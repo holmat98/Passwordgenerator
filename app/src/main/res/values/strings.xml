@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Password generator</string>
+    <string name="password_generator">Password generator</string>
+    <string name="my_passwords">My passwords</string>
+    <string name="open">menu is open</string>
+    <string name="close">menu is close</string>
+    <string name="generate_password">GENERATE PASSWORD</string>
+    <string name="length">length:</string>
+    <string name="create">create</string>
+    <string name="password_tester">Password tester</string>
+    <string name="password_tester_text">PASSWORD TESTER</string>
+    <string name="test">TEST</string>
+</resources>
