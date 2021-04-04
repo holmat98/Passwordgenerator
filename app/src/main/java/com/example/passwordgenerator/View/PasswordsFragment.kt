@@ -5,7 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.passwordgenerator.R
+import com.example.passwordgenerator.ViewModel.PasswordViewModel
+import com.example.passwordgenerator.ViewModel.PasswordsAdapter
+import kotlinx.android.synthetic.main.fragment_passwd_generator.view.*
+import kotlinx.android.synthetic.main.fragment_passwords.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +30,12 @@ class PasswordsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var myAdapter: PasswordsAdapter
+    private lateinit var myLayoutManager: LinearLayoutManager
+    private lateinit var recyclerView: RecyclerView
+
+    private lateinit var viewModel: PasswordViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +49,26 @@ class PasswordsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
+
+        myLayoutManager = LinearLayoutManager(context)
+        myAdapter = PasswordsAdapter(viewModel.passwords)
+
+        viewModel.passwords.observe(viewLifecycleOwner, Observer {
+            myAdapter.notifyDataSetChanged()
+        })
+
         return inflater.inflate(R.layout.fragment_passwords, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = passwordsRV.apply {
+            this.adapter = myAdapter
+            this.layoutManager = myLayoutManager
+        }
     }
 
     companion object {

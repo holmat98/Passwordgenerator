@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.example.passwordgenerator.Model.HelperClass
 import com.example.passwordgenerator.R
+import com.example.passwordgenerator.ViewModel.PasswordViewModel
 import kotlinx.android.synthetic.main.fragment_passwd_generator.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +35,7 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var createdPassword: String = ""
 
     private lateinit var adapter: ArrayAdapter<Int>
+    private lateinit var viewModel: PasswordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,8 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         adapter = context?.let {
             ArrayAdapter(
@@ -67,6 +73,13 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
             passwordLinearLayout.isVisible = true
             createdPassword = HelperClass.generatePassword(isWithLetters = true, isWithUpperCase = true, isWithNumbers = true, isWithSpecial = true, length =  length)
             passwordTextView.text = createdPassword
+        }
+
+        addPasswordBtn.setOnClickListener{
+            var password: String = passwordTextView.text.toString()
+
+            viewModel.insert("Twitter", password)
+            Toast.makeText(context, "Dodano", Toast.LENGTH_SHORT).show()
         }
 
     }
