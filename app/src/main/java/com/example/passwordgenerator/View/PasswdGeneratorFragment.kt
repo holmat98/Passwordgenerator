@@ -35,7 +35,6 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var createdPassword: String = ""
 
     private lateinit var adapter: ArrayAdapter<Int>
-    private lateinit var viewModel: PasswordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +47,6 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         adapter = context?.let {
             ArrayAdapter(
@@ -75,11 +72,12 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
             passwordTextView.text = createdPassword
         }
 
-        addPasswordBtn.setOnClickListener{
+        openDialogBtn.setOnClickListener{
             var password: String = passwordTextView.text.toString()
 
-            viewModel.insert("Twitter", password)
-            Toast.makeText(context, "Dodano", Toast.LENGTH_SHORT).show()
+            HelperClass.password = password
+            var dialog = AddPasswordDialog()
+            dialog.show(requireActivity().supportFragmentManager, "customDialog")
         }
 
     }

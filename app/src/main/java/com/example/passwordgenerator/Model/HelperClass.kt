@@ -1,11 +1,14 @@
 package com.example.passwordgenerator.Model
 
 import android.util.Log
+import com.example.passwordgenerator.Model.Entities.Password
 import java.lang.StringBuilder
 import java.security.SecureRandom
 
 class HelperClass {
     companion object {
+        var password: String = ""
+        var editPassword: Password? = null
         private val letters: String = "abcdefghijklmnopqrstuvwxyz"
         private val uppercase: String = "ABCDEFGHIJKLMNOPQESTUVWXYZ"
         private val numbers: String = "0123456789"

@@ -104,7 +104,7 @@
             />
 
         <ImageButton
-            android:id="@+id/addPasswordBtn"
+            android:id="@+id/openDialogBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_baseline_add_24"

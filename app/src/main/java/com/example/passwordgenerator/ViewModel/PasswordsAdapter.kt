@@ -2,22 +2,25 @@ package com.example.passwordgenerator.ViewModel
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.passwordgenerator.Model.Entities.Password
 import com.example.passwordgenerator.Model.HelperClass
 import com.example.passwordgenerator.R
+import com.example.passwordgenerator.View.EditPasswordDialog
 import kotlinx.android.synthetic.main.fragment_password_tester.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class PasswordsAdapter(val passwords: LiveData<List<Password>>) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
+class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentManager: FragmentManager) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
     inner class PasswordsHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsHolder {
@@ -61,6 +64,13 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>) : RecyclerView.A
             in 90.0..100.0 -> {
                 progressValueTV.setTextColor(Color.parseColor("#13EB48"))
             }
+        }
+
+        holder.itemView.setOnClickListener {
+            var dialog = EditPasswordDialog()
+
+            HelperClass.editPassword = passwords.value?.get(position)
+            dialog.show(fragmentManager, "customDialog")
         }
 
     }

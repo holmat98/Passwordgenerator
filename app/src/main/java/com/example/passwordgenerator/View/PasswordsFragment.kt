@@ -53,7 +53,7 @@ class PasswordsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         myLayoutManager = LinearLayoutManager(context)
-        myAdapter = PasswordsAdapter(viewModel.passwords)
+        myAdapter = PasswordsAdapter(viewModel.passwords, requireActivity().supportFragmentManager)
 
         viewModel.passwords.observe(viewLifecycleOwner, Observer {
             myAdapter.notifyDataSetChanged()
