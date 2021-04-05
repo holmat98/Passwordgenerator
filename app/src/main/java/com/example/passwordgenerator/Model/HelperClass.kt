@@ -25,7 +25,10 @@ class HelperClass {
 
             when(numOfPatterns){
                 0 -> return 10.0
-                1 -> return 5.0
+                1 -> return 9.0
+                2 -> {
+                    return if (password.length >= 8) 5.0 else 0.0
+                }
                 else -> return 0.0
             }
         }

@@ -1,5 +1,6 @@
 package com.example.passwordgenerator.View
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
@@ -7,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.example.passwordgenerator.Model.HelperClass
 import com.example.passwordgenerator.R
 import kotlinx.android.synthetic.main.fragment_password_tester.*
+import java.math.RoundingMode
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,30 +50,44 @@ class PasswordTesterFragment : Fragment() {
         passwordTesterButton.setOnClickListener {
             var password: String = passwordToTest.getText().toString()
             if(!"".equals(password)){
-                val score: Double = HelperClass.testPassword(password)
+                var score: Double = HelperClass.testPassword(password)
                 when(score){
                     in 0.00..0.10 -> {
                         passwordTestScore.text = "VERY WEAK"
                         passwordTesterLayout.setBackgroundColor(Color.parseColor("#F50C05"))
+                        progressValueTV2.setTextColor(Color.parseColor("#F50C05"))
                     }
                     in 0.10..0.30 -> {
                         passwordTestScore.text = "WEAK"
                         passwordTesterLayout.setBackgroundColor(Color.parseColor("#DB7216"))
+                        progressValueTV2.setTextColor(Color.parseColor("#DB7216"))
                     }
                     in 0.30..0.70 -> {
                         passwordTestScore.text = "NEUTRAL"
                         passwordTesterLayout.setBackgroundColor(Color.parseColor("#F5D10D"))
+                        progressValueTV2.setTextColor(Color.parseColor("#F5D10D"))
                     }
                     in 0.70..0.90 -> {
                         passwordTestScore.text = "STRONG"
                         passwordTesterLayout.setBackgroundColor(Color.parseColor("#BBEB0C"))
+                        progressValueTV2.setTextColor(Color.parseColor("#BBEB0C"))
                     }
                     in 0.90..1.00 -> {
                         passwordTestScore.text = "VERY STRONG"
                         passwordTesterLayout.setBackgroundColor(Color.parseColor("#13EB48"))
+                        progressValueTV2.setTextColor(Color.parseColor("#13EB48"))
                     }
                 }
 
+                score = (score*100).toBigDecimal().setScale(0, RoundingMode.HALF_EVEN).toDouble()
+
+                CLProgress.isVisible = true
+
+                ObjectAnimator.ofInt(passwordStrengthPb2, "progress", score.toInt())
+                        .setDuration(2000)
+                        .start()
+
+                progressValueTV2.text = score.toInt().toString() + "%"
 
             }
         }
