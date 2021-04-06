@@ -23,12 +23,11 @@ class AddPasswordDialog : DialogFragment(){
         viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         rootView.addPasswordBtn.setOnClickListener {
-            var password: String = platformNameET.text.toString()
+            var platform: String = platformNameET.text.toString()
 
-            if(!"".equals(password)){
-                HelperClass.editPassword?.password = password
-                viewModel.update(HelperClass.editPassword!!)
-                Toast.makeText(context, "Edited", Toast.LENGTH_SHORT).show()
+            if(!"".equals(platform)){
+                viewModel.insert(platformName = platform, password = HelperClass.password)
+                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }

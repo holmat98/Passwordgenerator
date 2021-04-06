@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.passwordgenerator.Model.SwipeToDeleteCallback
 import com.example.passwordgenerator.R
 import com.example.passwordgenerator.ViewModel.PasswordViewModel
 import com.example.passwordgenerator.ViewModel.PasswordsAdapter
@@ -53,7 +55,7 @@ class PasswordsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         myLayoutManager = LinearLayoutManager(context)
-        myAdapter = PasswordsAdapter(viewModel.passwords, requireActivity().supportFragmentManager)
+        myAdapter = PasswordsAdapter(viewModel.passwords, requireActivity().supportFragmentManager, viewModel, context)
 
         viewModel.passwords.observe(viewLifecycleOwner, Observer {
             myAdapter.notifyDataSetChanged()
@@ -69,6 +71,16 @@ class PasswordsFragment : Fragment() {
             this.adapter = myAdapter
             this.layoutManager = myLayoutManager
         }
+
+        val swipeHandler = object : SwipeToDeleteCallback(context){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = recyclerView.adapter as PasswordsAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     companion object {

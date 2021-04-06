@@ -3,12 +3,14 @@ package com.example.passwordgenerator.ViewModel
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_password_tester.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentManager: FragmentManager) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
+class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentManager: FragmentManager, val viewModel: PasswordViewModel, val context: Context?) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
     inner class PasswordsHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsHolder {
@@ -73,6 +75,12 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentMana
             dialog.show(fragmentManager, "customDialog")
         }
 
+    }
+
+    fun removeAt(position: Int){
+        viewModel.delete(passwords.value?.get(position)!!)
+        notifyDataSetChanged()
+        Toast.makeText(context,"Deleted", Toast.LENGTH_SHORT).show()
     }
 
     override fun getItemCount(): Int {

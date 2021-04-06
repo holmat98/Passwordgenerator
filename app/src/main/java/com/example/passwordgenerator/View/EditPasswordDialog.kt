@@ -19,15 +19,17 @@ class EditPasswordDialog: DialogFragment(){
     private lateinit var viewModel: PasswordViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var rootView: View = inflater.inflate(R.layout.add_password_dialog, container, false)
+        var rootView: View = inflater.inflate(R.layout.edit_password_dialog, container, false)
 
         viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         rootView.editPasswordBtn.setOnClickListener {
-            var platform: String = newPasswordET.text.toString()
+            var password: String = newPasswordET.text.toString()
 
-            if(!"".equals(platform)){
-                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show()
+            if(!"".equals(password)){
+                HelperClass.editPassword?.password = password
+                viewModel.update(HelperClass.editPassword!!)
+                Toast.makeText(context, "Edited", Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }

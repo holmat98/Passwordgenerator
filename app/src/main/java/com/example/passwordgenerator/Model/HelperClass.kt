@@ -22,13 +22,16 @@ class HelperClass {
                 if(password.toLowerCase()[i].toInt() == password.toLowerCase()[i+1].toInt() || password.toLowerCase()[i].toInt() - password.toLowerCase()[i+1].toInt() in 0..2)
                 {
                     numOfPatterns++
-                    Log.d("TEST", password.toLowerCase()[i] + " " + password.toLowerCase()[i].toInt().toString() + " " + password.toLowerCase()[i+1] + password.toLowerCase()[i+1].toInt().toString())
                 }
             }
 
             when(numOfPatterns){
-                0 -> return 10.0
-                1 -> return 9.0
+                0 -> {
+                    return if(password.length >= 8) 10.0 else 5.0
+                }
+                1 -> {
+                    return if(password.length >= 8) 9.0 else 0.0
+                }
                 2 -> {
                     return if (password.length >= 8) 5.0 else 0.0
                 }
@@ -61,10 +64,14 @@ class HelperClass {
             var factor: Double = 0.0
             val length = password.length
 
-            if(password.matches(Regex(".*["+ letters+"].*"))) factor += 2.0
-            if(password.matches(Regex(".*["+ uppercase+"].*"))) factor += 2.0
-            if(password.matches(Regex(".*["+ numbers+"].*"))) factor += 1.0
-            if(password.matches(Regex(".*["+ specialCharacters+"].*"))) factor += 5.0
+            if(password.matches(Regex(".*["+ letters+"].*")) && password.length >= 8) factor += 2.0
+            if(password.matches(Regex(".*["+ letters+"].*")) && password.length < 8) factor += 1.0
+            if(password.matches(Regex(".*["+ uppercase+"].*")) && password.length >= 8) factor += 2.0
+            if(password.matches(Regex(".*["+ uppercase+"].*")) && password.length < 8) factor += 1.0
+            if(password.matches(Regex(".*["+ numbers+"].*")) && password.length >= 8) factor += 1.0
+            if(password.matches(Regex(".*["+ numbers+"].*")) && password.length < 8) factor += 0.5
+            if(password.matches(Regex(".*["+ specialCharacters+"].*")) && password.length >= 8) factor += 5.0
+            if(password.matches(Regex(".*["+ specialCharacters+"].*")) && password.length < 8) factor += 2.5
             /*when(length){
                 in 1..7 -> factor += 0.0
                 in 8..10 -> factor += 2.0
@@ -74,7 +81,6 @@ class HelperClass {
             }*/
             factor += patternSearcher(password)
 
-            Log.d("TEST", ((factor*length)/(maxPasswordFactor * maxPasswordLength)).toString())
             return (factor*length)/(maxPasswordFactor * maxPasswordLength)
         }
     }
