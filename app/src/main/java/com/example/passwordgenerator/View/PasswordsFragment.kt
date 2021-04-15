@@ -1,10 +1,12 @@
 package com.example.passwordgenerator.View
 
+import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,8 +16,8 @@ import com.example.passwordgenerator.Model.SwipeToDeleteCallback
 import com.example.passwordgenerator.R
 import com.example.passwordgenerator.ViewModel.PasswordViewModel
 import com.example.passwordgenerator.ViewModel.PasswordsAdapter
-import kotlinx.android.synthetic.main.fragment_passwd_generator.view.*
 import kotlinx.android.synthetic.main.fragment_passwords.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,8 +49,8 @@ class PasswordsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
 
@@ -77,6 +79,16 @@ class PasswordsFragment : Fragment() {
                 val adapter = recyclerView.adapter as PasswordsAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
             }
+        }
+
+        addPasswordFloatingBtn.setOnClickListener {
+            val dialog = AddPasswordDialog2()
+
+            val metrics = resources.displayMetrics
+            val width = metrics.widthPixels
+            val height = metrics.heightPixels
+
+            dialog.show(requireActivity().supportFragmentManager, "customDialog")
         }
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
