@@ -18,4 +18,5 @@
     <color name="neutral">#F5D10D</color>
     <color name="weak">#DB7216</color>
     <color name="veryWeak">#F50C05</color>
+    <color name="lighter_black">#393939</color>
 </resources>

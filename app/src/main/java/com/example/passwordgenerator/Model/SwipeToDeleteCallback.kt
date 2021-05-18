@@ -1,8 +1,10 @@
 package com.example.passwordgenerator.Model
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +14,9 @@ abstract class SwipeToDeleteCallback(context: Context?) : ItemTouchHelper.Simple
     private val deleteIcon = ContextCompat.getDrawable(context!!, R.drawable.ic_baseline_delete_24)
     private val intrinsicWidth = deleteIcon?.intrinsicWidth
     private val intrinsicHeight = deleteIcon?.intrinsicHeight
-    private val background = ColorDrawable()
+    private val background = GradientDrawable().apply {
+        cornerRadius = 150.0f
+    }
     private val backgroundColor = Color.parseColor("#f44336")
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
@@ -36,7 +40,7 @@ abstract class SwipeToDeleteCallback(context: Context?) : ItemTouchHelper.Simple
             return
         }
 
-        background.color = backgroundColor
+        background.color = ColorStateList.valueOf(backgroundColor)
         background.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
         background.draw(c)
 

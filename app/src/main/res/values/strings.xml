@@ -10,4 +10,8 @@
     <string name="password_tester">Password tester</string>
     <string name="password_tester_text">PASSWORD TESTER</string>
     <string name="test">TEST</string>
+    <string name="provide_password_to_see_saved_passwords">Provide password to see saved passwords</string>
+    <string name="check">check</string>
+    <string name="password">Password</string>
+    <string name="create_password">Create password</string>
 </resources>
