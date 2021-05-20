@@ -1,15 +1,19 @@
 package com.example.passwordgenerator.View
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.example.passwordgenerator.Model.Entities.Password
 import com.example.passwordgenerator.Model.HelperClass
 import com.example.passwordgenerator.R
 import com.example.passwordgenerator.ViewModel.PasswordViewModel
@@ -36,6 +40,8 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var adapter: ArrayAdapter<Int>
 
+    private lateinit var viewModel: PasswordViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,6 +53,8 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         adapter = context?.let {
             ArrayAdapter(
@@ -72,12 +80,30 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
             passwordTextView.text = createdPassword
         }
 
-        openDialogBtn.setOnClickListener{
+        saveGeneratedPasswordBtn.setOnClickListener{
             var password: String = passwordTextView.text.toString()
 
-            HelperClass.password = password
-            var dialog = AddPasswordDialog()
-            dialog.show(requireActivity().supportFragmentManager, "customDialog")
+            val platformET = EditText(context).apply {
+                hint = "Platform"
+                inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                setBackgroundResource(R.drawable.background_style)
+            }
+
+            val dialog = AlertDialog.Builder(context).apply {
+                setTitle("Provide platform")
+                setView(platformET)
+                setPositiveButton("YES"){dialog, _ ->
+                    val platform: String = platformET.text.toString()
+                    if(platform.isNotEmpty()){
+                        viewModel.insert(platformName = platform, password = password)
+                        Toast.makeText(context, "Password is added", Toast.LENGTH_SHORT).show()
+                    }
+                    dialog.dismiss()
+                }
+                setNegativeButton("NO"){dialog, _ -> dialog.dismiss()}
+            }
+
+            dialog.show()
         }
 
     }

@@ -3,7 +3,9 @@ package com.example.passwordgenerator.View
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -78,42 +82,44 @@ class PasswordsFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences("Password", Context.MODE_PRIVATE)
         val editor = sharedPref?.edit()
 
-        val passwordDialog = Dialog(requireContext(), R.style.FullHeightDialog).apply {
-            setContentView(R.layout.provide_password_dialog)
-            setCancelable(true)
-        }
-        val passwordET = passwordDialog.findViewById<EditText>(R.id.passwordET)
-        val button = passwordDialog.findViewById<Button>(R.id.checkPasswordBtn)
-
-        button.setOnClickListener {
-            if(passwordET.text.toString().equals(sharedPref?.getString("password", ""))){
-                passwordsRV.isVisible = true
-                addPasswordFloatingBtn.isVisible = true
-                passwordDialog.dismiss()
-            }
-            else{
-                Toast.makeText(context, "Wrong password", Toast.LENGTH_SHORT).show()
-                passwordDialog.dismiss()
-            }
+        val inputET = EditText(context).apply {
+            hint = "Enter password"
+            inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
         }
 
-        val createPasswordDialog = Dialog(requireContext(), R.style.FullHeightDialog).apply {
-            setContentView(R.layout.create_password_dialog)
-            setCancelable(true)
-        }
-
-        val createPasswdButton = createPasswordDialog.findViewById<Button>(R.id.createPasswordBtn)
-        createPasswdButton.setOnClickListener {
-            val passwd: String = createPasswordDialog.findViewById<EditText>(R.id.newPasswordET).text.toString()
-            if(passwd.isNotEmpty()){
-                editor?.apply {
-                    putString("password", passwd)
-                    apply()
+        val passwordDialog = AlertDialog.Builder(requireContext()).apply {
+            setView(inputET)
+            setTitle("Enter the password")
+            setPositiveButton("YES"){dialog, _ ->
+                if(inputET.text.toString().equals(sharedPref?.getString("password", ""))){
+                    passwordsRV.isVisible = true
+                    addPasswordFloatingBtn.isVisible = true
                 }
-                passwordsRV.isVisible = true
-                addPasswordFloatingBtn.isVisible = true
-                createPasswordDialog.dismiss()
+                else{
+                    Toast.makeText(context, "Wrong password", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
             }
+            setNegativeButton("NO"){dialog, _ -> dialog.dismiss()}
+        }
+
+        val createPasswordDialog = AlertDialog.Builder(requireContext()).apply {
+            setView(inputET)
+            setTitle("Create password")
+            setPositiveButton("YES"){dialog, _ ->
+                val passwd: String = inputET.text.toString()
+                if(passwd.isNotEmpty()){
+                    editor?.apply {
+                        putString("password", passwd)
+                        apply()
+                    }
+                    passwordsRV.isVisible = true
+                    addPasswordFloatingBtn.isVisible = true
+                }
+                dialog.dismiss()
+            }
+            setNegativeButton("NO"){dialog, _ -> dialog.dismiss()}
+
         }
 
         if(sharedPref?.getString("password", "").isNullOrEmpty()){
@@ -136,9 +142,9 @@ class PasswordsFragment : Fragment() {
         }
 
         addPasswordFloatingBtn.setOnClickListener {
-            val dialog = AddPasswordDialog2()
+            val i = Intent(context, AddPasswordActivity::class.java)
 
-            dialog.show(requireActivity().supportFragmentManager, "customDialog")
+            requireActivity().startActivity(i)
         }
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)

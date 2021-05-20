@@ -2,12 +2,18 @@ package com.example.passwordgenerator.ViewModel
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -17,9 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.passwordgenerator.Model.Entities.Password
 import com.example.passwordgenerator.Model.HelperClass
 import com.example.passwordgenerator.R
-import com.example.passwordgenerator.View.EditPasswordDialog
-import kotlinx.android.synthetic.main.fragment_password_tester.*
-import java.math.BigDecimal
 import java.math.RoundingMode
 
 class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentManager: FragmentManager, val viewModel: PasswordViewModel, val context: Context?) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
@@ -69,18 +72,65 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentMana
         }
 
         holder.itemView.setOnClickListener {
-            var dialog = EditPasswordDialog()
 
-            HelperClass.editPassword = passwords.value?.get(position)
-            dialog.show(fragmentManager, "customDialog")
+            val newPasswordET = EditText(context).apply {
+                hint = "New password"
+                inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+
+            val dialog = AlertDialog.Builder(context).apply {
+                setTitle("Edit password")
+                setView(newPasswordET)
+                setPositiveButton("YES"){ dialog, _ ->
+                    val newPaswd: String = newPasswordET.text.toString()
+                    if(newPaswd.isNotEmpty()){
+                        var item: Password = passwords.value?.get(position)!!
+                        item.password = newPaswd
+                        viewModel.update(item)
+                        Toast.makeText(context, "You edited password", Toast.LENGTH_SHORT).show()
+                    }
+                    dialog.dismiss()
+                }
+
+                setNegativeButton("NO"){dialog, _ -> dialog.dismiss()}
+            }
+
+            dialog.show()
+        }
+
+        holder.itemView.setOnLongClickListener {
+            val clipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("text", passwords.value?.get(position)?.password)
+
+            clipboardManager.setPrimaryClip(clipData)
+
+            val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            val effect: VibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.EFFECT_HEAVY_CLICK)
+
+            vibrator.vibrate(effect)
+
+            Toast.makeText(context, "You copied the password", Toast.LENGTH_SHORT).show()
+            true
         }
 
     }
 
     fun removeAt(position: Int){
-        viewModel.delete(passwords.value?.get(position)!!)
-        notifyDataSetChanged()
-        Toast.makeText(context,"Deleted", Toast.LENGTH_SHORT).show()
+        val dialog = AlertDialog.Builder(context).apply{
+            setTitle("Delete")
+            setMessage("Do you really want to delete this?")
+            setPositiveButton("YES"){dialog, _ ->
+                viewModel.delete(passwords.value?.get(position)!!)
+                notifyDataSetChanged()
+                Toast.makeText(context,"Deleted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            setNegativeButton("NO"){dialog, _ ->
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
     }
 
     override fun getItemCount(): Int {
