@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.View
+package com.example.passwordgenerator.view
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,11 +13,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.example.passwordgenerator.Model.Entities.Password
-import com.example.passwordgenerator.Model.HelperClass
+import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
-import com.example.passwordgenerator.ViewModel.PasswordViewModel
-import kotlinx.android.synthetic.main.fragment_passwd_generator.*
+import com.example.passwordgenerator.viewModel.PasswordViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,7 +66,7 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
         return inflater.inflate(R.layout.fragment_passwd_generator, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         passwordLengthSpinner.adapter = adapter
@@ -106,7 +104,7 @@ class PasswdGeneratorFragment : Fragment(), AdapterView.OnItemSelectedListener {
             dialog.show()
         }
 
-    }
+    }*/
 
     companion object {
         /**

@@ -1,12 +1,12 @@
-package com.example.passwordgenerator.ViewModel
+package com.example.passwordgenerator.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.passwordgenerator.Model.Entities.Password
-import com.example.passwordgenerator.Model.PasswordDatabase
-import com.example.passwordgenerator.Model.Repositories.PasswordRepository
+import com.example.passwordgenerator.model.Entities.Password
+import com.example.passwordgenerator.model.PasswordDatabase
+import com.example.passwordgenerator.model.Repositories.PasswordRepository
 import kotlinx.coroutines.launch
 
 class PasswordViewModel(application: Application): AndroidViewModel(application) {

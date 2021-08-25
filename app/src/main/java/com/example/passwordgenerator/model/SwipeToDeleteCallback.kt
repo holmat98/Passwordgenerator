@@ -1,9 +1,8 @@
-package com.example.passwordgenerator.Model
+package com.example.passwordgenerator.model
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper

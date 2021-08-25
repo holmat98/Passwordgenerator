@@ -1,11 +1,11 @@
-package com.example.passwordgenerator.Model
+package com.example.passwordgenerator.model
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.passwordgenerator.Model.Entities.Password
-import com.example.passwordgenerator.Model.Entities.PasswordDao
+import com.example.passwordgenerator.model.Entities.Password
+import com.example.passwordgenerator.model.Entities.PasswordDao
 
 @Database(entities = [Password::class], version = 1, exportSchema = false)
 abstract class PasswordDatabase: RoomDatabase(){

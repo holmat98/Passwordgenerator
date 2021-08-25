@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.ViewModel
+package com.example.passwordgenerator.viewModel
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -20,8 +20,8 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.passwordgenerator.Model.Entities.Password
-import com.example.passwordgenerator.Model.HelperClass
+import com.example.passwordgenerator.model.Entities.Password
+import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
 import java.math.RoundingMode
 

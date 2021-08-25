@@ -12,14 +12,12 @@
     <string name="test">TEST</string>
     <string name="provide_password_to_see_saved_passwords">Provide password to see saved passwords</string>
     <string name="check">check</string>
-    <string name="password">Password</string>
     <string name="create_password">Create password</string>
     <string name="title_activity_add_password">AddPasswordActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
     <string name="hello_world">Hello Square World!</string>
     <string name="add_password">Add password</string>
     <string name="platform_name">Platform name</string>
+    <string name="password">Password</string>
+    <string name="login">login</string>
+    <string name="logo">logo</string>
 </resources>

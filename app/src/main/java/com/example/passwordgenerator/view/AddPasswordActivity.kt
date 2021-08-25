@@ -1,13 +1,11 @@
-package com.example.passwordgenerator.View
+package com.example.passwordgenerator.view
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.passwordgenerator.R
-import com.example.passwordgenerator.ViewModel.PasswordViewModel
-import kotlinx.android.synthetic.main.activity_add_password.*
+import com.example.passwordgenerator.viewModel.PasswordViewModel
 
 class AddPasswordActivity : AppCompatActivity() {
 
@@ -17,7 +15,7 @@ class AddPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_password)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        /*supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProvider(this).get(PasswordViewModel::class.java)
 
@@ -30,7 +28,7 @@ class AddPasswordActivity : AppCompatActivity() {
                 platformNameET2.text.clear()
                 passwordValueET.text.clear()
             }
-        }
+        }*/
     }
 
 }

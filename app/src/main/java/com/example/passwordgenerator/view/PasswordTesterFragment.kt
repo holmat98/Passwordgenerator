@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.View
+package com.example.passwordgenerator.view
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -9,9 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.example.passwordgenerator.Model.HelperClass
+import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
-import kotlinx.android.synthetic.main.fragment_password_tester.*
 import java.math.RoundingMode
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,7 +42,7 @@ class PasswordTesterFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_password_tester, container, false)
     }
 
-    @SuppressLint("ResourceAsColor")
+    /*@SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,7 +90,7 @@ class PasswordTesterFragment : Fragment() {
 
             }
         }
-    }
+    }*/
 
     companion object {
         /**

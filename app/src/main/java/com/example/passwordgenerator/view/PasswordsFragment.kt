@@ -1,7 +1,6 @@
-package com.example.passwordgenerator.View
+package com.example.passwordgenerator.view
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,24 +8,19 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.passwordgenerator.Model.SwipeToDeleteCallback
+import com.example.passwordgenerator.model.SwipeToDeleteCallback
 import com.example.passwordgenerator.R
-import com.example.passwordgenerator.ViewModel.PasswordViewModel
-import com.example.passwordgenerator.ViewModel.PasswordsAdapter
-import kotlinx.android.synthetic.main.fragment_passwords.*
+import com.example.passwordgenerator.viewModel.PasswordViewModel
+import com.example.passwordgenerator.viewModel.PasswordsAdapter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -76,7 +70,7 @@ class PasswordsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_passwords, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPref = activity?.getSharedPreferences("Password", Context.MODE_PRIVATE)
@@ -149,7 +143,7 @@ class PasswordsFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
+    }*/
 
     companion object {
         /**
