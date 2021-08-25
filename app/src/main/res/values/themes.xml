@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">@color/light_black</item>
         <item name="colorOnPrimary">@color/light_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/purple</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/light_black</item>
+        <item name="colorSecondaryVariant">@color/light_black</item>
+        <item name="colorOnSecondary">@color/light_black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/yellow</item>
         <!-- Customize your theme here. -->
@@ -19,6 +19,25 @@
         <item name="windowActionBarOverlay">true</item>
 
 
+    </style>
+
+    <style name="PasswordsActivityStyle" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green2</item>
+        <item name="colorPrimaryVariant">@color/purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_dark</item>
+        <item name="colorSecondaryVariant">@color/green2</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/green_dark</item>
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/ThemeActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="ThemeActionBar"

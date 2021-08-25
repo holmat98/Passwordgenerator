@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/createPassword">
+
+    <fragment
+        android:id="@+id/createPassword"
+        android:name="com.example.passwordgenerator.view.PasswdGeneratorFragment"
+        android:label="fragment_passwd_generator"
+        tools:layout="@layout/fragment_passwd_generator" />
+    <fragment
+        android:id="@+id/testPassword"
+        android:name="com.example.passwordgenerator.view.PasswordTesterFragment"
+        android:label="fragment_password_tester"
+        tools:layout="@layout/fragment_password_tester" />
+    <fragment
+        android:id="@+id/yourPasswords"
+        android:name="com.example.passwordgenerator.view.PasswordsFragment"
+        android:label="fragment_passwords"
+        tools:layout="@layout/fragment_passwords" />
+</navigation>

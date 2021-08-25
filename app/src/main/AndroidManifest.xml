@@ -13,10 +13,9 @@
         android:theme="@style/Theme.PasswordGenerator">
         <activity
             android:name=".view.PasswordsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".view.AddPasswordActivity"
-            android:parentActivityName=".view.MainActivity" />
+            android:exported="true"
+            android:theme="@style/PasswordsActivityStyle"
+            />
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

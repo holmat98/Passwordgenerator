@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun openActivity() {
         binding.lockerIV.animate().apply {
             duration = 1000
-            binding.lockerIV.setImageResource(R.drawable.outline_lock_open_24)
+            binding.lockerIV.setImageResource(R.drawable.ic_open_locker)
         }.withEndAction {
             val intent = Intent(this@MainActivity, PasswordsActivity::class.java)
             this@MainActivity.startActivity(intent)
