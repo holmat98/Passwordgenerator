@@ -21,4 +21,11 @@
         android:icon="@drawable/ic_password"
         android:color="@color/white"
         />
+
+    <item
+        android:id="@+id/settingFragment"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings"
+        android:color="@color/white"
+        />
 </menu>

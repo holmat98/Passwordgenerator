@@ -20,4 +20,9 @@
         android:name="com.example.passwordgenerator.view.fragments.PasswordsFragment"
         android:label="fragment_passwords"
         tools:layout="@layout/fragment_passwords" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.passwordgenerator.view.fragments.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

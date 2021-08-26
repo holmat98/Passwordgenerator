@@ -1,3 +1,23 @@
 <resources>
     <string name="hello_world">Hello Round World!</string>
+    <string name="app_name">Password generator</string>
+    <string name="create">Create</string>
+    <string name="test">Test</string>
+    <string name="passwords">Passwords</string>
+    <string name="length">length:</string>
+    <string name="password_tester">Password tester</string>
+    <string name="password_tester_text">PASSWORD TESTER</string>
+    <string name="provide_password_to_see_saved_passwords">Provide password to see saved passwords</string>
+    <string name="check">check</string>
+    <string name="create_password">Create password</string>
+    <string name="title_activity_add_password">AddPasswordActivity</string>
+    <string name="add_password">Add password</string>
+    <string name="platform_name">Platform name</string>
+    <string name="password">Password</string>
+    <string name="login">login</string>
+    <string name="logo">logo</string>
+    <string name="padlock">padlock logo</string>
+    <string name="password_result_image">password result image</string>
+    <string name="background_image">background image</string>
+    <string name="settings">Settings</string>
 </resources>

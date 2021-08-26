@@ -19,7 +19,7 @@ class PasswordsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = findNavController(R.id.fragmentHost)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.createPassword, R.id.testPassword, R.id.yourPasswords))
+        //val appBarConfiguration = AppBarConfiguration(setOf(R.id.createPassword, R.id.testPassword, R.id.yourPasswords, R.id.settingFragment))
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
 
