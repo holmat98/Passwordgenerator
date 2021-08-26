@@ -22,4 +22,13 @@
     <string name="settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="use_fingerprint_to_log_in">Use fingerprint to log in</string>
+    <string name="log_out">Log out</string>
+    <string name="error_biometric">Something went wrong</string>
+    <string name="failed_biometric">Authentication failed</string>
+    <string name="off_biometric">Biometrics is off</string>
+    <string name="biometric_permission">Application has no permission to use biometrics</string>
+    <string name="cancelled_biometric">Biometric authentication was cancelled</string>
+    <string name="login_with_biometrics">Log in using biometrics</string>
+    <string name="cancel">Cancel</string>
 </resources>

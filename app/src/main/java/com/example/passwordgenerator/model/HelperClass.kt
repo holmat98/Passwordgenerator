@@ -5,80 +5,77 @@ import java.security.SecureRandom
 import java.util.*
 
 object HelperClass {
-        var password: String = ""
+
+    val sharedPreferencesName: String by lazy {
+        "fingerprint"
+    }
+    var password: String = ""
         //var editPassword: Password? = null
-        private const val letters: String = "abcdefghijklmnopqrstuvwxyz"
-        private const val uppercase: String = "ABCDEFGHIJKLMNOPQESTUVWXYZ"
-        private const val numbers: String = "0123456789"
-        private const val specialCharacters: String = "!@#$%^&*-_+=?"
-        private const val maxPasswordLength: Double = 20.0
-        private const val maxPasswordFactor: Double = 20.0
+    private const val letters: String = "abcdefghijklmnopqrstuvwxyz"
+    private const val uppercase: String = "ABCDEFGHIJKLMNOPQESTUVWXYZ"
+    private const val numbers: String = "0123456789"
+    private const val specialCharacters: String = "!@#$%^&*-_+=?"
+    private const val maxPasswordLength: Double = 20.0
+    private const val maxPasswordFactor: Double = 20.0
 
-        private fun patternSearcher(password: String): Double{
-            var numOfPatterns = 0
-            for( i in 0..password.length-2){
-                if (password.lowercase(Locale.ROOT)[i].code == password.lowercase(Locale.ROOT)[i+1].code || password.lowercase(Locale.ROOT)[i].code - password.lowercase(Locale.ROOT)[i+1].code in 0..2)
-                {
-                    numOfPatterns++
-                }
-            }
-
-            return when(numOfPatterns){
-                0 -> {
-                    if(password.length >= 8) 10.0 else 5.0
-                }
-                1 -> {
-                    if(password.length >= 8) 9.0 else 0.0
-                }
-                2 -> {
-                    if (password.length >= 8) 5.0 else 0.0
-                }
-                else -> 0.0
+    private fun patternSearcher(password: String): Double{
+        var numOfPatterns = 0
+        for( i in 0..password.length-2){
+            if (password.lowercase(Locale.ROOT)[i].code == password.lowercase(Locale.ROOT)[i+1].code || password.lowercase(Locale.ROOT)[i].code - password.lowercase(Locale.ROOT)[i+1].code in 0..2)
+            {
+                numOfPatterns++
             }
         }
 
-        fun generatePassword(isWithLetters: Boolean, isWithUpperCase: Boolean, isWithNumbers: Boolean, isWithSpecial: Boolean, length: Int): String{
-            var result = ""
-
-            if(isWithLetters) result += letters
-            if(isWithUpperCase) result += uppercase
-            if(isWithNumbers) result += numbers
-            if(isWithSpecial) result += specialCharacters
-
-            val rnd = SecureRandom.getInstance("SHA1PRNG")
-            val sb = StringBuilder(length)
-
-            var i = 0
-            while (i < length){
-                val randomInt: Int = rnd.nextInt(result.length)
-                sb.append(result[randomInt])
-                i++
+        return when(numOfPatterns){
+            0 -> {
+                if(password.length >= 8) 10.0 else 5.0
             }
+            1 -> {
+                if(password.length >= 8) 9.0 else 0.0
+            }
+            2 -> {
+                if (password.length >= 8) 5.0 else 0.0
+            }
+            else -> 0.0
+        }
+    }
 
-            return sb.toString()
+    fun generatePassword(isWithLetters: Boolean, isWithUpperCase: Boolean, isWithNumbers: Boolean, isWithSpecial: Boolean, length: Int): String{
+        var result = ""
+
+        if(isWithLetters) result += letters
+        if(isWithUpperCase) result += uppercase
+        if(isWithNumbers) result += numbers
+        if(isWithSpecial) result += specialCharacters
+        val rnd = SecureRandom.getInstance("SHA1PRNG")
+        val sb = StringBuilder(length)
+
+        var i = 0
+        while (i < length){
+            val randomInt: Int = rnd.nextInt(result.length)
+            sb.append(result[randomInt])
+            i++
         }
 
-        fun testPassword(password: String): Double{
-            var factor = 0.0
-            val length = password.length
+        return sb.toString()
+    }
 
-            if(password.matches(Regex(".*[$letters].*")) && password.length >= 8) factor += 2.0
-            if(password.matches(Regex(".*[$letters].*")) && password.length < 8) factor += 1.0
-            if(password.matches(Regex(".*[$uppercase].*")) && password.length >= 8) factor += 2.0
-            if(password.matches(Regex(".*[$uppercase].*")) && password.length < 8) factor += 1.0
-            if(password.matches(Regex(".*[$numbers].*")) && password.length >= 8) factor += 1.0
-            if(password.matches(Regex(".*[$numbers].*")) && password.length < 8) factor += 0.5
-            if(password.matches(Regex(".*[$specialCharacters].*")) && password.length >= 8) factor += 5.0
-            if(password.matches(Regex(".*[$specialCharacters].*")) && password.length < 8) factor += 2.5
-            /*when(length){
-                in 1..7 -> factor += 0.0
-                in 8..10 -> factor += 2.0
-                in 11..14 -> factor += 3.0
-                in 15..17 -> factor += 4.0
-                in 18..20 -> factor += 5.0
-            }*/
-            factor += patternSearcher(password)
+    fun testPassword(password: String): Double{
+        var factor = 0.0
+        val length = password.length
 
-            return (factor*length)/(maxPasswordFactor * maxPasswordLength)
-        }
+        if(password.matches(Regex(".*[$letters].*")) && password.length >= 8) factor += 2.0
+        if(password.matches(Regex(".*[$letters].*")) && password.length < 8) factor += 1.0
+        if(password.matches(Regex(".*[$uppercase].*")) && password.length >= 8) factor += 2.0
+        if(password.matches(Regex(".*[$uppercase].*")) && password.length < 8) factor += 1.0
+        if(password.matches(Regex(".*[$numbers].*")) && password.length >= 8) factor += 1.0
+        if(password.matches(Regex(".*[$numbers].*")) && password.length < 8) factor += 0.5
+        if(password.matches(Regex(".*[$specialCharacters].*")) && password.length >= 8) factor += 5.0
+        if(password.matches(Regex(".*[$specialCharacters].*")) && password.length < 8) factor += 2.5
+
+        factor += patternSearcher(password)
+
+        return (factor*length)/(maxPasswordFactor * maxPasswordLength)
+    }
 }

@@ -21,4 +21,14 @@
     <string name="password_result_image">Logo wyniku hasła</string>
     <string name="background_image">Zdjęcie w tle</string>
     <string name="settings">Ustawienia</string>
+    <string name="error_biometric">Something went wrong</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="use_fingerprint_to_log_in">Użyj biometrii do zalogowania</string>
+    <string name="log_out">Wyloguj się</string>
+    <string name="failed_biometric">Autoryzacja zawiodła</string>
+    <string name="off_biometric">Biometria jest wyłączona</string>
+    <string name="biometric_permission">Aplikacja nie może korzystać z biometrii</string>
+    <string name="cancelled_biometric">Anulowano autoryzacje biometrią</string>
+    <string name="login_with_biometrics">Zaloguj się używając biometrii</string>
+    <string name="cancel">Anuluj</string>
 </resources>
