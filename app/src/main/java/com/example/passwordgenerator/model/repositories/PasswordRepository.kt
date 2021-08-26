@@ -1,10 +1,10 @@
-package com.example.passwordgenerator.model.Repositories
+package com.example.passwordgenerator.model.repositories
 
 import androidx.lifecycle.LiveData
-import com.example.passwordgenerator.model.Entities.Password
-import com.example.passwordgenerator.model.Entities.PasswordDao
+import com.example.passwordgenerator.model.entities.Password
+import com.example.passwordgenerator.model.entities.PasswordDao
 
-class PasswordRepository(val passwordDao: PasswordDao) {
+class PasswordRepository(private val passwordDao: PasswordDao) {
     suspend fun insert(password: Password){
         passwordDao.insert(password)
     }

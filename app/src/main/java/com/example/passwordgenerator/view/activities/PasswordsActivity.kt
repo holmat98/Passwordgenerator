@@ -1,8 +1,7 @@
-package com.example.passwordgenerator.view
+package com.example.passwordgenerator.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -22,7 +21,7 @@ class PasswordsActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragmentHost)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.createPassword, R.id.testPassword, R.id.yourPasswords))
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.bottomNavigation.setupWithNavController(navController)
 

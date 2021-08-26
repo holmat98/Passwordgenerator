@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PasswordGenerator">
         <activity
-            android:name=".view.PasswordsActivity"
+            android:name=".view.activities.PasswordsActivity"
             android:exported="true"
             android:theme="@style/PasswordsActivityStyle"
             />
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

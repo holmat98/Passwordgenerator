@@ -1,13 +1,12 @@
 package com.example.passwordgenerator.model
 
-import com.example.passwordgenerator.model.Entities.Password
 import java.lang.StringBuilder
 import java.security.SecureRandom
 import java.util.*
 
 object HelperClass {
         var password: String = ""
-        var editPassword: Password? = null
+        //var editPassword: Password? = null
         private const val letters: String = "abcdefghijklmnopqrstuvwxyz"
         private const val uppercase: String = "ABCDEFGHIJKLMNOPQESTUVWXYZ"
         private const val numbers: String = "0123456789"
@@ -18,23 +17,23 @@ object HelperClass {
         private fun patternSearcher(password: String): Double{
             var numOfPatterns = 0
             for( i in 0..password.length-2){
-                if (password.toLowerCase(Locale.ROOT)[i].toInt() == password.toLowerCase(Locale.ROOT)[i+1].toInt() || password.toLowerCase(Locale.ROOT)[i].toInt() - password.toLowerCase(Locale.ROOT)[i+1].toInt() in 0..2)
+                if (password.lowercase(Locale.ROOT)[i].code == password.lowercase(Locale.ROOT)[i+1].code || password.lowercase(Locale.ROOT)[i].code - password.lowercase(Locale.ROOT)[i+1].code in 0..2)
                 {
                     numOfPatterns++
                 }
             }
 
-            when(numOfPatterns){
+            return when(numOfPatterns){
                 0 -> {
-                    return if(password.length >= 8) 10.0 else 5.0
+                    if(password.length >= 8) 10.0 else 5.0
                 }
                 1 -> {
-                    return if(password.length >= 8) 9.0 else 0.0
+                    if(password.length >= 8) 9.0 else 0.0
                 }
                 2 -> {
-                    return if (password.length >= 8) 5.0 else 0.0
+                    if (password.length >= 8) 5.0 else 0.0
                 }
-                else -> return 0.0
+                else -> 0.0
             }
         }
 

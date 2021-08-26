@@ -44,10 +44,10 @@ abstract class SwipeToDeleteCallback(context: Context?) : ItemTouchHelper.Simple
         background.draw(c)
 
         val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight!!) / 2
-        val deleteIconMargin = (itemHeight - intrinsicHeight!!) / 2
+        val deleteIconMargin = (itemHeight - intrinsicHeight) / 2
         val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidth!!
         val deleteIconRight = itemView.right - deleteIconMargin
-        val deleteIconBottom = deleteIconTop + intrinsicHeight!!
+        val deleteIconBottom = deleteIconTop + intrinsicHeight
 
         deleteIcon?.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
         deleteIcon?.draw(c)

@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.model.Entities
+package com.example.passwordgenerator.model.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

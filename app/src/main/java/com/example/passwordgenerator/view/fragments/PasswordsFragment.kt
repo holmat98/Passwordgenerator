@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.view
+package com.example.passwordgenerator.view.fragments
 
 import android.os.Bundle
 import android.view.View

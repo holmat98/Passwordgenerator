@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.view
+package com.example.passwordgenerator.view.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openActivity() {
         binding.lockerIV.animate().apply {
-            duration = 1000
+            duration = 400
             binding.lockerIV.setImageResource(R.drawable.ic_open_locker)
         }.withEndAction {
             val intent = Intent(this@MainActivity, PasswordsActivity::class.java)

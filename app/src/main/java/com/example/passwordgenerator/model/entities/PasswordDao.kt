@@ -1,4 +1,4 @@
-package com.example.passwordgenerator.model.Entities
+package com.example.passwordgenerator.model.entities
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

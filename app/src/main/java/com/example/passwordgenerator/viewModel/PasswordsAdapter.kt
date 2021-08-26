@@ -20,7 +20,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.passwordgenerator.model.Entities.Password
+import com.example.passwordgenerator.model.entities.Password
 import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
 import java.math.RoundingMode

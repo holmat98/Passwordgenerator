@@ -17,4 +17,7 @@
     <string name="login">login</string>
     <string name="logo">logo</string>
     <string name="padlock">padlock logo</string>
+    <string name="password_result_image">password result image</string>
+    <string name="background_image">background image</string>
+    <string name="settings">Settings</string>
 </resources>
