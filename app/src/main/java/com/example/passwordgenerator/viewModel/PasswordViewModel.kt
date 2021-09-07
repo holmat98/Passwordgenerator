@@ -18,9 +18,9 @@ class PasswordViewModel(application: Application): AndroidViewModel(application)
         passwords = PasswordDatabase.getDatabase(application).passwordDao().getAllPasswords()
     }
 
-    fun insert(platformName: String, password: String){
+    fun insert(platformName: String, password: String, passwordIv: String){
         viewModelScope.launch {
-            passwordRepository.insert(Password(id = 0, platformName = platformName, password = password))
+            passwordRepository.insert(Password(id = 0, platformName = platformName, password = password, passwordIv = passwordIv))
         }
     }
 

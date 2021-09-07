@@ -1,6 +1,7 @@
 package com.example.passwordgenerator.model
 
 import java.lang.StringBuilder
+import java.security.KeyStore
 import java.security.SecureRandom
 import java.util.*
 
@@ -9,6 +10,7 @@ object HelperClass {
     val sharedPreferencesName: String by lazy {
         "fingerprint"
     }
+
     var password: String = ""
         //var editPassword: Password? = null
     private const val letters: String = "abcdefghijklmnopqrstuvwxyz"

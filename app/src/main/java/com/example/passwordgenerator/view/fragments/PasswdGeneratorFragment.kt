@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.*
+import androidx.lifecycle.ViewModelProvider
 import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
+import com.example.passwordgenerator.viewModel.PasswordViewModel
 
 
 class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
@@ -14,10 +16,15 @@ class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
     private var length: Int = 8
     private var createdPassword: String = ""
 
+    private lateinit var viewModel: PasswordViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val numberPicker = view.findViewById<NumberPicker>(R.id.passwordLengthNP)
+        val savePasswordBtn = view.findViewById<Button>(R.id.savePasswordBtn)
+
+        viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
 
         numberPicker.apply {
             minValue = 8
@@ -25,9 +32,16 @@ class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
         }
 
         view.findViewById<Button>(R.id.createPasswordBtn).setOnClickListener {
-            val password: String = HelperClass.generatePassword(true, true, true, true, numberPicker.value)
+            createdPassword = HelperClass.generatePassword(true, true, true, true, numberPicker.value)
 
-            view.findViewById<TextView>(R.id.createdPasswordTV).text = password
+            view.findViewById<TextView>(R.id.createdPasswordTV).text = createdPassword
+            savePasswordBtn.visibility = View.VISIBLE
+        }
+
+        savePasswordBtn.setOnClickListener {
+            if(createdPassword.isNotEmpty()){
+
+            }
         }
 
     }

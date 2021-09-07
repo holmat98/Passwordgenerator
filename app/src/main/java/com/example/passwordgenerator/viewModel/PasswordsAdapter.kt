@@ -98,21 +98,6 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentMana
             dialog.show()
         }
 
-        holder.itemView.setOnLongClickListener {
-            val clipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("text", passwords.value?.get(position)?.password)
-
-            clipboardManager.setPrimaryClip(clipData)
-
-            val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            val effect: VibrationEffect = VibrationEffect.createOneShot(200, VibrationEffect.EFFECT_HEAVY_CLICK)
-
-            vibrator.vibrate(effect)
-
-            Toast.makeText(context, "You copied the password", Toast.LENGTH_SHORT).show()
-            true
-        }
-
     }
 
     fun removeAt(position: Int){

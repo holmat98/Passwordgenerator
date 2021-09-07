@@ -45,16 +45,19 @@
         android:layout_marginEnd="16dp"
         android:gravity="center" />
 
-    <ImageButton
+    <Button
         android:id="@+id/savePasswordBtn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/createdPasswordTV"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_baseline_add_24"
         android:background="@drawable/circle_button"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="invisible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
