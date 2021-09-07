@@ -3,13 +3,10 @@ package com.example.passwordgenerator.viewModel
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,15 +14,15 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.passwordgenerator.model.entities.Password
 import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
+import com.example.passwordgenerator.model.Cryptography
 import java.math.RoundingMode
 
-class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentManager: FragmentManager, val viewModel: PasswordViewModel, val context: Context?) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
+class PasswordsAdapter(private val passwords: LiveData<List<Password>>, private val viewModel: PasswordViewModel, val context: Context?) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
     inner class PasswordsHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsHolder {
@@ -41,17 +38,33 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentMana
         val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.passwordStrengthPb)
         val progressValueTV = holder.itemView.findViewById<TextView>(R.id.progressValueTV)
 
-        platformTV.text = passwords.value?.get(position)?.platformName
-        passwordTV.text = passwords.value?.get(position)?.password
+        Log.d("TEST", passwords.value?.get(position)?.password!!)
 
-        var progress: Double = HelperClass.testPassword(passwords.value?.get(position)?.password!!)
+        val password: String = Cryptography.decryptedData(
+            passwords.value?.get(position)?.passwordIv!!.toByteArray(),
+            passwords.value?.get(position)?.password!!.toByteArray()
+        )
+
+        platformTV.text = passwords.value?.get(position)?.platformName
+        passwordTV.text = password
+
+        passwordTV.setOnClickListener {
+            if(passwordTV.inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                passwordTV.inputType = InputType.TYPE_CLASS_TEXT
+            else{
+                passwordTV.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
+
+        var progress: Double = HelperClass.testPassword(password)
         progress = (progress*100).toBigDecimal().setScale(0, RoundingMode.HALF_EVEN).toDouble()
 
         ObjectAnimator.ofInt(progressBar, "progress", progress.toInt())
                 .setDuration(2000)
                 .start()
 
-        progressValueTV.text = progress.toInt().toString() + "%"
+        val progressText = "${progress.toInt()}%"
+        progressValueTV.text = progressText
 
         when(progress){
             in 0.0..10.0 -> {
@@ -71,51 +84,6 @@ class PasswordsAdapter(val passwords: LiveData<List<Password>>, val fragmentMana
             }
         }
 
-        holder.itemView.setOnClickListener {
-
-            val newPasswordET = EditText(context).apply {
-                hint = "New password"
-                inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-            }
-
-            val dialog = AlertDialog.Builder(context).apply {
-                setTitle("Edit password")
-                setView(newPasswordET)
-                setPositiveButton("YES"){ dialog, _ ->
-                    val newPaswd: String = newPasswordET.text.toString()
-                    if(newPaswd.isNotEmpty()){
-                        var item: Password = passwords.value?.get(position)!!
-                        item.password = newPaswd
-                        viewModel.update(item)
-                        Toast.makeText(context, "You edited password", Toast.LENGTH_SHORT).show()
-                    }
-                    dialog.dismiss()
-                }
-
-                setNegativeButton("NO"){dialog, _ -> dialog.dismiss()}
-            }
-
-            dialog.show()
-        }
-
-    }
-
-    fun removeAt(position: Int){
-        val dialog = AlertDialog.Builder(context).apply{
-            setTitle("Delete")
-            setMessage("Do you really want to delete this?")
-            setPositiveButton("YES"){dialog, _ ->
-                viewModel.delete(passwords.value?.get(position)!!)
-                notifyDataSetChanged()
-                Toast.makeText(context,"Deleted", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-            }
-            setNegativeButton("NO"){dialog, _ ->
-                dialog.dismiss()
-            }
-        }
-
-        dialog.show()
     }
 
     override fun getItemCount(): Int {

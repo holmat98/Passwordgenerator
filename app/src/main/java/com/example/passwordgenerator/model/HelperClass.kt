@@ -1,7 +1,6 @@
 package com.example.passwordgenerator.model
 
 import java.lang.StringBuilder
-import java.security.KeyStore
 import java.security.SecureRandom
 import java.util.*
 
@@ -43,7 +42,7 @@ object HelperClass {
         }
     }
 
-    fun generatePassword(isWithLetters: Boolean, isWithUpperCase: Boolean, isWithNumbers: Boolean, isWithSpecial: Boolean, length: Int): String{
+    fun generatePassword(length: Int, isWithLetters: Boolean = true, isWithUpperCase: Boolean = true, isWithNumbers: Boolean = true, isWithSpecial: Boolean = true): String{
         var result = ""
 
         if(isWithLetters) result += letters

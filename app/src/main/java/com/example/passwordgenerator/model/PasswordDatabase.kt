@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.passwordgenerator.model.entities.Password
 import com.example.passwordgenerator.model.entities.PasswordDao
 
-@Database(entities = [Password::class], version = 1, exportSchema = false)
+@Database(entities = [Password::class], version = 2, exportSchema = false)
 abstract class PasswordDatabase: RoomDatabase(){
     abstract fun passwordDao(): PasswordDao
 
