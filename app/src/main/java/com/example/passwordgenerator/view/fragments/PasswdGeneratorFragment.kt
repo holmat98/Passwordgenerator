@@ -1,6 +1,7 @@
 package com.example.passwordgenerator.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.*
@@ -56,7 +57,7 @@ class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
                     val platformName: String = bottomSheetView.findViewById<EditText>(R.id.platformNameET).text.toString()
                     if(platformName.isNotEmpty()){
                         val encryptedPassword = Cryptography.encryptData(createdPassword)
-                        viewModel.insert(platformName = platformName, password = encryptedPassword.second.toString(), passwordIv = encryptedPassword.first.toString())
+                        viewModel.insert(platformName = platformName, password = String(encryptedPassword.second, Charsets.ISO_8859_1), passwordIv = String(encryptedPassword.first, Charsets.ISO_8859_1))
                         Toast.makeText(context, getString(R.string.password_saved), Toast.LENGTH_SHORT).show()
                         bottomSheetDialog.dismiss()
                         createdPassword = ""

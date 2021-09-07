@@ -2,6 +2,7 @@ package com.example.passwordgenerator.viewModel
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
@@ -10,19 +11,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.passwordgenerator.model.entities.Password
 import com.example.passwordgenerator.model.HelperClass
 import com.example.passwordgenerator.R
 import com.example.passwordgenerator.model.Cryptography
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.math.RoundingMode
 
-class PasswordsAdapter(private val passwords: LiveData<List<Password>>, private val viewModel: PasswordViewModel, val context: Context?) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
+class PasswordsAdapter(private val passwords: LiveData<List<Password>>, private val viewModel: PasswordViewModel, val context: Context?, val activity: Activity) : RecyclerView.Adapter<PasswordsAdapter.PasswordsHolder>() {
     inner class PasswordsHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsHolder {
@@ -34,56 +33,85 @@ class PasswordsAdapter(private val passwords: LiveData<List<Password>>, private 
     @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: PasswordsHolder, position: Int) {
         val platformTV = holder.itemView.findViewById<TextView>(R.id.platformNameTV)
-        val passwordTV = holder.itemView.findViewById<TextView>(R.id.passwordTV)
-        val progressBar = holder.itemView.findViewById<ProgressBar>(R.id.passwordStrengthPb)
-        val progressValueTV = holder.itemView.findViewById<TextView>(R.id.progressValueTV)
+        val passwordImage = holder.itemView.findViewById<ImageView>(R.id.passwordItemIV)
 
         Log.d("TEST", passwords.value?.get(position)?.password!!)
 
         val password: String = Cryptography.decryptedData(
-            passwords.value?.get(position)?.passwordIv!!.toByteArray(),
-            passwords.value?.get(position)?.password!!.toByteArray()
+            passwords.value?.get(position)?.passwordIv!!.toByteArray(Charsets.ISO_8859_1),
+            passwords.value?.get(position)?.password!!.toByteArray(Charsets.ISO_8859_1)
         )
 
         platformTV.text = passwords.value?.get(position)?.platformName
-        passwordTV.text = password
-
-        passwordTV.setOnClickListener {
-            if(passwordTV.inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                passwordTV.inputType = InputType.TYPE_CLASS_TEXT
-            else{
-                passwordTV.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-            }
-        }
 
         var progress: Double = HelperClass.testPassword(password)
         progress = (progress*100).toBigDecimal().setScale(0, RoundingMode.HALF_EVEN).toDouble()
 
-        ObjectAnimator.ofInt(progressBar, "progress", progress.toInt())
-                .setDuration(2000)
-                .start()
-
-        val progressText = "${progress.toInt()}%"
-        progressValueTV.text = progressText
-
         when(progress){
-            in 0.0..10.0 -> {
-                progressValueTV.setTextColor(Color.parseColor("#F50C05"))
+            in 0.0..33.0 -> {
+                passwordImage.setImageResource(R.drawable.ic_unsafe_password)
+                platformTV.setTextColor(R.color.veryWeak)
             }
-            in 10.0..30.0 -> {
-                progressValueTV.setTextColor(Color.parseColor("#DB7216"))
+            in 33.1..66.0 -> {
+                passwordImage.setImageResource(R.drawable.ic_neutral_password)
+                platformTV.setTextColor(R.color.neutral)
             }
-            in 30.0..70.0 -> {
-                progressValueTV.setTextColor(Color.parseColor("#F5D10D"))
-            }
-            in 70.0..90.0 -> {
-                progressValueTV.setTextColor(Color.parseColor("#BBEB0C"))
-            }
-            in 90.0..100.0 -> {
-                progressValueTV.setTextColor(Color.parseColor("#13EB48"))
+            else -> {
+                passwordImage.setImageResource(R.drawable.ic_safe_password)
+                platformTV.setTextColor(R.color.veryStrong)
             }
         }
 
+        holder.itemView.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(context!!)
+            val bottomSheetView = activity.layoutInflater.inflate(
+                R.layout.manage_password_bottom_sheet_dialog,
+                null
+            )
+
+            bottomSheetView.findViewById<ImageButton>(R.id.deletePasswordBtn).setOnClickListener {
+                removeAt(position)
+            }
+
+            val progressBar = bottomSheetView.findViewById<ProgressBar>(R.id.passwordStrengthPb)
+
+            ObjectAnimator.ofInt(progressBar, "progress", progress.toInt())
+                .setDuration(2000)
+                .start()
+
+            val text = "${progress}%"
+            bottomSheetView.findViewById<TextView>(R.id.progressValueTV).text = text
+
+            val passwordTV = bottomSheetView.findViewById<TextView>(R.id.passwordTV)
+
+            passwordTV.text = password
+
+            passwordTV.setOnClickListener {
+                passwordTV.inputType = InputType.TYPE_CLASS_TEXT
+            }
+
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.show()
+        }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeAt(position: Int){
+        val dialog = AlertDialog.Builder(context).apply{
+            setTitle("Delete")
+            setMessage("Do you really want to delete this?")
+            setPositiveButton("YES"){dialog, _ ->
+                viewModel.delete(passwords.value?.get(position)!!)
+                notifyDataSetChanged()
+                Toast.makeText(context,"Deleted", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            setNegativeButton("NO"){dialog, _ ->
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 
     override fun getItemCount(): Int {
