@@ -31,8 +31,8 @@
     <string name="cancelled_biometric">Biometric authentication was cancelled</string>
     <string name="login_with_biometrics">Log in using biometrics</string>
     <string name="cancel">Cancel</string>
-    <string name="save">SAVE</string>
+    <string name="save">Save</string>
     <string name="enter_the_name_of_platform_where_you_will_use_this_password">Enter the name of platform where you will use this password</string>
-    <string name="password_saved" />
-    <string name="platform_name_is_empty" />
+    <string name="password_saved" >Password is saved</string>
+    <string name="platform_name_is_empty" >Platform name is empty</string>
 </resources>

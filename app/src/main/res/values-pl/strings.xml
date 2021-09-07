@@ -31,8 +31,8 @@
     <string name="cancelled_biometric">Anulowano autoryzacje biometrią</string>
     <string name="login_with_biometrics">Zaloguj się używając biometrii</string>
     <string name="cancel">Anuluj</string>
-    <string name="save">SAVE</string>
-    <string name="enter_the_name_of_platform_where_you_will_use_this_password">Enter the name of platform where you will use this password</string>
-    <string name="password_saved" />
-    <string name="platform_name_is_empty" />
+    <string name="save">Zapisz</string>
+    <string name="enter_the_name_of_platform_where_you_will_use_this_password">Podaj nazwę platformy do której będziesz używał tego hasła</string>
+    <string name="password_saved">Zapisano hasło</string>
+    <string name="platform_name_is_empty">Nazwa platformy jest pusta</string>
 </resources>
