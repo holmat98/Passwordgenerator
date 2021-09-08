@@ -20,8 +20,6 @@
     <string name="password_result_image">password result image</string>
     <string name="background_image">background image</string>
     <string name="settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="use_fingerprint_to_log_in">Use fingerprint to log in</string>
     <string name="log_out">Log out</string>
     <string name="error_biometric">Something went wrong</string>
@@ -35,4 +33,17 @@
     <string name="enter_the_name_of_platform_where_you_will_use_this_password">Enter the name of platform where you will use this password</string>
     <string name="password_saved" >Password is saved</string>
     <string name="platform_name_is_empty" >Platform name is empty</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="should_delete">Do you really want to delete this password?</string>
+    <string name="deleted">Deleted</string>
+    <string name="delete">Delete</string>
+    <string name="delete_password_button">delete password button</string>
+    <string name="edit_password_button">edit password button</string>
+    <string name="password_edited">Password edited successfully</string>
+    <string name="password_platform_empty">Password or platform is empty</string>
+    <string name="change_password">Change password</string>
+    <string name="password_empty">Password is empty</string>
+    <string name="info_button">Info button</string>
+    <string name="info">When you are logging for the first time, type in password which you want to log in with to this app</string>
 </resources>

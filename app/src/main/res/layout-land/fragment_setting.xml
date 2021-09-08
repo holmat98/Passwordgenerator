@@ -17,25 +17,29 @@
         android:orientation="vertical"
         >
 
-        <LinearLayout
+        <Button
+            android:id="@+id/logOutBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            >
+            android:background="@drawable/log_out_button"
+            android:text="@string/log_out"
+            android:textColor="@color/white"
+            />
 
-            <Button
-                android:id="@+id/logOutBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/log_out_button"
-                android:text="@string/log_out"
-                android:textColor="@color/white"
-                />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/changePasswordBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/rounded_green_button"
+            android:text="@string/change_password"
+            android:textColor="@color/white"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

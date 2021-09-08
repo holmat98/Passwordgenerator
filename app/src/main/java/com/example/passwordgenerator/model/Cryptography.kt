@@ -63,7 +63,7 @@ object Cryptography {
         return Pair(iv, encryptedText)
     }
 
-    fun decryptedData(iv: ByteArray, encryptedData: ByteArray): String{
+    fun decryptData(iv: ByteArray, encryptedData: ByteArray): String{
         val cipher = Cipher.getInstance("AES/CBC/NoPadding")
         val spec = IvParameterSpec(iv)
 

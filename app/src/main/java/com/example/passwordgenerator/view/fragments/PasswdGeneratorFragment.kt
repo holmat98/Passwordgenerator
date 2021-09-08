@@ -1,7 +1,6 @@
 package com.example.passwordgenerator.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.*
@@ -15,8 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
 
-    private var passwordLengths: List<Int> = listOf( 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 )
-    private var length: Int = 8
     private var createdPassword: String = ""
 
     private lateinit var viewModel: PasswordViewModel
@@ -43,9 +40,6 @@ class PasswdGeneratorFragment: Fragment(R.layout.fragment_passwd_generator) {
 
         savePasswordBtn.setOnClickListener {
             if(createdPassword.isNotEmpty()){
-
-                if(!Cryptography.isKeyGenerated())
-                    Cryptography.generateKey()
 
                 val bottomSheetDialog = BottomSheetDialog(requireContext())
                 val bottomSheetView = layoutInflater.inflate(

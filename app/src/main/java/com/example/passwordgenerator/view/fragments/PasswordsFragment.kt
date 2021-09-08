@@ -17,6 +17,8 @@ import com.example.passwordgenerator.R
 import com.example.passwordgenerator.model.Cryptography
 import com.example.passwordgenerator.viewModel.PasswordViewModel
 import com.example.passwordgenerator.viewModel.PasswordsAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class PasswordsFragment : Fragment(R.layout.fragment_passwords) {
 
@@ -40,6 +42,40 @@ class PasswordsFragment : Fragment(R.layout.fragment_passwords) {
         view.findViewById<RecyclerView>(R.id.passwordsRV).apply {
             adapter = myAdapter
             layoutManager = myLayoutManager
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.addNewPasswordBtn).setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(requireContext())
+            val bottomSheetView = layoutInflater.inflate(
+                R.layout.add_new_password_dialog,
+                null
+            )
+
+            bottomSheetView.findViewById<Button>(R.id.saveBtn).setOnClickListener {
+                val platformName: String = bottomSheetView.findViewById<EditText>(R.id.platformNameET).text.toString()
+                val password: String = bottomSheetView.findViewById<EditText>(R.id.passwordNameET).text.toString()
+                if(platformName.isNotEmpty() && password.isNotEmpty()){
+                    val encryptedPassword = Cryptography.encryptData(password)
+                    viewModel.insert(
+                        platformName = platformName,
+                        password = String(encryptedPassword.second, Charsets.ISO_8859_1),
+                        passwordIv =  String(encryptedPassword.first, Charsets.ISO_8859_1)
+                    )
+                    Toast.makeText(context, context?.getString(R.string.password_saved), Toast.LENGTH_SHORT).show()
+                    bottomSheetDialog.dismiss()
+                }
+                else{
+                    Toast.makeText(context, context?.getString(R.string.password_platform_empty), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            bottomSheetView.findViewById<Button>(R.id.cancelBtn).setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.show()
+
         }
 
     }

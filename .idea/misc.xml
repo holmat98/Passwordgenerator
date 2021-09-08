@@ -12,6 +12,8 @@
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/circle.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/circle_background.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/circle_button.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/circle_green_button.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/circle_red_button.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/edit_text_background.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.19583333333333333" />
@@ -26,6 +28,7 @@
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/log_out_button.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/password_one_row_style.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/rounded_corners.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/drawable/rounded_green_button.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout-land/activity_main.xml" value="0.15211640211640212" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout-land/activity_password.xml" value="0.15211640211640212" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout-land/activity_passwords.xml" value="0.15211640211640212" />
@@ -38,7 +41,9 @@
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/activity_add_password.xml" value="0.14990942028985507" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/activity_passwords.xml" value="0.11538461538461539" />
+        <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/add_new_password_dialog.xml" value="0.17028985507246377" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/add_password_bottom_sheet_dialog.xml" value="0.17300724637681159" />
+        <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/change_password_bottom_sheet_dialog.xml" value="0.17028985507246377" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/fragment_passwd_generator.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/fragment_password_tester.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/matih/Documents/semestr6/MobilneInterfejsyMultimedialne/Passwordgenerator/app/src/main/res/layout/fragment_passwords.xml" value="0.14990942028985507" />

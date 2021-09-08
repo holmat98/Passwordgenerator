@@ -8,12 +8,15 @@ import android.hardware.biometrics.BiometricPrompt
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CancellationSignal
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.example.passwordgenerator.R
 import com.example.passwordgenerator.databinding.ActivityMainBinding
+import com.example.passwordgenerator.model.Cryptography
 import com.example.passwordgenerator.model.HelperClass.sharedPreferencesName
 
 class MainActivity : AppCompatActivity() {
@@ -48,7 +51,13 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = this.getSharedPreferences("fingerprintUsage", Context.MODE_PRIVATE)
         fingerprintUsage = sharedPreferences.getBoolean(sharedPreferencesName, false)
 
+        Log.d("TEST", "FingerprintUsage: $fingerprintUsage")
+
         if(fingerprintUsage && checkBiometricSupport()){
+            binding.logInWithFingerprintBtn.visibility = View.VISIBLE
+        }
+
+        binding.logInWithFingerprintBtn.setOnClickListener {
             val biometricPrompt = BiometricPrompt.Builder(this)
                 .setTitle(getString(R.string.login_with_biometrics))
                 .setNegativeButton(getString(R.string.cancel), this.mainExecutor, { _, _ ->
@@ -56,6 +65,10 @@ class MainActivity : AppCompatActivity() {
                 }).build()
 
             biometricPrompt.authenticate(getCancellationSignal(), mainExecutor, authenticationCallback)
+        }
+
+        binding.displayInfoBtn.setOnClickListener{
+            Toast.makeText(this, getString(R.string.info), Toast.LENGTH_SHORT).show()
         }
 
         binding.logInBtn.setOnClickListener{
@@ -70,12 +83,14 @@ class MainActivity : AppCompatActivity() {
             if(sharedPreferences.getString("PasswordValue", "").isNullOrEmpty()){
 
                 if(binding.passwordValueET.text.toString().isNotEmpty()){
+                    Cryptography.generateKey()
                     val sharedPreferencesEditor = sharedPreferences.edit()
                     sharedPreferencesEditor.apply() {
                         putString("PasswordValue", binding.passwordValueET.text.toString())
                         apply()
                     }
                     openActivity()
+                    Log.d("TEST", "1")
                 }
                 else{
                     Toast.makeText(this, "Password is empty", Toast.LENGTH_SHORT).show()
@@ -84,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             else {
                 if(sharedPreferences.getString("PasswordValue", "").equals(binding.passwordValueET.text.toString())) {
                     openActivity()
+                    Log.d("TEST", "2")
                 }
                 else{
                     Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show()
