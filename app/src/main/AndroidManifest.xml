@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.passwordgenerator">
+    package="com.mateuszholik.passwordgenerator">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
@@ -13,13 +13,13 @@
         android:theme="@style/Theme.PasswordGenerator">
         <activity
             android:name=".view.activities.PasswordsActivity"
-            android:exported="true"
-            android:theme="@style/PasswordsActivityStyle"
-            />
-        <activity android:name=".view.activities.MainActivity">
+            android:exported="false"
+            android:theme="@style/PasswordsActivityStyle" />
+        <activity
+            android:name=".view.activities.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

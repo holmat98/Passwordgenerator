@@ -1,0 +1,25 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.tool_build_version = "7.0.2"
+versions.kotlin_version = "1.5.30"
+
+def deps = [:]
+
+def build_versions = [:]
+build_versions.compile_sdk = 31
+build_versions.min_sdk = 24
+build_versions.target_sdk = 31
+build_versions.version_code = 3
+build_versions.version_name = "3.0.0"
+ext.build_versions = build_versions
+
+def build = [:]
+build.gradle_build_tools = "com.android.tools.build:gradle:$versions.tool_build_version"
+deps.build = build
+
+def kotlin = [:]
+kotlin.kotlin_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version"
+deps.kotlin = kotlin
+
+ext.deps = deps
