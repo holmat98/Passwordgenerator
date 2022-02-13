@@ -1,28 +1,20 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 }
 
 apply from: "../versions.gradle"
 
 android {
-    compileSdkVersion build_versions.compile_sdk
-    buildToolsVersion "30.0.3"
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        applicationId "com.mateuszholik.passwordgenerator"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode build_versions.version_code
-        versionName build_versions.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        viewBinding true
-        dataBinding true
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -31,22 +23,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = '1.8'
     }
 }
 
 dependencies {
-
-    // Modules
-    implementation(project(path: ":data"))
-    implementation(project(path: ":domain"))
 
     // Core ktx
     implementation deps.kotlin.core_ktx
@@ -61,13 +47,6 @@ dependencies {
     testImplementation deps.test.assertj
     testImplementation deps.test.core_androidx
 
-    // Navigation
-    implementation deps.navigation.fragment
-    implementation deps.navigation.ui_ktx
-
-    // Material design
-    implementation deps.material.design
-
     // Constraint layout
     implementation deps.constraint.layout
 
@@ -76,15 +55,6 @@ dependencies {
     kapt deps.room.compiler
     implementation deps.room.coroutines
     testImplementation deps.room.test
-
-    // ViewModel
-    implementation deps.view_model.lifecycle
-
-    // Jetpack security
-    implementation deps.security.crypto
-    implementation deps.security.identity_credential
-    implementation deps.security.app_authenticator
-    androidTestImplementation deps.security.app_authenticator_test
 
     // RxJava
     implementation deps.rx_java.rx_java
