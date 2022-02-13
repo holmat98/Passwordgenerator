@@ -1,5 +1,11 @@
 package com.mateuszholik.data.di
 
-import org.koin.core.module.Module
+import com.mateuszholik.data.di.modules.databaseModule
+import com.mateuszholik.data.di.modules.mappersModule
+import com.mateuszholik.data.di.modules.repositoriesModule
 
-val dataModules = listOf<Module>()
+val dataModules = listOf(
+    databaseModule,
+    mappersModule,
+    repositoriesModule
+)
