@@ -50,9 +50,6 @@ dependencies {
     testImplementation deps.test.assertj
     testImplementation deps.test.core_androidx
 
-    // Constraint layout
-    implementation deps.constraint.layout
-
     //room
     implementation deps.room.room
     kapt deps.room.compiler

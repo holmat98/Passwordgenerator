@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 apply from: "../versions.gradle"
@@ -47,23 +46,9 @@ dependencies {
     testImplementation deps.test.assertj
     testImplementation deps.test.core_androidx
 
-    //room
-    implementation deps.room.room
-    kapt deps.room.compiler
-    implementation deps.room.coroutines
-    testImplementation deps.room.test
+    // Material design
+    implementation deps.material.design
 
-    // RxJava
-    implementation deps.rx_java.rx_java
-    implementation deps.rx_java.android
-    implementation deps.rx_java.room
-
-    // koin
-    implementation deps.koin.koin
-    implementation deps.koin.viewmodel
-    implementation deps.koin.scope
-
-    // mockk
-    testImplementation deps.mockk.mockk
-    androidTestImplementation deps.mockk.mockk_android
+    // Constraint layout
+    implementation deps.constraint.layout
 }
