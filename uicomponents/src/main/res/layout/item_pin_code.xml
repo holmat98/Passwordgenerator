@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.mateuszholik.uicomponents.PinCodeElement
+        android:id="@+id/firstPinCodeElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        />
+
+    <com.mateuszholik.uicomponents.PinCodeElement
+        android:id="@+id/secondPinCodeElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        />
+
+    <com.mateuszholik.uicomponents.PinCodeElement
+        android:id="@+id/thirdPinCodeElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <com.mateuszholik.uicomponents.PinCodeElement
+        android:id="@+id/fourthPinCodeElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        />
+
+</LinearLayout>
