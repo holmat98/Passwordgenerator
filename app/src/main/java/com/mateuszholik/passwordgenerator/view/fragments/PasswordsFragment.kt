@@ -2,21 +2,17 @@ package com.mateuszholik.passwordgenerator.view.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.model.Cryptography
 import com.mateuszholik.passwordgenerator.viewModel.PasswordViewModel
-import com.mateuszholik.passwordgenerator.viewModel.PasswordsAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -24,7 +20,6 @@ class PasswordsFragment : Fragment(R.layout.fragment_passwords) {
 
     private lateinit var viewModel: PasswordViewModel
 
-    private lateinit var myAdapter: PasswordsAdapter
     private lateinit var myLayoutManager: GridLayoutManager
 
     @SuppressLint("NotifyDataSetChanged")
@@ -32,15 +27,9 @@ class PasswordsFragment : Fragment(R.layout.fragment_passwords) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity()).get(PasswordViewModel::class.java)
-        myAdapter = PasswordsAdapter(viewModel.passwords, viewModel, context, requireActivity())
         myLayoutManager = GridLayoutManager(context, 3)
 
-        viewModel.passwords.observe(viewLifecycleOwner){
-            myAdapter.notifyDataSetChanged()
-        }
-
         view.findViewById<RecyclerView>(R.id.passwordsRV).apply {
-            adapter = myAdapter
             layoutManager = myLayoutManager
         }
 
@@ -56,11 +45,6 @@ class PasswordsFragment : Fragment(R.layout.fragment_passwords) {
                 val password: String = bottomSheetView.findViewById<EditText>(R.id.passwordNameET).text.toString()
                 if(platformName.isNotEmpty() && password.isNotEmpty()){
                     val encryptedPassword = Cryptography.encryptData(password)
-                    viewModel.insert(
-                        platformName = platformName,
-                        password = String(encryptedPassword.second, Charsets.ISO_8859_1),
-                        passwordIv =  String(encryptedPassword.first, Charsets.ISO_8859_1)
-                    )
                     Toast.makeText(context, context?.getString(R.string.password_saved), Toast.LENGTH_SHORT).show()
                     bottomSheetDialog.dismiss()
                 }
