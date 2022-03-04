@@ -1,4 +1,4 @@
-package com.mateuszholik.uicomponents
+package com.mateuszholik.uicomponents.pin
 
 import android.content.Context
 import android.text.method.PasswordTransformationMethod
@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.mateuszholik.uicomponents.R
 import com.mateuszholik.uicomponents.databinding.ViewPinCodeBinding
 
 class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

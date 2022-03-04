@@ -1,4 +1,4 @@
-package com.mateuszholik.uicomponents
+package com.mateuszholik.uicomponents.pin
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -11,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.mateuszholik.uicomponents.R
 
 class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
 
