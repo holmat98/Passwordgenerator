@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pin_edittext_radius">15dp</dimen>
+    <dimen name="pin_edittext_stroke">5dp</dimen>
+    <dimen name="pin_edittext_text_size">20sp</dimen>
+    <dimen name="pin_edittext_padding">8dp</dimen>
+    <dimen name="pin_edittext_drawable_margin">5dp</dimen>
+    <dimen name="keyboard_margin">16dp</dimen>
+</resources>

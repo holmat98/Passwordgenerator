@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PinEditText">
+        <item name="android:textSize">@dimen/pin_edittext_text_size</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

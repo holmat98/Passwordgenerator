@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/numberOneBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_1"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="@dimen/keyboard_margin"
+        android:layout_marginVertical="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberFourBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberTwoBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/numberTwoBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_2"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_margin="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberFiveBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberThreeBtn"
+        app:layout_constraintStart_toEndOf="@id/numberOneBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/numberThreeBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_3"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginEnd="@dimen/keyboard_margin"
+        android:layout_marginVertical="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberSixBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberTwoBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/numberFourBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_4"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberSevenBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberFiveBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberOneBtn" />
+
+    <Button
+        android:id="@+id/numberFiveBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_5"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberEightBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberSixBtn"
+        app:layout_constraintStart_toEndOf="@id/numberFourBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberTwoBtn" />
+
+    <Button
+        android:id="@+id/numberSixBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_6"
+        android:layout_marginEnd="@dimen/keyboard_margin"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/numberNineBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberFiveBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberThreeBtn" />
+
+    <Button
+        android:id="@+id/numberSevenBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_7"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="@dimen/keyboard_margin"
+        android:layout_marginVertical="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/undoBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberEightBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberFourBtn" />
+
+    <Button
+        android:id="@+id/numberEightBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_8"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginHorizontal="@dimen/keyboard_margin"
+        android:layout_marginVertical="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/numberZeroBtn"
+        app:layout_constraintEnd_toStartOf="@id/numberNineBtn"
+        app:layout_constraintStart_toEndOf="@id/numberSevenBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberFiveBtn" />
+
+    <Button
+        android:id="@+id/numberNineBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_9"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+
+        android:layout_marginEnd="@dimen/keyboard_margin"
+        android:layout_marginVertical="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toTopOf="@id/confirmBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberEightBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberSixBtn" />
+
+    <ImageButton
+        android:id="@+id/undoBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:src="@drawable/ic_backspace"
+        android:layout_marginStart="@dimen/keyboard_margin"
+        android:layout_marginBottom="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/numberZeroBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/numberSevenBtn" />
+
+    <Button
+        android:id="@+id/numberZeroBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:text="@string/number_0"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginBottom="@dimen/keyboard_margin"
+        android:layout_marginHorizontal="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/confirmBtn"
+        app:layout_constraintStart_toEndOf="@id/undoBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberEightBtn" />
+
+    <ImageButton
+        android:id="@+id/confirmBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/pin_background"
+        android:src="@drawable/ic_confirm"
+        android:layout_marginEnd="@dimen/keyboard_margin"
+        android:layout_marginBottom="@dimen/keyboard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/numberZeroBtn"
+        app:layout_constraintTop_toBottomOf="@id/numberNineBtn" />
+
+</merge>

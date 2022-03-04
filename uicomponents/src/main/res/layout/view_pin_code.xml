@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <com.mateuszholik.uicomponents.pin.PinEditText
+        android:id="@+id/firstPinCodeElement"
+        style="@style/PinEditText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1" />
+
+    <com.mateuszholik.uicomponents.pin.PinEditText
+        android:id="@+id/secondPinCodeElement"
+        style="@style/PinEditText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_weight="1" />
+
+    <com.mateuszholik.uicomponents.pin.PinEditText
+        android:id="@+id/thirdPinCodeElement"
+        style="@style/PinEditText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <com.mateuszholik.uicomponents.pin.PinEditText
+        android:id="@+id/fourthPinCodeElement"
+        style="@style/PinEditText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_weight="1" />
+
+</merge>
