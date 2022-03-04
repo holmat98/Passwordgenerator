@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="pin_edittext_background">#332E33</color>
+    <color name="pin_edittext_stroke">#1E1E1E</color>
+    <color name="pin_edittext_stroke_success">#00AD20</color>
+    <color name="pin_edittext_stroke_error">#B30246</color>
 </resources>
