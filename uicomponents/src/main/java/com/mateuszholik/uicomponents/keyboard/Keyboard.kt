@@ -10,8 +10,7 @@ class Keyboard(context: Context, attrs: AttributeSet) : ConstraintLayout(context
 
     private val binding = ViewKeyboardBinding.inflate(
         LayoutInflater.from(context),
-        this,
-        true
+        this
     )
 
     var doOnNumberClicked: (Int) -> Unit = {}
