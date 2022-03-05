@@ -27,5 +27,14 @@ class CreatePasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpKeyboard()
+    }
+
+    private fun setUpKeyboard() {
+        with(binding) {
+            keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
+            keyboard.doOnUndoClicked = { pinCode.removeTextFromPin() }
+        }
     }
 }

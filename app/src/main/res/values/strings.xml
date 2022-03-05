@@ -8,4 +8,5 @@
     <string name="onboarding_text_screen_3">Przetestuj hasła aby sprawdzić czy są one wystarczająco silne</string>
     <string name="onboarding_skip_button">Pomiń</string>
     <string name="onboarding_start_button">Zaczynamy</string>
+    <string name="create_password_header">Stwórz hasło do aplikacji</string>
 </resources>
