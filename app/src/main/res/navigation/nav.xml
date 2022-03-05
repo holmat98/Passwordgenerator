@@ -3,26 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/createPassword">
-
+    app:startDestination="@id/onboardingFragment">
     <fragment
-        android:id="@+id/createPassword"
-        android:name="com.example.passwordgenerator.view.fragments.PasswdGeneratorFragment"
-        android:label="fragment_passwd_generator"
-        tools:layout="@layout/fragment_passwd_generator" />
-    <fragment
-        android:id="@+id/testPassword"
-        android:name="com.example.passwordgenerator.view.fragments.PasswordTesterFragment"
-        android:label="fragment_password_tester"
-        tools:layout="@layout/fragment_password_tester" />
-    <fragment
-        android:id="@+id/yourPasswords"
-        android:name="com.example.passwordgenerator.view.fragments.PasswordsFragment"
-        android:label="fragment_passwords"
-        tools:layout="@layout/fragment_passwords" />
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.example.passwordgenerator.view.fragments.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/onboardingFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.onboarding.OnboardingFragment"
+        android:label="OnboardingFragment" />
 </navigation>

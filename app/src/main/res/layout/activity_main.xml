@@ -1,91 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.MainActivity"
-    android:background="@drawable/background"
-    >
+    tools:context=".ui.MainActivity">
 
-    <ImageView
-        android:id="@+id/lockerIV"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toTopOf="@id/passwordET"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_locker"
-        android:contentDescription="@string/logo"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordET"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/userFragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordValueET"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
-            android:hint="@string/password"
-            android:textColor="@color/light_black"
-            android:textSize="18sp"
-            android:backgroundTint="@color/light_black"
-            android:inputType="textPassword"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/logInBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/passwordET"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="16dp"
-        android:text="@string/login"
-        android:textColor="@color/light_black"
-        android:background="@color/transparent"
-        android:textSize="20sp"
-        />
-
-    <ImageButton
-        android:id="@+id/logInWithFingerprintBtn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        app:layout_constraintTop_toBottomOf="@id/logInBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_fingerprint"
-        android:background="@color/transparent"
-        android:scaleType="fitXY"
-        android:visibility="invisible"
-        />
-
-    <ImageButton
-        android:id="@+id/displayInfoBtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="8dp"
-        android:src="@drawable/ic_baseline_info_24"
-        android:scaleType="fitXY"
-        android:background="@color/transparent"
-        />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

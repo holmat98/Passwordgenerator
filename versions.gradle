@@ -24,6 +24,8 @@ versions.mockk = "1.12.1"
 versions.assertj = "3.21.0"
 versions.core = "2.1.0"
 versions.core_testing_version = "1.1.1"
+versions.viewpager2 = "1.0.0"
+versions.lottie = "5.0.2"
 
 def deps = [:]
 
@@ -104,5 +106,13 @@ def mockk = [:]
 mockk.mockk = "io.mockk:mockk:$versions.mockk"
 mockk.mockk_android = "io.mockk:mockk-android:$versions.mockk"
 deps.mockk = mockk
+
+def viewpager = [:]
+viewpager.viewpager2 = "androidx.viewpager2:viewpager2:$versions.viewpager2"
+deps.viewpager = viewpager
+
+def lottie = [:]
+lottie.lottie = "com.airbnb.android:lottie:$versions.lottie"
+deps.lottie = lottie
 
 ext.deps = deps

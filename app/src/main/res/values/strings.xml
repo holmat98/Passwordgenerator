@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Password generator</string>
+    <string name="app_name">Password manager</string>
+    <string name="onboarding_screen_1">Przechowuj swoje hasła</string>
+    <string name="onboarding_screen_2">Generuj bezpieczna hasła</string>
+    <string name="onboarding_screen_3">Testuj hasła</string>
     <string name="create">Create</string>
     <string name="test">Test</string>
     <string name="passwords">Passwords</string>
