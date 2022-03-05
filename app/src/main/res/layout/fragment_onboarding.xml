@@ -13,12 +13,22 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:layout_marginBottom="@dimen/margin_8"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/margin_8"
         android:background="@null"
         app:tabBackground="@drawable/tab_layout_items"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
         app:tabPaddingEnd="@dimen/margin_8"
-        app:tabPaddingStart="@dimen/margin_8"/>
+        app:tabPaddingStart="@dimen/margin_8" />
+
+    <Button
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:background="@drawable/transparent_button"
+        android:text="@string/onboarding_skip_button" />
 </FrameLayout>

@@ -19,7 +19,7 @@ private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OnboardingScreen>() {
         oldItem == newItem
 }
 
-class OnboardingAdapter :
+class OnboardingAdapter(val doOnButtonClicked: () -> Unit) :
     ListAdapter<OnboardingScreen, OnboardingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -37,11 +37,14 @@ class OnboardingAdapter :
         holder.bind(getItem(position))
     }
 
-    class ItemViewHolder(private val binding: ItemOnboardingBinding) :
+    inner class ItemViewHolder(private val binding: ItemOnboardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: OnboardingScreen) {
             binding.item = item
+            binding.goToNextScreenButton.setOnClickListener {
+                doOnButtonClicked()
+            }
         }
     }
 }

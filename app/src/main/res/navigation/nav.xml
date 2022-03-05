@@ -7,5 +7,15 @@
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.onboarding.OnboardingFragment"
-        android:label="OnboardingFragment" />
+        android:label="OnboardingFragment" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_createPasswordFragment"
+            app:destination="@id/createPasswordFragment"
+            app:popUpTo="@id/onboardingFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createPasswordFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.createpassword.CreatePasswordFragment"
+        android:label="CreatePasswordFragment" />
 </navigation>

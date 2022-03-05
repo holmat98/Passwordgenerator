@@ -6,7 +6,7 @@
     <color name="primary_dark">#1E1E1E</color>
     <color name="secondary">#8bc34a</color>
     <color name="secondary_dark">#608A30</color>
-
+    <color name="transparent">#0000</color>
     <color name="green">#8bc34a</color>
     <color name="green_light">#bef67a</color>
     <color name="green_dark">#5a9216</color>
@@ -19,7 +19,6 @@
     <color name="weak">#DB7216</color>
     <color name="veryWeak">#F50C05</color>
     <color name="lighter_black">#393939</color>
-    <color name="transparent">#0000</color>
     <color name="yellow">#e8e828</color>
     <color name="light_black">#1c1c1c</color>
     <color name="green2">#7aed63</color>
