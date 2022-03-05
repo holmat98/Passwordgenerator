@@ -2,52 +2,14 @@
     <!-- Base application theme. -->
     <style name="Theme.PasswordGenerator" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/light_black</item>
-        <item name="colorPrimaryVariant">@color/light_black</item>
-        <item name="colorOnPrimary">@color/light_black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/light_black</item>
-        <item name="colorSecondaryVariant">@color/light_black</item>
-        <item name="colorOnSecondary">@color/light_black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/yellow</item>
-        <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Support library compatibility -->
-        <item name="actionBarStyle">@style/ThemeActionBar</item>
-        <item name="windowActionBarOverlay">true</item>
-
-
-    </style>
-
-    <style name="PasswordsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/green2</item>
-        <item name="colorPrimaryVariant">@color/purple</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/green_dark</item>
-        <item name="colorSecondaryVariant">@color/green2</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_dark</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/green_dark</item>
-        <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Support library compatibility -->
-        <item name="actionBarStyle">@style/ThemeActionBar</item>
-        <item name="windowActionBarOverlay">true</item>
-    </style>
-
-    <style name="ThemeActionBar"
-        parent="Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@null</item>
-        <!-- Support library compatibility -->
-        <item name="background">@null</item>
-    </style>
-
-    <style name="FullHeightDialog" parent="Theme.AppCompat.Dialog">
-        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primary</item>
     </style>
 </resources>

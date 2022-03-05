@@ -100,4 +100,10 @@ dependencies {
     // mockk
     testImplementation deps.mockk.mockk
     androidTestImplementation deps.mockk.mockk_android
+
+    // viewpager
+    implementation deps.viewpager.viewpager2
+
+    // lottie
+    implementation deps.lottie.lottie
 }
