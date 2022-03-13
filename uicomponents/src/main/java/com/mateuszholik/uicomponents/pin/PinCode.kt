@@ -43,7 +43,7 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
         )
         val backgroundColor = typedArray.getColor(
             R.styleable.PinCode_pinInputsBackgroundColor,
-            ContextCompat.getColor(context, R.color.pin_edittext_background)
+            ContextCompat.getColor(context, R.color.dark_default)
         )
         val isPinHidden = typedArray.getBoolean(
             R.styleable.PinCode_isPinHidden,

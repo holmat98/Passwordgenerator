@@ -2,21 +2,21 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/pinBackground"
-        android:bottom="@dimen/pin_edittext_drawable_margin"
-        android:end="@dimen/pin_edittext_drawable_margin"
-        android:start="@dimen/pin_edittext_drawable_margin"
-        android:top="@dimen/pin_edittext_drawable_margin">
+        android:bottom="@dimen/margin_5"
+        android:end="@dimen/margin_5"
+        android:start="@dimen/margin_5"
+        android:top="@dimen/margin_5">
         <shape android:shape="rectangle">
-            <solid android:color="@color/pin_edittext_background" />
-            <corners android:radius="@dimen/pin_edittext_radius" />
+            <solid android:color="@color/dark_default" />
+            <corners android:radius="@dimen/radius_15" />
         </shape>
     </item>
     <item>
         <shape>
             <stroke
-                android:width="@dimen/pin_edittext_stroke"
+                android:width="@dimen/stroke_2"
                 android:color="@color/pin_edittext_stroke_success" />
-            <corners android:radius="@dimen/pin_edittext_radius" />
+            <corners android:radius="@dimen/radius_15" />
         </shape>
     </item>
 </layer-list>

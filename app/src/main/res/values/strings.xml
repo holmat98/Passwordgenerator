@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Password manager</string>
-    <string name="onboarding_title_screen_1">Zapisuj</string>
-    <string name="onboarding_text_screen_1">Przechowuj i edytuj swoje hasła w bezpieczny sposób</string>
-    <string name="onboarding_title_screen_2">Twórz</string>
-    <string name="onboarding_text_screen_2">Wygeneruj nowe hasło aby mieć pewność, że twoje konto jest bezpieczne</string>
-    <string name="onboarding_title_screen_3">Testuj</string>
-    <string name="onboarding_text_screen_3">Przetestuj hasła aby sprawdzić czy są one wystarczająco silne</string>
-    <string name="onboarding_skip_button">Pomiń</string>
+    <string name="button_next">Następny</string>
+    <string name="button_skip">Pomiń</string>
+    <string name="button_start">Zaczynamy</string>
+    <string name="onboarding_text_screen_1">Wszystkie twoje hasła w jednym miejscu</string>
+    <string name="onboarding_text_screen_2">Twórz nowe, <b>BEZPIECZNE</b> hasła</string>
+    <string name="onboarding_text_screen_3">Sprawdzaj czy twoje hasła są wystarczająco silne</string>
     <string name="onboarding_start_button">Zaczynamy</string>
-    <string name="create_password_header">Stwórz hasło do aplikacji</string>
+    <string name="create_password_header">Stwórz hasło</string>
 </resources>

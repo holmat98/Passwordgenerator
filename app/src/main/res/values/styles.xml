@@ -29,7 +29,7 @@
         <item name="android:letterSpacing">0.03</item>
     </style>
 
-    <style name="GreenButton" parent="Button">
-        <item name="backgroundTint">@color/secondary</item>
+    <style name="Button.Gradient" parent="Button">
+        <item name="android:textColor">@color/primary</item>
     </style>
 </resources>

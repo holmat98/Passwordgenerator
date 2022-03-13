@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ItemOnboardingBinding
-import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnboardingScreen
+import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen
 
-private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OnboardingScreen>() {
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OnBoardingScreen>() {
 
-    override fun areItemsTheSame(oldItem: OnboardingScreen, newItem: OnboardingScreen) =
+    override fun areItemsTheSame(oldItem: OnBoardingScreen, newItem: OnBoardingScreen) =
         oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: OnboardingScreen, newItem: OnboardingScreen) =
+    override fun areContentsTheSame(oldItem: OnBoardingScreen, newItem: OnBoardingScreen) =
         oldItem == newItem
 }
 
-class OnboardingAdapter(val doOnButtonClicked: () -> Unit) :
-    ListAdapter<OnboardingScreen, OnboardingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
+class OnBoardingAdapter :
+    ListAdapter<OnBoardingScreen, OnBoardingAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding: ItemOnboardingBinding = DataBindingUtil.inflate(
@@ -40,11 +40,8 @@ class OnboardingAdapter(val doOnButtonClicked: () -> Unit) :
     inner class ItemViewHolder(private val binding: ItemOnboardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: OnboardingScreen) {
+        fun bind(item: OnBoardingScreen) {
             binding.item = item
-            binding.goToNextScreenButton.setOnClickListener {
-                doOnButtonClicked()
-            }
         }
     }
 }

@@ -4,29 +4,21 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.mateuszholik.passwordgenerator.R
 
-enum class OnboardingScreen(
-    @StringRes val title: Int,
+enum class OnBoardingScreen(
     @StringRes val text: Int,
-    @RawRes val animation: Int,
-    val isButtonVisible: Boolean
+    @RawRes val animation: Int
 ) {
 
     SCREEN_1(
-        R.string.onboarding_title_screen_1,
         R.string.onboarding_text_screen_1,
-        R.raw.save_passwords,
-        false
+        R.raw.save_passwords
     ),
     SCREEN_2(
-        R.string.onboarding_title_screen_2,
         R.string.onboarding_text_screen_2,
-        R.raw.create_passwords,
-        false
+        R.raw.create_passwords
     ),
     SCREEN_3(
-        R.string.onboarding_title_screen_3,
         R.string.onboarding_text_screen_3,
-        R.raw.test_passwords,
-        true
+        R.raw.test_passwords
     )
 }

@@ -66,4 +66,10 @@ dependencies {
     // mockk
     testImplementation deps.mockk.mockk
     androidTestImplementation deps.mockk.mockk_android
+
+    // Jetpack security
+    implementation deps.security.crypto
+    implementation deps.security.identity_credential
+    implementation deps.security.app_authenticator
+    androidTestImplementation deps.security.app_authenticator_test
 }

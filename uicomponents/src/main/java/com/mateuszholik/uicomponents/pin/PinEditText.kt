@@ -36,7 +36,7 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
         val backgroundColor = typedArray.getColor(
             R.styleable.PinEditText_pinBackgroundColor,
-            ContextCompat.getColor(context, R.color.pin_edittext_background)
+            ContextCompat.getColor(context, R.color.dark_default)
         )
         val textColor = typedArray.getColor(
             R.styleable.PinEditText_pinTextColor,

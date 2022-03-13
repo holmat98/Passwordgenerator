@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.mateuszholik.passwordgenerator.ui.onboarding.model.OnboardingScreen" />
+            type="com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen" />
     </data>
 
     <LinearLayout
@@ -18,24 +18,21 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:layout_weight="1" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_weight="5"
+            android:layout_weight="6"
             app:animation="@{item.animation}"
             app:lottie_autoPlay="true"
             app:lottie_loop="true" />
 
-        <TextView
-            style="@style/Header"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_16"
-            android:text="@{item.title}" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <TextView
             style="@style/OnboardingText"
@@ -47,21 +44,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
-
-        <Button
-            android:id="@+id/goToNextScreenButton"
-            style="@style/GreenButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_16"
-            android:text="@string/onboarding_start_button"
-            app:isVisible="@{item.isButtonVisible}"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2" />
+            android:layout_weight="3" />
 
     </LinearLayout>
 </layout>
