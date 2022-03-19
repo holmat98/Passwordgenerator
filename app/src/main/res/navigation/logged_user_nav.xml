@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/logged_user_nav"
+    app:startDestination="@id/passwords">
+
+    <fragment
+        android:id="@+id/passwords"
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsFragment"
+        android:label="PasswordsFragment" />
+    <fragment
+        android:id="@+id/generatePassword"
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordFragment"
+        android:label="GeneratePasswordFragment" />
+    <fragment
+        android:id="@+id/testPassword"
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.testpassword.TestPasswordFragment"
+        android:label="TestPasswordFragment" />
+</navigation>

@@ -32,4 +32,8 @@
     <style name="Button.Gradient" parent="Button">
         <item name="android:textColor">@color/primary</item>
     </style>
+
+    <style name="BottomNavigationView">
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+    </style>
 </resources>

@@ -18,7 +18,7 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     private var defaultBackgroundColor: Int = 0
     private var defaultTextColor: Int = 0
 
-    var codeValue: String
+    var value: String
         get() = text.toString()
         set(value) {
             setText(value)
@@ -44,12 +44,16 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         )
 
         changeBackground(backgroundColor = backgroundColor)
-        setTextColor(textColor)
+        changeTextColor(textColor)
 
         defaultBackgroundColor = backgroundColor
-        defaultTextColor = textColor
 
         typedArray.recycle()
+    }
+
+    fun changeTextColor(newColor: Int) {
+        defaultTextColor = newColor
+        setTextColor(newColor)
     }
 
     private fun shake() {
@@ -99,7 +103,7 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         shake()
     }
 
-    fun clear() {
+    fun setDefaultStyle() {
         changeBackground(backgroundColor = defaultBackgroundColor)
         setTextColor(defaultTextColor)
     }

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.mateuszholik.uicomponents.R
 import com.mateuszholik.uicomponents.databinding.ViewPinCodeBinding
+import com.mateuszholik.uicomponents.utils.Constants.EMPTY_STRING
 
 class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
@@ -15,9 +16,6 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
         LayoutInflater.from(context),
         this
     )
-
-    private var currentIndex: Int = 0
-
     private val inputs by lazy {
         listOf(
             binding.firstPinCodeElement,
@@ -26,6 +24,14 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
             binding.fourthPinCodeElement
         )
     }
+    private var currentIndex: Int = 0
+
+    val pin: String
+        get() {
+            var result = EMPTY_STRING
+            inputs.forEach { result += it.value }
+            return result
+        }
 
     init {
         setAttributes(attrs)
@@ -41,42 +47,56 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
             R.styleable.PinCode_areInputsFocusable,
             false
         )
-        val backgroundColor = typedArray.getColor(
-            R.styleable.PinCode_pinInputsBackgroundColor,
-            ContextCompat.getColor(context, R.color.dark_default)
-        )
         val isPinHidden = typedArray.getBoolean(
             R.styleable.PinCode_isPinHidden,
             false
+        )
+        val backgroundColor = typedArray.getColor(
+            R.styleable.PinCode_pinInputsBackgroundColor,
+            ContextCompat.getColor(context, R.color.dark_default)
         )
         val textColor = typedArray.getColor(
             R.styleable.PinCode_pinInputsTextColor,
             ContextCompat.getColor(context, R.color.white)
         )
 
+       applyStyleForInputs(
+           areItemsFocusable,
+           isPinHidden,
+           backgroundColor,
+           textColor
+       )
+
+        typedArray.recycle()
+    }
+
+    private fun applyStyleForInputs(
+        isItemFocusable: Boolean,
+        isPinHidden: Boolean,
+        backgroundColor: Int,
+        textColor: Int
+    ) {
         for (input in inputs) {
             input.apply {
-                isFocusable = areItemsFocusable
+                isFocusable = isItemFocusable
                 changeBackground(backgroundColor = backgroundColor)
-                setTextColor(textColor)
+                changeTextColor(textColor)
                 if (isPinHidden) {
                     transformationMethod = PasswordTransformationMethod.getInstance()
                 }
             }
         }
-
-        typedArray.recycle()
     }
 
     fun addPinText(text: String) {
         if (currentIndex < inputs.size) {
-            inputs[currentIndex++].codeValue = text
+            inputs[currentIndex++].value = text
         }
     }
 
     fun removeTextFromPin() {
         if (currentIndex > 0) {
-            inputs[--currentIndex].codeValue = ""
+            inputs[--currentIndex].value = EMPTY_STRING
         }
     }
 
@@ -92,9 +112,9 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
         }
     }
 
-    fun clear() {
+    fun setDefaultStyle() {
         for (input in inputs) {
-            input.clear()
+            input.setDefaultStyle()
         }
     }
 }

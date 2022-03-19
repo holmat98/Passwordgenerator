@@ -8,4 +8,8 @@
     <string name="onboarding_text_screen_3">Sprawdzaj czy twoje hasła są wystarczająco silne</string>
     <string name="onboarding_start_button">Zaczynamy</string>
     <string name="create_password_header">Stwórz hasło</string>
+    <string name="error_message">Coś poszło nie tak</string>
+    <string name="passwords">Hasła</string>
+    <string name="create">Stwórz</string>
+    <string name="test">Przetestuj</string>
 </resources>
