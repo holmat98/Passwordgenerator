@@ -6,7 +6,7 @@
     app:startDestination="@id/onboardingFragment">
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.onboarding.OnboardingFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.onboarding.OnBoardingFragment"
         android:label="OnboardingFragment" >
         <action
             android:id="@+id/action_onboardingFragment_to_createPasswordFragment"

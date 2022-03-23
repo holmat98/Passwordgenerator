@@ -2,11 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_half_transparent">#44FFFFFF</color>
     <color name="primary">#332E33</color>
     <color name="primary_dark">#1E1E1E</color>
     <color name="secondary">#8bc34a</color>
     <color name="secondary_dark">#608A30</color>
     <color name="transparent">#0000</color>
+    <color name="light_blue">#ABCDEF</color>
+    <color name="cream">#FEDCBA</color>
+    <color name="light_blue_darker">#6789AB</color>
+    <color name="cream_darker">#BA9876</color>
     <color name="green">#8bc34a</color>
     <color name="green_light">#bef67a</color>
     <color name="green_dark">#5a9216</color>
