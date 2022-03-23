@@ -1,6 +1,5 @@
-package com.mateuszholik.passwordgenerator.ui.createpassword
+package com.mateuszholik.passwordgenerator.ui.createpin
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,7 @@ import com.mateuszholik.passwordgenerator.R
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class CreatePasswordViewModel(
+class CreatePinViewModel(
     private val createPinUseCase: CreatePinUseCase
 ) : ViewModel() {
 

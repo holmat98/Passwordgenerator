@@ -16,20 +16,21 @@ import com.mateuszholik.passwordgenerator.extensions.hide
 import com.mateuszholik.passwordgenerator.extensions.show
 import com.mateuszholik.passwordgenerator.ui.onboarding.adapter.OnBoardingAdapter
 import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen
-import org.koin.android.ext.android.bind
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OnBoardingFragment : Fragment() {
 
     private lateinit var binding: FragmentOnboardingBinding
     private val onBoardingScreens = OnBoardingScreen.values().toList()
     private val adapter = OnBoardingAdapter()
+    private val viewModel: OnBoardingViewModel by viewModel()
 
     private val onPageChangedCallback = object : ViewPager2.OnPageChangeCallback() {
 
         override fun onPageSelected(position: Int) {
             if (position == onBoardingScreens.size - 1) {
                 binding.skipButton.hide()
-                updateNextButton(R.string.button_start, ::navigateToNextScreen)
+                updateNextButton(R.string.button_start, ::navigateToCreatePinScreen)
             } else {
                 if (!binding.skipButton.isVisible) {
                     binding.skipButton.show()
@@ -60,10 +61,12 @@ class OnBoardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpObservers()
+
         setUpViewPager()
 
         binding.skipButton.setOnClickListener {
-            navigateToNextScreen()
+            navigateToCreatePinScreen()
         }
     }
 
@@ -88,7 +91,15 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
-    private fun navigateToNextScreen() {
+    private fun setUpObservers() {
+        viewModel.shouldGoToNextScreen.observe(viewLifecycleOwner) { shouldSkipOnBoarding ->
+            if (shouldSkipOnBoarding) {
+                findNavController().navigate(R.id.action_onboardingFragment_to_logInFragment)
+            }
+        }
+    }
+
+    private fun navigateToCreatePinScreen() {
         findNavController().navigate(R.id.action_onboardingFragment_to_createPasswordFragment)
     }
 }

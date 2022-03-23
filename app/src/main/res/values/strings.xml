@@ -12,4 +12,5 @@
     <string name="passwords">Hasła</string>
     <string name="create">Stwórz</string>
     <string name="test">Przetestuj</string>
+    <string name="log_in_header">Zaloguj się</string>
 </resources>

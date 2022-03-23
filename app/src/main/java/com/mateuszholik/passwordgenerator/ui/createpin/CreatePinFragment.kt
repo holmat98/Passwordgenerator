@@ -1,25 +1,25 @@
-package com.mateuszholik.passwordgenerator.ui.createpassword
+package com.mateuszholik.passwordgenerator.ui.createpin
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.mateuszholik.passwordgenerator.databinding.FragmentCreatePasswordBinding
+import com.mateuszholik.passwordgenerator.databinding.FragmentCreatePinBinding
 import com.mateuszholik.passwordgenerator.ui.loggeduser.UserActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreatePasswordFragment : Fragment() {
+class CreatePinFragment : Fragment() {
 
-    private lateinit var binding: FragmentCreatePasswordBinding
-    private val viewModel: CreatePasswordViewModel by viewModel()
+    private lateinit var binding: FragmentCreatePinBinding
+    private val viewModel: CreatePinViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreatePasswordBinding.inflate(
+        binding = FragmentCreatePinBinding.inflate(
             inflater,
             container,
             false
