@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
-import com.mateuszholik.passwordgenerator.ui.loggeduser.UserActivity
+import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LogInFragment : Fragment() {
+class LogInFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLogInBinding
     private val viewModel: LogInViewModel by viewModel()
+
+    override val isBottomNavVisible: Boolean
+        get() = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,15 +53,14 @@ class LogInFragment : Fragment() {
     private fun setUpObservers() {
         viewModel.logInSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                openUserActivity()
+                goToLoggedUserScreen()
             } else {
                 binding.pinCode.animateFailure()
             }
         }
     }
 
-    private fun openUserActivity() {
-        UserActivity.newInstance(requireContext())
-        requireActivity().finish()
+    private fun goToLoggedUserScreen() {
+        findNavController().navigate(R.id.action_logInFragment_to_logged_user_nav)
     }
 }

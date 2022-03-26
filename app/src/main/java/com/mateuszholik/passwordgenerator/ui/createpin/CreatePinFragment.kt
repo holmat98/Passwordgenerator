@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentCreatePinBinding
-import com.mateuszholik.passwordgenerator.ui.loggeduser.UserActivity
+import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreatePinFragment : Fragment() {
+class CreatePinFragment : BaseFragment() {
 
     private lateinit var binding: FragmentCreatePinBinding
     private val viewModel: CreatePinViewModel by viewModel()
+
+    override val isBottomNavVisible: Boolean
+        get() = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +53,7 @@ class CreatePinFragment : Fragment() {
     private fun setUpObservers() {
         with(viewModel) {
             pinCreateSuccess.observe(viewLifecycleOwner) {
-                openUserActivity()
+                goToLoggedUserScreen()
             }
             pinCreateError.observe(viewLifecycleOwner) {
                 binding.pinCode.animateFailure()
@@ -57,8 +61,7 @@ class CreatePinFragment : Fragment() {
         }
     }
 
-    private fun openUserActivity() {
-        UserActivity.newInstance(requireContext())
-        requireActivity().finish()
+    private fun goToLoggedUserScreen() {
+        findNavController().navigate(R.id.action_createPinFragment_to_logged_user_nav)
     }
 }

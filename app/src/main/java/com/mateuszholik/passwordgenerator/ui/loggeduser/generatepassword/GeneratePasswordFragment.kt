@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.mateuszholik.passwordgenerator.databinding.FragmentGeneratePasswordBinding
+import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 
-class GeneratePasswordFragment : Fragment() {
+class GeneratePasswordFragment : BaseFragment() {
 
     private lateinit var binding: FragmentGeneratePasswordBinding
+
+    override val isBottomNavVisible: Boolean
+        get() = true
 
     override fun onCreateView(
         inflater: LayoutInflater,

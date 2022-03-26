@@ -14,11 +14,12 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentOnboardingBinding
 import com.mateuszholik.passwordgenerator.extensions.hide
 import com.mateuszholik.passwordgenerator.extensions.show
+import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.onboarding.adapter.OnBoardingAdapter
 import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OnBoardingFragment : Fragment() {
+class OnBoardingFragment : BaseFragment() {
 
     private lateinit var binding: FragmentOnboardingBinding
     private val onBoardingScreens = OnBoardingScreen.values().toList()
@@ -44,6 +45,9 @@ class OnBoardingFragment : Fragment() {
         }
     }
 
+    override val isBottomNavVisible: Boolean
+        get() = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,7 +66,6 @@ class OnBoardingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpObservers()
-
         setUpViewPager()
 
         binding.skipButton.setOnClickListener {
@@ -100,6 +103,6 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun navigateToCreatePinScreen() {
-        findNavController().navigate(R.id.action_onboardingFragment_to_createPasswordFragment)
+        findNavController().navigate(R.id.action_onboardingFragment_to_createPinFragment)
     }
 }
