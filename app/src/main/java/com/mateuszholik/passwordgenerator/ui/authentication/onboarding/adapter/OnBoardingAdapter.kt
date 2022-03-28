@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.onboarding.adapter
+package com.mateuszholik.passwordgenerator.ui.authentication.onboarding.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ItemOnboardingBinding
-import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen
+import com.mateuszholik.passwordgenerator.ui.authentication.onboarding.model.OnBoardingScreen
 
 private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OnBoardingScreen>() {
 

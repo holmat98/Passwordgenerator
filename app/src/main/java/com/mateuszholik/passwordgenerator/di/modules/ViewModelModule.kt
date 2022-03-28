@@ -1,16 +1,12 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
-import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
-import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
-import com.mateuszholik.passwordgenerator.ui.onboarding.OnBoardingViewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.createpin.CreatePinViewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.login.LogInViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-
-    viewModel {
-        OnBoardingViewModel(shouldSkipOnBoardingUseCase = get())
-    }
 
     viewModel {
         CreatePinViewModel(createPinUseCase = get())
@@ -18,5 +14,9 @@ val viewModelModule = module {
 
     viewModel {
         LogInViewModel(isPinCorrectUseCase = get())
+    }
+
+    viewModel {
+        AuthenticationHostViewModel(shouldSkipOnBoardingUseCase = get())
     }
 }

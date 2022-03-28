@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.createpin
+package com.mateuszholik.passwordgenerator.ui.authentication.createpin
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData

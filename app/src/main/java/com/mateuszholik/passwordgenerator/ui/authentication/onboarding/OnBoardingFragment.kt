@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.onboarding
+package com.mateuszholik.passwordgenerator.ui.authentication.onboarding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,24 +7,24 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentOnboardingBinding
 import com.mateuszholik.passwordgenerator.extensions.hide
 import com.mateuszholik.passwordgenerator.extensions.show
-import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
-import com.mateuszholik.passwordgenerator.ui.onboarding.adapter.OnBoardingAdapter
-import com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens.CREATE_PIN
+import com.mateuszholik.passwordgenerator.ui.authentication.onboarding.adapter.OnBoardingAdapter
+import com.mateuszholik.passwordgenerator.ui.authentication.onboarding.model.OnBoardingScreen
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class OnBoardingFragment : BaseFragment() {
+class OnBoardingFragment : Fragment() {
 
     private lateinit var binding: FragmentOnboardingBinding
     private val onBoardingScreens = OnBoardingScreen.values().toList()
     private val adapter = OnBoardingAdapter()
-    private val viewModel: OnBoardingViewModel by viewModel()
+    private val hostViewModel: AuthenticationHostViewModel by sharedViewModel()
 
     private val onPageChangedCallback = object : ViewPager2.OnPageChangeCallback() {
 
@@ -45,9 +45,6 @@ class OnBoardingFragment : BaseFragment() {
         }
     }
 
-    override val isBottomNavVisible: Boolean
-        get() = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,7 +62,6 @@ class OnBoardingFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpObservers()
         setUpViewPager()
 
         binding.skipButton.setOnClickListener {
@@ -78,6 +74,17 @@ class OnBoardingFragment : BaseFragment() {
         super.onDestroy()
     }
 
+    private fun updateNextButton(@StringRes newText: Int, onClick: () -> Unit) {
+        binding.nextButton.apply {
+            text = getString(newText)
+            setOnClickListener { onClick() }
+        }
+    }
+
+    private fun navigateToCreatePinScreen() {
+        hostViewModel.changeScreen(CREATE_PIN)
+    }
+
     private fun setUpViewPager() {
         adapter.submitList(onBoardingScreens)
         with(binding) {
@@ -87,22 +94,7 @@ class OnBoardingFragment : BaseFragment() {
         }
     }
 
-    private fun updateNextButton(@StringRes newText: Int, onClick: () -> Unit) {
-        binding.nextButton.apply {
-            text = getString(newText)
-            setOnClickListener { onClick() }
-        }
-    }
-
-    private fun setUpObservers() {
-        viewModel.shouldGoToNextScreen.observe(viewLifecycleOwner) { shouldSkipOnBoarding ->
-            if (shouldSkipOnBoarding) {
-                findNavController().navigate(R.id.action_onboardingFragment_to_logInFragment)
-            }
-        }
-    }
-
-    private fun navigateToCreatePinScreen() {
-        findNavController().navigate(R.id.action_onboardingFragment_to_createPinFragment)
+    companion object {
+        fun newInstance() = OnBoardingFragment()
     }
 }

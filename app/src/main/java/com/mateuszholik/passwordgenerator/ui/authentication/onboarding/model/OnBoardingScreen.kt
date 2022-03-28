@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.onboarding.model
+package com.mateuszholik.passwordgenerator.ui.authentication.onboarding.model
 
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes

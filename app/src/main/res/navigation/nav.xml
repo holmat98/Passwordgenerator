@@ -1,43 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/onboardingFragment">
+    app:startDestination="@id/authenticationHostFragment">
     <fragment
-        android:id="@+id/onboardingFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.onboarding.OnBoardingFragment"
-        android:label="OnboardingFragment">
+        android:id="@+id/authenticationHostFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostFragment"
+        android:label="AuthenticationHostFragment">
         <action
-            android:id="@+id/action_onboardingFragment_to_logInFragment"
-            app:destination="@id/logInFragment"
-            app:popUpTo="@id/onboardingFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_onboardingFragment_to_createPinFragment"
-            app:destination="@id/createPinFragment"
-            app:popUpTo="@id/onboardingFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/logInFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.login.LogInFragment"
-        android:label="LogInFragment">
-        <action
-            android:id="@+id/action_logInFragment_to_logged_user_nav"
+            android:id="@+id/action_authenticationHostFragment_to_logged_user_nav"
             app:destination="@id/logged_user_nav"
-            app:popUpTo="@id/onboardingFragment"
+            app:popUpTo="@id/authenticationHostFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <include app:graph="@navigation/logged_user_nav" />
-    <fragment
-        android:id="@+id/createPinFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.createpin.CreatePinFragment"
-        android:label="CreatePinFragment">
-        <action
-            android:id="@+id/action_createPinFragment_to_logged_user_nav"
-            app:destination="@id/logged_user_nav"
-            app:popUpTo="@id/onboardingFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 </navigation>

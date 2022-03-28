@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.mateuszholik.passwordgenerator.ui.onboarding.model.OnBoardingScreen" />
+            type="com.mateuszholik.passwordgenerator.ui.authentication.onboarding.model.OnBoardingScreen" />
     </data>
 
     <LinearLayout
