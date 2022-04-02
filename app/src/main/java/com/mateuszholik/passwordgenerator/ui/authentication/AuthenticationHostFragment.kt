@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
 import com.mateuszholik.passwordgenerator.databinding.FragmentAuthenticationHostBinding
 import com.mateuszholik.passwordgenerator.ui.authentication.factories.FragmentFactory
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
