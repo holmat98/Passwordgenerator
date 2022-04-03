@@ -4,7 +4,7 @@ import com.mateuszholik.data.cryptography.models.EncryptedData
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 
-interface EncryptionManager {
+internal interface EncryptionManager {
 
     /**
      * Encrypt data
@@ -59,7 +59,7 @@ internal class EncryptionManagerImpl(
             )
         }
 
-        return cipher.doFinal().toString(Charsets.UTF_8).trim()
+        return cipher.doFinal(encryptedData.data).toString(Charsets.UTF_8).trim()
     }
 
     private fun adjustStringLength(value: String): String {
