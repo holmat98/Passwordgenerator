@@ -30,12 +30,12 @@ class OnBoardingFragment : Fragment() {
 
         override fun onPageSelected(position: Int) {
             if (position == onBoardingScreens.size - 1) {
-                binding.skipButton.hide()
+//                binding.doubleButton.firstB.hide()
                 updateNextButton(R.string.button_start, ::navigateToCreatePinScreen)
             } else {
-                if (!binding.skipButton.isVisible) {
+                /*if (!binding.skipButton.isVisible) {
                     binding.skipButton.show()
-                }
+                }*/
                 updateNextButton(R.string.button_next) {
                     binding.viewpager.apply {
                         setCurrentItem(currentItem + 1, true)
@@ -64,9 +64,7 @@ class OnBoardingFragment : Fragment() {
 
         setUpViewPager()
 
-        binding.skipButton.setOnClickListener {
-            navigateToCreatePinScreen()
-        }
+        binding.doubleButton.onFirstButtonClicked = ::navigateToCreatePinScreen
     }
 
     override fun onDestroy() {
@@ -75,9 +73,9 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun updateNextButton(@StringRes newText: Int, onClick: () -> Unit) {
-        binding.nextButton.apply {
-            text = getString(newText)
-            setOnClickListener { onClick() }
+        binding.doubleButton.apply {
+            secondText = getString(newText)
+            onSecondButtonClicked = { onClick() }
         }
     }
 

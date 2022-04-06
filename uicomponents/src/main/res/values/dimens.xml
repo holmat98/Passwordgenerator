@@ -11,4 +11,5 @@
     <dimen name="padding_8">8dp</dimen>
 
     <dimen name="text_size_35">35sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
 </resources>

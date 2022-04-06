@@ -10,4 +10,12 @@
         <attr name="pinInputsTextColor" format="color" />
         <attr name="isPinHidden" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="DoubleButton">
+        <attr name="firstText" format="string" />
+        <attr name="secondText" format="string" />
+        <attr name="firstBackground" format="color" />
+        <attr name="secondBackground" format="color" />
+        <attr name="firstTextColor" format="color" />
+        <attr name="secondTextColor" format="color" />
+    </declare-styleable>
 </resources>
