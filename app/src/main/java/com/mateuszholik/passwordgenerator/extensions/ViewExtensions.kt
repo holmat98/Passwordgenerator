@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.view.isVisible
 
 private const val DURATION = 400L
-
-infix fun View.setIsVisibleOrGone(isVisible: Boolean) {
-    visibility = if (isVisible) VISIBLE else GONE
-}
 
 fun View.hide() {
     val initialWidth = measuredWidth
@@ -26,7 +23,7 @@ fun View.hide() {
             layoutParams = params
         }
         doOnEnd {
-            setIsVisibleOrGone(false)
+            isVisible = false
             layoutParams.width = initialWidth
             clearAnimation()
         }
@@ -42,7 +39,7 @@ fun View.show() {
             params.width = value
             layoutParams = params
         }
-        doOnStart { setIsVisibleOrGone(true) }
+        doOnStart { isVisible = true }
         doOnEnd { clearAnimation() }
     }.start()
 }
