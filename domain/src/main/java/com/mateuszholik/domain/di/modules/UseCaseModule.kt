@@ -18,4 +18,8 @@ internal val useCaseModule = module {
     factory<IsPinCorrectUseCase> {
         IsPinCorrectUseCaseImpl(encryptedSharedPrefManager = get())
     }
+
+    factory<CreatePasswordUseCase> {
+        CreatePasswordUseCaseImpl(passwordFactory = get())
+    }
 }

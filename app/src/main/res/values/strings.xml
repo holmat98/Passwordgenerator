@@ -13,4 +13,6 @@
     <string name="create">Stwórz</string>
     <string name="test">Przetestuj</string>
     <string name="log_in_header">Zaloguj się</string>
+    <string name="generate_password_length">Wybierz długość hasła:</string>
+    <string name="generate_create_password">Stwórz hasło</string>
 </resources>

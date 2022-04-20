@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentGeneratePasswordBinding
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GeneratePasswordFragment : BaseFragment() {
 
     private lateinit var binding: FragmentGeneratePasswordBinding
+    private val viewModel: GeneratePasswordViewModel by viewModel()
 
     override val isBottomNavVisible: Boolean
         get() = true
@@ -19,11 +24,15 @@ class GeneratePasswordFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentGeneratePasswordBinding.inflate(
+        binding = DataBindingUtil.inflate<FragmentGeneratePasswordBinding?>(
             inflater,
+            R.layout.fragment_generate_password,
             container,
             false
-        )
+        ).apply {
+            viewModel = this@GeneratePasswordFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }
@@ -31,6 +40,8 @@ class GeneratePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.progressChart.progress = 90
+        viewModel.generatedPassword.observe(viewLifecycleOwner ) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 }

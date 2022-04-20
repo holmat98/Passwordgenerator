@@ -5,6 +5,8 @@ import androidx.annotation.RawRes
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.slider.Slider
+import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 
 object BindingAdapters {
 
@@ -18,5 +20,13 @@ object BindingAdapters {
     @JvmStatic
     fun setVisibility(view: View, isVisible: Boolean) {
         view.isVisible = isVisible
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["onValueChangeListener"])
+    fun setOnValueChangeListener(slider: Slider, listener: OnValueChangedListener) {
+        slider.addOnChangeListener { _, value, _ ->
+            listener.onValueChanged(value)
+        }
     }
 }
