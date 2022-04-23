@@ -17,7 +17,7 @@ class CreatePinViewModel(
     val pinCreateSuccess: LiveData<Boolean>
         get() = _pinCreateSuccess
 
-    private val _pinCreateError = MutableLiveData<@StringRes Int>()
+    private val _pinCreateError = MutableLiveData<Int>()
     val pinCreateError: LiveData<Int>
         get() = _pinCreateError
 

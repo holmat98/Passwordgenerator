@@ -4,6 +4,7 @@ import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostVi
 import com.mateuszholik.passwordgenerator.ui.authentication.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -23,5 +24,12 @@ val viewModelModule = module {
 
     viewModel {
         GeneratePasswordViewModel(createPasswordUseCase = get())
+    }
+
+    viewModel { (password: String) ->
+        PasswordScoreViewModel(
+            password = password,
+            validatePasswordUseCase = get()
+        )
     }
 }

@@ -7,6 +7,8 @@ import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
+import com.mateuszholik.uicomponents.chart.ProgressChartView
+import com.mateuszholik.uicomponents.checkbox.AnimatedCheckbox
 
 object BindingAdapters {
 
@@ -28,5 +30,17 @@ object BindingAdapters {
         slider.addOnChangeListener { _, value, _ ->
             listener.onValueChanged(value)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:changeAnimation")
+    fun changeAnimation(animatedCheckbox: AnimatedCheckbox, value: Boolean) {
+        animatedCheckbox.isPositive = value
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setProggress")
+    fun setProgress(chartView: ProgressChartView, progress: Int) {
+        chartView.progress = progress
     }
 }

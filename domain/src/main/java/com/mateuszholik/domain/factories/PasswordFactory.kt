@@ -1,5 +1,9 @@
 package com.mateuszholik.domain.factories
 
+import com.mateuszholik.domain.constants.PasswordConstants.LETTERS
+import com.mateuszholik.domain.constants.PasswordConstants.NUMBERS
+import com.mateuszholik.domain.constants.PasswordConstants.SPECIAL_CHARACTERS
+import com.mateuszholik.domain.constants.PasswordConstants.UPPERCASE_LETTERS
 import java.lang.StringBuilder
 import java.security.SecureRandom
 
@@ -41,10 +45,6 @@ internal class PasswordFactoryImpl : PasswordFactory {
     }
 
     private companion object {
-        const val LETTERS = "abcdefghijklmnopqrstuvwxyz"
-        const val UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQESTUVWXYZ"
-        const val NUMBERS = "0123456789"
-        const val SPECIAL_CHARACTERS = "!@#$%^&*-_+=?"
         const val SECURE_RANDOM_ALGORITHM = "SHA1PRNG"
     }
 }

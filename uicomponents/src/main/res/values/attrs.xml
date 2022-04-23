@@ -18,4 +18,7 @@
         <attr name="firstTextColor" format="color" />
         <attr name="secondTextColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="AnimatedCheckbox">
+        <attr name="text" format="string" />
+    </declare-styleable>
 </resources>

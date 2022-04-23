@@ -62,6 +62,7 @@ deps.test = test
 def navigation = [:]
 navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
 navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+navigation.safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
 deps.navigation = navigation
 
 def material = [:]

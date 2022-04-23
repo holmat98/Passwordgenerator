@@ -15,4 +15,9 @@
     <string name="log_in_header">Zaloguj się</string>
     <string name="generate_password_length">Wybierz długość hasła:</string>
     <string name="generate_create_password">Stwórz hasło</string>
+    <string name="password_score_length">Ma co najmniej 8 znaków</string>
+    <string name="password_score_uppercase">Zawiera dużą literę</string>
+    <string name="password_score_letter">Zawiera literę</string>
+    <string name="password_score_number">Zawiera cyfrę</string>
+    <string name="password_score_special_character">Zawiera znak specjalny</string>
 </resources>
