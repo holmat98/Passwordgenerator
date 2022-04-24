@@ -1,5 +1,7 @@
 package com.mateuszholik.data.di.modules
 
+import com.mateuszholik.data.mappers.*
+import com.mateuszholik.data.mappers.PasswordDBMapper
 import com.mateuszholik.data.mappers.PasswordListMapper
 import com.mateuszholik.data.mappers.PasswordListMapperImpl
 import com.mateuszholik.data.mappers.PasswordMapper
@@ -14,5 +16,9 @@ internal val mappersModule = module {
 
     factory<PasswordListMapper> {
         PasswordListMapperImpl(get())
+    }
+
+    factory<PasswordDBMapper> {
+        PasswordDBMapperImpl()
     }
 }

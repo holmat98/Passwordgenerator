@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Single
 
 interface PasswordsRepository {
 
-    fun insert(password: Password): Completable
+    fun insert(platform: String, password: String): Completable
 
     fun delete(password: Password): Completable
 

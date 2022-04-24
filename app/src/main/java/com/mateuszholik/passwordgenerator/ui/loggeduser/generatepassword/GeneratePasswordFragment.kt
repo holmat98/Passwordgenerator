@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentGeneratePasswordBinding
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -40,8 +41,14 @@ class GeneratePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.generatedPassword.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        binding.goToSavePasswordScreenButton.setOnClickListener {
+            goToSavePasswordScreen(binding.generatedPasswordTV.text.toString())
         }
+    }
+
+    private fun goToSavePasswordScreen(password: String?) {
+        val action =
+            GeneratePasswordFragmentDirections.actionGeneratePasswordToSavePasswordFragment(password)
+        findNavController().navigate(action)
     }
 }

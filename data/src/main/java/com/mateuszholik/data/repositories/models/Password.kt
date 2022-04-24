@@ -1,10 +1,10 @@
 package com.mateuszholik.data.repositories.models
 
-import java.util.Date
+import java.time.LocalDateTime
 
 data class Password(
     val id: Long,
     val platformName: String,
     val password: String,
-    val expiringDate: Date
+    val expiringDate: LocalDateTime
 )

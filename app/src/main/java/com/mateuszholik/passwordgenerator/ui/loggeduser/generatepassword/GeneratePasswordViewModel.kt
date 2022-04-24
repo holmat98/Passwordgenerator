@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -13,7 +14,7 @@ class GeneratePasswordViewModel(
     private val createPasswordUseCase: CreatePasswordUseCase
 ) : ViewModel(), OnValueChangedListener {
 
-    private val _generatedPassword = MutableLiveData<String>()
+    private val _generatedPassword = MutableLiveData(EMPTY_STRING)
     val generatedPassword: LiveData<String>
         get() = _generatedPassword
 

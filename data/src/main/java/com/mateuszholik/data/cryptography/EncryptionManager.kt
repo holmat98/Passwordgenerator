@@ -12,23 +12,23 @@ internal interface EncryptionManager {
      * @param value String that will be encrypted
      * @return [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
      */
-    fun encrypt(value: String): EncryptedData
+    fun encrypt(value: String): String
 
     /**
      * Decrypt data
      *
-     * @param encryptedData [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
+     * @param data String
      * @return String
      * @throws KeyDoesNotExistsException if key does not exists
      */
-    fun decrypt(encryptedData: EncryptedData): String
+    fun decrypt(data: String): String
 }
 
 internal class EncryptionManagerImpl(
     private val cryptographyKeyManager: CryptographyKeyManager
 ) : EncryptionManager {
 
-    override fun encrypt(value: String): EncryptedData {
+    override fun encrypt(value: String): String {
         if (!cryptographyKeyManager.isKeyCreated()) {
             cryptographyKeyManager.createKey()
         }
@@ -39,27 +39,25 @@ internal class EncryptionManagerImpl(
 
         val adjustedValue = adjustStringLength(value)
 
-        val iv = cipher.iv
         val encryptedText = cipher.doFinal(adjustedValue.toByteArray(Charsets.UTF_8))
 
-        return EncryptedData(iv, encryptedText)
+        return encryptedText.toString(Charsets.ISO_8859_1)
     }
 
-    override fun decrypt(encryptedData: EncryptedData): String {
+    override fun decrypt(data: String): String {
         if (!cryptographyKeyManager.isKeyCreated()) {
             throw KeyDoesNotExistsException()
         }
 
-        val ivParameterSpec = IvParameterSpec(encryptedData.iv)
         val cipher = Cipher.getInstance(KEY_CIPHER_TRANSFORMATION).also {
             it.init(
                 Cipher.DECRYPT_MODE,
                 cryptographyKeyManager.getKey(),
-                ivParameterSpec
+                IvParameterSpec(it.iv)
             )
         }
 
-        return cipher.doFinal(encryptedData.data).toString(Charsets.UTF_8).trim()
+        return cipher.doFinal(data.toByteArray(Charsets.ISO_8859_1)).toString(Charsets.UTF_8).trim()
     }
 
     private fun adjustStringLength(value: String): String {

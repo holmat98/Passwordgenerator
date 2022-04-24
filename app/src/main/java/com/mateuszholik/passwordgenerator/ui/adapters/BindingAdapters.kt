@@ -1,5 +1,6 @@
 package com.mateuszholik.passwordgenerator.ui.adapters
 
+import android.util.Log
 import android.view.View
 import androidx.annotation.RawRes
 import androidx.core.view.isVisible
@@ -21,6 +22,7 @@ object BindingAdapters {
     @BindingAdapter("app:isVisible")
     @JvmStatic
     fun setVisibility(view: View, isVisible: Boolean) {
+        Log.d("TEST", "Test: $isVisible")
         view.isVisible = isVisible
     }
 

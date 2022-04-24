@@ -24,6 +24,17 @@ internal val useCaseModule = module {
     }
 
     factory<ValidatePasswordUseCase> {
-        ValidatePasswordUseCaseImpl(get(), get(), get(), get(), get(), get())
+        ValidatePasswordUseCaseImpl(
+            passwordScoreManager = get(),
+            containsLetterValidator = get(),
+            containsNumberValidator = get(),
+            containsSpecialCharacterValidator = get(),
+            containsUpperCaseValidator = get(),
+            passwordLengthValidator = get()
+        )
+    }
+
+    factory<SavePasswordUseCase> {
+        SavePasswordUseCaseImpl(passwordsRepository = get())
     }
 }
