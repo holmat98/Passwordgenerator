@@ -20,4 +20,6 @@
     <string name="password_score_letter">Zawiera literę</string>
     <string name="password_score_number">Zawiera cyfrę</string>
     <string name="password_score_special_character">Zawiera znak specjalny</string>
+    <string name="password_test_hint">Wprowadź hasło</string>
+    <string name="password_test_button_test">Przetestuj hasło</string>
 </resources>

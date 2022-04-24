@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentGeneratePasswordBinding
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -41,13 +41,7 @@ class GeneratePasswordFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.generatedPassword.observe(viewLifecycleOwner) {
-            navigateToPasswordScoreScreen(it)
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun navigateToPasswordScoreScreen(password: String) {
-        val action =
-            GeneratePasswordFragmentDirections.actionGeneratePasswordToPasswordScoreFragment(password)
-        findNavController().navigate(action)
     }
 }

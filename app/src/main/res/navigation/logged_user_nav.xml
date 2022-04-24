@@ -11,15 +11,15 @@
     <fragment
         android:id="@+id/generatePassword"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordFragment"
-        android:label="GeneratePasswordFragment" >
-        <action
-            android:id="@+id/action_generatePassword_to_passwordScoreFragment"
-            app:destination="@id/passwordScoreFragment" />
-    </fragment>
+        android:label="GeneratePasswordFragment" />
     <fragment
         android:id="@+id/testPassword"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.testpassword.TestPasswordFragment"
-        android:label="TestPasswordFragment" />
+        android:label="TestPasswordFragment" >
+        <action
+            android:id="@+id/action_testPassword_to_passwordScoreFragment"
+            app:destination="@id/passwordScoreFragment" />
+    </fragment>
     <fragment
         android:id="@+id/passwordScoreFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreFragment"
