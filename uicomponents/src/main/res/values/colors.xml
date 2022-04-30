@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="white">#FFFFFF</color>
-    <color name="white_half_transparent">#44FFFFFF</color>
-    <color name="dark_default">#1D1D26</color>
-    <color name="progress_color">#79F2C6</color>
-    <color name="pin_edittext_stroke_success">#00AD20</color>
-    <color name="pin_edittext_stroke_error">#B30246</color>
-</resources>

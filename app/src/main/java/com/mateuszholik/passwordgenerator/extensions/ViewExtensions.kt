@@ -43,3 +43,10 @@ fun View.show() {
         doOnEnd { clearAnimation() }
     }.start()
 }
+
+fun View.rotate(angle: Float) {
+    this.animate().apply {
+        duration = DURATION
+        rotationBy(angle)
+    }.start()
+}

@@ -19,7 +19,7 @@
         android:layout_marginBottom="@dimen/margin_16"
         android:text="@string/create_password_header" />
 
-    <com.mateuszholik.uicomponents.pin.PinCode
+    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinCode
         android:id="@+id/pinCode"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.mateuszholik.uicomponents.keyboard.Keyboard
+    <com.mateuszholik.passwordgenerator.uicomponents.keyboard.Keyboard
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -26,4 +26,17 @@
     <string name="save_password_platform_name">Nazwa platformy</string>
     <string name="save_password_password">Hasło</string>
     <string name="save_password_button_save">Zapisz hasło</string>
+    <string name="number_1">1</string>
+    <string name="number_2">2</string>
+    <string name="number_3">3</string>
+    <string name="number_4">4</string>
+    <string name="number_5">5</string>
+    <string name="number_6">6</string>
+    <string name="number_7">7</string>
+    <string name="number_8">8</string>
+    <string name="number_9">9</string>
+    <string name="number_0">0</string>
+    <string name="progress_value">%1$d</string>
+    <string name="item_password_expire_date">Data ważności: %1$s</string>
+    <string name="item_password_password">Hasło: %1$s</string>
 </resources>

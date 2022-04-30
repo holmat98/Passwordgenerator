@@ -8,6 +8,8 @@
     <color name="secondary">#79F2C6</color>
     <color name="secondary_dark">#6DB89C</color>
     <color name="transparent">#0000</color>
+    <color name="pin_edittext_stroke_success">#00AD20</color>
+    <color name="pin_edittext_stroke_error">#B30246</color>
     <color name="green">#8bc34a</color>
     <color name="green_light">#bef67a</color>
     <color name="green_dark">#5a9216</color>

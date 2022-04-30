@@ -20,6 +20,14 @@
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
 
+    <style name="CustomViewDefaultText">
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
     <style name="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_25</item>
@@ -48,5 +56,10 @@
         <item name="android:textColorHint">@color/secondary</item>
         <item name="counterTextColor">@color/white</item>
         <item name="hintTextColor">@color/secondary_dark</item>
+    </style>
+
+    <style name="PinEditText">
+        <item name="android:textSize">@dimen/text_size_35</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>

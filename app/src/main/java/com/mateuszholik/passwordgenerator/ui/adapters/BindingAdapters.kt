@@ -8,8 +8,10 @@ import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
-import com.mateuszholik.uicomponents.chart.ProgressChartView
-import com.mateuszholik.uicomponents.checkbox.AnimatedCheckbox
+import com.mateuszholik.passwordgenerator.uicomponents.chart.ProgressChartView
+import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
+import com.mateuszholik.passwordgenerator.uicomponents.expandable.ExpandableView
+import kotlin.math.exp
 
 object BindingAdapters {
 
@@ -44,5 +46,11 @@ object BindingAdapters {
     @BindingAdapter("app:setProggress")
     fun setProgress(chartView: ProgressChartView, progress: Int) {
         chartView.progress = progress
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setText")
+    fun setText(expandableView: ExpandableView, text: String) {
+        expandableView.setText(text)
     }
 }
