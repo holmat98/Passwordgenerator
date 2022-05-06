@@ -1,14 +1,17 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwords
+package com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
 
-class PasswordsAdapter(private val calculateProgress: (String) -> Int) :
+class PasswordsAdapter(
+    private val copyToClipboard: (String, String) -> Unit,
+    private val calculateProgress: (String) -> Int,
+    private val navigateToPasswordDetails: (Password) -> Unit
+) :
     RecyclerView.Adapter<PasswordsAdapter.PasswordsViewHolder>() {
 
     private val passwords: MutableList<Password> = mutableListOf()
@@ -41,17 +44,16 @@ class PasswordsAdapter(private val calculateProgress: (String) -> Int) :
 
         fun bind(password: Password) {
             with(binding) {
-                expandableView.setText(password.platformName)
-                passwordTV.text =
-                    passwordTV.context.getString(
-                        R.string.item_password_password,
+                root.setOnClickListener { navigateToPasswordDetails(password) }
+                platformNameTV.text = password.platformName
+                passwordTV.text = password.password
+                passwordScorePCV.progress = calculateProgress(password.password)
+                copyPasswordIB.setOnClickListener {
+                    copyToClipboard(
+                        password.platformName,
                         password.password
                     )
-                expirationDateText.text = expirationDateText.context.getString(
-                    R.string.item_password_expire_date,
-                    password.expiringDate
-                )
-                progressCV.progress = calculateProgress(password.password)
+                }
             }
         }
     }

@@ -39,4 +39,5 @@
     <string name="progress_value">%1$d</string>
     <string name="item_password_expire_date">Data ważności: %1$s</string>
     <string name="item_password_password">Hasło: %1$s</string>
+    <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
 </resources>

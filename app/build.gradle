@@ -106,4 +106,7 @@ dependencies {
 
     // lottie
     implementation deps.lottie.lottie
+
+    // gson converter
+    implementation deps.retrofit.converter
 }

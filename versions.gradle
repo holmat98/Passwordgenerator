@@ -26,6 +26,7 @@ versions.core = "2.1.0"
 versions.core_testing_version = "1.1.1"
 versions.viewpager2 = "1.0.0"
 versions.lottie = "5.0.2"
+versions.retrofit_version = "2.9.0"
 
 def deps = [:]
 
@@ -115,5 +116,9 @@ deps.viewpager = viewpager
 def lottie = [:]
 lottie.lottie = "com.airbnb.android:lottie:$versions.lottie"
 deps.lottie = lottie
+
+def retrofit = [:]
+retrofit.converter = "com.squareup.retrofit2:converter-gson:$versions.retrofit_version"
+deps.retrofit = retrofit
 
 ext.deps = deps
