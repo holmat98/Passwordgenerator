@@ -4,10 +4,10 @@ import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
 import com.mateuszholik.data.extensions.read
 import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.constants.SharedPrefKeys.PIN_KEY
-import com.mateuszholik.domain.usecase.base.ParameterizedUseCase
+import com.mateuszholik.domain.usecase.base.ParameterizedSingleUseCase
 import io.reactivex.rxjava3.core.Single
 
-interface IsPinCorrectUseCase : ParameterizedUseCase<String, Boolean>
+interface IsPinCorrectUseCase : ParameterizedSingleUseCase<String, Boolean>
 
 internal class IsPinCorrectUseCaseImpl(
     private val encryptedSharedPrefManager: EncryptedSharedPrefManager

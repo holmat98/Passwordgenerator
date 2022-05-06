@@ -2,18 +2,16 @@ package com.mateuszholik.data.repositories
 
 import com.mateuszholik.data.cryptography.EncryptionManager
 import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.mappers.PasswordDBMapper
+import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.mappers.PasswordListMapper
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.data.repositories.models.Resource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import java.time.LocalDateTime
-import java.util.*
 
 internal class PasswordsRepositoryImpl(
     private val passwordsDao: PasswordsDao,
-    private val passwordDBMapper: PasswordDBMapper,
     private val passwordListMapper: PasswordListMapper,
     private val encryptionManager: EncryptionManager
 ) : BaseRepository(), PasswordsRepository {
@@ -22,27 +20,29 @@ internal class PasswordsRepositoryImpl(
         val encryptedPlatformName = encryptionManager.encrypt(platform)
         val encryptedPassword = encryptionManager.encrypt(password)
 
-        val newPassword = Password(
+        val newPassword = PasswordDB(
             id = 0,
-            platformName = encryptedPlatformName,
-            password = encryptedPassword,
+            platformName = encryptedPlatformName.data,
+            platformIV = encryptedPlatformName.iv,
+            password = encryptedPassword.data,
+            passwordIV = encryptedPassword.iv,
             expiringDate = LocalDateTime.now().plusDays(90)
         )
 
-        return passwordsDao.insert(passwordDBMapper.map(newPassword))
+        return passwordsDao.insert(newPassword)
     }
 
     override fun delete(password: Password): Completable =
-        passwordsDao.delete(passwordDBMapper.map(password))
+        TODO()
 
     override fun update(password: Password): Completable =
-        passwordsDao.update(passwordDBMapper.map(password))
+        TODO()
 
     override fun getAllPasswords(): Single<Resource<List<Password>>> =
         passwordsDao.getAllPasswords()
-            .map {
-                createResource(it) { list ->
-                    passwordListMapper.map(list)
+            .map { passwordDBList ->
+                createResource(passwordDBList) { passwordDB ->
+                    passwordListMapper.map(passwordDB)
                 }
             }
 }

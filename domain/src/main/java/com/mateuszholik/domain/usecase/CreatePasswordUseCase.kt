@@ -1,10 +1,10 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.domain.factories.PasswordFactory
-import com.mateuszholik.domain.usecase.base.ParameterizedUseCase
+import com.mateuszholik.domain.usecase.base.ParameterizedSingleUseCase
 import io.reactivex.rxjava3.core.Single
 
-interface CreatePasswordUseCase : ParameterizedUseCase<Int, String>
+interface CreatePasswordUseCase : ParameterizedSingleUseCase<Int, String>
 
 internal class CreatePasswordUseCaseImpl(
     private val passwordFactory: PasswordFactory

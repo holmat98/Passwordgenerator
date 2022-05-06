@@ -1,17 +1,31 @@
 package com.mateuszholik.data.mappers
 
+import com.mateuszholik.data.cryptography.EncryptionManager
+import com.mateuszholik.data.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.repositories.models.Password
 
 internal interface PasswordMapper : Mapper<PasswordDB, Password>
 
-internal class PasswordMapperImpl : PasswordMapper {
+internal class PasswordMapperImpl(
+    private val encryptionManager: EncryptionManager
+) : PasswordMapper {
 
     override fun map(param: PasswordDB): Password =
         Password(
             id = param.id,
-            platformName = param.platformName,
-            password = param.password,
+            platformName = encryptionManager.decrypt(
+                EncryptedData(
+                    iv = param.platformIV,
+                    data = param.platformName
+                )
+            ),
+            password = encryptionManager.decrypt(
+                EncryptedData(
+                    iv = param.passwordIV,
+                    data = param.password
+                )
+            ),
             expiringDate = param.expiringDate
         )
 }

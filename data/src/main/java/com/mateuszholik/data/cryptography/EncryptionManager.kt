@@ -1,7 +1,5 @@
 package com.mateuszholik.data.cryptography
 
-import com.mateuszholik.data.cryptography.Utils.IV_SEPARATOR
-import com.mateuszholik.data.cryptography.extensions.toEncryptedData
 import com.mateuszholik.data.cryptography.models.EncryptedData
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -14,24 +12,24 @@ internal interface EncryptionManager {
      * @param value String that will be encrypted
      * @return [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
      */
-    fun encrypt(value: String): String
+    fun encrypt(value: String): EncryptedData
 
     /**
      * Decrypt data
      *
-     * @param data String
+     * @param encryptedData [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
      * @return String
      * @throws KeyDoesNotExistsException if key does not exists
      * @throws IllegalArgumentException if data has wrong format
      */
-    fun decrypt(data: String): String
+    fun decrypt(encryptedData: EncryptedData): String
 }
 
 internal class EncryptionManagerImpl(
     private val cryptographyKeyManager: CryptographyKeyManager
 ) : EncryptionManager {
 
-    override fun encrypt(value: String): String {
+    override fun encrypt(value: String): EncryptedData {
         if (!cryptographyKeyManager.isKeyCreated()) {
             cryptographyKeyManager.createKey()
         }
@@ -42,19 +40,13 @@ internal class EncryptionManagerImpl(
 
         val adjustedValue = adjustStringLength(value)
 
-        var encryptionResult = cipher.iv.toString(Charsets.ISO_8859_1) + IV_SEPARATOR
-        encryptionResult += cipher.doFinal(adjustedValue.toByteArray(Charsets.UTF_8))
-            .toString(Charsets.ISO_8859_1)
-
-        return encryptionResult
+        return EncryptedData(cipher.iv, cipher.doFinal(adjustedValue))
     }
 
-    override fun decrypt(data: String): String {
+    override fun decrypt(encryptedData: EncryptedData): String {
         if (!cryptographyKeyManager.isKeyCreated()) {
             throw KeyDoesNotExistsException()
         }
-
-        val encryptedData = data.toEncryptedData()
 
         val cipher = Cipher.getInstance(KEY_CIPHER_TRANSFORMATION).also {
             it.init(
@@ -67,13 +59,13 @@ internal class EncryptionManagerImpl(
         return cipher.doFinal(encryptedData.data).toString(Charsets.UTF_8).trim()
     }
 
-    private fun adjustStringLength(value: String): String {
+    private fun adjustStringLength(value: String): ByteArray {
         var temp = value
         while (temp.toByteArray().size % 16 != 0) {
             temp += SPACE_UNI_CODE
         }
 
-        return temp
+        return temp.toByteArray(Charsets.UTF_8)
     }
 
     private companion object {

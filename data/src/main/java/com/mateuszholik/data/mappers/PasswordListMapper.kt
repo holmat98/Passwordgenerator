@@ -1,5 +1,6 @@
 package com.mateuszholik.data.mappers
 
+import com.mateuszholik.data.cryptography.EncryptionManager
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.repositories.models.Password
 
@@ -10,7 +11,5 @@ internal class PasswordListMapperImpl(
 ) : PasswordListMapper {
 
     override fun map(param: List<PasswordDB>): List<Password> =
-        param.map { passwordDB ->
-            passwordMapper.map(passwordDB)
-        }
+        param.map { passwordMapper.map(it) }
 }

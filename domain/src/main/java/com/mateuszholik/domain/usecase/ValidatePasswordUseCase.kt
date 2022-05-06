@@ -2,11 +2,11 @@ package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.domain.managers.PasswordScoreManager
 import com.mateuszholik.domain.models.PasswordScore
-import com.mateuszholik.domain.usecase.base.ParameterizedUseCase
+import com.mateuszholik.domain.usecase.base.ParameterizedSingleUseCase
 import com.mateuszholik.domain.validators.*
 import io.reactivex.rxjava3.core.Single
 
-interface ValidatePasswordUseCase : ParameterizedUseCase<String, PasswordScore>
+interface ValidatePasswordUseCase : ParameterizedSingleUseCase<String, PasswordScore>
 
 internal class ValidatePasswordUseCaseImpl(
     private val passwordScoreManager: PasswordScoreManager,

@@ -7,7 +7,7 @@ import com.mateuszholik.domain.validators.ContainsSpecialCharacterValidator
 import com.mateuszholik.domain.validators.ContainsUpperCaseValidator
 import kotlin.math.abs
 
-internal interface PasswordScoreManager {
+interface PasswordScoreManager {
 
     fun getScore(password: String): Int
 }

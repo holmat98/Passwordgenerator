@@ -37,4 +37,8 @@ internal val useCaseModule = module {
     factory<SavePasswordUseCase> {
         SavePasswordUseCaseImpl(passwordsRepository = get())
     }
+
+    factory<GetPasswordsUseCase> {
+        GetPasswordsUseCaseImpl(passwordsRepository = get())
+    }
 }

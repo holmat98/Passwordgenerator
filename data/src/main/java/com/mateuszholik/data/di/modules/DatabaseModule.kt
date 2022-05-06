@@ -3,7 +3,7 @@ package com.mateuszholik.data.di.modules
 import android.content.Context
 import androidx.room.Room
 import com.mateuszholik.data.db.PasswordsDatabase
-import com.mateuszholik.data.db.converters.DateConverter
+import com.mateuszholik.data.db.converters.Converters
 import com.mateuszholik.data.di.models.Constants.DATABASE_NAME
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -11,11 +11,14 @@ import org.koin.dsl.module
 internal val databaseModule = module {
 
     single {
-        DateConverter()
+        Converters()
     }
 
     single {
-        provideDatabase(androidContext(), get())
+        provideDatabase(
+            context = androidContext(),
+            converter = get()
+        )
     }
 
     single {
@@ -23,10 +26,13 @@ internal val databaseModule = module {
     }
 }
 
-private fun provideDatabase(context: Context, dateConverter: DateConverter) = Room.databaseBuilder(
+private fun provideDatabase(
+    context: Context,
+    converter: Converters
+) = Room.databaseBuilder(
     context.applicationContext,
     PasswordsDatabase::class.java,
     DATABASE_NAME
 )
-    .addTypeConverter(dateConverter)
+    .addTypeConverter(converter)
     .build()

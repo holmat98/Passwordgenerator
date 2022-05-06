@@ -7,6 +7,10 @@ import org.koin.dsl.module
 internal val repositoriesModule = module {
 
     single<PasswordsRepository> {
-        PasswordsRepositoryImpl(get(), get(), get(), get())
+        PasswordsRepositoryImpl(
+            passwordsDao = get(),
+            passwordListMapper = get(),
+            encryptionManager = get()
+        )
     }
 }
