@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
+import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.adapters.PasswordsAdapter
 import org.koin.android.ext.android.inject
@@ -21,6 +22,7 @@ class PasswordsFragment : BaseFragment() {
     private lateinit var binding: FragmentPasswordsBinding
     private val viewModel: PasswordsViewModel by viewModel()
     private val clipboardManager: ClipboardManager by inject()
+    private val gsonFactory: GsonFactory by inject()
     private val adapter = PasswordsAdapter(
         copyToClipboard = { label, password ->
             clipboardManager.copyToClipboard(label, password)
@@ -67,7 +69,7 @@ class PasswordsFragment : BaseFragment() {
     }
 
     private fun navigateToPasswordDetails(password: Password) {
-        val passwordJson = Gson().toJson(password)
+        val passwordJson = gsonFactory.create().toJson(password)
         Log.d("TEST", passwordJson)
         val action =
             PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(passwordJson)

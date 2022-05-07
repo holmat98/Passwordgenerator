@@ -40,4 +40,6 @@
     <string name="item_password_expire_date">Data ważności: %1$s</string>
     <string name="item_password_password">Hasło: %1$s</string>
     <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
+    <string name="password_details_password_strength">Siła hasła</string>
+    <string name="password_details_expiring_date_proposal">Proponowana data zmiany hasła:</string>
 </resources>

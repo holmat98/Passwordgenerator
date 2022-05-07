@@ -9,7 +9,6 @@ import io.reactivex.rxjava3.core.Single
 interface ValidatePasswordUseCase : ParameterizedSingleUseCase<String, PasswordScore>
 
 internal class ValidatePasswordUseCaseImpl(
-    private val passwordScoreManager: PasswordScoreManager,
     private val containsLetterValidator: ContainsLetterValidator,
     private val containsUpperCaseValidator: ContainsUpperCaseValidator,
     private val containsNumberValidator: ContainsNumberValidator,
@@ -20,7 +19,6 @@ internal class ValidatePasswordUseCaseImpl(
     override fun invoke(param: String): Single<PasswordScore> =
         Single.just(
             PasswordScore(
-                score = passwordScoreManager.getScore(param),
                 containsLetters = containsLetterValidator.validate(param),
                 containsUpperCaseLetters = containsUpperCaseValidator.validate(param),
                 containsNumbers = containsNumberValidator.validate(param),

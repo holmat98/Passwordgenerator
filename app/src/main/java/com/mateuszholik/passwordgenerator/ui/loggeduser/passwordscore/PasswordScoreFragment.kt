@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordScoreBinding
+import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -48,5 +49,16 @@ class PasswordScoreFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+
+        displayPasswordValidationResultFragment()
+    }
+
+    private fun displayPasswordValidationResultFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(
+                binding.passwordValidationResult.id,
+                PasswordValidationResultFragment.newInstance(args.password)
+            )
+            .commit()
     }
 }
