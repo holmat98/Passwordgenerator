@@ -28,6 +28,7 @@ versions.viewpager2 = "1.0.0"
 versions.lottie = "5.0.2"
 versions.retrofit_version = "2.9.0"
 versions.timber_version = "5.0.1"
+versions.swipetorefresh = "1.1.0"
 
 def deps = [:]
 
@@ -125,5 +126,9 @@ deps.retrofit = retrofit
 def timber = [:]
 timber.timber = "com.jakewharton.timber:timber:$versions.timber_version"
 deps.timber = timber
+
+def swipetorefresh = [:]
+swipetorefresh.swipetorefresh = "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipetorefresh"
+deps.swipetorefresh = swipetorefresh
 
 ext.deps = deps

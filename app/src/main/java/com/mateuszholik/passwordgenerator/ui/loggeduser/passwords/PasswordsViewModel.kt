@@ -24,7 +24,7 @@ class PasswordsViewModel(
         getAllPasswords()
     }
 
-    private fun getAllPasswords() {
+    fun getAllPasswords() {
         getPasswordsUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

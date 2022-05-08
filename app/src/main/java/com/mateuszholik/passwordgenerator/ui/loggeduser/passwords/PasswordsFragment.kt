@@ -56,6 +56,12 @@ class PasswordsFragment : BaseFragment() {
 
         setUpRecyclerView()
         setUpObservers()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getAllPasswords()
+
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun setUpRecyclerView() {

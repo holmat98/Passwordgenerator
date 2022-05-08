@@ -112,4 +112,7 @@ dependencies {
 
     // timber
     implementation deps.timber.timber
+
+    // swipe to refresh
+    implementation deps.swipetorefresh.swipetorefresh
 }
