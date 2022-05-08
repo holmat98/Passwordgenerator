@@ -109,4 +109,7 @@ dependencies {
 
     // gson converter
     implementation deps.retrofit.converter
+
+    // timber
+    implementation deps.timber.timber
 }

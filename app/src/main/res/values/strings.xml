@@ -42,4 +42,5 @@
     <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
     <string name="password_details_password_strength">Siła hasła</string>
     <string name="password_details_expiring_date_proposal">Proponowana data zmiany hasła:</string>
+    <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
 </resources>

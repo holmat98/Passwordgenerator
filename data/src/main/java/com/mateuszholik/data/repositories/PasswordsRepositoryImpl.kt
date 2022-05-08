@@ -38,11 +38,9 @@ internal class PasswordsRepositoryImpl(
     override fun update(password: Password): Completable =
         TODO()
 
-    override fun getAllPasswords(): Single<Resource<List<Password>>> =
+    override fun getAllPasswords(): Single<List<Password>> =
         passwordsDao.getAllPasswords()
             .map { passwordDBList ->
-                createResource(passwordDBList) { passwordDB ->
-                    passwordListMapper.map(passwordDB)
-                }
+                passwordListMapper.map(passwordDBList)
             }
 }

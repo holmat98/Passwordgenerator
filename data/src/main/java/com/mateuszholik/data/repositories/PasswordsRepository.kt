@@ -13,5 +13,5 @@ interface PasswordsRepository {
 
     fun update(password: Password): Completable
 
-    fun getAllPasswords(): Single<Resource<List<Password>>>
+    fun getAllPasswords(): Single<List<Password>>
 }

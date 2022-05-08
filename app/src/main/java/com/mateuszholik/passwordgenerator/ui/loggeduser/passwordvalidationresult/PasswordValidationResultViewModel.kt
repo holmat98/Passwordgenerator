@@ -1,16 +1,17 @@
 package com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.mateuszholik.domain.usecase.ValidatePasswordUseCase
+import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import timber.log.Timber
 
 class PasswordValidationResultViewModel(
     private val password: String,
     private val validatePasswordUseCase: ValidatePasswordUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     val lengthCondition = MutableLiveData<Boolean>()
     val letterCondition = MutableLiveData<Boolean>()
@@ -37,8 +38,10 @@ class PasswordValidationResultViewModel(
                     }
                 },
                 {
-                    Log.d("TEST", "${it.message}")
+                    _errorOccurred.postValue(true)
+                    Timber.e(it)
                 }
             )
+            .addTo(compositeDisposable)
     }
 }

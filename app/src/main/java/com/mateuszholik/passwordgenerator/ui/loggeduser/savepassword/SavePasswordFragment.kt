@@ -47,9 +47,6 @@ class SavePasswordFragment : Fragment() {
 
     private fun setUpObservers() {
         with(viewModel) {
-            errorOccurred.observe(viewLifecycleOwner) {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
-            }
             savedPassword.observe(viewLifecycleOwner) {
                 Toast.makeText(context, "Password saved", Toast.LENGTH_SHORT).show()
             }

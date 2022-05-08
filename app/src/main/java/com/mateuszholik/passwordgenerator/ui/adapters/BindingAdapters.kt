@@ -1,6 +1,5 @@
 package com.mateuszholik.passwordgenerator.ui.adapters
 
-import android.util.Log
 import android.view.View
 import androidx.annotation.RawRes
 import androidx.core.view.isVisible
@@ -10,8 +9,6 @@ import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import com.mateuszholik.passwordgenerator.uicomponents.chart.ProgressChartView
 import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
-import com.mateuszholik.passwordgenerator.uicomponents.expandable.ExpandableView
-import kotlin.math.exp
 
 object BindingAdapters {
 
@@ -24,7 +21,6 @@ object BindingAdapters {
     @BindingAdapter("app:isVisible")
     @JvmStatic
     fun setVisibility(view: View, isVisible: Boolean) {
-        Log.d("TEST", "Test: $isVisible")
         view.isVisible = isVisible
     }
 
@@ -46,11 +42,5 @@ object BindingAdapters {
     @BindingAdapter("app:setProggress")
     fun setProgress(chartView: ProgressChartView, progress: Int) {
         chartView.progress = progress
-    }
-
-    @JvmStatic
-    @BindingAdapter("app:setText")
-    fun setText(expandableView: ExpandableView, text: String) {
-        expandableView.setText(text)
     }
 }

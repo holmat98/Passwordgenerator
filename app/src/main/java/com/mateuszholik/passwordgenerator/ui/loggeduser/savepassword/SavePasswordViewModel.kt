@@ -2,25 +2,23 @@ package com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.SavePasswordUseCase
+import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
+import timber.log.Timber
 
 class SavePasswordViewModel(
     generatedPassword: String?,
     private val savePasswordUseCase: SavePasswordUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _savedPassword = MutableLiveData<Boolean>()
     val savedPassword: LiveData<Boolean>
         get() = _savedPassword
-
-    private val _errorOccurred = MutableLiveData<Boolean>()
-    val errorOccurred: LiveData<Boolean>
-        get() = _errorOccurred
 
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
@@ -39,7 +37,11 @@ class SavePasswordViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { _savedPassword.postValue(true) },
-                { _errorOccurred.postValue(true) }
+                {
+                    _errorOccurred.postValue(true)
+                    Timber.e(it)
+                }
             )
+            .addTo(compositeDisposable)
     }
 }
