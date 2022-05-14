@@ -6,20 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
 
 class PasswordDetailsFragment : Fragment() {
 
     private val navArgs: PasswordDetailsFragmentArgs by navArgs()
     private val gsonFactory: GsonFactory by inject()
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val password: Password by lazy {
         gsonFactory.create().fromJson(navArgs.password, Password::class.java)
     }
@@ -51,6 +57,8 @@ class PasswordDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         displayPasswordValidationResultFragment()
+        setUpPasswordActionButtons()
+        setUpObservers()
     }
 
     private fun displayPasswordValidationResultFragment() {
@@ -60,5 +68,24 @@ class PasswordDetailsFragment : Fragment() {
                 PasswordValidationResultFragment.newInstance(password.password)
             )
             .commit()
+    }
+
+    private fun setUpPasswordActionButtons() {
+        binding.deletePasswordBtn.setOnClickListener {
+            showDialog(
+                titleRes = R.string.password_details_delete_password_title,
+                messageRes = R.string.password_details_delete_password_message,
+                negativeButtonRes = R.string.dialog_button_cancel
+            ) { viewModel.deletePassword() }
+        }
+    }
+
+    private fun setUpObservers() {
+        viewModel.passwordDeletedSuccessfully.observe(viewLifecycleOwner) {
+            if (it) {
+                messageProvider.show(R.string.password_details_password_deleted)
+                findNavController().popBackStack()
+            }
+        }
     }
 }

@@ -44,4 +44,8 @@ internal val useCaseModule = module {
     factory<GetPasswordsUseCase> {
         GetPasswordsUseCaseImpl(passwordsRepository = get())
     }
+
+    factory<DeletePasswordUseCase> {
+        DeletePasswordUseCaseImpl(passwordsRepository = get())
+    }
 }

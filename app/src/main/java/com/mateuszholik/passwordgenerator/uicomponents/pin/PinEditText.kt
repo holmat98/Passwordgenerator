@@ -2,16 +2,14 @@ package com.mateuszholik.passwordgenerator.uicomponents.pin
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.util.AttributeSet
 import android.view.animation.AnimationUtils
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.extensions.changeDrawableBackgroundColor
 
 class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
 
@@ -78,17 +76,11 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         @DrawableRes drawableRes: Int = R.drawable.pin_background,
         backgroundColor: Int
     ) {
-        val drawable = ResourcesCompat.getDrawable(
-            context.resources,
-            drawableRes,
-            null
+        this.changeDrawableBackgroundColor(
+            drawableRes = drawableRes,
+            itemId = R.id.pinBackground,
+            newBackgroundColor = backgroundColor
         )
-        val layerDrawable = drawable as LayerDrawable
-        val gradientDrawable =
-            layerDrawable.findDrawableByLayerId(R.id.pinBackground) as GradientDrawable
-        gradientDrawable.setColor(backgroundColor)
-
-        this.background = drawable
     }
 
     fun animateSuccess() {

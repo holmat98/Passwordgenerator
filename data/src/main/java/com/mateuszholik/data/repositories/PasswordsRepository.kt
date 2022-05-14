@@ -9,7 +9,7 @@ interface PasswordsRepository {
 
     fun insert(platform: String, password: String): Completable
 
-    fun delete(password: Password): Completable
+    fun delete(passwordId: Long): Completable
 
     fun update(password: Password): Completable
 

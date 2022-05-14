@@ -5,7 +5,6 @@ import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.mappers.PasswordListMapper
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.data.repositories.models.Resource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import java.time.LocalDateTime
@@ -32,8 +31,8 @@ internal class PasswordsRepositoryImpl(
         return passwordsDao.insert(newPassword)
     }
 
-    override fun delete(password: Password): Completable =
-        TODO()
+    override fun delete(passwordId: Long): Completable =
+        passwordsDao.deletePassword(passwordId)
 
     override fun update(password: Password): Completable =
         TODO()

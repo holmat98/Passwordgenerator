@@ -16,12 +16,12 @@ internal interface PasswordsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(passwordDB: PasswordDB): Completable
 
-    @Delete
-    fun delete(passwordDB: PasswordDB): Completable
-
     @Update
     fun update(passwordDB: PasswordDB): Completable
 
     @Query("select * from passwords")
     fun getAllPasswords(): Single<List<PasswordDB>>
+
+    @Query("delete from passwords where id = :passwordId")
+    fun deletePassword(passwordId: Long): Completable
 }

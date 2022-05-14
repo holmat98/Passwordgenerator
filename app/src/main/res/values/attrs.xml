@@ -16,4 +16,7 @@
     <declare-styleable name="ExpandableView">
         <attr name="expandableViewText" format="string" />
     </declare-styleable>
+    <declare-styleable name="RoundedImageButton">
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
 </resources>

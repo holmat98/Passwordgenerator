@@ -43,4 +43,11 @@
     <string name="password_details_password_strength">Siła hasła</string>
     <string name="password_details_expiring_date_proposal">Proponowana data zmiany hasła:</string>
     <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
+    <string name="dialog_button_no">Nie</string>
+    <string name="dialog_button_yes">Tak</string>
+    <string name="dialog_button_cancel">Anuluj</string>
+    <string name="dialog_button_delete">Usuń</string>
+    <string name="password_details_delete_password_title">Usuń hasło</string>
+    <string name="password_details_delete_password_message">Czy na pewno chcesz usunąć to hasło?</string>
+    <string name="password_details_password_deleted">Hasło zostało usunięte</string>
 </resources>

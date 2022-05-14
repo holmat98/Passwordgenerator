@@ -63,6 +63,7 @@ val viewModelModule = module {
         PasswordDetailsViewModel(
             password = password,
             calculatePasswordScoreUseCase = get(),
+            deletePasswordUseCase = get(),
             clipboardManager = get()
         )
     }
