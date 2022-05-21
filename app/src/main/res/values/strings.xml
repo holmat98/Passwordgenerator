@@ -50,4 +50,6 @@
     <string name="password_details_delete_password_title">Usuń hasło</string>
     <string name="password_details_delete_password_message">Czy na pewno chcesz usunąć to hasło?</string>
     <string name="password_details_password_deleted">Hasło zostało usunięte</string>
+    <string name="edit_password_button_edit">Edytuj hasło</string>
+    <string name="edit_password_edited_successfully">Hasło zostało zaktualizowane</string>
 </resources>

@@ -34,8 +34,20 @@ internal class PasswordsRepositoryImpl(
     override fun delete(passwordId: Long): Completable =
         passwordsDao.deletePassword(passwordId)
 
-    override fun update(password: Password): Completable =
-        TODO()
+    override fun update(password: Password): Completable {
+        val encryptedPlatformName = encryptionManager.encrypt(password.platformName)
+        val encryptedPassword = encryptionManager.encrypt(password.password)
+
+        val passwordDB = PasswordDB(
+            id = password.id,
+            platformName = encryptedPlatformName.data,
+            platformIV = encryptedPlatformName.iv,
+            password = encryptedPassword.data,
+            passwordIV = encryptedPassword.iv,
+            expiringDate = password.expiringDate
+        )
+        return passwordsDao.update(passwordDB)
+    }
 
     override fun getAllPasswords(): Single<List<Password>> =
         passwordsDao.getAllPasswords()

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/passwords"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsFragment"
-        android:label="PasswordsFragment" >
+        android:label="PasswordsFragment">
         <action
             android:id="@+id/action_passwords_to_passwordDetailsFragment"
             app:destination="@id/passwordDetailsFragment" />
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/generatePassword"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordFragment"
-        android:label="GeneratePasswordFragment" >
+        android:label="GeneratePasswordFragment">
         <action
             android:id="@+id/action_generatePassword_to_savePasswordFragment"
             app:destination="@id/savePasswordFragment" />
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/testPassword"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.testpassword.TestPasswordFragment"
-        android:label="TestPasswordFragment" >
+        android:label="TestPasswordFragment">
         <action
             android:id="@+id/action_testPassword_to_passwordScoreFragment"
             app:destination="@id/passwordScoreFragment" />
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/passwordScoreFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreFragment"
-        android:label="PasswordScoreFragment" >
+        android:label="PasswordScoreFragment">
         <argument
             android:name="password"
             app:argType="string" />
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/savePasswordFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword.SavePasswordFragment"
-        android:label="SavePasswordFragment" >
+        android:label="SavePasswordFragment">
         <argument
             android:name="password"
             app:argType="string"
@@ -48,7 +48,23 @@
     <fragment
         android:id="@+id/passwordDetailsFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passworddetails.PasswordDetailsFragment"
-        android:label="PasswordDetailsFragment" >
+        android:label="PasswordDetailsFragment">
+        <argument
+            android:name="password"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_passwordDetailsFragment_to_editPasswordFragment"
+            app:destination="@id/editPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPasswordFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.editpassword.EditPasswordFragment"
+        android:label="EditPasswordFragment">
+        <action
+            android:id="@+id/action_editPasswordFragment_to_passwords"
+            app:destination="@id/passwords"
+            app:popUpTo="@id/passwords"
+            app:popUpToInclusive="true" />
         <argument
             android:name="password"
             app:argType="string" />

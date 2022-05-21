@@ -78,6 +78,14 @@ class PasswordDetailsFragment : Fragment() {
                 negativeButtonRes = R.string.dialog_button_cancel
             ) { viewModel.deletePassword() }
         }
+        binding.editPasswordBtn.setOnClickListener {
+            val passwordJson = gsonFactory.create().toJson(password)
+            val action =
+                PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
+                    passwordJson
+                )
+            findNavController().navigate(action)
+        }
     }
 
     private fun setUpObservers() {

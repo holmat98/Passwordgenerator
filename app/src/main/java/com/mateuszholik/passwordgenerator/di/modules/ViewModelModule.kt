@@ -4,6 +4,7 @@ import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.login.LogInViewModel
+import com.mateuszholik.passwordgenerator.ui.loggeduser.editpassword.EditPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsViewModel
@@ -65,6 +66,13 @@ val viewModelModule = module {
             calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get()
+        )
+    }
+
+    viewModel { (password: Password) ->
+        EditPasswordViewModel(
+            password = password,
+            updatePasswordUseCase = get()
         )
     }
 }
