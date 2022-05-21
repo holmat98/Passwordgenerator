@@ -7,7 +7,7 @@ import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.EMPTY_STRING
+import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import timber.log.Timber
 
 class EditPasswordViewModel(

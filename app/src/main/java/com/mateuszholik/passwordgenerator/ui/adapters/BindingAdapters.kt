@@ -6,9 +6,11 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.slider.Slider
+import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import com.mateuszholik.passwordgenerator.uicomponents.chart.ProgressChartView
 import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
+import com.mateuszholik.passwordgenerator.uicomponents.switches.TextSwitch
 
 object BindingAdapters {
 
@@ -42,5 +44,17 @@ object BindingAdapters {
     @BindingAdapter("app:setProggress")
     fun setProgress(chartView: ProgressChartView, progress: Int) {
         chartView.progress = progress
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:onSwitchValueChanged")
+    fun setOnSwitchValueChanged(textSwitch: TextSwitch, listener: OnSwitchChangedValueListener) {
+        textSwitch.doOnSwitchChangedValue = { listener.onValueChanged(it) }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:setSwitchValue")
+    fun setSwitchValue(textSwitch: TextSwitch, isChecked: Boolean) {
+        textSwitch.switchValue = isChecked
     }
 }

@@ -57,4 +57,7 @@
     <string name="biometric_authentication_failed">Autentykacja nie powiodła się</string>
     <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
     <string name="biometric_authentication_cancelled">Autentykacja biometrią została anulowana</string>
+    <string name="settings_screen_title">Ustawienia</string>
+    <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
+    <string name="settings">Ustawienia</string>
 </resources>

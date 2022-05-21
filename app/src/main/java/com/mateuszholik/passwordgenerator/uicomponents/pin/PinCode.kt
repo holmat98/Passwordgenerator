@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.databinding.ViewPinCodeBinding
-import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.EMPTY_STRING
+import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import com.mateuszholik.passwordgenerator.R
 
 class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

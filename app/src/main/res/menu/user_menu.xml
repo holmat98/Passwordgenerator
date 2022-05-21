@@ -15,4 +15,9 @@
         android:id="@+id/testPassword"
         android:title="@string/test"
         android:icon="@drawable/ic_test" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings" />
 </menu>

@@ -52,4 +52,12 @@ internal val useCaseModule = module {
     factory<UpdatePasswordUseCase> {
         UpdatePasswordUseCaseImpl(passwordsRepository = get())
     }
+
+    factory<SaveIfShouldUseBiometricAuthenticationUseCase> {
+        SaveIfShouldUseBiometricAuthenticationUseCaseImpl(sharedPrefManager = get())
+    }
+
+    factory<ShouldUseBiometricAuthenticationUseCase> {
+        ShouldUseBiometricAuthenticationUseCaseImpl(sharedPrefManager = get())
+    }
 }

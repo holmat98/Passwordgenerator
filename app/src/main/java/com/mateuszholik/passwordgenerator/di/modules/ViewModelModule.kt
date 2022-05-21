@@ -11,6 +11,7 @@ import com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsViewM
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult.PasswordValidationResultViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword.SavePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.loggeduser.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -21,7 +22,10 @@ val viewModelModule = module {
     }
 
     viewModel {
-        LogInViewModel(isPinCorrectUseCase = get())
+        LogInViewModel(
+            isPinCorrectUseCase = get(),
+            shouldUseBiometricAuthenticationUseCase = get()
+        )
     }
 
     viewModel {
@@ -73,6 +77,13 @@ val viewModelModule = module {
         EditPasswordViewModel(
             password = password,
             updatePasswordUseCase = get()
+        )
+    }
+
+    viewModel {
+        SettingsViewModel(
+            saveIfShouldUseBiometricAuthenticationUseCase = get(),
+            shouldUseBiometricAuthenticationUseCase = get()
         )
     }
 }

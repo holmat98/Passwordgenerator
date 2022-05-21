@@ -50,15 +50,26 @@ class LogInFragment : Fragment() {
     private fun setUpObservers() {
         viewModel.logInSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                goToLoggedUserScreen()
+                viewModel.getIfShouldUseBiometricAuth()
             } else {
                 binding.pinCode.animateFailure()
+            }
+        }
+        viewModel.shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
+            if (it) {
+                goToBiometricAuthenticationScreen()
+            } else {
+                goToLoggedUserScreen()
             }
         }
     }
 
     private fun goToLoggedUserScreen() {
         findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
+    }
+
+    private fun goToBiometricAuthenticationScreen() {
+        findNavController().navigate(R.id.action_authenticationHostFragment_to_biometricAuthenticationFragment)
     }
 
     companion object {

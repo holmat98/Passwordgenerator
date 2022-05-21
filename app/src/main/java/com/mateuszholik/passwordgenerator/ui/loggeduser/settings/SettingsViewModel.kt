@@ -1,48 +1,49 @@
-package com.mateuszholik.passwordgenerator.ui.authentication.login
+package com.mateuszholik.passwordgenerator.ui.loggeduser.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
+import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
+import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
-class LogInViewModel(
-    private val isPinCorrectUseCase: IsPinCorrectUseCase,
+class SettingsViewModel(
+    private val saveIfShouldUseBiometricAuthenticationUseCase: SaveIfShouldUseBiometricAuthenticationUseCase,
     private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase
-) : BaseViewModel() {
-
-    private val _logInSuccess = MutableLiveData<Boolean>()
-    val logInSuccess: LiveData<Boolean>
-        get() = _logInSuccess
+) : BaseViewModel(), OnSwitchChangedValueListener {
 
     private val _shouldUseBiometricAuthentication = MutableLiveData<Boolean>()
     val shouldUseBiometricAuthentication: LiveData<Boolean>
         get() = _shouldUseBiometricAuthentication
 
-    fun logIn(pin: String) {
-        isPinCorrectUseCase(pin)
+    init {
+        getIfShouldUseBiometricAuthentication()
+    }
+
+    override fun onValueChanged(isChecked: Boolean) {
+        saveIfShouldUseBiometricAuthenticationUseCase(isChecked)
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _logInSuccess.postValue(it) },
+                doOnSuccess = {},
                 doOnError = {
-                    _logInSuccess.postValue(false)
                     Timber.e(it)
+                    _errorOccurred.postValue(true)
                 }
             )
             .addTo(compositeDisposable)
     }
 
-    fun getIfShouldUseBiometricAuth() {
+    private fun getIfShouldUseBiometricAuthentication() {
         shouldUseBiometricAuthenticationUseCase()
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _shouldUseBiometricAuthentication.postValue(it) },
+                doOnSuccess = {
+                    _shouldUseBiometricAuthentication.postValue(it)
+                },
                 doOnError = {
-                    _shouldUseBiometricAuthentication.postValue(false)
                     Timber.e(it)
+                    _errorOccurred.postValue(true)
                 }
             )
     }

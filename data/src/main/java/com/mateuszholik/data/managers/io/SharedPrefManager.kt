@@ -31,6 +31,8 @@ abstract class SharedPrefManager {
             }
         }
 
+    fun readBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
+
     fun clear(key: String) {
         sharedPreferences
             .edit()

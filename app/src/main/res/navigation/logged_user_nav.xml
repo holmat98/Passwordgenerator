@@ -69,4 +69,8 @@
             android:name="password"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordValidationResultBinding
-import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.EMPTY_STRING
+import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

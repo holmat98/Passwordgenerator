@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.uicomponents.utils
+package com.mateuszholik.passwordgenerator.utils
 
 internal object Constants {
     const val EMPTY_STRING = ""
