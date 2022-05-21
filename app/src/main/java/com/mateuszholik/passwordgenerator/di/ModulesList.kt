@@ -9,7 +9,8 @@ private val appModules = listOf(
     factoriesModule,
     providersModule,
     managersModule,
-    serializersModule
+    serializersModule,
+    callbacksModule
 )
 
 val allModules = dataModules + domainModules + appModules

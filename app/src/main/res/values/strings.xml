@@ -52,4 +52,9 @@
     <string name="password_details_password_deleted">Hasło zostało usunięte</string>
     <string name="edit_password_button_edit">Edytuj hasło</string>
     <string name="edit_password_edited_successfully">Hasło zostało zaktualizowane</string>
+    <string name="biometric_authentication_header">Zaloguj się przy użyciu biometrii</string>
+    <string name="biometric_authentication_error">Wystąpił błąd podczas autentykacji</string>
+    <string name="biometric_authentication_failed">Autentykacja nie powiodła się</string>
+    <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
+    <string name="biometric_authentication_cancelled">Autentykacja biometrią została anulowana</string>
 </resources>
