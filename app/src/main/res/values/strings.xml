@@ -60,4 +60,16 @@
     <string name="settings_screen_title">Ustawienia</string>
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings">Ustawienia</string>
+    <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
+    <string name="log_in_error">Wystąpił błąd przy sprawdzaniu pinu</string>
+    <string name="edit_password_error">Wystąpił błąd przy edycji hasła</string>
+    <string name="generate_password_error">Wystąpił błąd przy tworzeniu hasła</string>
+    <string name="password_details_password_score_error">Wystąpił błąd przy wyliczaniu siły hasła</string>
+    <string name="password_details_delete_password_error">Wystąpił błąd przy usuwaniu hasła</string>
+    <string name="passwords_get_passwords_error">Wystąpił błąd przy pobieraniu haseł</string>
+    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
+    <string name="save_password_error">Wystąpił błąd przy zapisie hasła</string>
+    <string name="save_password_saved">Hasło zostało zapisane</string>
+    <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
+    <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
 </resources>

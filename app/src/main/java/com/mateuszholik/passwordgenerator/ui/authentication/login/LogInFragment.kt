@@ -6,18 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.mateuszholik.domain.models.PinState
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
     private val viewModel: LogInViewModel by viewModel()
     private val hostViewModel: AuthenticationHostViewModel by sharedViewModel()
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,12 +59,15 @@ class LogInFragment : Fragment() {
 
     private fun setUpObservers() {
         with(viewModel) {
-            logInSuccess.observe(viewLifecycleOwner) {
-                if (it) {
-                    viewModel.getIfShouldUseBiometricAuth()
-                } else {
-                    binding.pinCode.animateFailure()
+            logInResult.observe(viewLifecycleOwner) {
+                when (it) {
+                    PinState.CORRECT -> viewModel.getIfShouldUseBiometricAuth()
+                    PinState.WRONG -> binding.pinCode.animateFailure()
+                    else -> error("Illegal argument")
                 }
+            }
+            errorOccurred.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
             }
             shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
                 if (it) {

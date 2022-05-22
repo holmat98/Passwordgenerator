@@ -7,8 +7,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val _errorOccurred = MutableLiveData(false)
-    val errorOccurred: LiveData<Boolean>
+    protected val _errorOccurred = MutableLiveData<Int>()
+    val errorOccurred: LiveData<Int>
         get() = _errorOccurred
 
     protected val _isProgressBarVisible = MutableLiveData(false)

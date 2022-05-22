@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.SavePasswordUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class SavePasswordViewModel(
@@ -16,8 +16,8 @@ class SavePasswordViewModel(
     private val savePasswordUseCase: SavePasswordUseCase
 ) : BaseViewModel() {
 
-    private val _savedPassword = MutableLiveData<Boolean>()
-    val savedPassword: LiveData<Boolean>
+    private val _savedPassword = MutableLiveData<Int>()
+    val savedPassword: LiveData<Int>
         get() = _savedPassword
 
     val platformName = MutableLiveData(EMPTY_STRING)
@@ -33,12 +33,10 @@ class SavePasswordViewModel(
             password = password.value ?: EMPTY_STRING
         )
         savePasswordUseCase(newPassword)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { _savedPassword.postValue(true) },
-                {
-                    _errorOccurred.postValue(true)
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = { _savedPassword.postValue(R.string.save_password_saved) },
+                doOnError = {
+                    _errorOccurred.postValue(R.string.save_password_error)
                     Timber.e(it)
                 }
             )

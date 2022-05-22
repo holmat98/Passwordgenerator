@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.managers.PasswordScoreManager
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class PasswordsViewModel(
@@ -26,12 +26,12 @@ class PasswordsViewModel(
 
     fun getAllPasswords() {
         getPasswordsUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { _passwords.postValue(it) },
-                {
-                    _errorOccurred.postValue(true)
+            .doOnSubscribe { _isProgressBarVisible.postValue(true) }
+            .doFinally { _isProgressBarVisible.postValue(false) }
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = { _passwords.postValue(it) },
+                doOnError = {
+                    _errorOccurred.postValue(R.string.passwords_get_passwords_error)
                     Timber.e(it)
                 }
             )

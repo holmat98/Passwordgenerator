@@ -65,9 +65,7 @@ class EditPasswordFragment : Fragment() {
                 }
             }
             errorOccurred.observe(viewLifecycleOwner) {
-                if (it) {
-                    messageProvider.show(R.string.error_message)
-                }
+                messageProvider.show(R.string.error_message)
             }
         }
     }

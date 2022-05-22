@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
@@ -26,10 +27,9 @@ class SettingsViewModel(
     override fun onValueChanged(isChecked: Boolean) {
         saveIfShouldUseBiometricAuthenticationUseCase(isChecked)
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = {},
                 doOnError = {
                     Timber.e(it)
-                    _errorOccurred.postValue(true)
+                    _errorOccurred.postValue(R.string.settings_error_on_saving_biometric_auth_setting)
                 }
             )
             .addTo(compositeDisposable)
@@ -43,7 +43,7 @@ class SettingsViewModel(
                 },
                 doOnError = {
                     Timber.e(it)
-                    _errorOccurred.postValue(true)
+                    _errorOccurred.postValue(R.string.settings_error_get_biometric_auth_setting)
                 }
             )
     }

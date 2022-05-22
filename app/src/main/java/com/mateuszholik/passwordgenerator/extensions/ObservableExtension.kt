@@ -5,13 +5,14 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-fun <T> Single<T>.subscribeWithObserveOnMainThread(
+fun <T: Any> Single<T>.subscribeWithObserveOnMainThread(
     scheduler: Scheduler = Schedulers.io(),
     doOnSuccess: (T) -> Unit,
     doOnError: (Throwable) -> Unit
-) = this.subscribeOn(scheduler)
+): Disposable = this.subscribeOn(scheduler)
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(
         { doOnSuccess(it) },
@@ -20,9 +21,9 @@ fun <T> Single<T>.subscribeWithObserveOnMainThread(
 
 fun Completable.subscribeWithObserveOnMainThread(
     scheduler: Scheduler = Schedulers.io(),
-    doOnSuccess: () -> Unit,
+    doOnSuccess: () -> Unit = {},
     doOnError: (Throwable) -> Unit
-) = this.subscribeOn(scheduler)
+): Disposable = this.subscribeOn(scheduler)
     .observeOn(AndroidSchedulers.mainThread())
     .subscribe(
         { doOnSuccess() },

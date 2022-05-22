@@ -2,13 +2,13 @@ package com.mateuszholik.passwordgenerator.ui.authentication.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mateuszholik.domain.models.PinState
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class LogInViewModel(
@@ -16,9 +16,9 @@ class LogInViewModel(
     private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase
 ) : BaseViewModel() {
 
-    private val _logInSuccess = MutableLiveData<Boolean>()
-    val logInSuccess: LiveData<Boolean>
-        get() = _logInSuccess
+    private val _logInResult = MutableLiveData<PinState>()
+    val logInResult: LiveData<PinState>
+        get() = _logInResult
 
     private val _shouldUseBiometricAuthentication = MutableLiveData<Boolean>()
     val shouldUseBiometricAuthentication: LiveData<Boolean>
@@ -27,9 +27,9 @@ class LogInViewModel(
     fun logIn(pin: String) {
         isPinCorrectUseCase(pin)
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _logInSuccess.postValue(it) },
+                doOnSuccess = { _logInResult.postValue(it) },
                 doOnError = {
-                    _logInSuccess.postValue(false)
+                    _errorOccurred.postValue(R.string.log_in_error)
                     Timber.e(it)
                 }
             )
@@ -45,5 +45,6 @@ class LogInViewModel(
                     Timber.e(it)
                 }
             )
+            .addTo(compositeDisposable)
     }
 }

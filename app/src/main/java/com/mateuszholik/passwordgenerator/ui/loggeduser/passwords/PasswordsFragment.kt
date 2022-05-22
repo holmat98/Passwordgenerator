@@ -9,17 +9,21 @@ import androidx.navigation.fragment.findNavController
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.adapters.PasswordsAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 
 class PasswordsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentPasswordsBinding
     private val viewModel: PasswordsViewModel by viewModel()
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
     private val gsonFactory: GsonFactory by inject()
     private val adapter = PasswordsAdapter(
@@ -64,13 +68,19 @@ class PasswordsFragment : BaseFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllPasswords()
+    }
+
     private fun setUpRecyclerView() {
         binding.recyclerView.adapter = adapter
     }
 
     private fun setUpObservers() {
-        viewModel.run {
+        with(viewModel) {
             passwords.observe(viewLifecycleOwner) { adapter.addPasswords(it) }
+            errorOccurred.observe(viewLifecycleOwner) { messageProvider.show(it) }
         }
     }
 

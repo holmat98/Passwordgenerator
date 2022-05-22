@@ -8,13 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentCreatePinBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 
 class CreatePinFragment : Fragment() {
 
     private lateinit var binding: FragmentCreatePinBinding
     private val viewModel: CreatePinViewModel by viewModel()
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +58,8 @@ class CreatePinFragment : Fragment() {
             pinCreateSuccess.observe(viewLifecycleOwner) {
                 goToLoggedUserScreen()
             }
-            pinCreateError.observe(viewLifecycleOwner) {
-                binding.pinCode.animateFailure()
+            errorOccurred.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
             }
         }
     }

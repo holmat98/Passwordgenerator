@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
@@ -23,11 +24,13 @@ class GeneratePasswordViewModel(
 
     fun createPassword() {
         createPasswordUseCase(passwordLength)
-            .subscribeOn(Schedulers.computation())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { _generatedPassword.postValue(it) },
-                { Timber.e(it) }
+            .subscribeWithObserveOnMainThread(
+                scheduler = Schedulers.computation(),
+                doOnSuccess = { _generatedPassword.postValue(it) },
+                doOnError = {
+                    Timber.e(it)
+                    _errorOccurred.postValue(R.string.generate_password_error)
+                }
             )
             .addTo(compositeDisposable)
     }

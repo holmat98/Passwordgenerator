@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class PasswordDetailsViewModel(
@@ -36,7 +35,10 @@ class PasswordDetailsViewModel(
         calculatePasswordScoreUseCase(password.password)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { _passwordScore.postValue(it) },
-                doOnError = { Timber.e(it) }
+                doOnError = {
+                    Timber.e(it)
+                    _errorOccurred.postValue(R.string.password_details_password_score_error)
+                }
             )
             .addTo(compositeDisposable)
     }
@@ -48,7 +50,10 @@ class PasswordDetailsViewModel(
         deletePasswordUseCase(password.id)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { _passwordDeletedSuccessfully.postValue(true) },
-                doOnError = { Timber.e(it) }
+                doOnError = {
+                    Timber.e(it)
+                    _errorOccurred.postValue(R.string.password_details_delete_password_error)
+                }
             )
             .addTo(compositeDisposable)
     }

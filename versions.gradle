@@ -34,7 +34,7 @@ def deps = [:]
 
 def build_versions = [:]
 build_versions.compile_sdk = 31
-build_versions.min_sdk = 28
+build_versions.min_sdk = 30
 build_versions.target_sdk = 31
 build_versions.version_code = 3
 build_versions.version_name = "3.0.0"

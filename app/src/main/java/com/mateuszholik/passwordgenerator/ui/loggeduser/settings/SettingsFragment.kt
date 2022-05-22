@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 
 class SettingsFragment : BaseFragment() {
 
@@ -16,6 +20,7 @@ class SettingsFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: SettingsViewModel by viewModel()
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,5 +38,17 @@ class SettingsFragment : BaseFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setUpObservers()
+    }
+
+    private fun setUpObservers() {
+        viewModel.errorOccurred.observe(viewLifecycleOwner) {
+            messageProvider.show(it)
+        }
     }
 }

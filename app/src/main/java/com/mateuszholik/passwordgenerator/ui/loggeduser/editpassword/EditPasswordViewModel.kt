@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
@@ -43,7 +44,7 @@ class EditPasswordViewModel(
                 },
                 doOnError = {
                     Timber.e(it)
-                    _errorOccurred.postValue(true)
+                    _errorOccurred.postValue(R.string.edit_password_error)
                 }
             )
             .addTo(compositeDisposable)

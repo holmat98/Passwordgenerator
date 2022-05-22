@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSavePasswordBinding
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
 
 class SavePasswordFragment : Fragment() {
 
@@ -21,6 +24,7 @@ class SavePasswordFragment : Fragment() {
     private val viewModel: SavePasswordViewModel by viewModel {
         parametersOf(args.password)
     }
+    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +53,11 @@ class SavePasswordFragment : Fragment() {
     private fun setUpObservers() {
         with(viewModel) {
             savedPassword.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
                 findNavController().popBackStack()
-                Toast.makeText(context, "Password saved", Toast.LENGTH_SHORT).show()
+            }
+            errorOccurred.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
             }
         }
     }
