@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSavePasswordBinding
@@ -48,6 +49,7 @@ class SavePasswordFragment : Fragment() {
     private fun setUpObservers() {
         with(viewModel) {
             savedPassword.observe(viewLifecycleOwner) {
+                findNavController().popBackStack()
                 Toast.makeText(context, "Password saved", Toast.LENGTH_SHORT).show()
             }
         }

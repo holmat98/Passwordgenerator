@@ -5,26 +5,12 @@
     app:startDestination="@id/authenticationHostFragment">
     <fragment
         android:id="@+id/authenticationHostFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostFragment"
-        android:label="AuthenticationHostFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostFragment">
         <action
             android:id="@+id/action_authenticationHostFragment_to_logged_user_nav"
             app:destination="@id/logged_user_nav"
             app:popUpTo="@id/authenticationHostFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_authenticationHostFragment_to_biometricAuthenticationFragment"
-            app:destination="@id/biometricAuthenticationFragment" />
     </fragment>
     <include app:graph="@navigation/logged_user_nav" />
-    <fragment
-        android:id="@+id/biometricAuthenticationFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.authentication.biometric.BiometricAuthenticationFragment"
-        android:label="BiometricAuthenticationFragment">
-        <action
-            android:id="@+id/action_biometricAuthenticationFragment_to_logged_user_nav"
-            app:destination="@id/logged_user_nav"
-            app:popUpTo="@id/authenticationHostFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
 </navigation>

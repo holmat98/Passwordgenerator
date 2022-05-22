@@ -11,6 +11,10 @@ abstract class BaseViewModel : ViewModel() {
     val errorOccurred: LiveData<Boolean>
         get() = _errorOccurred
 
+    protected val _isProgressBarVisible = MutableLiveData(false)
+    val isProgressBarVisible: LiveData<Boolean>
+        get() = _isProgressBarVisible
+
     protected val compositeDisposable = CompositeDisposable()
 
     override fun onCleared() {

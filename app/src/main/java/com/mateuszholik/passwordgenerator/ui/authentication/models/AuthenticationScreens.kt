@@ -2,6 +2,6 @@ package com.mateuszholik.passwordgenerator.ui.authentication.models
 
 enum class AuthenticationScreens {
     LOG_IN,
-    ON_BOARDING,
-    CREATE_PIN
+    CREATE_PIN,
+    BIOMETRIC_LOG_IN
 }

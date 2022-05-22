@@ -51,7 +51,7 @@ class BiometricAuthenticationFragment : BaseFragment() {
     }
 
     private fun goToNextScreen() {
-        findNavController().navigate(R.id.action_biometricAuthenticationFragment_to_logged_user_nav)
+        findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
     }
 
     private fun showBiometricPrompt() {
@@ -64,5 +64,9 @@ class BiometricAuthenticationFragment : BaseFragment() {
                 biometricAuthenticationCallback
             )
         }
+    }
+
+    companion object {
+        fun newInstance() = BiometricAuthenticationFragment()
     }
 }

@@ -8,12 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
+import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
+import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
     private val viewModel: LogInViewModel by viewModel()
+    private val hostViewModel: AuthenticationHostViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,18 +52,20 @@ class LogInFragment : Fragment() {
     }
 
     private fun setUpObservers() {
-        viewModel.logInSuccess.observe(viewLifecycleOwner) {
-            if (it) {
-                viewModel.getIfShouldUseBiometricAuth()
-            } else {
-                binding.pinCode.animateFailure()
+        with(viewModel) {
+            logInSuccess.observe(viewLifecycleOwner) {
+                if (it) {
+                    viewModel.getIfShouldUseBiometricAuth()
+                } else {
+                    binding.pinCode.animateFailure()
+                }
             }
-        }
-        viewModel.shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
-            if (it) {
-                goToBiometricAuthenticationScreen()
-            } else {
-                goToLoggedUserScreen()
+            shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
+                if (it) {
+                    goToBiometricAuthenticationScreen()
+                } else {
+                    goToLoggedUserScreen()
+                }
             }
         }
     }
@@ -69,7 +75,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun goToBiometricAuthenticationScreen() {
-        findNavController().navigate(R.id.action_authenticationHostFragment_to_biometricAuthenticationFragment)
+        hostViewModel.changeScreen(AuthenticationScreens.BIOMETRIC_LOG_IN)
     }
 
     companion object {

@@ -25,4 +25,8 @@ val factoriesModule = module {
     factory<CancellationSignalFactory> {
         CancellationSignalFactoryImpl(messageProvider = get(named(TOAST_MESSAGE_PROVIDER)))
     }
+
+    factory<AppBarConfigurationFactory> {
+        AppBarConfigurationFactoryImpl()
+    }
 }

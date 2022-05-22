@@ -1,21 +1,17 @@
 package com.mateuszholik.passwordgenerator.ui.authentication
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
+import timber.log.Timber
 
 class AuthenticationHostViewModel(
     private val shouldSkipOnBoardingUseCase: ShouldSkipOnBoardingUseCase
-) : ViewModel() {
-
-    private val disposables = CompositeDisposable()
+) : BaseViewModel() {
 
     private val _currentScreen = MutableLiveData<AuthenticationScreens>()
     val currentScreen: LiveData<AuthenticationScreens>
@@ -27,35 +23,27 @@ class AuthenticationHostViewModel(
 
     private fun displayFirstScreen() {
         shouldSkipOnBoardingUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { shouldSkipOnBoarding ->
+            .doOnSubscribe { _isProgressBarVisible.postValue(true) }
+            .doFinally { _isProgressBarVisible.postValue(false) }
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = { isPinCreated ->
                     _currentScreen.postValue(
-                        if (shouldSkipOnBoarding) {
+                        if (isPinCreated) {
                             AuthenticationScreens.LOG_IN
                         } else {
-                            AuthenticationScreens.ON_BOARDING
+                            AuthenticationScreens.CREATE_PIN
                         }
                     )
                 },
-                {
-                    Log.d(LOG_TAG, "${it.message}")
-                    _currentScreen.postValue(AuthenticationScreens.ON_BOARDING)
+                doOnError = {
+                    Timber.e(it)
+                    _currentScreen.postValue(AuthenticationScreens.CREATE_PIN)
                 }
-            ).addTo(disposables)
+            )
+            .addTo(compositeDisposable)
     }
 
     fun changeScreen(newScreen: AuthenticationScreens) {
         _currentScreen.postValue(newScreen)
-    }
-
-    override fun onCleared() {
-        disposables.clear()
-        super.onCleared()
-    }
-
-    private companion object {
-        const val LOG_TAG = "AuthenticationHostViewModel"
     }
 }

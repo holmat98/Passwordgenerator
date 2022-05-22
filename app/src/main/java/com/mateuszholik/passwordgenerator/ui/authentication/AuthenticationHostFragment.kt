@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentAuthenticationHostBinding
 import com.mateuszholik.passwordgenerator.ui.authentication.factories.FragmentFactory
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
@@ -25,11 +27,15 @@ class AuthenticationHostFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAuthenticationHostBinding.inflate(
+        binding = DataBindingUtil.inflate<FragmentAuthenticationHostBinding?>(
             inflater,
+            R.layout.fragment_authentication_host,
             container,
             false
-        )
+        ).apply {
+            viewModel = this@AuthenticationHostFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }

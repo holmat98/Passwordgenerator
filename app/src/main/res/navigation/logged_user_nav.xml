@@ -6,40 +6,35 @@
 
     <fragment
         android:id="@+id/passwords"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsFragment"
-        android:label="PasswordsFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.PasswordsFragment">
         <action
             android:id="@+id/action_passwords_to_passwordDetailsFragment"
             app:destination="@id/passwordDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/generatePassword"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordFragment"
-        android:label="GeneratePasswordFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword.GeneratePasswordFragment">
         <action
             android:id="@+id/action_generatePassword_to_savePasswordFragment"
             app:destination="@id/savePasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/testPassword"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.testpassword.TestPasswordFragment"
-        android:label="TestPasswordFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.testpassword.TestPasswordFragment">
         <action
             android:id="@+id/action_testPassword_to_passwordScoreFragment"
             app:destination="@id/passwordScoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/passwordScoreFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreFragment"
-        android:label="PasswordScoreFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore.PasswordScoreFragment">
         <argument
             android:name="password"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/savePasswordFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword.SavePasswordFragment"
-        android:label="SavePasswordFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword.SavePasswordFragment">
         <argument
             android:name="password"
             app:argType="string"
@@ -47,8 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordDetailsFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passworddetails.PasswordDetailsFragment"
-        android:label="PasswordDetailsFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.passworddetails.PasswordDetailsFragment">
         <argument
             android:name="password"
             app:argType="string" />
@@ -58,8 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPasswordFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.editpassword.EditPasswordFragment"
-        android:label="EditPasswordFragment">
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.editpassword.EditPasswordFragment">
         <action
             android:id="@+id/action_editPasswordFragment_to_passwords"
             app:destination="@id/passwords"
@@ -71,6 +64,5 @@
     </fragment>
     <fragment
         android:id="@+id/settings"
-        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:name="com.mateuszholik.passwordgenerator.ui.loggeduser.settings.SettingsFragment" />
 </navigation>
