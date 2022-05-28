@@ -7,13 +7,15 @@ import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
+import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import timber.log.Timber
 
 class EditPasswordViewModel(
     private val password: Password,
-    private val updatePasswordUseCase: UpdatePasswordUseCase
+    private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val workScheduler: WorkScheduler
 ) : BaseViewModel() {
 
     val newPlatformNameValue = MutableLiveData<String>()
@@ -41,6 +43,7 @@ class EditPasswordViewModel(
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
                     _passwordEditedCorrectly.postValue(true)
+                    workScheduler.cancelWorker(password.id)
                 },
                 doOnError = {
                     Timber.e(it)

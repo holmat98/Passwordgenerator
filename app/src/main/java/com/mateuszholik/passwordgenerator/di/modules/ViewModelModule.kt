@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
 import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.authentication.login.LogInViewModel
@@ -13,6 +14,7 @@ import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult
 import com.mateuszholik.passwordgenerator.ui.loggeduser.savepassword.SavePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.loggeduser.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelModule = module {
@@ -69,14 +71,16 @@ val viewModelModule = module {
             password = password,
             calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
-            clipboardManager = get()
+            clipboardManager = get(),
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
         )
     }
 
     viewModel { (password: Password) ->
         EditPasswordViewModel(
             password = password,
-            updatePasswordUseCase = get()
+            updatePasswordUseCase = get(),
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
         )
     }
 
