@@ -9,14 +9,18 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
+import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class PasswordDetailsViewModel(
     private val password: Password,
     private val calculatePasswordScoreUseCase: CalculatePasswordScoreUseCase,
     private val deletePasswordUseCase: DeletePasswordUseCase,
-    private val clipboardManager: ClipboardManager
+    private val clipboardManager: ClipboardManager,
+    private val workScheduler: WorkScheduler
 ) : BaseViewModel() {
 
     private val _passwordDeletedSuccessfully = MutableLiveData<Boolean>()
@@ -57,4 +61,14 @@ class PasswordDetailsViewModel(
             )
             .addTo(compositeDisposable)
     }
+
+    fun scheduleNotification() {
+        workScheduler.schedule(password, getDifferenceBetweenDays(password.expiringDate))
+    }
+
+    private fun getDifferenceBetweenDays(
+        endDateTime: LocalDateTime
+    ): Long =
+        endDateTime.toInstant(ZoneOffset.UTC).toEpochMilli() -
+                LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()
 }

@@ -72,4 +72,7 @@
     <string name="save_password_saved">Hasło zostało zapisane</string>
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
+    <string name="notification_worker_title">Twoje hasło wygasło</string>
+    <string name="notification_worker_message">Twoje hasło z %1$s wygasło. Rozważ jego zmianę</string>
+    <string name="password_details_notification_set">Przypomnienie zostało ustawione</string>
 </resources>
