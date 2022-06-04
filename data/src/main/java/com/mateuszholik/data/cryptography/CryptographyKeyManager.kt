@@ -8,8 +8,19 @@ import javax.crypto.SecretKey
 
 internal interface CryptographyKeyManager {
 
+    /**
+     * Checks if the key is created
+     */
     fun isKeyCreated(): Boolean
+
+    /**
+     * Creates key
+     */
     fun createKey()
+
+    /**
+     * @return [SecretKey]
+     */
     fun getKey(): SecretKey
 }
 

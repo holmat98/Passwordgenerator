@@ -13,45 +13,48 @@ internal class PasswordsRepositoryImpl(
     private val passwordsDao: PasswordsDao,
     private val passwordListMapper: PasswordListMapper,
     private val encryptionManager: EncryptionManager
-) : BaseRepository(), PasswordsRepository {
+) : PasswordsRepository {
 
-    override fun insert(platform: String, password: String): Completable {
-        val encryptedPlatformName = encryptionManager.encrypt(platform)
-        val encryptedPassword = encryptionManager.encrypt(password)
-
-        val newPassword = PasswordDB(
-            id = 0,
-            platformName = encryptedPlatformName.data,
-            platformIV = encryptedPlatformName.iv,
-            password = encryptedPassword.data,
-            passwordIV = encryptedPassword.iv,
-            expiringDate = LocalDateTime.now().plusDays(90)
-        )
-
-        return passwordsDao.insert(newPassword)
-    }
+    override fun insert(platform: String, password: String): Completable =
+        Single.zip(
+            Single.just(encryptionManager.encrypt(platform)),
+            Single.just(encryptionManager.encrypt(password))
+        ) { encryptedPlatformName, encryptedPassword ->
+            PasswordDB(
+                id = DEFAULT_ID,
+                platformName = encryptedPlatformName.data,
+                platformIV = encryptedPlatformName.iv,
+                password = encryptedPassword.data,
+                passwordIV = encryptedPassword.iv,
+                expiringDate = LocalDateTime.now().plusDays(ADDITIONAL_DAYS_TO_EXPIRING_DATE)
+            )
+        }.flatMapCompletable { passwordsDao.insert(it) }
 
     override fun delete(passwordId: Long): Completable =
         passwordsDao.deletePassword(passwordId)
 
-    override fun update(password: Password): Completable {
-        val encryptedPlatformName = encryptionManager.encrypt(password.platformName)
-        val encryptedPassword = encryptionManager.encrypt(password.password)
-
-        val passwordDB = PasswordDB(
-            id = password.id,
-            platformName = encryptedPlatformName.data,
-            platformIV = encryptedPlatformName.iv,
-            password = encryptedPassword.data,
-            passwordIV = encryptedPassword.iv,
-            expiringDate = password.expiringDate
-        )
-        return passwordsDao.update(passwordDB)
-    }
+    override fun update(password: Password): Completable =
+        Single.zip(
+            Single.just(encryptionManager.encrypt(password.platformName)),
+            Single.just(encryptionManager.encrypt(password.password))
+        ) { encryptedPlatformName, encryptedPassword ->
+            PasswordDB(
+                id = password.id,
+                platformName = encryptedPlatformName.data,
+                platformIV = encryptedPlatformName.iv,
+                password = encryptedPassword.data,
+                passwordIV = encryptedPassword.iv,
+                expiringDate = LocalDateTime.now().plusDays(ADDITIONAL_DAYS_TO_EXPIRING_DATE)
+            )
+        }.flatMapCompletable { passwordsDao.update(it) }
 
     override fun getAllPasswords(): Single<List<Password>> =
         passwordsDao.getAllPasswords()
-            .map { passwordDBList ->
-                passwordListMapper.map(passwordDBList)
-            }
+            .map { passwordListMapper.map(it) }
+
+
+    private companion object {
+        const val ADDITIONAL_DAYS_TO_EXPIRING_DATE = 90L
+        const val DEFAULT_ID = 0L
+    }
 }

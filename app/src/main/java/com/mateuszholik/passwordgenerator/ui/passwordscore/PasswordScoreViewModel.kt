@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore
+package com.mateuszholik.passwordgenerator.ui.passwordscore
 
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase

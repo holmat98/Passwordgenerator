@@ -1,7 +1,6 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
-import com.mateuszholik.data.extensions.read
 import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.constants.SharedPrefKeys.PIN_KEY
 import com.mateuszholik.domain.models.PinState
@@ -15,7 +14,7 @@ internal class IsPinCorrectUseCaseImpl(
 ) : IsPinCorrectUseCase {
 
     override fun invoke(param: String): Single<PinState> =
-        Single.just(encryptedSharedPrefManager.read<String>(PIN_KEY) ?: EMPTY_STRING)
+        Single.just(encryptedSharedPrefManager.readString(PIN_KEY) ?: EMPTY_STRING)
             .map {
                 if (param == it) {
                     PinState.CORRECT

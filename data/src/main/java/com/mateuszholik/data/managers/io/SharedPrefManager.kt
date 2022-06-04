@@ -1,6 +1,7 @@
 package com.mateuszholik.data.managers.io
 
 import android.content.SharedPreferences
+import com.mateuszholik.data.utils.Constants.EMPTY_STRING
 
 abstract class SharedPrefManager {
 
@@ -18,18 +19,9 @@ abstract class SharedPrefManager {
         edit.apply()
     }
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T> read(key: String, kClass: Class<T>): T? =
-        when {
-            kClass.isAssignableFrom(String::class.java) -> sharedPreferences.getString(key, "") as? T
-            kClass.isAssignableFrom(Boolean::class.java) -> sharedPreferences.getBoolean(key, false) as? T
-            kClass.isAssignableFrom(Long::class.java) -> sharedPreferences.getLong(key, 0L) as? T
-            kClass.isAssignableFrom(Float::class.java) -> sharedPreferences.getFloat(key, 0f) as? T
-            kClass.isAssignableFrom(Int::class.java) -> sharedPreferences.getInt(key, 0) as? T
-            else -> {
-                sharedPreferences.getString(key, "") as? T
-            }
-        }
+    fun readString(key: String): String? = sharedPreferences.getString(key, EMPTY_STRING)
+
+    fun readLong(key: String): Long = sharedPreferences.getLong(key, 0)
 
     fun readBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
 

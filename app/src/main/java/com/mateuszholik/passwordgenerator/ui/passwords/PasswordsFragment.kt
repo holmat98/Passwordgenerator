@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwords
+package com.mateuszholik.passwordgenerator.ui.passwords
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
-import com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.adapters.PasswordsAdapter
+import com.mateuszholik.passwordgenerator.ui.passwords.adapters.PasswordsAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named

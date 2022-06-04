@@ -1,9 +1,12 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.domain.managers.PasswordScoreManager
 import com.mateuszholik.domain.models.PasswordScore
 import com.mateuszholik.domain.usecase.base.ParameterizedSingleUseCase
-import com.mateuszholik.domain.validators.*
+import com.mateuszholik.domain.validators.ContainsLetterValidator
+import com.mateuszholik.domain.validators.ContainsUpperCaseValidator
+import com.mateuszholik.domain.validators.ContainsNumberValidator
+import com.mateuszholik.domain.validators.ContainsSpecialCharacterValidator
+import com.mateuszholik.domain.validators.PasswordLengthValidator
 import io.reactivex.rxjava3.core.Single
 
 interface ValidatePasswordUseCase : ParameterizedSingleUseCase<String, PasswordScore>
@@ -17,13 +20,24 @@ internal class ValidatePasswordUseCaseImpl(
 ) : ValidatePasswordUseCase {
 
     override fun invoke(param: String): Single<PasswordScore> =
-        Single.just(
+        Single.zip(
+            Single.just(containsLetterValidator.validate(param)),
+            Single.just(containsUpperCaseValidator.validate(param)),
+            Single.just(containsNumberValidator.validate(param)),
+            Single.just(containsSpecialCharacterValidator.validate(param)),
+            Single.just(passwordLengthValidator.validate(param))
+        ) { containsLetter,
+            containsUppercaseLetter,
+            containsNumber,
+            containsSpecialCharacter,
+            hasMinimumLength ->
+
             PasswordScore(
-                containsLetters = containsLetterValidator.validate(param),
-                containsUpperCaseLetters = containsUpperCaseValidator.validate(param),
-                containsNumbers = containsNumberValidator.validate(param),
-                containsSpecialCharacters = containsSpecialCharacterValidator.validate(param),
-                hasMinimumLength = passwordLengthValidator.validate(param)
+                containsLetters = containsLetter,
+                containsUpperCaseLetters = containsUppercaseLetter,
+                containsNumbers = containsNumber,
+                containsSpecialCharacters = containsSpecialCharacter,
+                hasMinimumLength = hasMinimumLength
             )
-        )
+        }
 }

@@ -1,6 +1,5 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.data.cryptography.EncryptionManager
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.repositories.models.Password
 

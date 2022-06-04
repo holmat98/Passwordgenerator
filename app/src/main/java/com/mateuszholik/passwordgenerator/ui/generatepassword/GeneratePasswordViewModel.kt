@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.generatepassword
+package com.mateuszholik.passwordgenerator.ui.generatepassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

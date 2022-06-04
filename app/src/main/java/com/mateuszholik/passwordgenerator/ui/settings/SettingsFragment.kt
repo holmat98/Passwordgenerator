@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.settings
+package com.mateuszholik.passwordgenerator.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

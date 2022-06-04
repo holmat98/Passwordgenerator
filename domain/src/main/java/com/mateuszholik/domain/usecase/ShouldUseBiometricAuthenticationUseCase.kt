@@ -12,7 +12,5 @@ internal class ShouldUseBiometricAuthenticationUseCaseImpl(
 ) : ShouldUseBiometricAuthenticationUseCase {
 
     override fun invoke(): Single<Boolean> =
-        Single.just(
-            sharedPrefManager.readBoolean(SHOULD_USE_BIOMETRIC_AUTH)
-        )
+        Single.just(sharedPrefManager.readBoolean(SHOULD_USE_BIOMETRIC_AUTH))
 }

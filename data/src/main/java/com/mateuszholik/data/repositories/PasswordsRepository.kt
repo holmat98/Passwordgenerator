@@ -1,7 +1,6 @@
 package com.mateuszholik.data.repositories
 
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.data.repositories.models.Resource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 

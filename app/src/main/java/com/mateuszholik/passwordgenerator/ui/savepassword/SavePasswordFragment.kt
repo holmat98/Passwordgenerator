@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwordscore
+package com.mateuszholik.passwordgenerator.ui.savepassword
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordScoreBinding
+import com.mateuszholik.passwordgenerator.databinding.FragmentSavePasswordBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
-import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-class PasswordScoreFragment : Fragment() {
+class SavePasswordFragment : Fragment() {
 
-    private lateinit var binding: FragmentPasswordScoreBinding
-    private val args: PasswordScoreFragmentArgs by navArgs()
-    private val viewModel: PasswordScoreViewModel by viewModel {
+    private lateinit var binding: FragmentSavePasswordBinding
+    private val args: SavePasswordFragmentArgs by navArgs()
+    private val viewModel: SavePasswordViewModel by viewModel {
         parametersOf(args.password)
     }
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
@@ -32,14 +31,13 @@ class PasswordScoreFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate<FragmentPasswordScoreBinding>(
+        binding = DataBindingUtil.inflate<FragmentSavePasswordBinding?>(
             inflater,
-            R.layout.fragment_password_score,
+            R.layout.fragment_save_password,
             container,
             false
         ).apply {
-            password = args.password
-            viewModel = this@PasswordScoreFragment.viewModel
+            viewModel = this@SavePasswordFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
 
@@ -49,20 +47,18 @@ class PasswordScoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.errorOccurred.observe(viewLifecycleOwner) {
-            messageProvider.show(it)
-            findNavController().popBackStack()
-        }
-
-        displayPasswordValidationResultFragment()
+        setUpObservers()
     }
 
-    private fun displayPasswordValidationResultFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                binding.passwordValidationResult.id,
-                PasswordValidationResultFragment.newInstance(args.password)
-            )
-            .commit()
+    private fun setUpObservers() {
+        with(viewModel) {
+            savedPassword.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
+                findNavController().popBackStack()
+            }
+            errorOccurred.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
+            }
+        }
     }
 }

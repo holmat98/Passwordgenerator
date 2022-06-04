@@ -20,7 +20,6 @@ internal interface EncryptionManager {
      * @param encryptedData [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
      * @return String
      * @throws KeyDoesNotExistsException if key does not exists
-     * @throws IllegalArgumentException if data has wrong format
      */
     fun decrypt(encryptedData: EncryptedData): String
 }

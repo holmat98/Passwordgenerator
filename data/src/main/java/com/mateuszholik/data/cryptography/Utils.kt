@@ -5,5 +5,4 @@ import androidx.security.crypto.MasterKeys
 internal object Utils {
 
     val KEY_GEN_PARAMETER_SPEC = MasterKeys.AES256_GCM_SPEC
-    const val IV_SEPARATOR = "]"
 }

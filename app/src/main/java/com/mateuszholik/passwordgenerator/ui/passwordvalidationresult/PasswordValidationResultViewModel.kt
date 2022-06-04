@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult
+package com.mateuszholik.passwordgenerator.ui.passwordvalidationresult
 
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.usecase.ValidatePasswordUseCase

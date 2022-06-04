@@ -15,11 +15,4 @@ internal class Converters {
 
     @TypeConverter
     fun dateToTimestamp(date: LocalDateTime?): Long? = date?.toEpochSecond(ZoneOffset.UTC)
-
-    @TypeConverter
-    fun byteArrayToString(value: ByteArray?): String? =
-        value?.let { String(it, Charsets.ISO_8859_1) }
-
-    @TypeConverter
-    fun stringToByteArray(value: String?): ByteArray? = value?.toByteArray(Charsets.ISO_8859_1)
 }

@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passworddetails
+package com.mateuszholik.passwordgenerator.ui.passworddetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
-import com.mateuszholik.passwordgenerator.ui.loggeduser.passwordvalidationresult.PasswordValidationResultFragment
+import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf

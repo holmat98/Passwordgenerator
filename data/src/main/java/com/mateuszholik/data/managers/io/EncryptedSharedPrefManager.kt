@@ -8,12 +8,9 @@ import com.mateuszholik.data.cryptography.Utils.KEY_GEN_PARAMETER_SPEC
 
 abstract class EncryptedSharedPrefManager : SharedPrefManager()
 
-internal class EncryptedSharedPrefManagerImpl(
-    private val context: Context
-) : EncryptedSharedPrefManager() {
+internal class EncryptedSharedPrefManagerImpl(context: Context) : EncryptedSharedPrefManager() {
 
-    override val sharedPreferences: SharedPreferences
-        get() = EncryptedSharedPreferences.create(
+    override val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
             ENCRYPTED_SHARED_PREF_FILE_NAME,
             MasterKeys.getOrCreate(KEY_GEN_PARAMETER_SPEC),
             context,

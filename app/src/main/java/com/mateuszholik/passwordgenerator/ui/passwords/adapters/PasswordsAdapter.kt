@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.loggeduser.passwords.adapters
+package com.mateuszholik.passwordgenerator.ui.passwords.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
