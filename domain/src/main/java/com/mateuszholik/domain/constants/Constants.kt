@@ -1,5 +1,5 @@
 package com.mateuszholik.domain.constants
 
-object Constants {
+internal object Constants {
     const val EMPTY_STRING = ""
 }

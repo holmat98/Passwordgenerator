@@ -87,7 +87,8 @@ val viewModelModule = module {
     viewModel {
         SettingsViewModel(
             saveIfShouldUseBiometricAuthenticationUseCase = get(),
-            shouldUseBiometricAuthenticationUseCase = get()
+            shouldUseBiometricAuthenticationUseCase = get(),
+            savePasswordValidityValueUseCase = get()
         )
     }
 }

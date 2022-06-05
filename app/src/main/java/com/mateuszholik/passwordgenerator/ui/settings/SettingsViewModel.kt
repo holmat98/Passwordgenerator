@@ -3,6 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
@@ -13,7 +14,8 @@ import timber.log.Timber
 
 class SettingsViewModel(
     private val saveIfShouldUseBiometricAuthenticationUseCase: SaveIfShouldUseBiometricAuthenticationUseCase,
-    private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase
+    private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase,
+    private val savePasswordValidityValueUseCase: SavePasswordValidityValueUseCase
 ) : BaseViewModel(), OnSwitchChangedValueListener {
 
     private val _shouldUseBiometricAuthentication = MutableLiveData<Boolean>()
@@ -30,6 +32,18 @@ class SettingsViewModel(
                 doOnError = {
                     Timber.e(it)
                     _errorOccurred.postValue(R.string.settings_error_on_saving_biometric_auth_setting)
+                }
+            )
+            .addTo(compositeDisposable)
+    }
+
+    fun savePasswordValidity(numOfDays: Long) {
+        savePasswordValidityValueUseCase(numOfDays)
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = {},
+                doOnError = {
+                    _errorOccurred.postValue(R.string.settings_error_saving_password_validity)
+                    Timber.e(it)
                 }
             )
             .addTo(compositeDisposable)

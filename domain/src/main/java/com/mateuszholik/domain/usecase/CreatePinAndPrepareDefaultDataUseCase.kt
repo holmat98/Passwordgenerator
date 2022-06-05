@@ -1,7 +1,7 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
-import com.mateuszholik.domain.constants.SharedPrefKeys.PIN_KEY
+import com.mateuszholik.data.managers.io.SharedPrefKeys.PIN_KEY
 import com.mateuszholik.domain.usecase.base.CompletableUseCase
 import io.reactivex.rxjava3.core.Completable
 

@@ -3,6 +3,8 @@ package com.mateuszholik.data.repositories
 import com.mateuszholik.data.cryptography.EncryptionManager
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
+import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
+import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.mappers.PasswordListMapper
 import com.mateuszholik.data.repositories.models.Password
 import io.reactivex.rxjava3.core.Completable
@@ -12,21 +14,23 @@ import java.time.LocalDateTime
 internal class PasswordsRepositoryImpl(
     private val passwordsDao: PasswordsDao,
     private val passwordListMapper: PasswordListMapper,
-    private val encryptionManager: EncryptionManager
+    private val encryptionManager: EncryptionManager,
+    private val sharedPrefManager: SharedPrefManager
 ) : PasswordsRepository {
 
     override fun insert(platform: String, password: String): Completable =
         Single.zip(
             Single.just(encryptionManager.encrypt(platform)),
-            Single.just(encryptionManager.encrypt(password))
-        ) { encryptedPlatformName, encryptedPassword ->
+            Single.just(encryptionManager.encrypt(password)),
+            Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY))
+        ) { encryptedPlatformName, encryptedPassword, passwordValidityInDays ->
             PasswordDB(
                 id = DEFAULT_ID,
                 platformName = encryptedPlatformName.data,
                 platformIV = encryptedPlatformName.iv,
                 password = encryptedPassword.data,
                 passwordIV = encryptedPassword.iv,
-                expiringDate = LocalDateTime.now().plusDays(ADDITIONAL_DAYS_TO_EXPIRING_DATE)
+                expiringDate = LocalDateTime.now().plusDays(passwordValidityInDays)
             )
         }.flatMapCompletable { passwordsDao.insert(it) }
 
@@ -36,15 +40,16 @@ internal class PasswordsRepositoryImpl(
     override fun update(password: Password): Completable =
         Single.zip(
             Single.just(encryptionManager.encrypt(password.platformName)),
-            Single.just(encryptionManager.encrypt(password.password))
-        ) { encryptedPlatformName, encryptedPassword ->
+            Single.just(encryptionManager.encrypt(password.password)),
+            Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY))
+        ) { encryptedPlatformName, encryptedPassword, passwordValidityInDays ->
             PasswordDB(
                 id = password.id,
                 platformName = encryptedPlatformName.data,
                 platformIV = encryptedPlatformName.iv,
                 password = encryptedPassword.data,
                 passwordIV = encryptedPassword.iv,
-                expiringDate = LocalDateTime.now().plusDays(ADDITIONAL_DAYS_TO_EXPIRING_DATE)
+                expiringDate = LocalDateTime.now().plusDays(passwordValidityInDays)
             )
         }.flatMapCompletable { passwordsDao.update(it) }
 
@@ -54,7 +59,6 @@ internal class PasswordsRepositoryImpl(
 
 
     private companion object {
-        const val ADDITIONAL_DAYS_TO_EXPIRING_DATE = 90L
         const val DEFAULT_ID = 0L
     }
 }

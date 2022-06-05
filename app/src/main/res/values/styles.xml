@@ -7,6 +7,12 @@
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
 
+    <style name="DialogText" parent="DefaultText">
+        <item name="android:textColor">@color/primary</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="Header" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_40</item>
         <item name="android:textAlignment">center</item>

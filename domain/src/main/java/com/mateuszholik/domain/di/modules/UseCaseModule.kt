@@ -1,8 +1,31 @@
 package com.mateuszholik.domain.di.modules
 
-import com.mateuszholik.domain.usecase.*
+import com.mateuszholik.domain.usecase.CreatePinUseCase
 import com.mateuszholik.domain.usecase.CreatePinUseCaseImpl
+import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCase
 import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCaseImpl
+import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
+import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
+import com.mateuszholik.domain.usecase.CreatePasswordUseCase
+import com.mateuszholik.domain.usecase.CreatePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.ValidatePasswordUseCase
+import com.mateuszholik.domain.usecase.ValidatePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase
+import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCaseImpl
+import com.mateuszholik.domain.usecase.SavePasswordUseCase
+import com.mateuszholik.domain.usecase.SavePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.GetPasswordsUseCase
+import com.mateuszholik.domain.usecase.GetPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.DeletePasswordUseCase
+import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
+import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
+import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCaseImpl
 import org.koin.dsl.module
 
 internal val useCaseModule = module {
@@ -59,5 +82,9 @@ internal val useCaseModule = module {
 
     factory<ShouldUseBiometricAuthenticationUseCase> {
         ShouldUseBiometricAuthenticationUseCaseImpl(sharedPrefManager = get())
+    }
+
+    factory<SavePasswordValidityValueUseCase> {
+        SavePasswordValidityValueUseCaseImpl(sharedPrefManager = get())
     }
 }

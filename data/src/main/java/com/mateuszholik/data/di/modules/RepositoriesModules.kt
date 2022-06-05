@@ -10,7 +10,8 @@ internal val repositoriesModule = module {
         PasswordsRepositoryImpl(
             passwordsDao = get(),
             passwordListMapper = get(),
-            encryptionManager = get()
+            encryptionManager = get(),
+            sharedPrefManager = get()
         )
     }
 }

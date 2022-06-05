@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.showNumberPickerDialog
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
@@ -44,11 +45,26 @@ class SettingsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpObservers()
+
+        binding.passwordValidityButton.setOnClickListener {
+            showNumberPickerDialog(
+                R.string.settings_dialog_password_validity,
+                minValue = MIN_PASSWORD_VALIDITY,
+                maxValue = MAX_PASSWORD_VALIDITY
+            ) {
+                viewModel.savePasswordValidity(it.toLong())
+            }
+        }
     }
 
     private fun setUpObservers() {
         viewModel.errorOccurred.observe(viewLifecycleOwner) {
             messageProvider.show(it)
         }
+    }
+
+    private companion object {
+        const val MIN_PASSWORD_VALIDITY = 30
+        const val MAX_PASSWORD_VALIDITY = 120
     }
 }

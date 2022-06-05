@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.ui.savepassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
+import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.SavePasswordUseCase
 import com.mateuszholik.passwordgenerator.R

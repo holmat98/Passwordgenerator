@@ -1,7 +1,7 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.managers.io.SharedPrefManager
-import com.mateuszholik.domain.constants.SharedPrefKeys.SHOULD_USE_BIOMETRIC_AUTH
+import com.mateuszholik.data.managers.io.SharedPrefKeys.SHOULD_USE_BIOMETRIC_AUTH
 import com.mateuszholik.domain.usecase.base.UseCase
 import io.reactivex.rxjava3.core.Single
 

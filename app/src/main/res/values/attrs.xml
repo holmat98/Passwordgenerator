@@ -16,4 +16,7 @@
     <declare-styleable name="TextSwitch">
         <attr name="text" format="string" />
     </declare-styleable>
+    <declare-styleable name="SettingsButton">
+        <attr name="buttonText" format="string" />
+    </declare-styleable>
 </resources>
