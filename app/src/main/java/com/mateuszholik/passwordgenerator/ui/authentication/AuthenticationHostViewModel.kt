@@ -17,6 +17,10 @@ class AuthenticationHostViewModel(
     val currentScreen: LiveData<AuthenticationScreens>
         get() = _currentScreen
 
+    private val _isProgressBarVisible = MutableLiveData(true)
+    val isProgressBarVisible: LiveData<Boolean>
+        get() = _isProgressBarVisible
+
     init {
         displayFirstScreen()
     }

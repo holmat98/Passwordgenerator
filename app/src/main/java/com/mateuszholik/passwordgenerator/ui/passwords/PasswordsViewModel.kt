@@ -20,6 +20,10 @@ class PasswordsViewModel(
     val passwords: LiveData<List<Password>>
         get() = _passwords
 
+    private val _isProgressBarVisible = MutableLiveData(true)
+    val isProgressBarVisible: LiveData<Boolean>
+        get() = _isProgressBarVisible
+
     init {
         getAllPasswords()
     }

@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.ui.editpassword
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
@@ -24,6 +25,16 @@ class EditPasswordViewModel(
     private val _passwordEditedCorrectly = MutableLiveData<Boolean>()
     val passwordEditedCorrectly: LiveData<Boolean>
         get() = _passwordEditedCorrectly
+
+    val isButtonEnabled = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(newPasswordValue) {
+            value = areInputsNotEmpty()
+        }
+        addSource(newPlatformNameValue) {
+            value = areInputsNotEmpty()
+        }
+    }
 
     init {
         with(password) {
@@ -52,4 +63,8 @@ class EditPasswordViewModel(
             )
             .addTo(compositeDisposable)
     }
+
+    private fun areInputsNotEmpty(): Boolean =
+        newPasswordValue.value?.isNotEmpty() ?: false &&
+                newPlatformNameValue.value?.isNotEmpty() ?: false
 }

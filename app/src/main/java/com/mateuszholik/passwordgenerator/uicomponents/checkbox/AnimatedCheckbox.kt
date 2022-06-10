@@ -46,8 +46,7 @@ class AnimatedCheckbox(context: Context, attrs: AttributeSet) : LinearLayout(con
                     R.raw.failed
                 }
             )
-            playAnimation()
-        }
+        }.playAnimation()
     }
 
 }

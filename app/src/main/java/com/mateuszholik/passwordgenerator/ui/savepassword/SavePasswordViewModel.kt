@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.ui.savepassword
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import com.mateuszholik.domain.models.NewPassword
@@ -23,6 +24,16 @@ class SavePasswordViewModel(
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
 
+    val isButtonEnabled = MediatorLiveData<Boolean>().apply {
+        value = false
+        addSource(platformName) {
+            value = areInputsNotEmpty()
+        }
+        addSource(password) {
+            value = areInputsNotEmpty()
+        }
+    }
+
     init {
         password.postValue(generatedPassword)
     }
@@ -42,4 +53,8 @@ class SavePasswordViewModel(
             )
             .addTo(compositeDisposable)
     }
+
+    private fun areInputsNotEmpty(): Boolean =
+        password.value?.isNotEmpty() ?: false &&
+                password.value?.isNotEmpty() ?: false
 }
