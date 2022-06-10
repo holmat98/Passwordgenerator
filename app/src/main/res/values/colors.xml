@@ -12,19 +12,6 @@
     <color name="transparent">#0000</color>
     <color name="pin_edittext_stroke_success">#00AD20</color>
     <color name="pin_edittext_stroke_error">#B30246</color>
+    <color name="error">#F50C05</color>
     <color name="green">#8bc34a</color>
-    <color name="green_light">#bef67a</color>
-    <color name="green_dark">#5a9216</color>
-    <color name="purple">#B04AC2</color>
-    <color name="purple_light">#B675C2</color>
-    <color name="purple_dark">#671575</color>
-    <color name="veryStrong">#13EB48</color>
-    <color name="strong">#BBEB0C</color>
-    <color name="neutral">#F5D10D</color>
-    <color name="weak">#DB7216</color>
-    <color name="veryWeak">#F50C05</color>
-    <color name="lighter_black">#393939</color>
-    <color name="yellow">#e8e828</color>
-    <color name="light_black">#1c1c1c</color>
-    <color name="green2">#7aed63</color>
 </resources>

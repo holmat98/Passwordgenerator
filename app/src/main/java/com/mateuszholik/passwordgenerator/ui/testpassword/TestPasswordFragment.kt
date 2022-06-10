@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.databinding.FragmentTestPasswordBinding
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -34,6 +35,9 @@ class TestPasswordFragment : BaseFragment() {
 
         binding.testPasswordButton.setOnClickListener {
             navigateToPasswordScoreScreen(binding.testPasswordValueET.text.toString())
+        }
+        binding.testPasswordValueET.doOnTextChanged { text, _, _, _ ->
+            binding.testPasswordButton.isEnabled = text.toString().isNotEmpty()
         }
     }
 

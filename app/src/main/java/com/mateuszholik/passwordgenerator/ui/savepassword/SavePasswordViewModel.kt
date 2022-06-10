@@ -56,5 +56,5 @@ class SavePasswordViewModel(
 
     private fun areInputsNotEmpty(): Boolean =
         password.value?.isNotEmpty() ?: false &&
-                password.value?.isNotEmpty() ?: false
+                platformName.value?.isNotEmpty() ?: false
 }
