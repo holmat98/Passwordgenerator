@@ -16,14 +16,13 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
         LayoutInflater.from(context),
         this
     )
-    private val inputs by lazy {
-        listOf(
-            binding.firstPinCodeElement,
-            binding.secondPinCodeElement,
-            binding.thirdPinCodeElement,
-            binding.fourthPinCodeElement
-        )
-    }
+    private val inputs = listOf(
+        binding.firstPinCodeElement,
+        binding.secondPinCodeElement,
+        binding.thirdPinCodeElement,
+        binding.fourthPinCodeElement
+    )
+
     private var currentIndex: Int = 0
 
     val pin: String
@@ -43,43 +42,23 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
             R.styleable.PinCode
         )
 
-        val areItemsFocusable = typedArray.getBoolean(
-            R.styleable.PinCode_areInputsFocusable,
-            false
-        )
         val isPinHidden = typedArray.getBoolean(
             R.styleable.PinCode_isPinHidden,
             false
-        )
-        val backgroundColor = typedArray.getColor(
-            R.styleable.PinCode_pinInputsBackgroundColor,
-            ContextCompat.getColor(context, R.color.primary)
         )
         val textColor = typedArray.getColor(
             R.styleable.PinCode_pinInputsTextColor,
             ContextCompat.getColor(context, R.color.white)
         )
 
-       applyStyleForInputs(
-           areItemsFocusable,
-           isPinHidden,
-           backgroundColor,
-           textColor
-       )
+        applyStyleForInputs(isPinHidden, textColor)
 
         typedArray.recycle()
     }
 
-    private fun applyStyleForInputs(
-        isItemFocusable: Boolean,
-        isPinHidden: Boolean,
-        backgroundColor: Int,
-        textColor: Int
-    ) {
-        for (input in inputs) {
+    private fun applyStyleForInputs(isPinHidden: Boolean, textColor: Int) {
+        inputs.forEach { input ->
             input.apply {
-                isFocusable = isItemFocusable
-                changeBackground(backgroundColor = backgroundColor)
                 changeTextColor(textColor)
                 if (isPinHidden) {
                     transformationMethod = PasswordTransformationMethod.getInstance()
@@ -101,20 +80,14 @@ class PinCode(context: Context, attrs: AttributeSet) : LinearLayout(context, att
     }
 
     fun animateSuccess() {
-        for (input in inputs) {
-            input.animateSuccess()
-        }
+        inputs.forEach { it.animateSuccess() }
     }
 
     fun animateFailure() {
-        for (input in inputs) {
-            input.animateFailure()
-        }
+        inputs.forEach { it.animateFailure() }
     }
 
     fun setDefaultStyle() {
-        for (input in inputs) {
-            input.setDefaultStyle()
-        }
+        inputs.forEach { it.setDefaultStyle() }
     }
 }

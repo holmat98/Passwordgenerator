@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="PinEditText">
-        <attr name="pinBackgroundColor" format="color" />
         <attr name="pinTextColor" format="color" />
     </declare-styleable>
     <declare-styleable name="PinCode">
-        <attr name="areInputsFocusable" format="boolean" />
-        <attr name="pinInputsBackgroundColor" format="color" />
         <attr name="pinInputsTextColor" format="color" />
         <attr name="isPinHidden" format="boolean" />
     </declare-styleable>
