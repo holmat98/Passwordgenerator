@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.ui.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCase
+import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
@@ -10,7 +10,7 @@ import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import timber.log.Timber
 
 class AuthenticationHostViewModel(
-    private val shouldSkipOnBoardingUseCase: ShouldSkipOnBoardingUseCase
+    private val isPinCreatedUseCase: IsPinCreatedUseCase
 ) : BaseViewModel() {
 
     private val _currentScreen = MutableLiveData<AuthenticationScreens>()
@@ -26,7 +26,7 @@ class AuthenticationHostViewModel(
     }
 
     private fun displayFirstScreen() {
-        shouldSkipOnBoardingUseCase()
+        isPinCreatedUseCase()
             .doOnSubscribe { _isProgressBarVisible.postValue(true) }
             .doFinally { _isProgressBarVisible.postValue(false) }
             .subscribeWithObserveOnMainThread(

@@ -2,8 +2,8 @@ package com.mateuszholik.domain.di.modules
 
 import com.mateuszholik.domain.usecase.CreatePinUseCase
 import com.mateuszholik.domain.usecase.CreatePinUseCaseImpl
-import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCase
-import com.mateuszholik.domain.usecase.ShouldSkipOnBoardingUseCaseImpl
+import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
+import com.mateuszholik.domain.usecase.IsPinCreatedUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
@@ -34,8 +34,8 @@ internal val useCaseModule = module {
         CreatePinUseCaseImpl(encryptedSharedPrefManager = get())
     }
 
-    factory<ShouldSkipOnBoardingUseCase> {
-        ShouldSkipOnBoardingUseCaseImpl(encryptedSharedPrefManager = get())
+    factory<IsPinCreatedUseCase> {
+        IsPinCreatedUseCaseImpl(encryptedSharedPrefManager = get())
     }
 
     factory<IsPinCorrectUseCase> {

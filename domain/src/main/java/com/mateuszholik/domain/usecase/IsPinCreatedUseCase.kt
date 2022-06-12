@@ -6,11 +6,11 @@ import com.mateuszholik.data.managers.io.SharedPrefKeys.PIN_KEY
 import com.mateuszholik.domain.usecase.base.UseCase
 import io.reactivex.rxjava3.core.Single
 
-interface ShouldSkipOnBoardingUseCase : UseCase<Boolean>
+interface IsPinCreatedUseCase : UseCase<Boolean>
 
-internal class ShouldSkipOnBoardingUseCaseImpl(
+internal class IsPinCreatedUseCaseImpl(
     private val encryptedSharedPrefManager: EncryptedSharedPrefManager
-) : ShouldSkipOnBoardingUseCase {
+) : IsPinCreatedUseCase {
 
     override fun invoke(): Single<Boolean> =
         Single.just(encryptedSharedPrefManager.readString(PIN_KEY) ?: EMPTY_STRING)

@@ -31,7 +31,7 @@ val viewModelModule = module {
     }
 
     viewModel {
-        AuthenticationHostViewModel(shouldSkipOnBoardingUseCase = get())
+        AuthenticationHostViewModel(isPinCreatedUseCase = get())
     }
 
     viewModel {
