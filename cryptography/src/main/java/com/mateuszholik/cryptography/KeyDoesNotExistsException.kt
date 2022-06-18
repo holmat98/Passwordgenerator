@@ -1,4 +1,4 @@
-package com.mateuszholik.data.cryptography
+package com.mateuszholik.cryptography
 
 import java.lang.Exception
 

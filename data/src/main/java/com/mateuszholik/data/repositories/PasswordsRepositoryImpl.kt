@@ -1,6 +1,6 @@
 package com.mateuszholik.data.repositories
 
-import com.mateuszholik.data.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.EncryptionManager
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
@@ -56,7 +56,6 @@ internal class PasswordsRepositoryImpl(
     override fun getAllPasswords(): Single<List<Password>> =
         passwordsDao.getAllPasswords()
             .map { passwordListMapper.map(it) }
-
 
     private companion object {
         const val DEFAULT_ID = 0L

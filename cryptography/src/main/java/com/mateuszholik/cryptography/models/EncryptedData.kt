@@ -1,6 +1,6 @@
-package com.mateuszholik.data.cryptography.models
+package com.mateuszholik.cryptography.models
 
-internal data class EncryptedData(val iv: ByteArray, val data: ByteArray) {
+data class EncryptedData(val iv: ByteArray, val data: ByteArray) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

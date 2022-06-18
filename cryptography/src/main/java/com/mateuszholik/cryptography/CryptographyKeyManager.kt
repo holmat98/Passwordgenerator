@@ -1,4 +1,4 @@
-package com.mateuszholik.data.cryptography
+package com.mateuszholik.cryptography
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
@@ -41,10 +41,10 @@ internal class CryptographyKeyManagerImpl : CryptographyKeyManager {
         val keyGenParamSpec = KeyGenParameterSpec.Builder(
             KEY_NAME,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-        ).apply {
-            setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-            setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-        }.build()
+        )
+            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .build()
 
         keyGenerator.run {
             init(keyGenParamSpec)

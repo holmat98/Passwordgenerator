@@ -1,7 +1,7 @@
 package com.mateuszholik.data.repositories
 
-import com.mateuszholik.data.cryptography.EncryptionManager
-import com.mateuszholik.data.cryptography.models.EncryptedData
+import com.mateuszholik.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.managers.io.SharedPrefManager

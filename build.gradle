@@ -9,7 +9,7 @@ buildscript {
 
     dependencies {
         classpath deps.build.gradle_build_tools
-        classpath deps.kotlin.kotlin_plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath deps.navigation.safe_args
 
         // NOTE: Do not place your application dependencies here; they belong

@@ -6,7 +6,6 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.mateuszholik.data.cryptography.Utils
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +25,7 @@ class EncryptedSharedPrefManagerImplTest {
 
         encryptedSharedPreferences = EncryptedSharedPreferences.create(
             "EncryptedData",
-            MasterKeys.getOrCreate(Utils.KEY_GEN_PARAMETER_SPEC),
+            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
             context,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

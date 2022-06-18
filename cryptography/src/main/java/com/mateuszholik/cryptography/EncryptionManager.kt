@@ -1,23 +1,23 @@
-package com.mateuszholik.data.cryptography
+package com.mateuszholik.cryptography
 
-import com.mateuszholik.data.cryptography.models.EncryptedData
+import com.mateuszholik.cryptography.models.EncryptedData
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 
-internal interface EncryptionManager {
+interface EncryptionManager {
 
     /**
      * Encrypt data
      *
      * @param value String that will be encrypted
-     * @return [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
+     * @return [EncryptedData][com.mateuszholik.cryptography.models.EncryptedData]
      */
     fun encrypt(value: String): EncryptedData
 
     /**
      * Decrypt data
      *
-     * @param encryptedData [EncryptedData][com.mateuszholik.data.cryptography.models.EncryptedData]
+     * @param encryptedData [EncryptedData][com.mateuszholik.cryptography.models.EncryptedData]
      * @return String
      * @throws KeyDoesNotExistsException if key does not exists
      */
