@@ -1,9 +1,15 @@
 package com.mateuszholik.passwordgenerator.ui.settings
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
@@ -55,6 +61,7 @@ class SettingsFragment : BaseFragment() {
                 viewModel.savePasswordValidity(it.toLong())
             }
         }
+        binding.shouldUseBiometricAuthBtn.isVisible = isBiometricAvailable()
     }
 
     private fun setUpObservers() {
@@ -62,6 +69,14 @@ class SettingsFragment : BaseFragment() {
             messageProvider.show(it)
         }
     }
+
+    @SuppressLint("WrongConstant")
+    private fun isBiometricAvailable(): Boolean =
+        activity?.let {
+            val biometricManager = BiometricManager.from(it)
+
+            biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS
+        } ?: false
 
     private companion object {
         const val MIN_PASSWORD_VALIDITY = 30

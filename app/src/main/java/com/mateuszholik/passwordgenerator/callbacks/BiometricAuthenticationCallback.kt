@@ -1,6 +1,6 @@
 package com.mateuszholik.passwordgenerator.callbacks
 
-import android.hardware.biometrics.BiometricPrompt
+import androidx.biometric.BiometricPrompt
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 
@@ -9,7 +9,7 @@ class BiometricAuthenticationCallback(
     private val doOnSuccess: () -> Unit
 ) : BiometricPrompt.AuthenticationCallback() {
 
-    override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+    override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
         super.onAuthenticationError(errorCode, errString)
 
         messageProvider.show(R.string.biometric_authentication_error)
@@ -21,7 +21,7 @@ class BiometricAuthenticationCallback(
         messageProvider.show(R.string.biometric_authentication_failed)
     }
 
-    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
+    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
         super.onAuthenticationSucceeded(result)
 
         doOnSuccess()

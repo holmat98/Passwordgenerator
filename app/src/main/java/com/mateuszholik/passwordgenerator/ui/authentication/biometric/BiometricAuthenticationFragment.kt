@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentBiometricAuthenticationBinding
 import com.mateuszholik.passwordgenerator.factories.BiometricPromptFactory
-import com.mateuszholik.passwordgenerator.factories.CancellationSignalFactory
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -21,7 +22,6 @@ class BiometricAuthenticationFragment : BaseFragment() {
     private lateinit var binding: FragmentBiometricAuthenticationBinding
 
     private val biometricPromptFactory: BiometricPromptFactory by inject()
-    private val cancellationSignalFactory: CancellationSignalFactory by inject()
     private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
         parametersOf(::goToNextScreen)
     }
@@ -56,13 +56,15 @@ class BiometricAuthenticationFragment : BaseFragment() {
 
     private fun showBiometricPrompt() {
         activity?.let {
-            val biometricPrompt = biometricPromptFactory.create(it)
+            val biometricPromptInfo = biometricPromptFactory.create(it)
 
-            biometricPrompt.authenticate(
-                cancellationSignalFactory.create(),
-                it.mainExecutor,
+            val biometricPrompt = BiometricPrompt(
+                it,
+                ContextCompat.getMainExecutor(it),
                 biometricAuthenticationCallback
             )
+
+            biometricPrompt.authenticate(biometricPromptInfo)
         }
     }
 

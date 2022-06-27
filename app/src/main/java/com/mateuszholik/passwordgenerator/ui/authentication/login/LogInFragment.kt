@@ -4,26 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.domain.models.PinState
 import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.factories.BiometricPromptFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
-import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
-import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
     private val viewModel: LogInViewModel by viewModel()
-    private val hostViewModel: AuthenticationHostViewModel by sharedViewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val biometricPromptFactory: BiometricPromptFactory by inject()
+    private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
+        parametersOf(::goToLoggedUserScreen)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,7 +76,7 @@ class LogInFragment : Fragment() {
             }
             shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
                 if (it) {
-                    goToBiometricAuthenticationScreen()
+                    showBiometricPrompt()
                 } else {
                     goToLoggedUserScreen()
                 }
@@ -83,8 +88,18 @@ class LogInFragment : Fragment() {
         findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
     }
 
-    private fun goToBiometricAuthenticationScreen() {
-        hostViewModel.changeScreen(AuthenticationScreens.BIOMETRIC_LOG_IN)
+    private fun showBiometricPrompt() {
+        activity?.let {
+            val biometricPromptInfo = biometricPromptFactory.create(it)
+
+            val biometricPrompt = BiometricPrompt(
+                it,
+                ContextCompat.getMainExecutor(it),
+                biometricAuthenticationCallback
+            )
+
+            biometricPrompt.authenticate(biometricPromptInfo)
+        }
     }
 
     companion object {

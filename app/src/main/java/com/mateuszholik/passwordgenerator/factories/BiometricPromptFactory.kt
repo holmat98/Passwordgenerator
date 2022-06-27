@@ -1,26 +1,22 @@
 package com.mateuszholik.passwordgenerator.factories
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.hardware.biometrics.BiometricPrompt
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricPrompt
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
 
 interface BiometricPromptFactory {
 
-    fun create(activity: Activity): BiometricPrompt
+    fun create(activity: Activity): BiometricPrompt.PromptInfo
 }
 
-class BiometricPromptFactoryImpl(
-    private val messageProvider: MessageProvider
-) : BiometricPromptFactory {
+class BiometricPromptFactoryImpl : BiometricPromptFactory {
 
-    override fun create(activity: Activity) = BiometricPrompt.Builder(activity)
+    @SuppressLint("WrongConstant")
+    override fun create(activity: Activity) = BiometricPrompt.PromptInfo.Builder()
         .setTitle(activity.getString(R.string.biometric_authentication_prompt_title))
-        .setNegativeButton(
-            activity.getString(R.string.dialog_button_cancel),
-            activity.mainExecutor
-        ) { _, _ ->
-            messageProvider.show(R.string.biometric_authentication_cancelled)
-        }
+        .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
         .build()
 }

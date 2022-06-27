@@ -30,6 +30,7 @@ versions.retrofit_version = "2.9.0"
 versions.timber_version = "5.0.1"
 versions.swipetorefresh = "1.1.0"
 versions.work_version = "2.7.1"
+versions.biometric = "1.0.0-beta01"
 
 def deps = [:]
 
@@ -135,5 +136,9 @@ deps.swipetorefresh = swipetorefresh
 def worker_manager = [:]
 worker_manager.worker = "androidx.work:work-runtime-ktx:$versions.work_version"
 deps.worker_manager = worker_manager
+
+def biometric = [:]
+biometric.manager = "androidx.biometric:biometric:$versions.biometric"
+deps.biometric = biometric
 
 ext.deps = deps

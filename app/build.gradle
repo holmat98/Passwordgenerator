@@ -119,4 +119,7 @@ dependencies {
 
     // worker manager
     implementation deps.worker_manager.worker
+
+    // biometric manager
+    implementation deps.biometric.manager
 }
