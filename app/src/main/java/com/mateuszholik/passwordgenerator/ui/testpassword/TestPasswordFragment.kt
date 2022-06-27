@@ -35,6 +35,7 @@ class TestPasswordFragment : BaseFragment() {
 
         binding.testPasswordButton.setOnClickListener {
             navigateToPasswordScoreScreen(binding.testPasswordValueET.text.toString())
+            binding.testPasswordValueET.text?.clear()
         }
         binding.testPasswordValueET.doOnTextChanged { text, _, _, _ ->
             binding.testPasswordButton.isEnabled = text.toString().isNotEmpty()
