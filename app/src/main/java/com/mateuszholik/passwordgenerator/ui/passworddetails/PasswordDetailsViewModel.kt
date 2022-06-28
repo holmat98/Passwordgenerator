@@ -7,6 +7,7 @@ import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
@@ -53,7 +54,10 @@ class PasswordDetailsViewModel(
     fun deletePassword() {
         deletePasswordUseCase(password.id)
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _passwordDeletedSuccessfully.postValue(true) },
+                doOnSuccess = {
+                    workScheduler.cancelWorker(password.id)
+                    _passwordDeletedSuccessfully.postValue(true)
+                },
                 doOnError = {
                     Timber.e(it)
                     _errorOccurred.postValue(R.string.password_details_delete_password_error)
@@ -63,12 +67,6 @@ class PasswordDetailsViewModel(
     }
 
     fun scheduleNotification() {
-        workScheduler.schedule(password, getDifferenceBetweenDays(password.expiringDate))
+        workScheduler.schedule(password, password.expiringDate.getDiffFromNowInMilliseconds())
     }
-
-    private fun getDifferenceBetweenDays(
-        endDateTime: LocalDateTime
-    ): Long =
-        endDateTime.toInstant(ZoneOffset.UTC).toEpochMilli() -
-                LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()
 }

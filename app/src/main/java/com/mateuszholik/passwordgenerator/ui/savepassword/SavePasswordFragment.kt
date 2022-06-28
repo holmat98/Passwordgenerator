@@ -54,7 +54,7 @@ class SavePasswordFragment : Fragment() {
         with(viewModel) {
             savedPassword.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.action_savePasswordFragment_to_passwords)
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
