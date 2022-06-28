@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.domain.models.PinState
@@ -13,7 +11,7 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
-import com.mateuszholik.passwordgenerator.factories.BiometricPromptFactory
+import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,10 +23,10 @@ class LogInFragment : Fragment() {
     private lateinit var binding: FragmentLogInBinding
     private val viewModel: LogInViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
-    private val biometricPromptFactory: BiometricPromptFactory by inject()
     private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
         parametersOf(::goToLoggedUserScreen)
     }
+    private val biometricManager: BiometricManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,22 +82,14 @@ class LogInFragment : Fragment() {
         }
     }
 
-    private fun goToLoggedUserScreen() {
-        findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
-    }
-
     private fun showBiometricPrompt() {
         activity?.let {
-            val biometricPromptInfo = biometricPromptFactory.create(it)
-
-            val biometricPrompt = BiometricPrompt(
-                it,
-                ContextCompat.getMainExecutor(it),
-                biometricAuthenticationCallback
-            )
-
-            biometricPrompt.authenticate(biometricPromptInfo)
+            biometricManager.showBiometricPrompt(it, biometricAuthenticationCallback)
         }
+    }
+
+    private fun goToLoggedUserScreen() {
+        findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
     }
 
     companion object {

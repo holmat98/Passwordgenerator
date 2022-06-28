@@ -1,20 +1,16 @@
 package com.mateuszholik.passwordgenerator.ui.settings
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.showNumberPickerDialog
+import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
@@ -28,6 +24,7 @@ class SettingsFragment : BaseFragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val viewModel: SettingsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val biometricManager: BiometricManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +58,9 @@ class SettingsFragment : BaseFragment() {
                 viewModel.savePasswordValidity(it.toLong())
             }
         }
-        binding.shouldUseBiometricAuthBtn.isVisible = isBiometricAvailable()
+        activity?.let {
+            binding.shouldUseBiometricAuthBtn.isVisible = biometricManager.isBiometricAvailable(it)
+        }
     }
 
     private fun setUpObservers() {
@@ -69,14 +68,6 @@ class SettingsFragment : BaseFragment() {
             messageProvider.show(it)
         }
     }
-
-    @SuppressLint("WrongConstant")
-    private fun isBiometricAvailable(): Boolean =
-        activity?.let {
-            val biometricManager = BiometricManager.from(it)
-
-            biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) == BIOMETRIC_SUCCESS
-        } ?: false
 
     private companion object {
         const val MIN_PASSWORD_VALIDITY = 30

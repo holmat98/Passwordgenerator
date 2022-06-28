@@ -9,21 +9,33 @@
         android:name="com.mateuszholik.passwordgenerator.ui.passwords.PasswordsFragment">
         <action
             android:id="@+id/action_passwords_to_passwordDetailsFragment"
-            app:destination="@id/passwordDetailsFragment" />
+            app:destination="@id/passwordDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/generatePassword"
         android:name="com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordFragment">
         <action
             android:id="@+id/action_generatePassword_to_savePasswordFragment"
-            app:destination="@id/savePasswordFragment" />
+            app:destination="@id/savePasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/testPassword"
         android:name="com.mateuszholik.passwordgenerator.ui.testpassword.TestPasswordFragment">
         <action
             android:id="@+id/action_testPassword_to_passwordScoreFragment"
-            app:destination="@id/passwordScoreFragment" />
+            app:destination="@id/passwordScoreFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/passwordScoreFragment"
@@ -48,7 +60,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_passwordDetailsFragment_to_editPasswordFragment"
-            app:destination="@id/editPasswordFragment" />
+            app:destination="@id/editPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/editPasswordFragment"
@@ -56,6 +72,10 @@
         <action
             android:id="@+id/action_editPasswordFragment_to_passwords"
             app:destination="@id/passwords"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/passwords"
             app:popUpToInclusive="true" />
         <argument
