@@ -79,4 +79,5 @@
     <string name="dialog_button_save">Zapisz</string>
     <string name="settings_dialog_password_validity">Wybierz ile dni hasło będzie ważne</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
+    <string name="passwords_create_password_button">Stwórz hasło</string>
 </resources>

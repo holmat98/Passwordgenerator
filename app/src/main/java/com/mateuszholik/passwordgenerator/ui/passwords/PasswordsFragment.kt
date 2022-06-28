@@ -15,6 +15,7 @@ import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.passwords.adapters.PasswordsAdapter
+import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
@@ -66,6 +67,10 @@ class PasswordsFragment : BaseFragment() {
 
             binding.swipeRefreshLayout.isRefreshing = false
         }
+
+        binding.goToCreatePasswordScreenBtn.setOnClickListener {
+            navigateToCreatePasswordScreen()
+        }
     }
 
     override fun onResume() {
@@ -88,6 +93,11 @@ class PasswordsFragment : BaseFragment() {
         val passwordJson = gsonFactory.create().toJson(password)
         val action =
             PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(passwordJson)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToCreatePasswordScreen() {
+        val action = PasswordsFragmentDirections.actionPasswordsToSavePasswordFragment(EMPTY_STRING)
         findNavController().navigate(action)
     }
 }
