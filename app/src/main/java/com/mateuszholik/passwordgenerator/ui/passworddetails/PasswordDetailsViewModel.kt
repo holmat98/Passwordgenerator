@@ -13,8 +13,6 @@ import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import timber.log.Timber
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class PasswordDetailsViewModel(
     private val password: Password,

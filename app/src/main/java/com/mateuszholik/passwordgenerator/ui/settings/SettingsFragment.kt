@@ -52,8 +52,8 @@ class SettingsFragment : BaseFragment() {
         binding.passwordValidityButton.setOnClickListener {
             showNumberPickerDialog(
                 R.string.settings_dialog_password_validity,
-                minValue = MIN_PASSWORD_VALIDITY,
-                maxValue = MAX_PASSWORD_VALIDITY
+                minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
+                maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
             ) {
                 viewModel.savePasswordValidity(it.toLong())
             }
@@ -70,7 +70,7 @@ class SettingsFragment : BaseFragment() {
     }
 
     private companion object {
-        const val MIN_PASSWORD_VALIDITY = 30
-        const val MAX_PASSWORD_VALIDITY = 120
+        const val MIN_PASSWORD_VALIDITY_IN_DAYS = 30
+        const val MAX_PASSWORD_VALIDITY_IN_DAYS = 120
     }
 }

@@ -46,8 +46,4 @@ class AuthenticationHostViewModel(
             )
             .addTo(compositeDisposable)
     }
-
-    fun changeScreen(newScreen: AuthenticationScreens) {
-        _currentScreen.postValue(newScreen)
-    }
 }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.mateuszholik.domain.models.PinState
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
@@ -62,12 +61,9 @@ class LogInFragment : Fragment() {
 
     private fun setUpObservers() {
         with(viewModel) {
-            logInResult.observe(viewLifecycleOwner) {
-                when (it) {
-                    PinState.CORRECT -> viewModel.getIfShouldUseBiometricAuth()
-                    PinState.WRONG -> binding.pinCode.animateFailure()
-                    else -> error("Illegal argument")
-                }
+            loginFailed.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
+                binding.pinCode.animateFailure()
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)

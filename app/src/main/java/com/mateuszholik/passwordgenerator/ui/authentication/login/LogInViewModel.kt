@@ -16,9 +16,9 @@ class LogInViewModel(
     private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase
 ) : BaseViewModel() {
 
-    private val _logInResult = MutableLiveData<PinState>()
-    val logInResult: LiveData<PinState>
-        get() = _logInResult
+    private val _loginFailed = MutableLiveData<Int>()
+    val loginFailed: LiveData<Int>
+        get() = _loginFailed
 
     private val _shouldUseBiometricAuthentication = MutableLiveData<Boolean>()
     val shouldUseBiometricAuthentication: LiveData<Boolean>
@@ -27,7 +27,7 @@ class LogInViewModel(
     fun logIn(pin: String) {
         isPinCorrectUseCase(pin)
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _logInResult.postValue(it) },
+                doOnSuccess = { managePinState(it) },
                 doOnError = {
                     _errorOccurred.postValue(R.string.log_in_error)
                     Timber.e(it)
@@ -36,12 +36,19 @@ class LogInViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun getIfShouldUseBiometricAuth() {
+    private fun managePinState(pinState: PinState) =
+        when(pinState) {
+            PinState.CORRECT -> getIfShouldUseBiometricAuth()
+            PinState.WRONG -> _loginFailed.postValue(R.string.log_in_wrong_pin)
+            else -> _errorOccurred.postValue(R.string.error_message)
+        }
+
+    private fun getIfShouldUseBiometricAuth() {
         shouldUseBiometricAuthenticationUseCase()
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { _shouldUseBiometricAuthentication.postValue(it) },
                 doOnError = {
-                    _shouldUseBiometricAuthentication.postValue(false)
+                    _errorOccurred.postValue(R.string.error_message)
                     Timber.e(it)
                 }
             )
