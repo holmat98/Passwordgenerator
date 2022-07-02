@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 internal val factoriesModule = module {
 
-    factory<PasswordFactory> { PasswordFactoryImpl() }
+    single<PasswordFactory> { PasswordFactoryImpl() }
 }

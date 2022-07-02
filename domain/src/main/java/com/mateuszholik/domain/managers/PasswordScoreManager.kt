@@ -64,7 +64,7 @@ internal class PasswordScoreManagerImpl(
         for (i in 0..password.length - 2) {
             val nextCharsDiff =
                 abs(password[i].lowercaseChar().code - password[i + 1].lowercaseChar().code)
-            if (password[i].lowercaseChar().code == password[i + 1].lowercaseChar().code || nextCharsDiff in 0..2) {
+            if (nextCharsDiff in 0..2) {
                 numOfPatterns++
             }
         }

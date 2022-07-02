@@ -10,13 +10,13 @@ import org.koin.dsl.module
 
 internal val validatorsModule = module {
 
-    factory<ContainsLetterValidator> { ContainsLetterValidatorImpl() }
+    single<ContainsLetterValidator> { ContainsLetterValidatorImpl() }
 
-    factory<ContainsUpperCaseValidator> { ContainsUpperCaseValidatorImpl() }
+    single<ContainsUpperCaseValidator> { ContainsUpperCaseValidatorImpl() }
 
-    factory<ContainsNumberValidator> { ContainsNumberValidatorImpl() }
+    single<ContainsNumberValidator> { ContainsNumberValidatorImpl() }
 
-    factory<ContainsSpecialCharacterValidator> { ContainsSpecialCharacterValidatorImpl() }
+    single<ContainsSpecialCharacterValidator> { ContainsSpecialCharacterValidatorImpl() }
 
-    factory<PasswordLengthValidator> { PasswordLengthValidatorImpl() }
+    single<PasswordLengthValidator> { PasswordLengthValidatorImpl() }
 }

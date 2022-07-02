@@ -42,11 +42,11 @@ internal val useCaseModule = module {
         IsPinCorrectUseCaseImpl(encryptedSharedPrefManager = get())
     }
 
-    factory<CreatePasswordUseCase> {
-        CreatePasswordUseCaseImpl()
+    single<CreatePasswordUseCase> {
+        CreatePasswordUseCaseImpl(passwordFactory = get())
     }
 
-    factory<ValidatePasswordUseCase> {
+    single<ValidatePasswordUseCase> {
         ValidatePasswordUseCaseImpl(
             containsLetterValidator = get(),
             containsNumberValidator = get(),
@@ -56,15 +56,15 @@ internal val useCaseModule = module {
         )
     }
 
-    factory<CalculatePasswordScoreUseCase> {
+    single<CalculatePasswordScoreUseCase> {
         CalculatePasswordScoreUseCaseImpl(passwordScoreManager = get())
     }
 
-    factory<SavePasswordUseCase> {
+    single<SavePasswordUseCase> {
         SavePasswordUseCaseImpl(passwordsRepository = get())
     }
 
-    factory<GetPasswordsUseCase> {
+    single<GetPasswordsUseCase> {
         GetPasswordsUseCaseImpl(passwordsRepository = get())
     }
 
@@ -76,15 +76,15 @@ internal val useCaseModule = module {
         UpdatePasswordUseCaseImpl(passwordsRepository = get())
     }
 
-    factory<SaveIfShouldUseBiometricAuthenticationUseCase> {
+    single<SaveIfShouldUseBiometricAuthenticationUseCase> {
         SaveIfShouldUseBiometricAuthenticationUseCaseImpl(sharedPrefManager = get())
     }
 
-    factory<ShouldUseBiometricAuthenticationUseCase> {
+    single<ShouldUseBiometricAuthenticationUseCase> {
         ShouldUseBiometricAuthenticationUseCaseImpl(sharedPrefManager = get())
     }
 
-    factory<SavePasswordValidityValueUseCase> {
+    single<SavePasswordValidityValueUseCase> {
         SavePasswordValidityValueUseCaseImpl(sharedPrefManager = get())
     }
 }
