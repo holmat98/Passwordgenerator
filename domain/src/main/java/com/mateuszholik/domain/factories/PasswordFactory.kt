@@ -1,12 +1,5 @@
 package com.mateuszholik.domain.factories
 
-import com.mateuszholik.domain.constants.PasswordConstants.LETTERS
-import com.mateuszholik.domain.constants.PasswordConstants.NUMBERS
-import com.mateuszholik.domain.constants.PasswordConstants.SPECIAL_CHARACTERS
-import com.mateuszholik.domain.constants.PasswordConstants.UPPERCASE_LETTERS
-import java.lang.StringBuilder
-import java.security.SecureRandom
-
 interface PasswordFactory {
 
     fun create(
@@ -27,7 +20,7 @@ internal class PasswordFactoryImpl : PasswordFactory {
         hasNumbers: Boolean,
         hasSpecialCharacters: Boolean
     ): String {
-        var allCharacters = ""
+        /*var allCharacters = ""
 
         if (hasLetters) { allCharacters += LETTERS }
         if (hasUppercaseLetters) { allCharacters += UPPERCASE_LETTERS }
@@ -39,9 +32,9 @@ internal class PasswordFactoryImpl : PasswordFactory {
         for (i in 0..length) {
             val index = secureRandom.nextInt(allCharacters.length)
             password.append(allCharacters[index])
-        }
+        }*/
 
-        return password.toString()
+        return ""
     }
 
     private companion object {

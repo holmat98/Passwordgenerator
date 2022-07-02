@@ -43,7 +43,7 @@ internal val useCaseModule = module {
     }
 
     factory<CreatePasswordUseCase> {
-        CreatePasswordUseCaseImpl(passwordFactory = get())
+        CreatePasswordUseCaseImpl()
     }
 
     factory<ValidatePasswordUseCase> {
