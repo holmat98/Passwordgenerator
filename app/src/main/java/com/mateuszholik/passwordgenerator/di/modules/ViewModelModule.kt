@@ -55,7 +55,7 @@ val viewModelModule = module {
     viewModel {
         PasswordsViewModel(
             getPasswordsUseCase = get(),
-            passwordsScoreManager = get()
+            passwordsScoreProvider = get()
         )
     }
 

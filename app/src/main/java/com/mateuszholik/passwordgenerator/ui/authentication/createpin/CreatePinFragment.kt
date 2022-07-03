@@ -16,7 +16,7 @@ import org.koin.core.qualifier.named
 
 class CreatePinFragment : Fragment() {
 
-    private lateinit var binding: FragmentCreatePinBinding
+    private var binding: FragmentCreatePinBinding? = null
     private val viewModel: CreatePinViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
@@ -24,14 +24,14 @@ class CreatePinFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCreatePinBinding.inflate(
             inflater,
             container,
             false
         )
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +41,13 @@ class CreatePinFragment : Fragment() {
         setUpObservers()
     }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     private fun setUpKeyboard() {
+        val binding = binding ?: return
         with(binding) {
             keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
             keyboard.doOnUndoClicked = {

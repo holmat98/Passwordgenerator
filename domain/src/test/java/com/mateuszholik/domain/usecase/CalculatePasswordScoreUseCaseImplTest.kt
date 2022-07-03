@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.domain.managers.PasswordScoreManager
+import com.mateuszholik.domain.providers.PasswordScoreProvider
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Test
@@ -10,7 +10,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class CalculatePasswordScoreUseCaseImplTest {
 
-    private val passwordScoreManager = mockk<PasswordScoreManager>()
+    private val passwordScoreManager = mockk<PasswordScoreProvider>()
 
     private val calculatePasswordScoreUseCase =
         CalculatePasswordScoreUseCaseImpl(passwordScoreManager)

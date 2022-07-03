@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentAuthenticationHostBinding
+import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.ui.authentication.factories.FragmentFactory
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -17,7 +19,7 @@ class AuthenticationHostFragment : BaseFragment() {
 
     private val viewModel: AuthenticationHostViewModel by sharedViewModel()
     private val fragmentFactory: FragmentFactory by inject()
-    private lateinit var binding: FragmentAuthenticationHostBinding
+    private var binding: FragmentAuthenticationHostBinding? = null
 
     override val isBottomNavVisible: Boolean
         get() = false
@@ -26,7 +28,7 @@ class AuthenticationHostFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentAuthenticationHostBinding?>(
             inflater,
             R.layout.fragment_authentication_host,
@@ -37,7 +39,7 @@ class AuthenticationHostFragment : BaseFragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,10 +50,26 @@ class AuthenticationHostFragment : BaseFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        binding?.let {
+            activity?.removeFragment(it.fragmentHost.id, CURRENT_SCREEN_TAG)
+        }
+        binding = null
+        super.onDestroyView()
+    }
+
     private fun replaceCurrentScreen(newScreen: AuthenticationScreens) {
-        requireActivity().supportFragmentManager.beginTransaction().replace(
-            binding.fragmentHost.id,
-            fragmentFactory.create(newScreen)
-        ).commit()
+        val binding = binding ?: return
+        requireActivity().supportFragmentManager.commit {
+            replace(
+                binding.fragmentHost.id,
+                fragmentFactory.create(newScreen),
+                CURRENT_SCREEN_TAG
+            )
+        }
+    }
+
+    private companion object {
+        const val CURRENT_SCREEN_TAG = "AUTHENTICATION_SCREEN"
     }
 }

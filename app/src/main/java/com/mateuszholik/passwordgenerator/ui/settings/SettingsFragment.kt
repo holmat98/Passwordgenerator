@@ -21,7 +21,7 @@ class SettingsFragment : BaseFragment() {
 
     override val isBottomNavVisible: Boolean = true
 
-    private lateinit var binding: FragmentSettingsBinding
+    private var binding: FragmentSettingsBinding? = null
     private val viewModel: SettingsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val biometricManager: BiometricManager by inject()
@@ -30,7 +30,7 @@ class SettingsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentSettingsBinding?>(
             inflater,
             R.layout.fragment_settings,
@@ -41,14 +41,23 @@ class SettingsFragment : BaseFragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViews()
         setUpObservers()
+    }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
+    private fun setUpViews() {
+        val binding = binding ?: return
         binding.passwordValidityButton.setOnClickListener {
             showNumberPickerDialog(
                 R.string.settings_dialog_password_validity,

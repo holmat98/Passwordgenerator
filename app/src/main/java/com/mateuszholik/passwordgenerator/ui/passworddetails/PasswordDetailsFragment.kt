@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
@@ -32,13 +34,13 @@ class PasswordDetailsFragment : Fragment() {
     private val viewModel: PasswordDetailsViewModel by viewModel {
         parametersOf(password)
     }
-    private lateinit var binding: FragmentPasswordDetailsBinding
+    private var binding: FragmentPasswordDetailsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentPasswordDetailsBinding?>(
             inflater,
             R.layout.fragment_password_details,
@@ -50,7 +52,7 @@ class PasswordDetailsFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,30 +63,46 @@ class PasswordDetailsFragment : Fragment() {
         setUpObservers()
     }
 
-    private fun displayPasswordValidationResultFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                binding.passwordValidationResult.id,
-                PasswordValidationResultFragment.newInstance(password.password)
+    override fun onDestroyView() {
+        binding?.let {
+            activity?.removeFragment(
+                it.passwordValidationResult.id,
+                VALIDATION_RESULT_FRAGMENT_TAG
             )
-            .commit()
+        }
+        binding = null
+        super.onDestroyView()
+    }
+
+    private fun displayPasswordValidationResultFragment() {
+        val binding = binding ?: return
+        requireActivity().supportFragmentManager.commit {
+            replace(
+                binding.passwordValidationResult.id,
+                PasswordValidationResultFragment.newInstance(password.password),
+                VALIDATION_RESULT_FRAGMENT_TAG
+            )
+        }
     }
 
     private fun setUpPasswordActionButtons() {
-        binding.deletePasswordBtn.setOnClickListener {
-            showDialog(
-                titleRes = R.string.password_details_delete_password_title,
-                messageRes = R.string.password_details_delete_password_message,
-                negativeButtonRes = R.string.dialog_button_cancel
-            ) { viewModel.deletePassword() }
-        }
-        binding.editPasswordBtn.setOnClickListener {
-            val passwordJson = gsonFactory.create().toJson(password)
-            val action =
-                PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
-                    passwordJson
-                )
-            findNavController().navigate(action)
+        val binding = binding ?: return
+        binding.run {
+            deletePasswordBtn.setOnClickListener {
+                showDialog(
+                    titleRes = R.string.password_details_delete_password_title,
+                    messageRes = R.string.password_details_delete_password_message,
+                    negativeButtonRes = R.string.dialog_button_cancel
+                ) { viewModel?.deletePassword() }
+            }
+            editPasswordBtn.setOnClickListener {
+                val passwordJson = gsonFactory.create().toJson(password)
+                val action =
+                    PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
+                        passwordJson
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -100,5 +118,9 @@ class PasswordDetailsFragment : Fragment() {
                 messageProvider.show(it)
             }
         }
+    }
+
+    private companion object {
+        const val VALIDATION_RESULT_FRAGMENT_TAG = "VALIDATION_RESULT_FRAGMENT"
     }
 }

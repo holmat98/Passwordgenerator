@@ -19,7 +19,7 @@ import org.koin.core.qualifier.named
 
 class SavePasswordFragment : Fragment() {
 
-    private lateinit var binding: FragmentSavePasswordBinding
+    private var binding: FragmentSavePasswordBinding? = null
     private val args: SavePasswordFragmentArgs by navArgs()
     private val viewModel: SavePasswordViewModel by viewModel {
         parametersOf(args.password)
@@ -30,7 +30,7 @@ class SavePasswordFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentSavePasswordBinding?>(
             inflater,
             R.layout.fragment_save_password,
@@ -41,13 +41,18 @@ class SavePasswordFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpObservers()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     private fun setUpObservers() {

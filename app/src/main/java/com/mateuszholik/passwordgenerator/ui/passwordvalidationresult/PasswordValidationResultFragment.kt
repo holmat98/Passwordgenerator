@@ -18,7 +18,7 @@ import org.koin.core.qualifier.named
 
 class PasswordValidationResultFragment : Fragment() {
 
-    private lateinit var binding: FragmentPasswordValidationResultBinding
+    private var binding: FragmentPasswordValidationResultBinding? = null
 
     private val password: String by lazy {
         requireArguments().getString(PASSWORD_KEY, EMPTY_STRING)
@@ -33,7 +33,7 @@ class PasswordValidationResultFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentPasswordValidationResultBinding?>(
             inflater,
             R.layout.fragment_password_validation_result,
@@ -44,13 +44,18 @@ class PasswordValidationResultFragment : Fragment() {
             viewModel = this@PasswordValidationResultFragment.viewModel
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpObservers()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     private fun setUpObservers() {

@@ -3,7 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.passwords
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.domain.managers.PasswordScoreManager
+import com.mateuszholik.domain.providers.PasswordScoreProvider
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
@@ -13,7 +13,7 @@ import timber.log.Timber
 
 class PasswordsViewModel(
     private val getPasswordsUseCase: GetPasswordsUseCase,
-    private val passwordsScoreManager: PasswordScoreManager
+    private val passwordsScoreProvider: PasswordScoreProvider
 ) : BaseViewModel() {
 
     private val _passwords = MutableLiveData<List<Password>>()
@@ -42,5 +42,5 @@ class PasswordsViewModel(
             .addTo(compositeDisposable)
     }
 
-    fun getPasswordScore(password: String) = passwordsScoreManager.getScore(password)
+    fun getPasswordScore(password: String) = passwordsScoreProvider.getScore(password)
 }

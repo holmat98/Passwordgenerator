@@ -57,7 +57,7 @@ internal val useCaseModule = module {
     }
 
     single<CalculatePasswordScoreUseCase> {
-        CalculatePasswordScoreUseCaseImpl(passwordScoreManager = get())
+        CalculatePasswordScoreUseCaseImpl(passwordScoreProvider = get())
     }
 
     single<SavePasswordUseCase> {

@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordScoreBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsFragment
 import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,7 +23,7 @@ import org.koin.core.qualifier.named
 
 class PasswordScoreFragment : Fragment() {
 
-    private lateinit var binding: FragmentPasswordScoreBinding
+    private var binding: FragmentPasswordScoreBinding? = null
     private val args: PasswordScoreFragmentArgs by navArgs()
     private val viewModel: PasswordScoreViewModel by viewModel {
         parametersOf(args.password)
@@ -31,7 +34,7 @@ class PasswordScoreFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentPasswordScoreBinding>(
             inflater,
             R.layout.fragment_password_score,
@@ -43,7 +46,7 @@ class PasswordScoreFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,12 +60,29 @@ class PasswordScoreFragment : Fragment() {
         displayPasswordValidationResultFragment()
     }
 
-    private fun displayPasswordValidationResultFragment() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(
-                binding.passwordValidationResult.id,
-                PasswordValidationResultFragment.newInstance(args.password)
+    override fun onDestroyView() {
+        binding?.let {
+            activity?.removeFragment(
+                it.passwordValidationResult.id,
+                VALIDATION_RESULT_FRAGMENT_TAG
             )
-            .commit()
+        }
+        binding = null
+        super.onDestroyView()
+    }
+
+    private fun displayPasswordValidationResultFragment() {
+        val binding = binding ?: return
+        requireActivity().supportFragmentManager.commit {
+            replace(
+                binding.passwordValidationResult.id,
+                PasswordValidationResultFragment.newInstance(args.password),
+                VALIDATION_RESULT_FRAGMENT_TAG
+            )
+        }
+    }
+
+    private companion object {
+        const val VALIDATION_RESULT_FRAGMENT_TAG = "VALIDATION_RESULT_FRAGMENT"
     }
 }

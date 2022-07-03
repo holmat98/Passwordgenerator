@@ -19,7 +19,7 @@ import org.koin.core.qualifier.named
 
 class LogInFragment : Fragment() {
 
-    private lateinit var binding: FragmentLogInBinding
+    private var binding: FragmentLogInBinding? = null
     private val viewModel: LogInViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
@@ -31,14 +31,14 @@ class LogInFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentLogInBinding.inflate(
             inflater,
             container,
             false
         )
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +48,13 @@ class LogInFragment : Fragment() {
         setUpKeyboard()
     }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     private fun setUpKeyboard() {
+        val binding = binding ?: return
         with(binding) {
             keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
             keyboard.doOnUndoClicked = {
@@ -60,6 +66,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun setUpObservers() {
+        val binding = binding ?: return
         with(viewModel) {
             loginFailed.observe(viewLifecycleOwner) {
                 messageProvider.show(it)

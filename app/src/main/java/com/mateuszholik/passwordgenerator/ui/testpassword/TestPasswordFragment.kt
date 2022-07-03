@@ -11,7 +11,7 @@ import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 
 class TestPasswordFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentTestPasswordBinding
+    private var binding: FragmentTestPasswordBinding? = null
 
     override val isBottomNavVisible: Boolean
         get() = true
@@ -20,19 +20,29 @@ class TestPasswordFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentTestPasswordBinding.inflate(
             inflater,
             container,
             false
         )
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViews()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
+    private fun setUpViews() {
+        val binding = binding ?: return
         binding.testPasswordButton.setOnClickListener {
             navigateToPasswordScoreScreen(binding.testPasswordValueET.text.toString())
             binding.testPasswordValueET.text?.clear()

@@ -22,7 +22,7 @@ import org.koin.core.qualifier.named
 
 class PasswordsFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentPasswordsBinding
+    private var binding: FragmentPasswordsBinding? = null
     private val viewModel: PasswordsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
@@ -42,7 +42,7 @@ class PasswordsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentPasswordsBinding?>(
             inflater,
             R.layout.fragment_passwords,
@@ -53,7 +53,7 @@ class PasswordsFragment : BaseFragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,7 +61,21 @@ class PasswordsFragment : BaseFragment() {
 
         setUpRecyclerView()
         setUpObservers()
+        setUpViews()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllPasswords()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
+    private fun setUpViews() {
+        val binding = binding ?: return
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getAllPasswords()
 
@@ -73,13 +87,8 @@ class PasswordsFragment : BaseFragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getAllPasswords()
-    }
-
     private fun setUpRecyclerView() {
-        binding.recyclerView.adapter = adapter
+        binding?.recyclerView?.adapter = adapter
     }
 
     private fun setUpObservers() {

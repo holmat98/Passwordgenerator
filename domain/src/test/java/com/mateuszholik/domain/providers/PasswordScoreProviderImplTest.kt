@@ -1,4 +1,4 @@
-package com.mateuszholik.domain.managers
+package com.mateuszholik.domain.providers
 
 import com.mateuszholik.domain.validators.ContainsLetterValidatorImpl
 import com.mateuszholik.domain.validators.ContainsUpperCaseValidatorImpl
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-class PasswordScoreManagerImplTest(
+class PasswordScoreProviderImplTest(
     private val param: String,
     private val expected: Int
 ) {
@@ -19,7 +19,7 @@ class PasswordScoreManagerImplTest(
     private val containsUpperCaseValidator = ContainsUpperCaseValidatorImpl()
     private val containsNumberValidator = ContainsNumberValidatorImpl()
     private val containsSpecialCharacterValidator = ContainsSpecialCharacterValidatorImpl()
-    private val passwordScoreManagerImpl = PasswordScoreManagerImpl(
+    private val passwordScoreManagerImpl = PasswordScoreProviderImpl(
         containsLetterValidator,
         containsUpperCaseValidator,
         containsNumberValidator,

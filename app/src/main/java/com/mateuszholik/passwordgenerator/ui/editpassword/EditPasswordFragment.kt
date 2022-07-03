@@ -21,7 +21,7 @@ import org.koin.core.qualifier.named
 
 class EditPasswordFragment : Fragment() {
 
-    private lateinit var binding: FragmentEditPasswordBinding
+    private var binding: FragmentEditPasswordBinding? = null
     private val navArgs: EditPasswordFragmentArgs by navArgs()
     private val gsonFactory: GsonFactory by inject()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
@@ -36,7 +36,7 @@ class EditPasswordFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentEditPasswordBinding?>(
             inflater,
             R.layout.fragment_edit_password,
@@ -47,13 +47,18 @@ class EditPasswordFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpObservers()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     private fun setUpObservers() {

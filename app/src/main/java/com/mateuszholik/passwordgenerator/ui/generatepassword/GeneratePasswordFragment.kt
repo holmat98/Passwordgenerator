@@ -17,7 +17,7 @@ import org.koin.core.qualifier.named
 
 class GeneratePasswordFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentGeneratePasswordBinding
+    private var binding: FragmentGeneratePasswordBinding? = null
     private val viewModel: GeneratePasswordViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
 
@@ -28,7 +28,7 @@ class GeneratePasswordFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = DataBindingUtil.inflate<FragmentGeneratePasswordBinding>(
             inflater,
             R.layout.fragment_generate_password,
@@ -39,17 +39,24 @@ class GeneratePasswordFragment : BaseFragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.goToSavePasswordScreenButton.setOnClickListener {
-            goToSavePasswordScreen(binding.generatedPasswordTV.text.toString())
+        binding?.let { binding ->
+            binding.goToSavePasswordScreenButton.setOnClickListener {
+                goToSavePasswordScreen(binding.generatedPasswordTV.text.toString())
+            }
         }
 
         setUpObservers()
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     private fun goToSavePasswordScreen(password: String?) {

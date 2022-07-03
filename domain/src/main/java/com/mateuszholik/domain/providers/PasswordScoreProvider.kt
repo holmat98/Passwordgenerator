@@ -1,4 +1,4 @@
-package com.mateuszholik.domain.managers
+package com.mateuszholik.domain.providers
 
 import com.mateuszholik.domain.constants.PasswordConstants.MIN_PASSWORD_LENGTH
 import com.mateuszholik.domain.validators.ContainsLetterValidator
@@ -7,20 +7,20 @@ import com.mateuszholik.domain.validators.ContainsSpecialCharacterValidator
 import com.mateuszholik.domain.validators.ContainsUpperCaseValidator
 import kotlin.math.abs
 
-interface PasswordScoreManager {
+interface PasswordScoreProvider {
 
     fun getScore(password: String): Int
 }
 
-internal class PasswordScoreManagerImpl(
+internal class PasswordScoreProviderImpl(
     private val containsLetterValidator: ContainsLetterValidator,
     private val containsUpperCaseValidator: ContainsUpperCaseValidator,
     private val containsNumberValidator: ContainsNumberValidator,
     private val containsSpecialCharacterValidator: ContainsSpecialCharacterValidator
-) : PasswordScoreManager {
+) : PasswordScoreProvider {
 
     override fun getScore(password: String): Int {
-        val factor =
+        val score =
             addPointsForLetters(password) +
                     addPointsForNumbers(password) +
                     addPointsForUppercaseLetters(password) +
@@ -28,7 +28,7 @@ internal class PasswordScoreManagerImpl(
                     addPointsForNotContainingPatterns(password)
         val length = password.length
 
-        return (((factor * length) / (MAX_PASSWORD_FACTOR * MAX_PASSWORD_LENGTH)) * 100).toInt()
+        return (((score * length) / (MAX_PASSWORD_SCORE * MAX_PASSWORD_LENGTH)) * 100).toInt()
     }
 
     private fun addPointsForLetters(password: String) =
@@ -93,6 +93,6 @@ internal class PasswordScoreManagerImpl(
         const val SEVEN_AND_HALF_POINTS = 7.5
         const val TEN_POINTS = 10.0
         const val MAX_PASSWORD_LENGTH: Double = 20.0
-        const val MAX_PASSWORD_FACTOR: Double = 20.0
+        const val MAX_PASSWORD_SCORE: Double = 20.0
     }
 }
