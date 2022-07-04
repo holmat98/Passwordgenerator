@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DefaultText">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+    </style>
+
+    <style name="DialogText" parent="DefaultText">
+        <item name="android:textColor">@color/primary</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Header" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_40</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="OnboardingText" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+    </style>
+
+    <style name="ErrorText" parent="DefaultText">
+        <item name="android:textColor">@color/error</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="PasswordItemText">
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:padding">@dimen/padding_8</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <style name="BottomNavigationView">
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+    </style>
+
+    <style name="DefaultEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/selector_edit_text</item>
+        <item name="android:textColorHint">@color/secondary</item>
+        <item name="counterTextColor">@color/white</item>
+        <item name="hintTextColor">@color/secondary_dark</item>
+    </style>
+
+    <style name="PinEditText">
+        <item name="android:textSize">@dimen/text_size_35</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

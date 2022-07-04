@@ -1,2 +1,6 @@
 include ':app'
 rootProject.name = "Password generator"
+include ':domain'
+include ':data'
+include ':uicomponents'
+include ':cryptography'

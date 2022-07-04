@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PinEditText">
+        <attr name="pinTextColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="PinCode">
+        <attr name="pinInputsTextColor" format="color" />
+        <attr name="isPinHidden" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="AnimatedCheckbox">
+        <attr name="checkBoxText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="TextSwitch">
+        <attr name="text" format="string" />
+    </declare-styleable>
+    <declare-styleable name="SettingsButton">
+        <attr name="buttonText" format="string" />
+    </declare-styleable>
+</resources>

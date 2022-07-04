@@ -5,26 +5,19 @@
             android:shape="ring"
             android:thicknessRatio="16"
             android:useLevel="false">
-            <solid android:color="#DDD" />
+            <solid android:color="@color/primary" />
         </shape>
     </item>
     <item>
         <rotate
             android:fromDegrees="270"
-            android:toDegrees="270"
-            >
-        <shape
-            android:shape="ring"
-            android:thicknessRatio="16"
-            android:useLevel="true"
-            >
-            <gradient
-                android:startColor="@color/veryWeak"
-                android:centerColor="@color/neutral"
-                android:endColor="@color/veryStrong"
-                android:type="sweep"
-                />
-        </shape>
+            android:toDegrees="270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="16"
+                android:useLevel="true">
+                <solid android:color="@color/secondary_dark" />
+            </shape>
         </rotate>
     </item>
 </layer-list>

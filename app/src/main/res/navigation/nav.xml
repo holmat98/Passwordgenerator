@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/createPassword">
-
+    app:startDestination="@id/authenticationHostFragment">
     <fragment
-        android:id="@+id/createPassword"
-        android:name="com.example.passwordgenerator.view.fragments.PasswdGeneratorFragment"
-        android:label="fragment_passwd_generator"
-        tools:layout="@layout/fragment_passwd_generator" />
-    <fragment
-        android:id="@+id/testPassword"
-        android:name="com.example.passwordgenerator.view.fragments.PasswordTesterFragment"
-        android:label="fragment_password_tester"
-        tools:layout="@layout/fragment_password_tester" />
-    <fragment
-        android:id="@+id/yourPasswords"
-        android:name="com.example.passwordgenerator.view.fragments.PasswordsFragment"
-        android:label="fragment_passwords"
-        tools:layout="@layout/fragment_passwords" />
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.example.passwordgenerator.view.fragments.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/authenticationHostFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostFragment">
+        <action
+            android:id="@+id/action_authenticationHostFragment_to_logged_user_nav"
+            app:destination="@id/logged_user_nav"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/authenticationHostFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <include app:graph="@navigation/logged_user_nav" />
 </navigation>

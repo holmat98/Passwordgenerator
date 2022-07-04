@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/logged_user_nav"
+    app:startDestination="@id/passwords">
+
+    <fragment
+        android:id="@+id/passwords"
+        android:name="com.mateuszholik.passwordgenerator.ui.passwords.PasswordsFragment">
+        <action
+            android:id="@+id/action_passwords_to_passwordDetailsFragment"
+            app:destination="@id/passwordDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_passwords_to_savePasswordFragment"
+            app:destination="@id/savePasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/generatePassword"
+        android:name="com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordFragment">
+        <action
+            android:id="@+id/action_generatePassword_to_savePasswordFragment"
+            app:destination="@id/savePasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/testPassword"
+        android:name="com.mateuszholik.passwordgenerator.ui.testpassword.TestPasswordFragment">
+        <action
+            android:id="@+id/action_testPassword_to_passwordScoreFragment"
+            app:destination="@id/passwordScoreFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordScoreFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreFragment">
+        <argument
+            android:name="password"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/savePasswordFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.savepassword.SavePasswordFragment">
+        <argument
+            android:name="password"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_savePasswordFragment_to_passwords"
+            app:destination="@id/passwords"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/passwords"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordDetailsFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsFragment">
+        <argument
+            android:name="password"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_passwordDetailsFragment_to_editPasswordFragment"
+            app:destination="@id/editPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPasswordFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordFragment">
+        <action
+            android:id="@+id/action_editPasswordFragment_to_passwords"
+            app:destination="@id/passwords"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/passwords"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.mateuszholik.passwordgenerator.ui.settings.SettingsFragment" />
+</navigation>

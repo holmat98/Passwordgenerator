@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/passwords"
+        android:title="@string/passwords"
+        android:icon="@drawable/ic_password" />
+
+    <item
+        android:id="@+id/generatePassword"
+        android:title="@string/create"
+        android:icon="@drawable/ic_add" />
+
+    <item
+        android:id="@+id/testPassword"
+        android:title="@string/test"
+        android:icon="@drawable/ic_test" />
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings" />
+</menu>
