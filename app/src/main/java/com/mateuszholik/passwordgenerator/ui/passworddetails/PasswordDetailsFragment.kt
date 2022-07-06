@@ -13,7 +13,6 @@ import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
-import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
@@ -64,30 +63,23 @@ class PasswordDetailsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        binding?.let {
-            activity?.removeFragment(
-                it.passwordValidationResult.id,
-                VALIDATION_RESULT_FRAGMENT_TAG
-            )
-        }
         binding = null
         super.onDestroyView()
     }
 
     private fun displayPasswordValidationResultFragment() {
-        val binding = binding ?: return
-        requireActivity().supportFragmentManager.commit {
-            replace(
-                binding.passwordValidationResult.id,
-                PasswordValidationResultFragment.newInstance(password.password),
-                VALIDATION_RESULT_FRAGMENT_TAG
-            )
+        binding?.run {
+            requireActivity().supportFragmentManager.commit {
+                replace(
+                    passwordValidationResult.id,
+                    PasswordValidationResultFragment.newInstance(password!!.password)
+                )
+            }
         }
     }
 
     private fun setUpPasswordActionButtons() {
-        val binding = binding ?: return
-        binding.run {
+        binding?.run {
             deletePasswordBtn.setOnClickListener {
                 showDialog(
                     titleRes = R.string.password_details_delete_password_title,
@@ -118,9 +110,5 @@ class PasswordDetailsFragment : Fragment() {
                 messageProvider.show(it)
             }
         }
-    }
-
-    private companion object {
-        const val VALIDATION_RESULT_FRAGMENT_TAG = "VALIDATION_RESULT_FRAGMENT"
     }
 }

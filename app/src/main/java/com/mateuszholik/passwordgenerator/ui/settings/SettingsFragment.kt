@@ -47,29 +47,27 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpViews()
         setUpObservers()
+
+        binding?.run {
+            passwordValidityButton.setOnClickListener {
+                showNumberPickerDialog(
+                    R.string.settings_dialog_password_validity,
+                    minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
+                    maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
+                ) {
+                    viewModel?.savePasswordValidity(it.toLong())
+                }
+            }
+            activity?.let {
+                shouldUseBiometricAuthBtn.isVisible = biometricManager.isBiometricAvailable(it)
+            }
+        }
     }
 
     override fun onDestroyView() {
         binding = null
         super.onDestroyView()
-    }
-
-    private fun setUpViews() {
-        val binding = binding ?: return
-        binding.passwordValidityButton.setOnClickListener {
-            showNumberPickerDialog(
-                R.string.settings_dialog_password_validity,
-                minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
-                maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
-            ) {
-                viewModel.savePasswordValidity(it.toLong())
-            }
-        }
-        activity?.let {
-            binding.shouldUseBiometricAuthBtn.isVisible = biometricManager.isBiometricAvailable(it)
-        }
     }
 
     private fun setUpObservers() {

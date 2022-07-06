@@ -47,14 +47,13 @@ class CreatePinFragment : Fragment() {
     }
 
     private fun setUpKeyboard() {
-        val binding = binding ?: return
-        with(binding) {
+        binding?.run {
             keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
             keyboard.doOnUndoClicked = {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
             }
-            keyboard.doOnConfirmedClicked = { viewModel.createPin(pinCode.pin) }
+            keyboard.doOnConfirmedClicked = { viewModel.savePinIfCorrect(pinCode.pin) }
         }
     }
 
@@ -65,6 +64,10 @@ class CreatePinFragment : Fragment() {
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
+            }
+            wrongPin.observe(viewLifecycleOwner) {
+                messageProvider.show(it)
+                binding?.pinCode?.animateFailure()
             }
         }
     }

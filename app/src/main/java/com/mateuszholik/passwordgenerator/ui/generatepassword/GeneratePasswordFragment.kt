@@ -45,9 +45,9 @@ class GeneratePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let { binding ->
-            binding.goToSavePasswordScreenButton.setOnClickListener {
-                goToSavePasswordScreen(binding.generatedPasswordTV.text.toString())
+        binding?.run {
+            goToSavePasswordScreenButton.setOnClickListener {
+                goToSavePasswordScreen(generatedPasswordTV.text.toString())
             }
         }
 

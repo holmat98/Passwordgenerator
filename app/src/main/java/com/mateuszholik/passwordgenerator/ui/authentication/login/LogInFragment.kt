@@ -54,23 +54,21 @@ class LogInFragment : Fragment() {
     }
 
     private fun setUpKeyboard() {
-        val binding = binding ?: return
-        with(binding) {
+        binding?.run {
             keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
             keyboard.doOnUndoClicked = {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
             }
-            keyboard.doOnConfirmedClicked = { viewModel.logIn(binding.pinCode.pin) }
+            keyboard.doOnConfirmedClicked = { viewModel.logIn(pinCode.pin) }
         }
     }
 
     private fun setUpObservers() {
-        val binding = binding ?: return
         with(viewModel) {
             loginFailed.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
-                binding.pinCode.animateFailure()
+                binding?.pinCode?.animateFailure()
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)

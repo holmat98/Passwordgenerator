@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentAuthenticationHostBinding
-import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.ui.authentication.factories.FragmentFactory
 import com.mateuszholik.passwordgenerator.ui.authentication.models.AuthenticationScreens
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -51,9 +50,6 @@ class AuthenticationHostFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        binding?.let {
-            activity?.removeFragment(it.fragmentHost.id, CURRENT_SCREEN_TAG)
-        }
         binding = null
         super.onDestroyView()
     }
@@ -63,13 +59,8 @@ class AuthenticationHostFragment : BaseFragment() {
         requireActivity().supportFragmentManager.commit {
             replace(
                 binding.fragmentHost.id,
-                fragmentFactory.create(newScreen),
-                CURRENT_SCREEN_TAG
+                fragmentFactory.create(newScreen)
             )
         }
-    }
-
-    private companion object {
-        const val CURRENT_SCREEN_TAG = "AUTHENTICATION_SCREEN"
     }
 }
