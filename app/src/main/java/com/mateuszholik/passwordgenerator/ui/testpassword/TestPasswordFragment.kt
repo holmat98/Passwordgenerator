@@ -33,23 +33,20 @@ class TestPasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpViews()
+        binding?.run {
+            testPasswordButton.setOnClickListener {
+                navigateToPasswordScoreScreen(testPasswordValueET.text.toString())
+                testPasswordValueET.text?.clear()
+            }
+            testPasswordValueET.doOnTextChanged { text, _, _, _ ->
+                testPasswordButton.isEnabled = text.toString().isNotEmpty()
+            }
+        }
     }
 
     override fun onDestroyView() {
         binding = null
         super.onDestroyView()
-    }
-
-    private fun setUpViews() {
-        val binding = binding ?: return
-        binding.testPasswordButton.setOnClickListener {
-            navigateToPasswordScoreScreen(binding.testPasswordValueET.text.toString())
-            binding.testPasswordValueET.text?.clear()
-        }
-        binding.testPasswordValueET.doOnTextChanged { text, _, _, _ ->
-            binding.testPasswordButton.isEnabled = text.toString().isNotEmpty()
-        }
     }
 
     private fun navigateToPasswordScoreScreen(password: String) {

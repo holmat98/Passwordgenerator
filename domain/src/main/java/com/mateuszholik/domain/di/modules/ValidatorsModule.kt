@@ -19,4 +19,6 @@ internal val validatorsModule = module {
     single<ContainsSpecialCharacterValidator> { ContainsSpecialCharacterValidatorImpl() }
 
     single<PasswordLengthValidator> { PasswordLengthValidatorImpl() }
+
+    factory<PinValidator> { PinValidatorImpl() }
 }

@@ -1,7 +1,5 @@
 package com.mateuszholik.domain.di.modules
 
-import com.mateuszholik.domain.usecase.CreatePinUseCase
-import com.mateuszholik.domain.usecase.CreatePinUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
@@ -18,20 +16,24 @@ import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.domain.usecase.GetPasswordsUseCaseImpl
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
-import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
-import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
-import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCaseImpl
-import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
-import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseImpl
-import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCaseImpl
+import com.mateuszholik.domain.usecase.SavePinUseCase
+import com.mateuszholik.domain.usecase.SavePinUseCaseImpl
+import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
+import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
+import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
+import com.mateuszholik.domain.usecase.IsPinCorrectToSaveUseCase
+import com.mateuszholik.domain.usecase.IsPinCorrectToSaveUseCaseImpl
 import org.koin.dsl.module
 
 internal val useCaseModule = module {
 
-    factory<CreatePinUseCase> {
-        CreatePinUseCaseImpl(encryptedSharedPrefManager = get())
+    factory<SavePinUseCase> {
+        SavePinUseCaseImpl(encryptedSharedPrefManager = get())
     }
 
     factory<IsPinCreatedUseCase> {
@@ -87,4 +89,6 @@ internal val useCaseModule = module {
     single<SavePasswordValidityValueUseCase> {
         SavePasswordValidityValueUseCaseImpl(sharedPrefManager = get())
     }
+
+    factory<IsPinCorrectToSaveUseCase> { IsPinCorrectToSaveUseCaseImpl(pinValidator = get()) }
 }

@@ -20,7 +20,10 @@ import org.koin.dsl.module
 val viewModelModule = module {
 
     viewModel {
-        CreatePinViewModel(createPinUseCase = get())
+        CreatePinViewModel(
+            isPinCorrectToSaveUseCase = get(),
+            savePinUseCase = get()
+        )
     }
 
     viewModel {

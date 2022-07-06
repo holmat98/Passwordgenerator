@@ -3,15 +3,14 @@ package com.mateuszholik.domain.usecase
 import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.junit.Test
 
-class CreatePinUseCaseImplTest {
+class SavePinUseCaseImplTest {
 
     private val encryptedSharedPrefManager = mockk<EncryptedSharedPrefManager>() {
         every { write(any(), "1234") } returns Unit
     }
-    private val createPinUseCase = CreatePinUseCaseImpl(encryptedSharedPrefManager)
+    private val createPinUseCase = SavePinUseCaseImpl(encryptedSharedPrefManager)
 
     @Test(expected = Throwable::class)
     fun `When pin is to short then error is returned`() {

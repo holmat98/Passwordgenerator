@@ -61,7 +61,18 @@ class PasswordsFragment : BaseFragment() {
 
         setUpRecyclerView()
         setUpObservers()
-        setUpViews()
+
+        binding?.run {
+            swipeRefreshLayout.setOnRefreshListener {
+                viewModel?.getAllPasswords()
+
+                swipeRefreshLayout.isRefreshing = false
+            }
+
+            goToCreatePasswordScreenBtn.setOnClickListener {
+                navigateToCreatePasswordScreen()
+            }
+        }
     }
 
     override fun onResume() {
@@ -72,19 +83,6 @@ class PasswordsFragment : BaseFragment() {
     override fun onDestroyView() {
         binding = null
         super.onDestroyView()
-    }
-
-    private fun setUpViews() {
-        val binding = binding ?: return
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getAllPasswords()
-
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
-
-        binding.goToCreatePasswordScreenBtn.setOnClickListener {
-            navigateToCreatePasswordScreen()
-        }
     }
 
     private fun setUpRecyclerView() {

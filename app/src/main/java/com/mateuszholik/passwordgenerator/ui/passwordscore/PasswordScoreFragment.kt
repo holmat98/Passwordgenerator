@@ -12,9 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordScoreBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
-import com.mateuszholik.passwordgenerator.extensions.removeFragment
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
-import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsFragment
 import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,12 +59,6 @@ class PasswordScoreFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        binding?.let {
-            activity?.removeFragment(
-                it.passwordValidationResult.id,
-                VALIDATION_RESULT_FRAGMENT_TAG
-            )
-        }
         binding = null
         super.onDestroyView()
     }
@@ -76,13 +68,8 @@ class PasswordScoreFragment : Fragment() {
         requireActivity().supportFragmentManager.commit {
             replace(
                 binding.passwordValidationResult.id,
-                PasswordValidationResultFragment.newInstance(args.password),
-                VALIDATION_RESULT_FRAGMENT_TAG
+                PasswordValidationResultFragment.newInstance(args.password)
             )
         }
-    }
-
-    private companion object {
-        const val VALIDATION_RESULT_FRAGMENT_TAG = "VALIDATION_RESULT_FRAGMENT"
     }
 }
