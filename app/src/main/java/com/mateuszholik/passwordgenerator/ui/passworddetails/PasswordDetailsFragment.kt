@@ -1,10 +1,7 @@
 package com.mateuszholik.passwordgenerator.ui.passworddetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
@@ -14,6 +11,7 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.showDialog
+import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultFragment
@@ -22,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-class PasswordDetailsFragment : Fragment() {
+class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private val navArgs: PasswordDetailsFragmentArgs by navArgs()
     private val gsonFactory: GsonFactory by inject()
@@ -33,53 +31,33 @@ class PasswordDetailsFragment : Fragment() {
     private val viewModel: PasswordDetailsViewModel by viewModel {
         parametersOf(password)
     }
-    private var binding: FragmentPasswordDetailsBinding? = null
+    private val binding by viewBinding(FragmentPasswordDetailsBinding::bind)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate<FragmentPasswordDetailsBinding?>(
-            inflater,
-            R.layout.fragment_password_details,
-            container,
-            false
-        ).apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
             password = this@PasswordDetailsFragment.password
             viewModel = this@PasswordDetailsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         displayPasswordValidationResultFragment()
         setUpPasswordActionButtons()
         setUpObservers()
     }
 
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
-    }
-
     private fun displayPasswordValidationResultFragment() {
-        binding?.run {
-            requireActivity().supportFragmentManager.commit {
-                replace(
-                    passwordValidationResult.id,
-                    PasswordValidationResultFragment.newInstance(password!!.password)
-                )
-            }
+        requireActivity().supportFragmentManager.commit {
+            replace(
+                binding.passwordValidationResult.id,
+                PasswordValidationResultFragment.newInstance(password.password)
+            )
         }
     }
 
     private fun setUpPasswordActionButtons() {
-        binding?.run {
+        binding.run {
             deletePasswordBtn.setOnClickListener {
                 showDialog(
                     titleRes = R.string.password_details_delete_password_title,

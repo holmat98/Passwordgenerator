@@ -1,15 +1,14 @@
 package com.mateuszholik.passwordgenerator.ui.authentication.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import org.koin.android.ext.android.inject
@@ -17,29 +16,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-class LogInFragment : Fragment() {
+class LogInFragment : Fragment(R.layout.fragment_log_in) {
 
-    private var binding: FragmentLogInBinding? = null
+    private val binding by viewBinding(FragmentLogInBinding::bind)
     private val viewModel: LogInViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
         parametersOf(::goToLoggedUserScreen)
     }
     private val biometricManager: BiometricManager by inject()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentLogInBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-
-        return binding?.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,13 +33,8 @@ class LogInFragment : Fragment() {
         setUpKeyboard()
     }
 
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
-    }
-
     private fun setUpKeyboard() {
-        binding?.run {
+        binding.run {
             keyboard.doOnNumberClicked = { value -> pinCode.addPinText(value.toString()) }
             keyboard.doOnUndoClicked = {
                 pinCode.removeTextFromPin()
@@ -68,7 +48,7 @@ class LogInFragment : Fragment() {
         with(viewModel) {
             loginFailed.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
-                binding?.pinCode?.animateFailure()
+                binding.pinCode.animateFailure()
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
