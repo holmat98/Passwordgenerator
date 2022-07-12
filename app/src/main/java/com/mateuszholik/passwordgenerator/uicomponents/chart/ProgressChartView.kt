@@ -18,7 +18,6 @@ class ProgressChartView(context: Context, attrs: AttributeSet) : FrameLayout(con
     var progress: Int = 0
         set(value) {
             animateProgress(value)
-            binding.progressValue.text = context.getString(R.string.progress_value, value)
             field = value
         }
 
@@ -26,7 +25,10 @@ class ProgressChartView(context: Context, attrs: AttributeSet) : FrameLayout(con
         ValueAnimator.ofInt(0, value).apply {
             addUpdateListener {
                 val animatedValue = it.animatedValue as Int
-                binding.progressBar.progress = animatedValue
+                binding.apply {
+                    progressBar.progress = animatedValue
+                    progressValue.text = context.getString(R.string.progress_value, animatedValue)
+                }
             }
             duration = ANIMATION_DURATION
         }.start()

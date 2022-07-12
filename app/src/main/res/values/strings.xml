@@ -62,7 +62,7 @@
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="password_test_hint">Wprowadź hasło</string>
     <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
-    <string name="progress_value">%1$d</string>
+    <string name="progress_value">%d%%</string>
     <string name="save_password_error">Wystąpił błąd przy zapisie hasła</string>
     <string name="save_password_saved">Hasło zostało zapisane</string>
     <string name="save_password_platform_name">Nazwa platformy</string>

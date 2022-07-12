@@ -25,16 +25,19 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
     private val gsonFactory: GsonFactory by inject()
-    private var adapter: PasswordsAdapter? = null
+    private val adapter: PasswordsAdapter = PasswordsAdapter(
+        copyToClipboard = { label, password ->
+            clipboardManager.copyToClipboard(label, password)
+        },
+        calculateProgress = { viewModel.getPasswordScore(it) },
+        navigateToPasswordDetails = { navigateToPasswordDetails(it) }
+    )
 
     override val isBottomNavVisible: Boolean
         get() = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setUpRecyclerView()
-        setUpObservers()
 
         binding.apply {
             viewModel = this@PasswordsFragment.viewModel
@@ -49,7 +52,11 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
             goToCreatePasswordScreenBtn.setOnClickListener {
                 navigateToCreatePasswordScreen()
             }
+
+            recyclerView.adapter = adapter
         }
+
+        setUpObservers()
     }
 
     override fun onResume() {
@@ -57,27 +64,11 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
         viewModel.getAllPasswords()
     }
 
-    private fun setUpRecyclerView() {
-        adapter = PasswordsAdapter(
-            copyToClipboard = { label, password ->
-                clipboardManager.copyToClipboard(label, password)
-            },
-            calculateProgress = { viewModel.getPasswordScore(it) },
-            navigateToPasswordDetails = { navigateToPasswordDetails(it) }
-        )
-        binding.recyclerView.adapter = adapter
-    }
-
     private fun setUpObservers() {
         with(viewModel) {
-            passwords.observe(viewLifecycleOwner) { adapter?.addPasswords(it) }
+            passwords.observe(viewLifecycleOwner) { adapter.addPasswords(it) }
             errorOccurred.observe(viewLifecycleOwner) { messageProvider.show(it) }
         }
-    }
-
-    override fun onDestroyView() {
-        adapter = null
-        super.onDestroyView()
     }
 
     private fun navigateToPasswordDetails(password: Password) {
