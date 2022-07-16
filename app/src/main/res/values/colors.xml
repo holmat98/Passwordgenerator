@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="error">#F50C05</color>
-    <color name="green">#8bc34a</color>
     <color name="half_transparent">#44FFFFFF</color>
-    <color name="pin_edittext_stroke_error">#B30246</color>
-    <color name="pin_edittext_stroke_success">#00AD20</color>
+    <color name="red">#B30246</color>
+    <color name="green">#00AD20</color>
+    <color name="yellow">#DDC27C</color>
     <color name="primary">#1D1D26</color>
     <color name="primary_light">#3B3A41</color>
     <color name="primary_medium">#37363C</color>

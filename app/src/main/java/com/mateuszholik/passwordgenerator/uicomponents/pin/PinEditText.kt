@@ -52,7 +52,7 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     private fun changeBackground(
-        @DrawableRes drawableRes: Int = R.drawable.pin_background
+        @DrawableRes drawableRes: Int = R.drawable.rounded_dark_background_with_white_stroke
     ) {
         val drawable = ResourcesCompat.getDrawable(
             context.resources,
@@ -64,14 +64,14 @@ class PinEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     fun animateSuccess() {
-        changeBackground(R.drawable.pin_background_success)
-        setTextColor(ContextCompat.getColor(context, R.color.pin_edittext_stroke_success))
+        changeBackground(R.drawable.rounded_dark_background_with_green_stroke)
+        setTextColor(ContextCompat.getColor(context, R.color.green))
         shake()
     }
 
     fun animateFailure() {
-        changeBackground(R.drawable.pin_background_error)
-        setTextColor(ContextCompat.getColor(context, R.color.pin_edittext_stroke_error))
+        changeBackground(R.drawable.rounded_dark_background_with_red_stroke)
+        setTextColor(ContextCompat.getColor(context, R.color.red))
         shake()
     }
 
