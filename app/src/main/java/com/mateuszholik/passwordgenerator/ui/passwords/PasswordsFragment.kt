@@ -48,6 +48,12 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     override fun onResume() {
         super.onResume()
         viewModel.getAllPasswords()
+        binding.swipeRefreshLayout.isEnabled = true
+    }
+
+    override fun onPause() {
+        binding.swipeRefreshLayout.isEnabled = false
+        super.onPause()
     }
 
     private fun setUpViews() {
