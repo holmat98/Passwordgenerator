@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.ui.passwords
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.domain.providers.PasswordScoreProvider
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.passwordgenerator.R
@@ -16,8 +16,8 @@ class PasswordsViewModel(
     private val passwordsScoreProvider: PasswordScoreProvider
 ) : BaseViewModel() {
 
-    private val _passwords = MutableLiveData<List<Password>>()
-    val passwords: LiveData<List<Password>>
+    private val _passwords = MutableLiveData<List<PasswordType>>()
+    val passwords: LiveData<List<PasswordType>>
         get() = _passwords
 
     private val _isProgressBarVisible = MutableLiveData(true)
