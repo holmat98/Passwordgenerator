@@ -8,8 +8,8 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
-import com.mateuszholik.passwordgenerator.uicomponents.chart.ProgressChartView
 import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
+import com.mateuszholik.passwordgenerator.uicomponents.progressbar.CircularProgressBar
 import com.mateuszholik.passwordgenerator.uicomponents.switches.TextSwitch
 
 object BindingAdapters {
@@ -42,8 +42,8 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("app:setProggress")
-    fun setProgress(chartView: ProgressChartView, progress: Int) {
-        chartView.progress = progress
+    fun setProgress(chartView: CircularProgressBar, progress: Int) {
+        chartView.animateProgress(progress)
     }
 
     @JvmStatic

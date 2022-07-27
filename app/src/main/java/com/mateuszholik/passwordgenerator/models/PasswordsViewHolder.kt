@@ -24,7 +24,7 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.progress = calculateProgress(passwordType.password.password)
+                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
                 copyPasswordIB.setOnClickListener {
                     copyToClipboard(
                         passwordType.password.platformName,
@@ -48,7 +48,7 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.progress = calculateProgress(passwordType.password.password)
+                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
             }
         }
     }
@@ -67,7 +67,7 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.progress = calculateProgress(passwordType.password.password)
+                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
                 copyPasswordIB.setOnClickListener {
                     copyToClipboard(
                         passwordType.password.platformName,
