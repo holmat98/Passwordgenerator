@@ -18,7 +18,7 @@ val factoriesModule = module {
 
     factory<BiometricPromptFactory> { BiometricPromptFactoryImpl() }
 
-    factory<AppBarConfigurationFactory> {
-        AppBarConfigurationFactoryImpl()
-    }
+    single<AppBarConfigurationFactory> { AppBarConfigurationFactoryImpl() }
+
+    single<ViewHolderFactory> { ViewHolderFactoryImpl() }
 }

@@ -1,60 +1,62 @@
 package com.mateuszholik.passwordgenerator.ui.passwords.adapters
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
+import com.mateuszholik.domain.models.PasswordType
+import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.models.PasswordsViewHolder
 
 class PasswordsAdapter(
     private val copyToClipboard: (String, String) -> Unit,
     private val calculateProgress: (String) -> Int,
-    private val navigateToPasswordDetails: (Password) -> Unit
+    private val navigateToPasswordDetails: (Password) -> Unit,
+    private val createPasswordViewHolder: (ViewGroup, Int) -> PasswordsViewHolder
 ) :
-    RecyclerView.Adapter<PasswordsAdapter.PasswordsViewHolder>() {
+    RecyclerView.Adapter<PasswordsViewHolder>() {
 
-    private val passwords: MutableList<Password> = mutableListOf()
+    private val passwords: MutableList<PasswordType> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addPasswords(list: List<Password>) {
+    fun addPasswords(list: List<PasswordType>) {
         passwords.clear()
         passwords.addAll(list)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsViewHolder {
-        val binding = ItemPasswordBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-
-        return PasswordsViewHolder(binding)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsViewHolder =
+        createPasswordViewHolder(parent, viewType)
 
     override fun onBindViewHolder(holder: PasswordsViewHolder, position: Int) {
-        holder.bind(passwords[position])
+        val passwordType = passwords[position]
+        when (holder) {
+            is PasswordsViewHolder.ValidPasswordViewHolder -> holder.bind(
+                passwordType,
+                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
+                calculateProgress = { calculateProgress(it) },
+                copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
+            )
+            is PasswordsViewHolder.OutdatedPasswordViewHolder -> holder.bind(
+                passwordType,
+                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
+                calculateProgress = { calculateProgress(it) }
+            )
+            is PasswordsViewHolder.ExpiringPasswordViewHolder -> holder.bind(
+                passwordType,
+                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
+                calculateProgress = { calculateProgress(it) },
+                copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
+            )
+        }
     }
 
     override fun getItemCount(): Int = passwords.size
 
-    inner class PasswordsViewHolder(private val binding: ItemPasswordBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(password: Password) {
-            with(binding) {
-                root.setOnClickListener { navigateToPasswordDetails(password) }
-                platformNameTV.text = password.platformName
-                passwordTV.text = password.password
-                passwordScorePCV.progress = calculateProgress(password.password)
-                copyPasswordIB.setOnClickListener {
-                    copyToClipboard(
-                        password.platformName,
-                        password.password
-                    )
-                }
-            }
+    override fun getItemViewType(position: Int): Int =
+        when(passwords[position]) {
+            is PasswordType.ValidPassword -> R.layout.item_password
+            is PasswordType.ExpiringPassword -> R.layout.item_password_expiring
+            is PasswordType.OutdatedPassword -> R.layout.item_password_outdated
         }
-    }
 }

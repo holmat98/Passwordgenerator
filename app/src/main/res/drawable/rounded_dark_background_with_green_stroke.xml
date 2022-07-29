@@ -15,7 +15,7 @@
         <shape>
             <stroke
                 android:width="@dimen/stroke_2"
-                android:color="@color/pin_edittext_stroke_success" />
+                android:color="@color/green" />
             <corners android:radius="@dimen/radius_15" />
         </shape>
     </item>

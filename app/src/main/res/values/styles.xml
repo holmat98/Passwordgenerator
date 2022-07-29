@@ -27,7 +27,7 @@
     </style>
 
     <style name="ErrorText" parent="DefaultText">
-        <item name="android:textColor">@color/error</item>
+        <item name="android:textColor">@color/red</item>
         <item name="android:textAlignment">center</item>
     </style>
 
