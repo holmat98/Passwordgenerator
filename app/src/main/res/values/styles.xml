@@ -58,9 +58,4 @@
         <item name="counterTextColor">@color/white</item>
         <item name="hintTextColor">@color/secondary_dark</item>
     </style>
-
-    <style name="PinEditText">
-        <item name="android:textSize">@dimen/text_size_35</item>
-        <item name="android:textAlignment">center</item>
-    </style>
 </resources>

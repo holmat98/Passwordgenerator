@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
 import kotlin.math.min
 
 class CircularProgressBar @JvmOverloads constructor(
@@ -44,6 +45,7 @@ class CircularProgressBar @JvmOverloads constructor(
         get() = Paint().apply {
             color = secondaryColor
             textSize = this@CircularProgressBar.textSize
+            textAlign = Paint.Align.CENTER
         }
 
     private val oval: RectF
@@ -61,21 +63,21 @@ class CircularProgressBar @JvmOverloads constructor(
     private fun setAttributes(attributeSet: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(
             attributeSet,
-            R.styleable.CircularProgressView
+            R.styleable.CircularProgressBar
         )
 
         val primaryColor = typedArray.getColor(
-            R.styleable.CircularProgressView_primaryColor,
+            R.styleable.CircularProgressBar_primaryColor,
             ContextCompat.getColor(context, R.color.primary)
         )
 
         val secondaryColor = typedArray.getColor(
-            R.styleable.CircularProgressView_secondaryColor,
+            R.styleable.CircularProgressBar_secondaryColor,
             ContextCompat.getColor(context, R.color.secondary)
         )
 
         val textSize = typedArray.getDimension(
-            R.styleable.CircularProgressView_android_textSize,
+            R.styleable.CircularProgressBar_android_textSize,
             resources.getDimension(R.dimen.text_size_25)
         )
 
@@ -97,14 +99,12 @@ class CircularProgressBar @JvmOverloads constructor(
         canvas?.run {
             drawArc(oval, -90f, 360f, false, paintBackground)
             drawArc(oval, -90f, 360f * progress / 100, false, paintProgress)
+
+            val yPos: Float = (height / 2f) - (paintText.descent() + paintText.ascent()) / 2
             drawText(
                 context.getString(R.string.progress_value, progress),
-                if (progress > 10) {
-                    width / 2f - radius / 2 - (strokeWidth * 1.5).toInt()
-                } else {
-                    width / 2f - radius / 2 + strokeWidth / 2
-                },
-                height / 2f + radius / 2 - strokeWidth * 2,
+                width / 2f,
+                yPos,
                 paintText
             )
         }
@@ -123,6 +123,5 @@ class CircularProgressBar @JvmOverloads constructor(
 
     private companion object {
         const val DEFAULT_STROKE_WIDTH = 40f
-        const val ANIMATION_DURATION = 300L
     }
 }
