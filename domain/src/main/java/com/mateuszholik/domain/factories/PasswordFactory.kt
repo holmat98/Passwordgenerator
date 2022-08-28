@@ -1,9 +1,10 @@
 package com.mateuszholik.domain.factories
 
-import com.mateuszholik.domain.constants.Constants
+import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
 import com.mateuszholik.domain.extensions.getRandom
 import com.mateuszholik.domain.extensions.getRandomAndRemove
 import com.mateuszholik.domain.models.PasswordCharacterType
+import kotlin.random.Random
 
 interface PasswordFactory {
 
@@ -14,18 +15,39 @@ internal class PasswordFactoryImpl : PasswordFactory {
 
     override fun create(length: Int): String {
         val availableIndexes = (0 until length).toMutableList()
-        var currentCharacterType = PasswordCharacterType.values().random()
-        val result = MutableList(length) { Constants.EMPTY_STRING }
+        val result = MutableList(length) { EMPTY_STRING }
+        val numberOfCharactersByType = getNumberOfCharacterByType(length)
 
-        while (availableIndexes.isNotEmpty()) {
-            val index = availableIndexes.getRandomAndRemove()
-            PASSWORD_CHARACTERS[currentCharacterType]?.let {
-                result[index] = it.getRandom()
-                currentCharacterType = currentCharacterType.nextType
+        numberOfCharactersByType.forEach { (passwordCharacterType, numOfCharacters) ->
+            for (i in 0 until numOfCharacters) {
+                val index = availableIndexes.getRandomAndRemove()
+                PASSWORD_CHARACTERS[passwordCharacterType]?.let {
+                    result[index] = it.getRandom()
+                }
             }
         }
 
-        return result.joinToString(Constants.EMPTY_STRING)
+        return result.joinToString(EMPTY_STRING)
+    }
+
+    private fun getNumberOfCharacterByType(passwordLength: Int): Map<PasswordCharacterType, Int> {
+        var numOfCharacterTypesLeft = PasswordCharacterType.values().size
+        val result = mutableMapOf<PasswordCharacterType, Int>()
+
+        PasswordCharacterType.values().forEach { characterType ->
+            numOfCharacterTypesLeft--
+            val maxNumOfCharactersForCurrentType = passwordLength - result.values.sum() - numOfCharacterTypesLeft
+            
+            val amountOfCharacters: Int = if (numOfCharacterTypesLeft > 1) {
+                    Random.nextInt(maxNumOfCharactersForCurrentType) + 1 // [1;maxNumOfCharactersForCurrentType]
+                } else {
+                    maxNumOfCharactersForCurrentType
+                }
+
+            result[characterType] = amountOfCharacters
+        }
+
+        return result
     }
 
     private companion object {
