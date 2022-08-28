@@ -19,10 +19,10 @@ internal class PasswordFactoryImpl : PasswordFactory {
         val numberOfCharactersByType = getNumberOfCharacterByType(length)
 
         numberOfCharactersByType.forEach { (passwordCharacterType, numOfCharacters) ->
-            for (i in 0 until numOfCharacters) {
+            repeat(numOfCharacters) {
                 val index = availableIndexes.getRandomAndRemove()
-                PASSWORD_CHARACTERS[passwordCharacterType]?.let {
-                    result[index] = it.getRandom()
+                PASSWORD_CHARACTERS[passwordCharacterType]?.let { characters ->
+                    result[index] = characters.getRandom()
                 }
             }
         }
@@ -36,8 +36,12 @@ internal class PasswordFactoryImpl : PasswordFactory {
 
         PasswordCharacterType.values().forEach { characterType ->
             numOfCharacterTypesLeft--
-            val maxNumOfCharactersForCurrentType = passwordLength - result.values.sum() - numOfCharacterTypesLeft
-            
+
+            val maxNumOfCharactersForCurrentType = when (numOfCharacterTypesLeft) {
+                PasswordCharacterType.values().size - 1 -> passwordLength / 2
+                else -> passwordLength - result.values.sum() - numOfCharacterTypesLeft
+            }
+
             val amountOfCharacters: Int = if (numOfCharacterTypesLeft > 1) {
                     Random.nextInt(maxNumOfCharactersForCurrentType) + 1 // [1;maxNumOfCharactersForCurrentType]
                 } else {
