@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+apply from: "../versions.gradle"
+
+android {
+    compileSdk build_versions.compile_sdk
+
+    defaultConfig {
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    // Core ktx
+    implementation deps.kotlin.core_ktx
+
+    // Appcompat
+    implementation deps.appcompat.appcompat
+
+    // Tests
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.ext_junit
+    androidTestImplementation deps.test.espresso
+    testImplementation deps.test.assertj
+    testImplementation deps.test.core_androidx
+
+    //room
+    implementation deps.room.room
+    kapt deps.room.compiler
+    implementation deps.room.coroutines
+    testImplementation deps.room.test
+
+    // RxJava
+    implementation deps.rx_java.rx_java
+    implementation deps.rx_java.android
+    implementation deps.rx_java.room
+
+    // koin
+    implementation deps.koin.koin
+    implementation deps.koin.viewmodel
+    implementation deps.koin.scope
+
+    // mockk
+    testImplementation deps.mockk.mockk
+    androidTestImplementation deps.mockk.mockk_android
+}
