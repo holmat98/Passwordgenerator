@@ -1,6 +1,5 @@
 package com.mateuszholik.passwordvalidation.usecases
 
-import com.mateuszholik.passwordvalidation.extensions.asObservable
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
 import com.mateuszholik.passwordvalidation.providers.PasswordValidationStrategyProvider
@@ -26,6 +25,6 @@ internal class ValidatePasswordUseCaseImpl(
             passwordValidationStrategyProvider
                 .provide(validationType)
                 .validate(password)
-                .asObservable()
+                .toObservable()
         }
 }
