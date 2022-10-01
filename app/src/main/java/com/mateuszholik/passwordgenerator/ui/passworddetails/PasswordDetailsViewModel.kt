@@ -3,9 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.passworddetails
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
-import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
@@ -14,23 +12,25 @@ import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
 import timber.log.Timber
 
 class PasswordDetailsViewModel(
     private val password: Password,
-    private val calculatePasswordScoreUseCase: CalculatePasswordScoreUseCase,
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val clipboardManager: ClipboardManager,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     val workScheduler: WorkScheduler
 ) : BaseViewModel() {
 
+    private var currentScore = 0f
+    private var currentMaxScore = 0f
+
     private val _passwordDeletedSuccessfully = MutableLiveData<Boolean>()
     val passwordDeletedSuccessfully: LiveData<Boolean>
         get() = _passwordDeletedSuccessfully
 
-    private val _passwordScore = MutableLiveData<Int>()
+    private val _passwordScore = MutableLiveData(0)
     val passwordScore: LiveData<Int>
         get() = _passwordScore
 
@@ -39,26 +39,18 @@ class PasswordDetailsViewModel(
         get() = _passwordValidationResult
 
     init {
-        getPasswordScore()
         validatePassword()
-    }
-
-    private fun getPasswordScore() {
-        calculatePasswordScoreUseCase(password.password)
-            .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _passwordScore.postValue(it) },
-                doOnError = {
-                    Timber.e(it)
-                    _errorOccurred.postValue(R.string.password_details_password_score_error)
-                }
-            )
-            .addTo(compositeDisposable)
     }
 
     private fun validatePassword() {
         validatePasswordUseCase(password.password)
             .subscribeWithObserveOnMainThread(
-                doOnNext = { _passwordValidationResult.value = it },
+                doOnNext = {
+                    _passwordValidationResult.value = it
+                    currentScore += it.score
+                    currentMaxScore += it.maxScore
+                    _passwordScore.value = ((currentScore / currentMaxScore) * 100).toInt()
+                },
                 doOnSuccess = { Timber.i("Successfully validated password") },
                 doOnError = {
                     Timber.e(it, "Error during password validation")

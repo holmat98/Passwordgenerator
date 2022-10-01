@@ -41,7 +41,7 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:setProggress")
+    @BindingAdapter("app:setProgress")
     fun setProgress(chartView: CircularProgressBar, progress: Int) {
         chartView.animateProgress(progress)
     }

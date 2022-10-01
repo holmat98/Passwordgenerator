@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.databinding.ItemValidationResultBinding
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
-import timber.log.Timber
 
 class PasswordValidationAdapter(
     private val validationTypeToText: (PasswordValidationType) -> String
@@ -19,7 +17,6 @@ class PasswordValidationAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun addValidationResult(result: PasswordValidationResult) {
         validationResults.add(result)
-        Timber.i("Testowanie: $validationResults")
         notifyDataSetChanged()
     }
 

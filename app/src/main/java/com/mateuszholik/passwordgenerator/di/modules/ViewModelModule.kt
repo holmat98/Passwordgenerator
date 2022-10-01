@@ -43,7 +43,6 @@ val viewModelModule = module {
     viewModel { (password: String) ->
         PasswordScoreViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get(),
             validatePasswordUseCase = get()
         )
     }
@@ -65,7 +64,6 @@ val viewModelModule = module {
     viewModel { (password: Password) ->
         PasswordDetailsViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
