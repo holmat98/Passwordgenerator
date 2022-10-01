@@ -3,6 +3,7 @@ package com.mateuszholik.passwordgenerator.di
 import com.mateuszholik.data.di.dataModules
 import com.mateuszholik.domain.di.domainModules
 import com.mateuszholik.passwordgenerator.di.modules.*
+import com.mateuszholik.passwordvalidation.di.passwordValidationModules
 
 private val appModules = listOf(
     viewModelModule,
@@ -11,7 +12,8 @@ private val appModules = listOf(
     managersModule,
     serializersModule,
     callbacksModule,
-    schedulerModule
+    schedulerModule,
+    mappersModule
 )
 
-val allModules = dataModules + domainModules + appModules
+val allModules = dataModules + domainModules + appModules + passwordValidationModules

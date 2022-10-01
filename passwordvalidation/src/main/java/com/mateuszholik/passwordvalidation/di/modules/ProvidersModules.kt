@@ -7,6 +7,11 @@ import org.koin.dsl.module
 internal val providersModules = module {
 
     single<PasswordValidationStrategyProvider> {
-        PasswordValidationStrategyProviderImpl()
+        PasswordValidationStrategyProviderImpl(
+            commonPasswordDao = get(),
+            commonNameDao = get(),
+            commonPetsNameDao = get(),
+            commonWordDao = get()
+        )
     }
 }

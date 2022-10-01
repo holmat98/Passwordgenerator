@@ -15,16 +15,17 @@ interface ValidatePasswordUseCase {
 
 internal class ValidatePasswordUseCaseImpl(
     private val passwordValidationStrategyProvider: PasswordValidationStrategyProvider
-): ValidatePasswordUseCase {
+) : ValidatePasswordUseCase {
 
     override operator fun invoke(
         password: String,
         validationTypes: List<PasswordValidationType>
-    ): Observable<PasswordValidationResult> = Observable.fromIterable(validationTypes)
-        .flatMap { validationType ->
-            passwordValidationStrategyProvider
-                .provide(validationType)
-                .validate(password)
-                .toObservable()
-        }
+    ): Observable<PasswordValidationResult> =
+        Observable.fromIterable(validationTypes)
+            .flatMap { validationType ->
+                passwordValidationStrategyProvider
+                    .provide(validationType)
+                    .validate(password)
+                    .toObservable()
+            }
 }

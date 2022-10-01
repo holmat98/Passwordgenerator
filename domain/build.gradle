@@ -36,7 +36,6 @@ dependencies {
 
     // Modules
     implementation(project(path: ":data"))
-    implementation(project(path: ":passwordvalidation"))
 
     // Core ktx
     implementation deps.kotlin.core_ktx

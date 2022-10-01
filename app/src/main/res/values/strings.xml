@@ -54,11 +54,11 @@
     <string name="password_details_password_score_error">Wystąpił błąd przy wyliczaniu siły hasła</string>
     <string name="password_details_password_strength">Siła hasła</string>
     <string name="passwords_get_passwords_error">Wystąpił błąd przy pobieraniu haseł</string>
-    <string name="password_score_length">Ma co najmniej 8 znaków</string>
-    <string name="password_score_letter">Zawiera literę</string>
-    <string name="password_score_number">Zawiera cyfrę</string>
-    <string name="password_score_special_character">Zawiera znak specjalny</string>
-    <string name="password_score_uppercase">Zawiera dużą literę</string>
+    <string name="password_validation_length">Ma co najmniej 8 znaków</string>
+    <string name="password_validation_letter">Zawiera literę</string>
+    <string name="password_validation_number">Zawiera cyfrę</string>
+    <string name="password_validation_special_character">Zawiera znak specjalny</string>
+    <string name="password_validation_uppercase">Zawiera dużą literę</string>
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="password_test_hint">Wprowadź hasło</string>
     <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
@@ -78,4 +78,8 @@
     <string name="settings_screen_title">Ustawienia</string>
     <string name="test">Przetestuj</string>
     <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
+    <string name="password_validation_common_password">Popularne hasło</string>
+    <string name="password_validation_name">Zawiera imię</string>
+    <string name="password_validation_word">Zawiera słowo</string>
+    <string name="password_validation_result_error">Wystąpił błąd podczas walidacji</string>
 </resources>

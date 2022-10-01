@@ -13,8 +13,7 @@ class PasswordsAdapter(
     private val calculateProgress: (String) -> Int,
     private val navigateToPasswordDetails: (Password) -> Unit,
     private val createPasswordViewHolder: (ViewGroup, Int) -> PasswordsViewHolder
-) :
-    RecyclerView.Adapter<PasswordsViewHolder>() {
+) : RecyclerView.Adapter<PasswordsViewHolder>() {
 
     private val passwords: MutableList<PasswordType> = mutableListOf()
 

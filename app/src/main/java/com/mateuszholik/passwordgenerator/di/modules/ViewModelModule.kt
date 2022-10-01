@@ -75,7 +75,8 @@ val viewModelModule = module {
             calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
-            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            validatePasswordUseCase = get()
         )
     }
 
