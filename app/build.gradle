@@ -115,9 +115,6 @@ dependencies {
     // timber
     implementation deps.timber.timber
 
-    // swipe to refresh
-    implementation deps.swipetorefresh.swipetorefresh
-
     // worker manager
     implementation deps.worker_manager.worker
 
