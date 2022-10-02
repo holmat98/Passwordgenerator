@@ -2,6 +2,7 @@ package com.mateuszholik.passwordgenerator.managers
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
