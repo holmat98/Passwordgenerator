@@ -54,7 +54,7 @@ class PasswordDetailsViewModel(
                 doOnSuccess = { Timber.i("Successfully validated password") },
                 doOnError = {
                     Timber.e(it, "Error during password validation")
-                    _errorOccurred.value = R.string.password_validation_result_error
+                    _errorOccurred.value = R.string.password_validation_error
                 }
             )
             .addTo(compositeDisposable)

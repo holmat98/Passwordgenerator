@@ -24,6 +24,8 @@ class PasswordValidationTypeToTextMapperImpl(
             PasswordValidationType.COMMON_PASSWORD -> getString(R.string.password_validation_common_password)
             PasswordValidationType.COMMON_NAME -> getString(R.string.password_validation_name)
             PasswordValidationType.COMMON_WORD -> getString(R.string.password_validation_word)
+            PasswordValidationType.ALPHABETICAL_PATTERN -> getString(R.string.password_validation_alphabetical_pattern)
+            PasswordValidationType.KEYBOARD_PATTERN -> getString(R.string.password_validation_keyboard_pattern)
         }
 
     private fun getString(@StringRes stringRes: Int) = context.getString(stringRes)

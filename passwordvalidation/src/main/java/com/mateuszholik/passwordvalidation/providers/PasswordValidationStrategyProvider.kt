@@ -33,5 +33,7 @@ internal class PasswordValidationStrategyProviderImpl(
             COMMON_PASSWORD -> CommonPasswordValidationStrategyImpl(commonPasswordDao)
             COMMON_WORD -> CommonWordsValidationStrategyImpl(commonWordDao)
             COMMON_NAME -> CommonNameValidationStrategyImpl(commonNameDao, commonPetsNameDao)
+            ALPHABETICAL_PATTERN -> AlphabeticalPatternsValidationStrategyImpl()
+            KEYBOARD_PATTERN -> KeyboardPatternsValidationStrategyImpl()
         }
 }

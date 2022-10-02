@@ -42,7 +42,7 @@ class PasswordScoreViewModel(
                 doOnSuccess = { Timber.i("Password validation has finished") },
                 doOnError = {
                     Timber.e(it, "Error occurred during password validation")
-                    _errorOccurred.value = R.string.password_validation_result_error
+                    _errorOccurred.value = R.string.password_validation_error
                 }
             )
             .addTo(compositeDisposable)
