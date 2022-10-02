@@ -10,7 +10,6 @@ import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordVi
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreViewModel
-import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultViewModel
 import com.mateuszholik.passwordgenerator.ui.savepassword.SavePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -44,7 +43,7 @@ val viewModelModule = module {
     viewModel { (password: String) ->
         PasswordScoreViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get()
+            validatePasswordUseCase = get()
         )
     }
 
@@ -62,20 +61,13 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (password: String) ->
-        PasswordValidationResultViewModel(
-            password = password,
-            validatePasswordUseCase = get()
-        )
-    }
-
     viewModel { (password: Password) ->
         PasswordDetailsViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
-            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            validatePasswordUseCase = get()
         )
     }
 

@@ -40,34 +40,23 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        setUpRecyclerView()
-        setUpViews()
+        binding.goToCreatePasswordScreenBtn.setOnClickListener {
+            navigateToCreatePasswordScreen()
+        }
+
         setUpObservers()
     }
 
     override fun onResume() {
         super.onResume()
+        setUpRecyclerView()
         viewModel.getAllPasswords()
-        binding.swipeRefreshLayout.isEnabled = true
     }
 
     override fun onPause() {
-        binding.swipeRefreshLayout.isEnabled = false
         super.onPause()
-    }
-
-    private fun setUpViews() {
-        binding.run {
-            swipeRefreshLayout.setOnRefreshListener {
-                viewModel?.getAllPasswords()
-
-                swipeRefreshLayout.isRefreshing = false
-            }
-
-            goToCreatePasswordScreenBtn.setOnClickListener {
-                navigateToCreatePasswordScreen()
-            }
-        }
+        binding.recyclerView.adapter = null
+        adapter = null
     }
 
     private fun setUpRecyclerView() {

@@ -54,14 +54,22 @@
     <string name="password_details_password_score_error">Wystąpił błąd przy wyliczaniu siły hasła</string>
     <string name="password_details_password_strength">Siła hasła</string>
     <string name="passwords_get_passwords_error">Wystąpił błąd przy pobieraniu haseł</string>
-    <string name="password_score_length">Ma co najmniej 8 znaków</string>
-    <string name="password_score_letter">Zawiera literę</string>
-    <string name="password_score_number">Zawiera cyfrę</string>
-    <string name="password_score_special_character">Zawiera znak specjalny</string>
-    <string name="password_score_uppercase">Zawiera dużą literę</string>
+
+    <!-- Password validation -->
+    <string name="password_validation_alphabetical_pattern">Nie zawiera powtórzeń alfabetycznych</string>
+    <string name="password_validation_common_password">Nie jest to popularne hasło</string>
+    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
+    <string name="password_validation_keyboard_pattern">Nie zawiera powtórzeń klawiaturowych</string>
+    <string name="password_validation_length">Ma co najmniej 8 znaków</string>
+    <string name="password_validation_letter">Zawiera literę</string>
+    <string name="password_validation_name">Nie zawiera imienia</string>
+    <string name="password_validation_number">Zawiera cyfrę</string>
+    <string name="password_validation_special_character">Zawiera znak specjalny</string>
+    <string name="password_validation_uppercase">Zawiera dużą literę</string>
+    <string name="password_validation_word">Nie zawiera słowa</string>
+
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="password_test_hint">Wprowadź hasło</string>
-    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
     <string name="progress_value">%d%%</string>
     <string name="save_password_error">Wystąpił błąd przy zapisie hasła</string>
     <string name="save_password_saved">Hasło zostało zapisane</string>

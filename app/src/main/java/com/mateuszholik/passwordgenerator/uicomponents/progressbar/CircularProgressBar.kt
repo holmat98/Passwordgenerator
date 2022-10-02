@@ -11,6 +11,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
+import timber.log.Timber
 import kotlin.math.min
 
 class CircularProgressBar @JvmOverloads constructor(
@@ -19,10 +20,10 @@ class CircularProgressBar @JvmOverloads constructor(
 ) : View(context, attributeSet) {
 
     private var strokeWidth = DEFAULT_STROKE_WIDTH
-    private var progress: Int = 0
+    private var animatedProgressValue: Int = NONE
     private var primaryColor: Int = Color.BLACK
     private var secondaryColor: Int = Color.WHITE
-    private var textSize: Float = 0f
+    private var textSize: Float = NONE.toFloat()
 
     private val radius: Float
         get() = (min(width, height) - (strokeWidth * 2)) / 2
@@ -97,12 +98,12 @@ class CircularProgressBar @JvmOverloads constructor(
         super.onDraw(canvas)
 
         canvas?.run {
-            drawArc(oval, -90f, 360f, false, paintBackground)
-            drawArc(oval, -90f, 360f * progress / 100, false, paintProgress)
+            drawArc(oval, START_ANGLE, FULL_ANGLE, false, paintBackground)
+            drawArc(oval, START_ANGLE, FULL_ANGLE * animatedProgressValue / 100, false, paintProgress)
 
             val yPos: Float = (height / 2f) - (paintText.descent() + paintText.ascent()) / 2
             drawText(
-                context.getString(R.string.progress_value, progress),
+                context.getString(R.string.progress_value, animatedProgressValue),
                 width / 2f,
                 yPos,
                 paintText
@@ -115,7 +116,7 @@ class CircularProgressBar @JvmOverloads constructor(
             duration = ANIMATION_DURATION
             addUpdateListener {
                 val animationValue = it.animatedValue as Int
-                this@CircularProgressBar.progress = animationValue
+                animatedProgressValue = animationValue
                 invalidate()
             }
         }.start()
@@ -123,5 +124,8 @@ class CircularProgressBar @JvmOverloads constructor(
 
     private companion object {
         const val DEFAULT_STROKE_WIDTH = 40f
+        const val NONE = 0
+        const val START_ANGLE = -90f
+        const val FULL_ANGLE = 360f
     }
 }
