@@ -5,17 +5,14 @@ import androidx.annotation.StringRes
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
 
-interface PasswordValidationTypeToTextMapper {
-
-    fun map(validationType: PasswordValidationType): String
-}
+interface PasswordValidationTypeToTextMapper : ObjectToTextMapper<PasswordValidationType>
 
 class PasswordValidationTypeToTextMapperImpl(
     private val context: Context
 ) : PasswordValidationTypeToTextMapper {
 
-    override fun map(validationType: PasswordValidationType): String =
-        when (validationType) {
+    override fun map(param: PasswordValidationType): String =
+        when (param) {
             PasswordValidationType.SMALL_LETTERS -> getString(R.string.password_validation_letter)
             PasswordValidationType.UPPERCASE_LETTERS -> getString(R.string.password_validation_uppercase)
             PasswordValidationType.LENGTH -> getString(R.string.password_validation_length)

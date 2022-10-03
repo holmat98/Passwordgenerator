@@ -1,33 +1,40 @@
-package com.mateuszholik.passwordgenerator.ui.authentication.login
+package com.mateuszholik.passwordgenerator.ui.login
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.callbacks.BiometricAuthenticationCallback
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.di.utils.NamedConstants
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-class LogInFragment : Fragment(R.layout.fragment_log_in) {
+class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
     private val binding by viewBinding(FragmentLogInBinding::bind)
     private val viewModel: LogInViewModel by viewModel()
-    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val messageProvider: MessageProvider by inject(named(NamedConstants.TOAST_MESSAGE_PROVIDER))
     private val biometricAuthenticationCallback: BiometricAuthenticationCallback by inject {
         parametersOf(::goToLoggedUserScreen)
     }
     private val biometricManager: BiometricManager by inject()
 
+    override val isBottomNavVisible: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            viewModel = this@LogInFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         setUpObservers()
         setUpKeyboard()
@@ -40,13 +47,13 @@ class LogInFragment : Fragment(R.layout.fragment_log_in) {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
             }
-            keyboard.doOnConfirmedClicked = { viewModel.logIn(pinCode.pin) }
+            keyboard.doOnConfirmedClicked = { viewModel?.onSubmitButtonClicked(pinCode.pin) }
         }
     }
 
     private fun setUpObservers() {
         with(viewModel) {
-            loginFailed.observe(viewLifecycleOwner) {
+            wrongPin.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
                 binding.pinCode.animateFailure()
             }
@@ -70,10 +77,6 @@ class LogInFragment : Fragment(R.layout.fragment_log_in) {
     }
 
     private fun goToLoggedUserScreen() {
-        findNavController().navigate(R.id.action_authenticationHostFragment_to_logged_user_nav)
-    }
-
-    companion object {
-        fun newInstance() = LogInFragment()
+        findNavController().navigate(R.id.action_logInFragment_to_logged_user_nav)
     }
 }

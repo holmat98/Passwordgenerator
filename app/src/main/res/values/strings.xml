@@ -9,7 +9,7 @@
     <string name="button_skip">Pomiń</string>
     <string name="button_start">Zaczynamy</string>
     <string name="create">Stwórz</string>
-    <string name="create_password_header">Stwórz hasło</string>
+    <string name="create_pin_header">Stwórz pin</string>
     <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
     <string name="create_pin_wrong_pin">Podany pin nie spełnia warunków</string>
     <string name="dialog_button_cancel">Anuluj</string>
