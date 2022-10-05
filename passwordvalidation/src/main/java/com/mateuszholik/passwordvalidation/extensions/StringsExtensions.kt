@@ -1,7 +1,6 @@
 package com.mateuszholik.passwordvalidation.extensions
 
-internal fun String.removeNumbers(): String =
-    this.filterNot { it.code in 30..39 }
+internal fun String.removeNumbers(): String = this.filterNot { it.code in 48..57 }
 
 internal fun String.removeLeetText(): String =
     this.replaceSpecialCharactersWithLetters()
