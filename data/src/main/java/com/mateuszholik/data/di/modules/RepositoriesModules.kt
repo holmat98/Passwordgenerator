@@ -11,6 +11,7 @@ internal val repositoriesModule = module {
             passwordsDao = get(),
             passwordListMapper = get(),
             passwordDBMapper = get(),
+            passwordMapper = get(),
             sharedPrefManager = get()
         )
     }

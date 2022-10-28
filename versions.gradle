@@ -31,6 +31,7 @@ versions.timber_version = "5.0.1"
 versions.work_version = "2.7.1"
 versions.biometric = "1.0.0-beta01"
 versions.leakcanary = "2.8.1"
+versions.rxWorker = "2.7.1"
 
 def deps = [:]
 
@@ -131,6 +132,7 @@ deps.timber = timber
 
 def worker_manager = [:]
 worker_manager.worker = "androidx.work:work-runtime-ktx:$versions.work_version"
+worker_manager.rx_worker = "androidx.work:work-rxjava3:$versions.rxWorker"
 deps.worker_manager = worker_manager
 
 def biometric = [:]

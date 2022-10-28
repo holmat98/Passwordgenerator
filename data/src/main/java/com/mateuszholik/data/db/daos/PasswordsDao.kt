@@ -7,16 +7,20 @@ import androidx.room.Query
 import androidx.room.OnConflictStrategy
 import com.mateuszholik.data.db.models.PasswordDB
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 @Dao
 internal interface PasswordsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(passwordDB: PasswordDB): Completable
+    fun insert(passwordDB: PasswordDB): Single<Long>
 
     @Update
     fun update(passwordDB: PasswordDB): Completable
+
+    @Query("select * from passwords where id = :passwordId")
+    fun getPassword(passwordId: Long): Maybe<PasswordDB>
 
     @Query("select * from passwords")
     fun getAllPasswords(): Single<List<PasswordDB>>

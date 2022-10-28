@@ -13,6 +13,7 @@ import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
+import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
 class PasswordDetailsViewModel(
@@ -65,9 +66,13 @@ class PasswordDetailsViewModel(
 
     fun deletePassword() {
         deletePasswordUseCase(password.id)
+            .andThen(
+                Completable.fromAction {
+                    workScheduler.cancelWorker(password.id)
+                }
+            )
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
-                    workScheduler.cancelWorker(password.id)
                     _passwordDeletedSuccessfully.postValue(true)
                 },
                 doOnError = {
@@ -79,6 +84,6 @@ class PasswordDetailsViewModel(
     }
 
     fun scheduleNotification() {
-        workScheduler.schedule(password, password.expiringDate.getDiffFromNowInMilliseconds())
+        workScheduler.schedule(password.id, password.expiringDate.getDiffFromNowInMilliseconds())
     }
 }

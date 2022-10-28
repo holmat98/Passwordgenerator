@@ -41,7 +41,9 @@ val viewModelModule = module {
     viewModel { (password: String?) ->
         SavePasswordViewModel(
             generatedPassword = password,
-            savePasswordUseCase = get()
+            getPasswordUseCase = get(),
+            savePasswordUseCase = get(),
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
         )
     }
 
