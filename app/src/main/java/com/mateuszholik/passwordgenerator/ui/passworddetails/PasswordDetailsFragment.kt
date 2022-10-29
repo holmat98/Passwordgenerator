@@ -44,6 +44,8 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
             lifecycleOwner = viewLifecycleOwner
         }
 
+        binding.passwordInfoView.date = password.expiringDate
+
         setUpRecyclerView()
         setUpPasswordActionButtons()
         setUpObservers()

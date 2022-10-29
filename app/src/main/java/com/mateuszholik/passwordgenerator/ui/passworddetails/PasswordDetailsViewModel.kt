@@ -6,13 +6,13 @@ import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
-import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
+import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
 class PasswordDetailsViewModel(
@@ -65,9 +65,13 @@ class PasswordDetailsViewModel(
 
     fun deletePassword() {
         deletePasswordUseCase(password.id)
+            .andThen(
+                Completable.fromAction {
+                    workScheduler.cancelWorker(password.id)
+                }
+            )
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
-                    workScheduler.cancelWorker(password.id)
                     _passwordDeletedSuccessfully.postValue(true)
                 },
                 doOnError = {
@@ -76,9 +80,5 @@ class PasswordDetailsViewModel(
                 }
             )
             .addTo(compositeDisposable)
-    }
-
-    fun scheduleNotification() {
-        workScheduler.schedule(password, password.expiringDate.getDiffFromNowInMilliseconds())
     }
 }

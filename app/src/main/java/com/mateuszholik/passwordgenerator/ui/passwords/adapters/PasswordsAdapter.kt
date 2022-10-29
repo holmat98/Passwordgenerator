@@ -10,7 +10,6 @@ import com.mateuszholik.passwordgenerator.models.PasswordsViewHolder
 
 class PasswordsAdapter(
     private val copyToClipboard: (String, String) -> Unit,
-    private val calculateProgress: (String) -> Int,
     private val navigateToPasswordDetails: (Password) -> Unit,
     private val createPasswordViewHolder: (ViewGroup, Int) -> PasswordsViewHolder
 ) : RecyclerView.Adapter<PasswordsViewHolder>() {
@@ -33,18 +32,16 @@ class PasswordsAdapter(
             is PasswordsViewHolder.ValidPasswordViewHolder -> holder.bind(
                 passwordType,
                 navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-                calculateProgress = { calculateProgress(it) },
                 copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
             )
             is PasswordsViewHolder.OutdatedPasswordViewHolder -> holder.bind(
                 passwordType,
+                copyToClipboard = { platform, password -> copyToClipboard(platform, password) },
                 navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-                calculateProgress = { calculateProgress(it) }
             )
             is PasswordsViewHolder.ExpiringPasswordViewHolder -> holder.bind(
                 passwordType,
                 navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-                calculateProgress = { calculateProgress(it) },
                 copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
             )
         }

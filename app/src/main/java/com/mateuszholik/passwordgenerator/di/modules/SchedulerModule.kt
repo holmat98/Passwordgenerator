@@ -12,8 +12,7 @@ val schedulerModule = module {
 
     single<WorkScheduler>(named(NOTIFICATION_WORK_SCHEDULER)) {
         NotificationWorkSchedulerImpl(
-            context = androidContext(),
-            messageProvider = get(named(TOAST_MESSAGE_PROVIDER))
+            context = androidContext()
         )
     }
 }

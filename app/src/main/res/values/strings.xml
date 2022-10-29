@@ -86,4 +86,9 @@
     <string name="settings_screen_title">Ustawienia</string>
     <string name="test">Przetestuj</string>
     <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
+    <string name="copy_button">Przycisk kopiowania hasła</string>
+    <string name="warning_icon">Ikona informująca o zbliżającym się wygaśnięciu hasła</string>
+    <string name="warning_password_expired">Twoje hasło wygasło!</string>
+    <string name="warning_password_correct">Twoje hasło jest bezpieczne</string>
+    <string name="warning_password_expiring">Twoje hasło wkrótce wygaśnie!</string>
 </resources>

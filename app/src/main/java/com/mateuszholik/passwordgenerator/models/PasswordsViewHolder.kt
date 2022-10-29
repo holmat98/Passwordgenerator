@@ -17,14 +17,12 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
         fun bind(
             passwordType: PasswordType,
             navigateToPasswordDetails: (Password) -> Unit,
-            copyToClipboard: (String, String) -> Unit,
-            calculateProgress: (String) -> Int
+            copyToClipboard: (String, String) -> Unit
         ) {
             with(binding) {
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
                 copyPasswordIB.setOnClickListener {
                     copyToClipboard(
                         passwordType.password.platformName,
@@ -41,14 +39,17 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
 
         fun bind(
             passwordType: PasswordType,
+            copyToClipboard: (String, String) -> Unit,
             navigateToPasswordDetails: (Password) -> Unit,
-            calculateProgress: (String) -> Int
         ) {
             with(binding) {
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
+                copyPasswordIB.setOnClickListener { copyToClipboard(
+                    passwordType.password.platformName,
+                    passwordType.password.password
+                ) }
             }
         }
     }
@@ -61,13 +62,11 @@ sealed class PasswordsViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder
             passwordType: PasswordType,
             navigateToPasswordDetails: (Password) -> Unit,
             copyToClipboard: (String, String) -> Unit,
-            calculateProgress: (String) -> Int
         ) {
             with(binding) {
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
                 platformNameTV.text = passwordType.password.platformName
                 passwordTV.text = passwordType.password.password
-                passwordScorePCV.animateProgress(calculateProgress(passwordType.password.password))
                 copyPasswordIB.setOnClickListener {
                     copyToClipboard(
                         passwordType.password.platformName,

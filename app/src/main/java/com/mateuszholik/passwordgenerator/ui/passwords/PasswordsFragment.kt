@@ -64,7 +64,6 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
             copyToClipboard = { label, password ->
                 clipboardManager.copyToClipboard(label, password)
             },
-            calculateProgress = { viewModel.getPasswordScore(it) },
             navigateToPasswordDetails = { navigateToPasswordDetails(it) },
             createPasswordViewHolder = { viewGroup, viewType ->
                 viewHolderFactory.create(
