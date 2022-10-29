@@ -8,8 +8,6 @@ import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.domain.usecase.CreatePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ValidatePasswordUseCase
 import com.mateuszholik.domain.usecase.ValidatePasswordUseCaseImpl
-import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCase
-import com.mateuszholik.domain.usecase.CalculatePasswordScoreUseCaseImpl
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
@@ -58,10 +56,6 @@ internal val useCaseModule = module {
             containsUpperCaseValidator = get(),
             passwordLengthValidator = get()
         )
-    }
-
-    single<CalculatePasswordScoreUseCase> {
-        CalculatePasswordScoreUseCaseImpl(passwordScoreProvider = get())
     }
 
     single<SavePasswordUseCase> {
