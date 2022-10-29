@@ -6,7 +6,6 @@ import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
-import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
@@ -81,9 +80,5 @@ class PasswordDetailsViewModel(
                 }
             )
             .addTo(compositeDisposable)
-    }
-
-    fun scheduleNotification() {
-        workScheduler.schedule(password.id, password.expiringDate.getDiffFromNowInMilliseconds())
     }
 }
