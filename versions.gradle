@@ -36,9 +36,9 @@ versions.rxWorker = "2.7.1"
 def deps = [:]
 
 def build_versions = [:]
-build_versions.compile_sdk = 31
+build_versions.compile_sdk = 33
 build_versions.min_sdk = 30
-build_versions.target_sdk = 31
+build_versions.target_sdk = 33
 build_versions.version_code = 3
 build_versions.version_name = "3.0.0"
 ext.build_versions = build_versions
