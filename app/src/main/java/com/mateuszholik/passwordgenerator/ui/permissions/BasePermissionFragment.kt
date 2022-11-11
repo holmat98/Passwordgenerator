@@ -34,12 +34,10 @@ abstract class BasePermissionFragment(permissionType: String) :
     private val permissionManager by inject<PermissionManager>(named(permissionType))
 
     private val appPermissionsSettingsLauncher = registerForActivityResult(StartActivityForResult()) {
-        Timber.i("Testowanie: appPermissionsSettingsLauncher")
         handlePermissionState()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) {
-        Timber.i("Testowanie: requestPermissionLauncher")
         handlePermissionState()
     }
 

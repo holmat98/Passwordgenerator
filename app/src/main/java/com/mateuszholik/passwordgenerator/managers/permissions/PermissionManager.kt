@@ -2,6 +2,7 @@ package com.mateuszholik.passwordgenerator.managers.permissions
 
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.content.ContextCompat
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.passwordgenerator.managers.permissions.models.PermissionState
@@ -11,6 +12,7 @@ abstract class PermissionManager(
 ) {
 
     abstract val permission: String
+    protected abstract val minSdk: Int?
     protected abstract val permissionKey: String
 
     fun checkPermission(activity: Activity): PermissionState =
@@ -26,7 +28,8 @@ abstract class PermissionManager(
     }
 
     private fun isPermissionGranted(activity: Activity): Boolean =
-        ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED ||
+                minSdk?.let { Build.VERSION.SDK_INT < it } ?: false
 
     private fun wasPermissionRequested(): Boolean =
         sharedPrefManager.readBoolean(permissionKey)
