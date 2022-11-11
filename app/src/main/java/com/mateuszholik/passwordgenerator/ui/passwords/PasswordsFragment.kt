@@ -29,8 +29,7 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val viewHolderFactory: ViewHolderFactory by inject()
     private var adapter: PasswordsAdapter? = null
 
-    override val isBottomNavVisible: Boolean
-        get() = true
+    override val isBottomNavVisible: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

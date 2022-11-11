@@ -10,16 +10,27 @@ import com.mateuszholik.passwordgenerator.databinding.DialogNumberPickerBinding
 fun Fragment.showDialog(
     @StringRes titleRes: Int,
     @StringRes messageRes: Int,
-    @StringRes negativeButtonRes: Int = R.string.dialog_button_no,
+    isCancellable: Boolean = false,
+    @StringRes negativeButtonRes: Int? = null,
     @StringRes positiveButtonRes: Int = R.string.dialog_button_yes,
+    doOnNegativeButton: (() -> Unit)? = null,
     doOnPositiveButton: () -> Unit
 ) {
     context?.let {
         AlertDialog.Builder(it).apply {
+            setCancelable(isCancellable)
             setTitle(it.getString(titleRes))
             setMessage(it.getString(messageRes))
-            setNegativeButton(negativeButtonRes) { dialog, _ -> dialog.dismiss() }
-            setPositiveButton(positiveButtonRes) { _, _ -> doOnPositiveButton() }
+            negativeButtonRes?.let {
+                setNegativeButton(negativeButtonRes) { dialog, _ ->
+                    doOnNegativeButton?.invoke()
+                    dialog.dismiss()
+                }
+            }
+            setPositiveButton(positiveButtonRes) { dialog, _ ->
+                doOnPositiveButton()
+                dialog.dismiss()
+            }
         }.show()
     }
 }
