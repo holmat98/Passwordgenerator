@@ -3,6 +3,7 @@
     package="com.mateuszholik.passwordgenerator">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".App"

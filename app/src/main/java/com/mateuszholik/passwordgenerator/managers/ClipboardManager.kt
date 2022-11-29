@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.managers
 
 import android.content.ClipData
+import android.content.ClipDescription
 import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
@@ -23,13 +24,13 @@ class ClipboardManagerImpl(
 
         val clipData = ClipData.newPlainText(label, text).apply {
             description.extras = PersistableBundle().apply {
-                putBoolean("android.content.extra.IS_SENSITIVE", true)
+                putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)
             }
         }
 
         clipboard.setPrimaryClip(clipData)
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             messageProvider.show(R.string.message_password_copied_to_clipboard)
         }
     }

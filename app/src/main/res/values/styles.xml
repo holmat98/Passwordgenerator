@@ -25,8 +25,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="OnboardingText" parent="DefaultText">
+    <style name="Title" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="Description" parent="DefaultText">
         <item name="android:textAlignment">center</item>
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
@@ -51,6 +57,7 @@
         <item name="android:padding">@dimen/padding_8</item>
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
         <item name="android:letterSpacing">0.03</item>
+        <item name="android:minHeight">@dimen/min_button_height</item>
     </style>
 
     <style name="BottomNavigationView">
