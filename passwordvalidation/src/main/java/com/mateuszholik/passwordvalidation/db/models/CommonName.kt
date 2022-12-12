@@ -11,5 +11,5 @@ internal data class CommonName(
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "name")
-    val name: String?
+    val name: String
 )

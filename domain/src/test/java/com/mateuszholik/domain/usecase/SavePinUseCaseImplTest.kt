@@ -3,7 +3,7 @@ package com.mateuszholik.domain.usecase
 import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class SavePinUseCaseImplTest {
 
@@ -12,7 +12,7 @@ class SavePinUseCaseImplTest {
     }
     private val createPinUseCase = SavePinUseCaseImpl(encryptedSharedPrefManager)
 
-    @Test(expected = Throwable::class)
+    @Test
     fun `When pin is to short then error is returned`() {
         createPinUseCase("123")
             .test()

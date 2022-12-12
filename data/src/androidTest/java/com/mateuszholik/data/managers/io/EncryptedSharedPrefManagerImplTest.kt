@@ -4,21 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions.assertThat
 
-@RunWith(AndroidJUnit4::class)
 class EncryptedSharedPrefManagerImplTest {
 
     private lateinit var context: Context
     private lateinit var encryptedSharedPreferences: SharedPreferences
     private lateinit var encryptedSharedPrefManager: EncryptedSharedPrefManagerImpl
 
-    @Before
+    @BeforeEach
     fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
         encryptedSharedPrefManager = EncryptedSharedPrefManagerImpl(context)
@@ -38,7 +35,7 @@ class EncryptedSharedPrefManagerImplTest {
 
         val result = encryptedSharedPreferences.getString(KEY, "")
 
-        Assert.assertEquals(DATA, result)
+        assertThat(result).isEqualTo(DATA)
     }
 
     @Test
@@ -47,7 +44,7 @@ class EncryptedSharedPrefManagerImplTest {
 
         val result = encryptedSharedPrefManager.readString(KEY)
 
-        Assert.assertEquals(DATA, result)
+        assertThat(result).isEqualTo(DATA)
     }
 
     @Test
@@ -57,7 +54,7 @@ class EncryptedSharedPrefManagerImplTest {
 
         val result = encryptedSharedPreferences.getString(KEY, "")
 
-        Assert.assertEquals("", result)
+        assertThat(result).isEqualTo(DATA)
     }
 
     private companion object {

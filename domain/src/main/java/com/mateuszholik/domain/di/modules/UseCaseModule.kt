@@ -6,8 +6,6 @@ import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.domain.usecase.CreatePasswordUseCaseImpl
-import com.mateuszholik.domain.usecase.ValidatePasswordUseCase
-import com.mateuszholik.domain.usecase.ValidatePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
@@ -46,16 +44,6 @@ internal val useCaseModule = module {
 
     single<CreatePasswordUseCase> {
         CreatePasswordUseCaseImpl(passwordFactory = get())
-    }
-
-    single<ValidatePasswordUseCase> {
-        ValidatePasswordUseCaseImpl(
-            containsLetterValidator = get(),
-            containsNumberValidator = get(),
-            containsSpecialCharacterValidator = get(),
-            containsUpperCaseValidator = get(),
-            passwordLengthValidator = get()
-        )
     }
 
     single<SavePasswordUseCase> {

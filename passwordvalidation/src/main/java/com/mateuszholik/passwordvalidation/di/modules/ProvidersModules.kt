@@ -11,7 +11,8 @@ internal val providersModules = module {
             commonPasswordDao = get(),
             commonNameDao = get(),
             commonPetsNameDao = get(),
-            commonWordDao = get()
+            commonWordDao = get(),
+            stringTransformer = get()
         )
     }
 }

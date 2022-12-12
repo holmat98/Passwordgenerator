@@ -10,6 +10,7 @@ import com.mateuszholik.passwordvalidation.strategies.*
 import com.mateuszholik.passwordvalidation.strategies.NumberValidationStrategyImpl
 import com.mateuszholik.passwordvalidation.strategies.PasswordValidationStrategy
 import com.mateuszholik.passwordvalidation.strategies.SpecialCharacterValidationStrategyImpl
+import com.mateuszholik.passwordvalidation.transformers.StringTransformer
 
 internal interface PasswordValidationStrategyProvider {
 
@@ -20,7 +21,8 @@ internal class PasswordValidationStrategyProviderImpl(
     private val commonPasswordDao: CommonPasswordDao,
     private val commonNameDao: CommonNameDao,
     private val commonPetsNameDao: CommonPetsNameDao,
-    private val commonWordDao: CommonWordDao
+    private val commonWordDao: CommonWordDao,
+    private val stringTransformer: StringTransformer
 ) : PasswordValidationStrategyProvider {
 
     override fun provide(passwordValidationType: PasswordValidationType): PasswordValidationStrategy =
@@ -31,7 +33,7 @@ internal class PasswordValidationStrategyProviderImpl(
             NUMBERS -> NumberValidationStrategyImpl()
             LENGTH -> LengthValidationStrategyImpl()
             COMMON_PASSWORD -> CommonPasswordValidationStrategyImpl(commonPasswordDao)
-            COMMON_WORD -> CommonWordsValidationStrategyImpl(commonWordDao)
+            COMMON_WORD -> CommonWordsValidationStrategyImpl(commonWordDao, stringTransformer)
             COMMON_NAME -> CommonNameValidationStrategyImpl(commonNameDao, commonPetsNameDao)
             ALPHABETICAL_PATTERN -> AlphabeticalPatternsValidationStrategyImpl()
             KEYBOARD_PATTERN -> KeyboardPatternsValidationStrategyImpl()

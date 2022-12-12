@@ -4,11 +4,11 @@ import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
 import com.mateuszholik.domain.models.PinState
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
+
 class IsPinCorrectUseCaseImplTest {
 
     private val encryptedSharedPrefManager = mockk<EncryptedSharedPrefManager> {

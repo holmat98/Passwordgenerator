@@ -3,11 +3,11 @@ package com.mateuszholik.domain.usecase
 import com.mateuszholik.domain.factories.PasswordFactory
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
+
 class CreatePasswordUseCaseImplTest {
 
     private val passwordFactory = mockk<PasswordFactory> {

@@ -2,11 +2,8 @@ package com.mateuszholik.passwordvalidation.strategies
 
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.junit.jupiter.api.Test
 
-@RunWith(JUnit4::class)
 class LengthValidationStrategyImplTest {
 
     private val lengthValidationStrategy = LengthValidationStrategyImpl()

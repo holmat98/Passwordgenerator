@@ -10,18 +10,15 @@ import com.mateuszholik.data.repositories.models.Password
 import io.mockk.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-@RunWith(JUnit4::class)
 class PasswordsRepositoryImplTest {
 
     private val passwordsDao = mockk<PasswordsDao> {
-        every { insert(PASSWORD_DB) } returns Completable.complete()
+        every { insert(PASSWORD_DB) } returns Single.just(1)
         every { update(PASSWORD_DB) } returns Completable.complete()
         every { deletePassword(MAPPED_PASSWORD.id) } returns Completable.complete()
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD_DB))
@@ -44,13 +41,13 @@ class PasswordsRepositoryImplTest {
         sharedPrefManager
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         mockkStatic(LocalDateTime.now()::class)
         every { LocalDateTime.now() } returns TODAY_DATE
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         unmockkStatic(LocalDateTime::class)
     }
