@@ -1,11 +1,5 @@
 package com.mateuszholik.domain.providers
 
-import com.mateuszholik.domain.validators.ContainsLetterValidatorImpl
-import com.mateuszholik.domain.validators.ContainsUpperCaseValidatorImpl
-import com.mateuszholik.domain.validators.ContainsNumberValidatorImpl
-import com.mateuszholik.domain.validators.ContainsSpecialCharacterValidatorImpl
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
@@ -15,7 +9,7 @@ class PasswordScoreProviderImplTest(
     private val expected: Int
 ) {
 
-    private val containsLetterValidator = ContainsLetterValidatorImpl()
+    /*private val containsLetterValidator = ContainsLetterValidatorImpl()
     private val containsUpperCaseValidator = ContainsUpperCaseValidatorImpl()
     private val containsNumberValidator = ContainsNumberValidatorImpl()
     private val containsSpecialCharacterValidator = ContainsSpecialCharacterValidatorImpl()
@@ -31,7 +25,7 @@ class PasswordScoreProviderImplTest(
         val result = passwordScoreManagerImpl.getScore(param)
 
         assertThat(result).isEqualTo(expected)
-    }
+    }*/
 
     companion object {
         @JvmStatic

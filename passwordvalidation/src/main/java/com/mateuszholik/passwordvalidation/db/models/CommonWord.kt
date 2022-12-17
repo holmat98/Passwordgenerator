@@ -11,5 +11,5 @@ internal data class CommonWord(
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "word")
-    val word: String?
+    val word: String
 )

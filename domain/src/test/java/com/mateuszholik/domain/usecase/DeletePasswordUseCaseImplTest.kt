@@ -4,11 +4,11 @@ import com.mateuszholik.data.repositories.PasswordsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
+
 class DeletePasswordUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository>()

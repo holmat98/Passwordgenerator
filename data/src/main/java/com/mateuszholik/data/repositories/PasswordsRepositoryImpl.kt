@@ -1,5 +1,6 @@
 package com.mateuszholik.data.repositories
 
+import android.util.Log
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.managers.io.SharedPrefManager
@@ -20,8 +21,8 @@ internal class PasswordsRepositoryImpl(
     private val sharedPrefManager: SharedPrefManager
 ) : PasswordsRepository {
 
-    override fun insert(platform: String, password: String): Single<Long> =
-        Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY))
+    override fun createAndGetId(platform: String, password: String): Single<Long> =
+        Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY, DEFAULT_PASSWORD_VALIDITY))
             .map {
                 Password(
                     id = DEFAULT_ID,
@@ -31,13 +32,13 @@ internal class PasswordsRepositoryImpl(
                 )
             }
             .map { passwordDBMapper.map(it) }
-            .flatMap { passwordsDao.insert(it) }
+            .flatMap { passwordsDao.insertAndGetId(it) }
 
     override fun delete(passwordId: Long): Completable =
         passwordsDao.deletePassword(passwordId)
 
     override fun update(password: Password): Completable =
-        Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY))
+        Single.just(sharedPrefManager.readLong(PASSWORD_VALIDITY, DEFAULT_PASSWORD_VALIDITY))
             .map {
                 passwordDBMapper.map(
                     password.copy(
@@ -57,5 +58,6 @@ internal class PasswordsRepositoryImpl(
 
     private companion object {
         const val DEFAULT_ID = 0L
+        const val DEFAULT_PASSWORD_VALIDITY = 30L
     }
 }

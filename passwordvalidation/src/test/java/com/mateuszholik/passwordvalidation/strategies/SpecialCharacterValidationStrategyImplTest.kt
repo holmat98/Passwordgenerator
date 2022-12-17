@@ -2,11 +2,11 @@ package com.mateuszholik.passwordvalidation.strategies
 
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
+
 class SpecialCharacterValidationStrategyImplTest {
 
     private val specialCharacterValidationStrategy = SpecialCharacterValidationStrategyImpl()

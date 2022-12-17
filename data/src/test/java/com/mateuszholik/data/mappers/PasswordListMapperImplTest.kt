@@ -5,12 +5,9 @@ import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-@RunWith(JUnit4::class)
 class PasswordListMapperImplTest {
 
     private val passwordMapper = mockk<PasswordMapper> {

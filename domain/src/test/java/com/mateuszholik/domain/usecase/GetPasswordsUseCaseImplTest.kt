@@ -6,15 +6,14 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Single
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import java.time.LocalDateTime
 
-@RunWith(JUnit4::class)
 class GetPasswordsUseCaseImplTest {
 
-    private val passwordsRepository = mockk<PasswordsRepository> {
+    /*private val passwordsRepository = mockk<PasswordsRepository> {
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD))
     }
 
@@ -28,7 +27,7 @@ class GetPasswordsUseCaseImplTest {
             .assertValue(listOf(PASSWORD))
 
         verify(exactly = 1) { passwordsRepository.getAllPasswords() }
-    }
+    }*/
 
     private companion object {
         val PASSWORD = Password(

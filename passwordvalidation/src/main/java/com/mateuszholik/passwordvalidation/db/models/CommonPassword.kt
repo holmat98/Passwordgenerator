@@ -11,5 +11,5 @@ internal data class CommonPassword(
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "password")
-    val password: String?
+    val password: String
 )
