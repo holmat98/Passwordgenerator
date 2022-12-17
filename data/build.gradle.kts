@@ -4,22 +4,24 @@ plugins {
     kotlin("kapt")
 }
 
+apply(from="${project.rootDir}/jacoco.gradle")
+
 android {
-    compileSdk = Dependencies.DefaultConfig.COMPILE_SDK
+    compileSdk = DefaultConfig.COMPILE_SDK
 
     defaultConfig {
-        minSdk = Dependencies.DefaultConfig.MIN_SDK
-        targetSdk = Dependencies.DefaultConfig.TARGET_SDK
+        minSdk = DefaultConfig.MIN_SDK
+        targetSdk = DefaultConfig.TARGET_SDK
 
-        testInstrumentationRunner = Dependencies.DefaultConfig.TEST_INSTRUMENTATION_RUNNER
+        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
             proguardFiles(
-                getDefaultProguardFile(Dependencies.Proguard.FILE),
-                Dependencies.Proguard.RULES
+                getDefaultProguardFile(Proguard.FILE),
+                Proguard.RULES
             )
         }
     }
@@ -38,44 +40,49 @@ dependencies {
     implementation(project(":cryptography"))
 
     // Core ktx
-    implementation(Dependencies.Androidx.Core.DEPENDENCY)
+    implementation(Androidx.Core.DEPENDENCY)
 
     // Appcompat
-    implementation(Dependencies.Androidx.AppCompat.DEPENDENCY)
+    implementation(Androidx.AppCompat.DEPENDENCY)
 
     // Tests
-    testImplementation(Dependencies.Testing.JUnit.DEPENDENCY)
-    testCompileOnly(Dependencies.Testing.JUnit.API_DEPENDENCY)
-    testRuntimeOnly(Dependencies.Testing.JUnit.ENGINE)
-    testImplementation(Dependencies.Testing.JUnit.PARAMS)
-    androidTestImplementation(Dependencies.Testing.Espresso.DEPENDENCY)
-    testImplementation(Dependencies.Testing.AssertJ.DEPENDENCY)
-    testImplementation(Dependencies.Androidx.Core.Testing.DEPENDENCY)
+    testImplementation(Testing.JUnit.DEPENDENCY)
+    testCompileOnly(Testing.JUnit.API_DEPENDENCY)
+    testRuntimeOnly(Testing.JUnit.ENGINE)
+    testImplementation(Testing.JUnit.PARAMS)
+    testImplementation(Testing.AssertJ.DEPENDENCY)
+    testImplementation(Androidx.Core.Testing.DEPENDENCY)
+    androidTestImplementation(Testing.JUnit.DEPENDENCY)
+    androidTestCompileOnly(Testing.JUnit.API_DEPENDENCY)
+    androidTestRuntimeOnly(Testing.JUnit.ENGINE)
+    androidTestImplementation(Testing.JUnit.PARAMS)
+    androidTestImplementation(Testing.Espresso.DEPENDENCY)
+    androidTestImplementation(Testing.AssertJ.DEPENDENCY)
 
     //room
-    implementation(Dependencies.Androidx.Room.ROOM_KTX_DEPENDENCY)
-    kapt(Dependencies.Androidx.Room.COMPILER_DEPENDENCY)
-    implementation(Dependencies.Androidx.Room.ROOM_KTX_DEPENDENCY)
-    testImplementation(Dependencies.Androidx.Room.TEST_DEPENDENCY)
+    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
+    kapt(Androidx.Room.COMPILER_DEPENDENCY)
+    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
+    testImplementation(Androidx.Room.TEST_DEPENDENCY)
 
     // RxJava
-    implementation(Dependencies.RxJava.DEPENDENCY)
-    implementation(Dependencies.RxJava.Android.DEPENDENCY)
-    implementation(Dependencies.Androidx.Room.RX_JAVA_DEPENDENCY)
+    implementation(RxJava.DEPENDENCY)
+    implementation(RxJava.Android.DEPENDENCY)
+    implementation(Androidx.Room.RX_JAVA_DEPENDENCY)
 
     // koin
-    implementation(Dependencies.Koin.DEPENDENCY)
-    implementation(Dependencies.Koin.ViewModel.DEPENDENCY)
-    implementation(Dependencies.Koin.Scope.DEPENDENCY)
+    implementation(Koin.DEPENDENCY)
+    implementation(Koin.ViewModel.DEPENDENCY)
+    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
-    testImplementation(Dependencies.Mockk.DEPENDENCY)
-    androidTestImplementation(Dependencies.Mockk.Android.DEPENDENCY)
+    testImplementation(Mockk.DEPENDENCY)
+    androidTestImplementation(Mockk.Android.DEPENDENCY)
 
     // Jetpack security
-    implementation(Dependencies.Androidx.Security.CRYPTO_DEPENDENCY)
+    implementation(Androidx.Security.CRYPTO_DEPENDENCY)
 }
 
-tasks.withType<Test> {
+tasks.withType(Test::class) {
     useJUnitPlatform()
 }

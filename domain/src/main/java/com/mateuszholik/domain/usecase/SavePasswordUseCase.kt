@@ -12,5 +12,5 @@ internal class SavePasswordUseCaseImpl(
 ) : SavePasswordUseCase {
 
     override fun invoke(param: NewPassword): Single<Long> =
-        passwordsRepository.insert(param.platformName, param.password)
+        passwordsRepository.createAndGetId(param.platformName, param.password)
 }

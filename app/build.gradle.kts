@@ -5,17 +5,19 @@ plugins {
     id("androidx.navigation.safeargs")
 }
 
+apply(from="${project.rootDir}/jacoco.gradle")
+
 android {
-    compileSdk = Dependencies.DefaultConfig.COMPILE_SDK
+    compileSdk = DefaultConfig.COMPILE_SDK
 
     defaultConfig {
-        applicationId = Dependencies.DefaultConfig.APPLICATION_ID
-        minSdk = Dependencies.DefaultConfig.MIN_SDK
-        targetSdk = Dependencies.DefaultConfig.TARGET_SDK
-        versionCode = Dependencies.DefaultConfig.VERSION_CODE
-        versionName = Dependencies.DefaultConfig.VERSION_NAME
+        applicationId = DefaultConfig.APPLICATION_ID
+        minSdk = DefaultConfig.MIN_SDK
+        targetSdk = DefaultConfig.TARGET_SDK
+        versionCode = DefaultConfig.VERSION_CODE
+        versionName = DefaultConfig.VERSION_NAME
 
-        testInstrumentationRunner = Dependencies.DefaultConfig.TEST_INSTRUMENTATION_RUNNER
+        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildFeatures {
@@ -28,8 +30,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile(Dependencies.Proguard.FILE),
-                Dependencies.Proguard.RULES
+                getDefaultProguardFile(Proguard.FILE),
+                Proguard.RULES
             )
         }
     }
@@ -52,82 +54,82 @@ dependencies {
     implementation(project(":passwordvalidation"))
 
     // Core ktx
-    implementation(Dependencies.Androidx.Core.DEPENDENCY)
+    implementation(Androidx.Core.DEPENDENCY)
 
     // Appcompat
-    implementation(Dependencies.Androidx.AppCompat.DEPENDENCY)
+    implementation(Androidx.AppCompat.DEPENDENCY)
 
     // Tests
-    testImplementation(Dependencies.Testing.JUnit.DEPENDENCY)
-    testCompileOnly(Dependencies.Testing.JUnit.API_DEPENDENCY)
-    testRuntimeOnly(Dependencies.Testing.JUnit.ENGINE)
-    testImplementation(Dependencies.Testing.JUnit.PARAMS)
-    androidTestImplementation(Dependencies.Testing.Espresso.DEPENDENCY)
-    testImplementation(Dependencies.Testing.AssertJ.DEPENDENCY)
-    testImplementation(Dependencies.Androidx.Core.Testing.DEPENDENCY)
+    testImplementation(Testing.JUnit.DEPENDENCY)
+    testCompileOnly(Testing.JUnit.API_DEPENDENCY)
+    testRuntimeOnly(Testing.JUnit.ENGINE)
+    testImplementation(Testing.JUnit.PARAMS)
+    androidTestImplementation(Testing.Espresso.DEPENDENCY)
+    testImplementation(Testing.AssertJ.DEPENDENCY)
+    testImplementation(Androidx.Core.Testing.DEPENDENCY)
 
     // Navigation
-    implementation(Dependencies.Androidx.Navigation.FRAGMENT_NAVIGATION_DEPENDENCY)
-    implementation(Dependencies.Androidx.Navigation.UI_KTX_NAVIGATION_DEPENDENCY)
+    implementation(Androidx.Navigation.FRAGMENT_NAVIGATION_DEPENDENCY)
+    implementation(Androidx.Navigation.UI_KTX_NAVIGATION_DEPENDENCY)
 
     // Material design
-    implementation(Dependencies.Google.MaterialDesign.DEPENDENCY)
+    implementation(Google.MaterialDesign.DEPENDENCY)
 
     // Constraint layout
-    implementation(Dependencies.Androidx.ConstraintLayout.DEPENDENCY)
+    implementation(Androidx.ConstraintLayout.DEPENDENCY)
 
     //room
-    implementation(Dependencies.Androidx.Room.ROOM_KTX_DEPENDENCY)
-    kapt(Dependencies.Androidx.Room.COMPILER_DEPENDENCY)
-    implementation(Dependencies.Androidx.Room.ROOM_KTX_DEPENDENCY)
-    testImplementation(Dependencies.Androidx.Room.TEST_DEPENDENCY)
+    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
+    kapt(Androidx.Room.COMPILER_DEPENDENCY)
+    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
+    testImplementation(Androidx.Room.TEST_DEPENDENCY)
 
     // ViewModel
-    implementation(Dependencies.Androidx.Lifecycle.ViewModel.DEPENDENCY)
+    implementation(Androidx.Lifecycle.ViewModel.DEPENDENCY)
 
     // Jetpack security
-    implementation(Dependencies.Androidx.Security.CRYPTO_DEPENDENCY)
-    implementation(Dependencies.Androidx.Security.APP_AUTHENTICATOR_DEPENDENCY)
-    implementation(Dependencies.Androidx.Security.IDENTITY_CREDENTIAL_DEPENDENCY)
-    androidTestImplementation(Dependencies.Androidx.Security.APP_AUTHENTICATOR_TESTING_DEPENDENCY)
+    implementation(Androidx.Security.CRYPTO_DEPENDENCY)
+    implementation(Androidx.Security.APP_AUTHENTICATOR_DEPENDENCY)
+    implementation(Androidx.Security.IDENTITY_CREDENTIAL_DEPENDENCY)
+    androidTestImplementation(Androidx.Security.APP_AUTHENTICATOR_TESTING_DEPENDENCY)
 
     // RxJava
-    implementation(Dependencies.RxJava.DEPENDENCY)
-    implementation(Dependencies.RxJava.Android.DEPENDENCY)
-    implementation(Dependencies.Androidx.Room.RX_JAVA_DEPENDENCY)
+    implementation(RxJava.DEPENDENCY)
+    implementation(RxJava.Android.DEPENDENCY)
+    implementation(Androidx.Room.RX_JAVA_DEPENDENCY)
 
     // koin
-    implementation(Dependencies.Koin.DEPENDENCY)
-    implementation(Dependencies.Koin.ViewModel.DEPENDENCY)
-    implementation(Dependencies.Koin.Scope.DEPENDENCY)
+    implementation(Koin.DEPENDENCY)
+    implementation(Koin.ViewModel.DEPENDENCY)
+    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
-    testImplementation(Dependencies.Mockk.DEPENDENCY)
-    androidTestImplementation(Dependencies.Mockk.Android.DEPENDENCY)
+    testImplementation(Mockk.DEPENDENCY)
+    androidTestImplementation(Mockk.Android.DEPENDENCY)
 
     // viewpager
-    implementation(Dependencies.Androidx.ViewPager.DEPENDENCY)
+    implementation(Androidx.ViewPager.DEPENDENCY)
 
     // lottie
-    implementation(Dependencies.Lottie.DEPENDENCY)
+    implementation(Lottie.DEPENDENCY)
 
     // gson converter
-    implementation(Dependencies.Retrofit.Converter.DEPENDENCY)
+    implementation(Retrofit.Converter.DEPENDENCY)
 
     // timber
-    implementation(Dependencies.Timber.DEPENDENCY)
+    implementation(Timber.DEPENDENCY)
 
     // worker manager
-    implementation(Dependencies.Androidx.WorkManager.DEPENDENCY)
-    implementation(Dependencies.Androidx.WorkManager.Rx.DEPENDENCY)
+    implementation(Androidx.WorkManager.DEPENDENCY)
+    implementation(Androidx.WorkManager.Rx.DEPENDENCY)
 
     // biometric manager
-    implementation(Dependencies.Androidx.Biometric.DEPENDENCY)
+    implementation(Androidx.Biometric.DEPENDENCY)
 
     // leak canary
-    debugImplementation(Dependencies.SquareUp.LeakCanary.DEPENDENCY)
+    debugImplementation(SquareUp.LeakCanary.DEPENDENCY)
 }
 
-tasks.withType<Test> {
+tasks.withType(Test::class) {
     useJUnitPlatform()
 }

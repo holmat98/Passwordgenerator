@@ -30,10 +30,7 @@ class NotificationWorkSchedulerImpl(
         val uniqueWorkName = NOTIFICATION_WORKER_TAG + passwordId
 
         val work = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(
-                delay,
-                TimeUnit.MILLISECONDS
-            )
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
             .build()
 

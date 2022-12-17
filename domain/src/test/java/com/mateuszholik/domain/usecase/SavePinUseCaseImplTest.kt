@@ -13,13 +13,6 @@ class SavePinUseCaseImplTest {
     private val createPinUseCase = SavePinUseCaseImpl(encryptedSharedPrefManager)
 
     @Test
-    fun `When pin is to short then error is returned`() {
-        createPinUseCase("123")
-            .test()
-            .assertError(THROWABLE_ERROR)
-    }
-
-    @Test
     fun `When pin is correct then it is saved to shared preferences`() {
         createPinUseCase("1234")
             .test()

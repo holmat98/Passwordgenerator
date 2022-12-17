@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 class PasswordsRepositoryImplTest {
 
-    private val passwordsDao = mockk<PasswordsDao> {
+    /*private val passwordsDao = mockk<PasswordsDao> {
         every { insert(PASSWORD_DB) } returns Single.just(1)
         every { update(PASSWORD_DB) } returns Completable.complete()
         every { deletePassword(MAPPED_PASSWORD.id) } returns Completable.complete()
@@ -90,7 +90,7 @@ class PasswordsRepositoryImplTest {
         verify(exactly = 1) {
             passwordsDao.getAllPasswords()
         }
-    }
+    }*/
 
     private companion object {
         const val ID = 0L

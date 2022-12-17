@@ -6,10 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.time.LocalDateTime
-
 
 class PasswordListMapperImplTest {
 

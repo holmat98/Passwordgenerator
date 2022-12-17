@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Single
 internal interface PasswordsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(passwordDB: PasswordDB): Single<Long>
+    fun insertAndGetId(passwordDB: PasswordDB): Single<Long>
 
     @Update
     fun update(passwordDB: PasswordDB): Completable

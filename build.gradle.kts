@@ -6,9 +6,17 @@ buildscript {
     }
 
     dependencies {
-        classpath(Dependencies.Gradle.DEPENDENCY)
-        classpath(Dependencies.Jetbrains.KotlinGradlePlugin.DEPENDENCY)
-        classpath(Dependencies.Androidx.Navigation.SAFE_ARGS_DEPENDENCY)
+        classpath(Gradle.DEPENDENCY)
+        classpath(Jetbrains.KotlinGradlePlugin.DEPENDENCY)
+        classpath(Androidx.Navigation.SAFE_ARGS_DEPENDENCY)
+        classpath(Jacoco.DEPENDENCY)
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
     }
 }
 
