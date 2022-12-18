@@ -3,6 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.settings
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
@@ -32,6 +33,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.apply {
             viewModel = this@SettingsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
+
+            transferPasswordsButton.setOnClickListener {
+                findNavController().navigate(R.id.action_settings_to_transferPasswordHostFragment)
+            }
 
             passwordValidityButton.setOnClickListener {
                 showNumberPickerDialog(

@@ -81,6 +81,7 @@
     <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
+    <string name="settings_export_passwords">Import/Eksport haseł</string>
     <string name="settings_notification_num_of_days">Wybierz ilość dni po których hasło wygaśnie</string>
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
@@ -101,4 +102,14 @@
     <string name="permission_image_description">Ikona ekranu uprawnień</string>
     <string name="permission_button_access">Nadaj uprawnienie</string>
     <string name="permission_button_settings">Otwórz ustawienia</string>
+
+    <!-- Password Export and Import -->
+    <string name="export_screen_description">Wybierz jedną z dwóch opcji eksportu haseł</string>
+    <string name="transfer_type_description">Wybierz czy chcesz wyeksportować lub zaimportować swoje hasła</string>
+    <string name="transfer_type_option_import">Importuj</string>
+    <string name="transfer_type_option_export">Eksportuj</string>
+    <string name="transfer_encryption_type_description">Wybierz czy hasła są szyfrowane?</string>
+    <string name="transfer_encryption_type_option_yes">Tak</string>
+    <string name="transfer_encryption_type_option_no">Nie</string>
+    <string name="transfer_encryption_password_description">Wprowadź hasło, które będzie użyte do zaszyfrowania lub odszyfrowania Twoich haseł</string>
 </resources>

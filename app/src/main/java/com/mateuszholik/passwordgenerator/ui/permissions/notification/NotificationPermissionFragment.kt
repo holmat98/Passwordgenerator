@@ -18,7 +18,6 @@ import com.mateuszholik.passwordgenerator.managers.permissions.models.Permission
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import timber.log.Timber
 
 class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission_screen) {
 
@@ -48,25 +47,21 @@ class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission
     private fun handlePermissionState() {
         when (permissionManager.checkPermission(requireActivity())) {
             PermissionState.NOT_REQUESTED -> {
-                Timber.i("Testowanie: NOT_REQUESTED")
                 updateButton {
                     requestPermissionLauncher.launch(permissionManager.permission)
                     permissionManager.savePermissionRequested()
                 }
             }
             PermissionState.GRANTED -> {
-                Timber.i("Testowanie: GRANTED")
                 findNavController().navigate(R.id.action_notificationPermissionFragment_to_logInFragment)
             }
             PermissionState.DENIED -> {
-                Timber.i("Testowanie: DENIED")
                 updateButton(
                     textResId = R.string.permission_button_settings,
                     doOnClick = ::openSettings
                 )
             }
             PermissionState.SHOW_RATIONALE -> {
-                Timber.i("Testowanie: SHOW_RATIONALE")
                 showDialog(
                     titleRes = R.string.permission_rationale_title,
                     messageRes = R.string.notification_permission_rationale,

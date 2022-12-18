@@ -99,5 +99,12 @@
     </fragment>
     <fragment
         android:id="@+id/settings"
-        android:name="com.mateuszholik.passwordgenerator.ui.settings.SettingsFragment" />
+        android:name="com.mateuszholik.passwordgenerator.ui.settings.SettingsFragment" >
+        <action
+            android:id="@+id/action_settings_to_transferPasswordHostFragment"
+            app:destination="@id/transferPasswordHostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferPasswordHostFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.transfer.TransferPasswordHostFragment" />
 </navigation>
