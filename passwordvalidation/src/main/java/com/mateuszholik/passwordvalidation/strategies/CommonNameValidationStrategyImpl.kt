@@ -1,45 +1,23 @@
 package com.mateuszholik.passwordvalidation.strategies
 
-import com.mateuszholik.passwordvalidation.db.daos.CommonNameDao
-import com.mateuszholik.passwordvalidation.db.daos.CommonPetsNameDao
-import com.mateuszholik.passwordvalidation.extensions.removeLeetText
-import com.mateuszholik.passwordvalidation.extensions.removeNumbers
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType.COMMON_NAME
+import com.mateuszholik.passwordvalidation.usecases.GetIsPasswordANameUseCase
+import com.mateuszholik.passwordvalidation.usecases.GetIsPasswordAPetNameUseCase
 import com.mateuszholik.passwordvalidation.utils.Numbers
 import io.reactivex.rxjava3.core.Single
 
 internal class CommonNameValidationStrategyImpl(
-    private val commonNameDao: CommonNameDao,
-    private val commonPetsNameDao: CommonPetsNameDao
+    private val getIsPasswordANameUseCase: GetIsPasswordANameUseCase,
+    private val getIsPasswordAPetNameUseCase: GetIsPasswordAPetNameUseCase
 ) : PasswordValidationStrategy {
 
     override fun validate(password: String): Single<PasswordValidationResult> =
         Single.zip(
-            commonNameDao.getMatchingNames(password),
-            commonNameDao.getMatchingNames(password.removeLeetText()),
-            commonNameDao.getMatchingNames(password.removeNumbers()),
-            commonNameDao.getMatchingNames(password.removeNumbers().removeLeetText()),
-            commonPetsNameDao.getMatchingPetNames(password),
-            commonPetsNameDao.getMatchingPetNames(password.removeLeetText()),
-            commonPetsNameDao.getMatchingPetNames(password.removeNumbers()),
-            commonPetsNameDao.getMatchingPetNames(password.removeNumbers().removeLeetText())
-        ) { matchingNamesWithPassword,
-            matchingNamesWithEditedPassword,
-            matchingNamesWithoutNumbers,
-            matchingNamesWithoutNumbersAndLeet,
-            matchingPetNamesWithPassword,
-            matchingPetNamesWithEditedPassword,
-            matchingPetNamesWithoutNumbers,
-            matchingPetNamesWithoutNumbersAndLeet ->
-            val result = matchingNamesWithPassword.isEmpty()
-                    && matchingNamesWithEditedPassword.isEmpty()
-                    && matchingNamesWithoutNumbers.isEmpty()
-                    && matchingNamesWithoutNumbersAndLeet.isEmpty()
-                    && matchingPetNamesWithPassword.isEmpty()
-                    && matchingPetNamesWithEditedPassword.isEmpty()
-                    && matchingPetNamesWithoutNumbers.isEmpty()
-                    && matchingPetNamesWithoutNumbersAndLeet.isEmpty()
+            getIsPasswordANameUseCase(password),
+            getIsPasswordAPetNameUseCase(password)
+        ) { isName, isPetName ->
+            val result = isName && isPetName
 
             PasswordValidationResult(
                 validationType = COMMON_NAME,

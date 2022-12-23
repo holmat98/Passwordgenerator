@@ -8,10 +8,10 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 internal interface CommonNameDao {
 
-    @Query("select * from most_common_names where " +
+    @Query("select name from most_common_names where " +
             ":name like \"%\" || name || \"%\" " +
             "or name like \"%\" || :name || \"%\" " +
             "or name = :name"
     )
-    fun getMatchingNames(name: String): Single<List<CommonName>>
+    fun getMatchingNames(name: String): Single<List<String>>
 }

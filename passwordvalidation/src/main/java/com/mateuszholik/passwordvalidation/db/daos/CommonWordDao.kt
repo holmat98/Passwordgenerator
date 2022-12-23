@@ -8,10 +8,10 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 internal interface CommonWordDao {
 
-    @Query("select * from most_common_words where " +
+    @Query("select word from most_common_words where " +
             ":word like \"%\" || word || \"%\" " +
             "or word like \"%\" || :word || \"%\" " +
             "or word = :word"
     )
-    fun getMatchingWords(word: String): Single<List<CommonWord>>
+    fun getMatchingWords(word: String): Single<List<String>>
 }

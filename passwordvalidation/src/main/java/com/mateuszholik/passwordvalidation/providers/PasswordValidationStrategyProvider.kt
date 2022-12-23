@@ -1,16 +1,13 @@
 package com.mateuszholik.passwordvalidation.providers
 
-import com.mateuszholik.passwordvalidation.db.daos.CommonNameDao
 import com.mateuszholik.passwordvalidation.db.daos.CommonPasswordDao
-import com.mateuszholik.passwordvalidation.db.daos.CommonPetsNameDao
 import com.mateuszholik.passwordvalidation.db.daos.CommonWordDao
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType.*
 import com.mateuszholik.passwordvalidation.strategies.*
-import com.mateuszholik.passwordvalidation.strategies.NumberValidationStrategyImpl
-import com.mateuszholik.passwordvalidation.strategies.PasswordValidationStrategy
-import com.mateuszholik.passwordvalidation.strategies.SpecialCharacterValidationStrategyImpl
 import com.mateuszholik.passwordvalidation.transformers.StringTransformer
+import com.mateuszholik.passwordvalidation.usecases.GetIsPasswordANameUseCase
+import com.mateuszholik.passwordvalidation.usecases.GetIsPasswordAPetNameUseCase
 
 internal interface PasswordValidationStrategyProvider {
 
@@ -19,8 +16,8 @@ internal interface PasswordValidationStrategyProvider {
 
 internal class PasswordValidationStrategyProviderImpl(
     private val commonPasswordDao: CommonPasswordDao,
-    private val commonNameDao: CommonNameDao,
-    private val commonPetsNameDao: CommonPetsNameDao,
+    private val getIsPasswordANameUseCase: GetIsPasswordANameUseCase,
+    private val getIsPasswordAPetNameUseCase: GetIsPasswordAPetNameUseCase,
     private val commonWordDao: CommonWordDao,
     private val stringTransformer: StringTransformer
 ) : PasswordValidationStrategyProvider {
@@ -34,7 +31,10 @@ internal class PasswordValidationStrategyProviderImpl(
             LENGTH -> LengthValidationStrategyImpl()
             COMMON_PASSWORD -> CommonPasswordValidationStrategyImpl(commonPasswordDao)
             COMMON_WORD -> CommonWordsValidationStrategyImpl(commonWordDao, stringTransformer)
-            COMMON_NAME -> CommonNameValidationStrategyImpl(commonNameDao, commonPetsNameDao)
+            COMMON_NAME -> CommonNameValidationStrategyImpl(
+                getIsPasswordANameUseCase = getIsPasswordANameUseCase,
+                getIsPasswordAPetNameUseCase = getIsPasswordAPetNameUseCase
+            )
             ALPHABETICAL_PATTERN -> AlphabeticalPatternsValidationStrategyImpl()
             KEYBOARD_PATTERN -> KeyboardPatternsValidationStrategyImpl()
         }

@@ -45,7 +45,10 @@ project.afterEvaluate {
                 'com/intellij/**',
                 'junit/**',
                 'org/**',
-                '**/di/**'
+                '**/di/**',
+                '**/models/**',
+                '**/extensions/**',
+                '**/utils/**'
         ]
 
         def javaClasses = fileTree(

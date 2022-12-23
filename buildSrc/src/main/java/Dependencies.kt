@@ -26,8 +26,6 @@ object Jetbrains {
 
         const val DEPENDENCY = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
     }
-
-
 }
 
 object Androidx {
