@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-apply(from="${project.rootDir}/jacoco.gradle")
+apply(from="../jacoco.gradle")
 
 android {
     compileSdk = DefaultConfig.COMPILE_SDK

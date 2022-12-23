@@ -19,12 +19,6 @@ object Gradle {
     const val DEPENDENCY = "com.android.tools.build:gradle:$version"
 }
 
-object Jacoco {
-    private const val version = "0.8.8"
-
-    const val DEPENDENCY = "org.jacoco:org.jacoco.core:$version"
-}
-
 object Jetbrains {
 
     object KotlinGradlePlugin {
