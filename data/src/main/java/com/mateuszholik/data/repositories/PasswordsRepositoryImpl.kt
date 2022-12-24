@@ -20,7 +20,7 @@ internal class PasswordsRepositoryImpl(
     private val updatedPasswordToPasswordDBMapper: UpdatedPasswordToPasswordDBMapper
 ) : PasswordsRepository {
 
-    override fun createAndGetId(newPassword: NewPassword): Single<Long> =
+    override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
         newPasswordToPasswordDBMapper.map(newPassword)
             .flatMap { passwordsDao.insertAndGetId(it) }
 

@@ -16,8 +16,8 @@ import com.mateuszholik.domain.usecase.IsPinCorrectToSaveUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectToSaveUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCaseImpl
-import com.mateuszholik.domain.usecase.SavePasswordUseCase
-import com.mateuszholik.domain.usecase.SavePasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
+import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePinUseCase
@@ -46,8 +46,11 @@ internal val useCaseModule = module {
         CreatePasswordUseCaseImpl(passwordFactory = get())
     }
 
-    single<SavePasswordUseCase> {
-        SavePasswordUseCaseImpl(passwordsRepository = get())
+    single<InsertPasswordAndGetIdUseCase> {
+        InsertPasswordAndGetIdUseCaseImpl(
+            passwordsRepository = get(),
+            newPasswordMapper = get()
+        )
     }
 
     single<GetPasswordsUseCase> {
@@ -59,7 +62,10 @@ internal val useCaseModule = module {
     }
 
     factory<UpdatePasswordUseCase> {
-        UpdatePasswordUseCaseImpl(passwordsRepository = get())
+        UpdatePasswordUseCaseImpl(
+            passwordsRepository = get(),
+            updatedPasswordMapper = get()
+        )
     }
 
     single<SaveIfShouldUseBiometricAuthenticationUseCase> {

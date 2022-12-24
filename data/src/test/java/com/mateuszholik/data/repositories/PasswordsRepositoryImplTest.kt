@@ -54,7 +54,7 @@ class PasswordsRepositoryImplTest {
 
     @Test
     fun `Password is saved correctly to the database and its id is returned`() {
-        passwordsRepository.createAndGetId(NEW_PASSWORD)
+        passwordsRepository.insertAndGetId(NEW_PASSWORD)
             .test()
             .assertValue(ID)
 
