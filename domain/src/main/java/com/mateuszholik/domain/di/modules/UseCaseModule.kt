@@ -54,7 +54,10 @@ internal val useCaseModule = module {
     }
 
     single<GetPasswordsUseCase> {
-        GetPasswordsUseCaseImpl(passwordsRepository = get())
+        GetPasswordsUseCaseImpl(
+            passwordsRepository = get(),
+            passwordsListToPasswordsTypeListMapper = get()
+        )
     }
 
     factory<DeletePasswordUseCase> {
