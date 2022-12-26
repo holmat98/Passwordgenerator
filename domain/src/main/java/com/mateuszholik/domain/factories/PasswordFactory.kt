@@ -14,6 +14,10 @@ interface PasswordFactory {
 internal class PasswordFactoryImpl : PasswordFactory {
 
     override fun create(length: Int): String {
+        if (length < MIN_PASSWORD_LENGTH) {
+            error("Minimum password length is eight")
+        }
+
         val availableIndexes = (0 until length).toMutableList()
         val result = MutableList(length) { EMPTY_STRING }
         val numberOfCharactersByType = getNumberOfCharacterByType(length)
@@ -55,6 +59,7 @@ internal class PasswordFactoryImpl : PasswordFactory {
     }
 
     private companion object {
+        const val MIN_PASSWORD_LENGTH = 8
         val PASSWORD_CHARACTERS = mapOf(
             PasswordCharacterType.LETTERS to "abcdefghijklmnopqrstuvwxyz",
             PasswordCharacterType.UPPERCASE_LETTERS to "ABCDEFGHIJKLMNOPQESTUVWXYZ",

@@ -20,7 +20,7 @@ internal val mappersModule = module {
 
     single<PasswordsListToPasswordsTypeListMapper> {
         PasswordsListToPasswordsTypeListMapperImpl(
-            passwordsToPasswordTypeMapper = get()
+            passwordToPasswordTypeMapper = get()
         )
     }
 }

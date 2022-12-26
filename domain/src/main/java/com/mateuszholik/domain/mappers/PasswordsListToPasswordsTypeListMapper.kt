@@ -6,9 +6,9 @@ import com.mateuszholik.domain.models.PasswordType
 internal interface PasswordsListToPasswordsTypeListMapper : ListMapper<Password, PasswordType>
 
 internal class PasswordsListToPasswordsTypeListMapperImpl(
-    private val passwordsToPasswordTypeMapper: PasswordToPasswordTypeMapper
+    private val passwordToPasswordTypeMapper: PasswordToPasswordTypeMapper
 ) : PasswordsListToPasswordsTypeListMapper {
 
     override fun map(param: List<Password>): List<PasswordType> =
-        param.map { passwordsToPasswordTypeMapper.map(it) }
+        param.map { passwordToPasswordTypeMapper.map(it) }
 }
