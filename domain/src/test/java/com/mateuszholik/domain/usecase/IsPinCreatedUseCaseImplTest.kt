@@ -1,12 +1,10 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.managers.io.EncryptedSharedPrefManager
+import com.mateuszholik.data.managers.io.SharedPrefKeys.PIN_KEY
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
 
 class IsPinCreatedUseCaseImplTest {
 
@@ -16,7 +14,7 @@ class IsPinCreatedUseCaseImplTest {
 
     @Test
     fun `When pin is created use case will return true`() {
-        every { encryptedSharedPrefManager.readString(any()) } returns PIN
+        setUpSharedPrefReturn(PIN)
 
         isPinCreatedUseCase.invoke()
             .test()
@@ -25,11 +23,17 @@ class IsPinCreatedUseCaseImplTest {
 
     @Test
     fun `When pin is not created use case will return false`() {
-        every { encryptedSharedPrefManager.readString(any()) } returns ""
+        setUpSharedPrefReturn(null)
 
         isPinCreatedUseCase.invoke()
             .test()
             .assertValue(false)
+    }
+
+    private fun setUpSharedPrefReturn(returnedValue: String?) {
+        every {
+            encryptedSharedPrefManager.readString(key = PIN_KEY, defValue = null)
+        } returns returnedValue
     }
 
     private companion object {

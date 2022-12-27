@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.domain.models.UpdatedPassword
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
@@ -44,13 +45,12 @@ class EditPasswordViewModel(
     }
 
     fun editPassword() {
-        val editedPassword = Password(
+        val updatedPassword = UpdatedPassword(
             id = password.id,
             platformName = newPlatformNameValue.value ?: EMPTY_STRING,
             password = newPasswordValue.value ?: EMPTY_STRING,
-            expiringDate = password.expiringDate
         )
-        updatePasswordUseCase(editedPassword)
+        updatePasswordUseCase(updatedPassword)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
                     _passwordEditedCorrectly.postValue(true)

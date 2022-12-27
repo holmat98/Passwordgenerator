@@ -42,7 +42,7 @@ val viewModelModule = module {
         SavePasswordViewModel(
             generatedPassword = password,
             getPasswordUseCase = get(),
-            savePasswordUseCase = get(),
+            insertPasswordAndGetIdUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
         )
     }

@@ -8,14 +8,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-class PasswordListMapperImplTest {
+class PasswordDBListToPasswordListMapperImplTest {
 
-    private val passwordMapper = mockk<PasswordMapper> {
+    private val passwordDBToPasswordMapper = mockk<PasswordDBToPasswordMapper> {
         every { map(PASSWORD_DB_1) } returns MAPPED_PASSWORD_1
         every { map(PASSWORD_DB_2) } returns MAPPED_PASSWORD_2
     }
 
-    private val passwordListMapper = PasswordListMapperImpl(passwordMapper)
+    private val passwordListMapper = PasswordDBListToPasswordListMapperImpl(passwordDBToPasswordMapper)
 
     @Test
     fun `PasswordListMapper maps correctly list of PasswordDB objects to list of Password objects`() {

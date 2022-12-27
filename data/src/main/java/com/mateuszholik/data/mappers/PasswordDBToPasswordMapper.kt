@@ -5,11 +5,11 @@ import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.repositories.models.Password
 
-internal interface PasswordMapper : Mapper<PasswordDB, Password>
+internal interface PasswordDBToPasswordMapper : Mapper<PasswordDB, Password>
 
-internal class PasswordMapperImpl(
+internal class PasswordDBToPasswordMapperImpl(
     private val encryptionManager: EncryptionManager
-) : PasswordMapper {
+) : PasswordDBToPasswordMapper {
 
     override fun map(param: PasswordDB): Password =
         Password(

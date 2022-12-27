@@ -9,10 +9,10 @@ internal val repositoriesModule = module {
     single<PasswordsRepository> {
         PasswordsRepositoryImpl(
             passwordsDao = get(),
-            passwordListMapper = get(),
-            passwordDBMapper = get(),
-            passwordMapper = get(),
-            sharedPrefManager = get()
+            passwordDBListToPasswordListMapper = get(),
+            passwordDBToPasswordMapper = get(),
+            newPasswordToPasswordDBMapper = get(),
+            updatedPasswordToPasswordDBMapper = get()
         )
     }
 }

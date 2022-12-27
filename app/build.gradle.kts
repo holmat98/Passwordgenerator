@@ -5,7 +5,7 @@ plugins {
     id("androidx.navigation.safeargs")
 }
 
-apply(from="${project.rootDir}/jacoco.gradle")
+apply(from="../jacoco.gradle")
 
 android {
     compileSdk = DefaultConfig.COMPILE_SDK

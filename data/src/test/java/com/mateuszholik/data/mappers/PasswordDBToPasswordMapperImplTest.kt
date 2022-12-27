@@ -7,13 +7,11 @@ import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.time.LocalDateTime
 import org.assertj.core.api.Assertions.assertThat
 
 
-class PasswordMapperImplTest {
+class PasswordDBToPasswordMapperImplTest {
 
     private val encryptionManager = mockk<EncryptionManager> {
         every {
@@ -35,7 +33,7 @@ class PasswordMapperImplTest {
         } returns PLATFORM_NAME
     }
 
-    private val passwordMapper = PasswordMapperImpl(encryptionManager)
+    private val passwordMapper = PasswordDBToPasswordMapperImpl(encryptionManager)
 
     @Test
     fun `PasswordMapper maps correctly PasswordDB object to Password object`() {

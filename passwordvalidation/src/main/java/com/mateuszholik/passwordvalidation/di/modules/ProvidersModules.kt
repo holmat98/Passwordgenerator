@@ -9,8 +9,8 @@ internal val providersModules = module {
     single<PasswordValidationStrategyProvider> {
         PasswordValidationStrategyProviderImpl(
             commonPasswordDao = get(),
-            commonNameDao = get(),
-            commonPetsNameDao = get(),
+            getIsPasswordANameUseCase = get(),
+            getIsPasswordAPetNameUseCase = get(),
             commonWordDao = get(),
             stringTransformer = get()
         )

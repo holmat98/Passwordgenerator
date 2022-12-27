@@ -4,9 +4,6 @@ import com.mateuszholik.domain.factories.PasswordFactory
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
 
 class CreatePasswordUseCaseImplTest {
 
