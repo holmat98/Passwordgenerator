@@ -12,6 +12,7 @@ internal val repositoriesModule = module {
             passwordDBListToPasswordListMapper = get(),
             passwordDBToPasswordMapper = get(),
             newPasswordToPasswordDBMapper = get(),
+            newPasswordsListToPasswordDBListMapper = get(),
             updatedPasswordToPasswordDBMapper = get()
         )
     }

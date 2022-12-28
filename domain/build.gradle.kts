@@ -73,6 +73,9 @@ dependencies {
     // mockk
     testImplementation(Mockk.DEPENDENCY)
     androidTestImplementation(Mockk.Android.DEPENDENCY)
+
+    // gson converter
+    implementation(Gson.DEPENDENCY)
 }
 
 tasks.withType<Test> {

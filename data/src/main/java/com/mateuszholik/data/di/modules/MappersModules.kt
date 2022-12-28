@@ -2,6 +2,8 @@ package com.mateuszholik.data.di.modules
 
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapperImpl
+import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
+import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapperImpl
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapperImpl
 import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
@@ -33,6 +35,12 @@ internal val mappersModule = module {
         UpdatedPasswordToPasswordDBMapperImpl(
             encryptionManager = get(),
             sharedPrefManager = get()
+        )
+    }
+
+    factory<NewPasswordsListToPasswordDBListMapper> {
+        NewPasswordsListToPasswordDBListMapperImpl(
+            newPasswordToPasswordDBMapper = get()
         )
     }
 }

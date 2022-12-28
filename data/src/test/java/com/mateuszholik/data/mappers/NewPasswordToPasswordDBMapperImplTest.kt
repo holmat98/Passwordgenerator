@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -49,19 +50,18 @@ internal class NewPasswordToPasswordDBMapperImplTest {
             encryptionManager.encrypt(PLATFORM_NAME)
         } returns ENCRYPTED_PLATFORM_NAME
 
-        passwordToPasswordDBMapper
-            .map(TESTED_VALUE)
-            .test()
-            .assertValue(
-                PasswordDB(
-                    id = ID,
-                    platformName = ENCRYPTED_PLATFORM_NAME.data,
-                    platformIV = ENCRYPTED_PLATFORM_NAME.iv,
-                    password = ENCRYPTED_PASSWORD.data,
-                    passwordIV = ENCRYPTED_PASSWORD.iv,
-                    expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
-                )
+        val result = passwordToPasswordDBMapper.map(TESTED_VALUE)
+
+        assertThat(result).isEqualTo(
+            PasswordDB(
+                id = ID,
+                platformName = ENCRYPTED_PLATFORM_NAME.data,
+                platformIV = ENCRYPTED_PLATFORM_NAME.iv,
+                password = ENCRYPTED_PASSWORD.data,
+                passwordIV = ENCRYPTED_PASSWORD.iv,
+                expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
             )
+        )
     }
 
     private companion object {

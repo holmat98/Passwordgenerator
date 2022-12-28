@@ -209,6 +209,12 @@ object Retrofit {
     }
 }
 
+object Gson {
+    private const val version = "2.10"
+
+    const val DEPENDENCY = "com.google.code.gson:gson:$version"
+}
+
 object Timber {
     private const val version = "5.0.1"
 
