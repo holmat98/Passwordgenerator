@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.factories
 
-import com.mateuszholik.domain.constants.Constants.EMPTY_STRING
+import com.mateuszholik.domain.utils.Constants.EMPTY_STRING
 import com.mateuszholik.domain.extensions.getRandom
 import com.mateuszholik.domain.extensions.getRandomAndRemove
 import com.mateuszholik.domain.models.PasswordCharacterType

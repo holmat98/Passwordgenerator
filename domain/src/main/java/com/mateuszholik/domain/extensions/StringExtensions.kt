@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.extensions
 
-import com.mateuszholik.domain.constants.Constants
+import com.mateuszholik.domain.utils.Constants
 import java.security.SecureRandom
 
 internal fun String.getRandom(): String {

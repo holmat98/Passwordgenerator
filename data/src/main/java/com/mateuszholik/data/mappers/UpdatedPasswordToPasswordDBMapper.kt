@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.managers.io.SharedPrefManager
@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 internal interface UpdatedPasswordToPasswordDBMapper : Mapper<UpdatedPassword, PasswordDB>
 
 internal class UpdatedPasswordToPasswordDBMapperImpl(
-    private val encryptionManager: EncryptionManager,
+    private val encryptionManager: KeyBaseEncryptionManager,
     private val sharedPrefManager: SharedPrefManager
 ) : UpdatedPasswordToPasswordDBMapper {
 

@@ -1,19 +1,18 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import org.assertj.core.api.Assertions.assertThat
-
 
 class PasswordDBToPasswordMapperImplTest {
 
-    private val encryptionManager = mockk<EncryptionManager> {
+    private val encryptionManager = mockk<KeyBaseEncryptionManager> {
         every {
             decrypt(
                 EncryptedData(

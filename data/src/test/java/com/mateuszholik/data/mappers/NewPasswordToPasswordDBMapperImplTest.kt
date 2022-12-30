@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 
 internal class NewPasswordToPasswordDBMapperImplTest {
 
-    private val encryptionManager = mockk<EncryptionManager>()
+    private val encryptionManager = mockk<KeyBaseEncryptionManager>()
     private val sharedPrefManager = mockk<SharedPrefManager> {
         every {
             readLong(PASSWORD_VALIDITY, any())

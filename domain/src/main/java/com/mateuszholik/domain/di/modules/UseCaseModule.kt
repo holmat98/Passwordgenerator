@@ -1,5 +1,6 @@
 package com.mateuszholik.domain.di.modules
 
+import com.mateuszholik.domain.di.utils.NamedConstants.DOWNLOAD_URI_FACTORY
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.domain.usecase.CreatePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
@@ -31,6 +32,7 @@ import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseIm
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 internal val useCaseModule = module {
@@ -103,7 +105,9 @@ internal val useCaseModule = module {
             passwordsRepository = get(),
             passwordsListToExportPasswordsListMapper = get(),
             jsonParser = get(),
-            saveDataToFileUseCase = get()
+            saveDataToFileUseCase = get(),
+            encryptionManager = get(),
+            uriFactory = get(named(DOWNLOAD_URI_FACTORY))
         )
     }
 }

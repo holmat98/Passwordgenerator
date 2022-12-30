@@ -1,7 +1,9 @@
 package com.mateuszholik.cryptography
 
+import com.mateuszholik.cryptography.extensions.adjustLengthAndReturnByteArray
 import com.mateuszholik.cryptography.models.EncryptedData
 import javax.crypto.Cipher
+import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
 interface EncryptionManager {
@@ -10,65 +12,43 @@ interface EncryptionManager {
      * Encrypt data
      *
      * @param value String that will be encrypted
+     * @param key [SecretKey][javax.crypto.SecretKey] that will be used to encrypt data
      * @return [EncryptedData][com.mateuszholik.cryptography.models.EncryptedData]
      */
-    fun encrypt(value: String): EncryptedData
+    fun encrypt(value: String, key: SecretKey): EncryptedData
 
     /**
      * Decrypt data
      *
      * @param encryptedData [EncryptedData][com.mateuszholik.cryptography.models.EncryptedData]
+     * @param key [SecretKey][javax.crypto.SecretKey] that will be used to decrypt data
      * @return String
      * @throws KeyDoesNotExistsException if key does not exists
      */
-    fun decrypt(encryptedData: EncryptedData): String
+    fun decrypt(encryptedData: EncryptedData, key: SecretKey): String
 }
 
-internal class EncryptionManagerImpl(
-    private val cryptographyKeyManager: CryptographyKeyManager
-) : EncryptionManager {
+internal class EncryptionManagerImpl : EncryptionManager {
 
-    override fun encrypt(value: String): EncryptedData {
-        if (!cryptographyKeyManager.isKeyCreated()) {
-            cryptographyKeyManager.createKey()
-        }
-
+    override fun encrypt(value: String, key: SecretKey): EncryptedData {
         val cipher = Cipher.getInstance(KEY_CIPHER_TRANSFORMATION).also {
-            it.init(Cipher.ENCRYPT_MODE, cryptographyKeyManager.getKey())
+            it.init(Cipher.ENCRYPT_MODE, key)
         }
 
-        val adjustedValue = adjustStringLength(value)
+        val adjustedValue = value.adjustLengthAndReturnByteArray(16)
 
         return EncryptedData(cipher.iv, cipher.doFinal(adjustedValue))
     }
 
-    override fun decrypt(encryptedData: EncryptedData): String {
-        if (!cryptographyKeyManager.isKeyCreated()) {
-            throw KeyDoesNotExistsException()
-        }
-
+    override fun decrypt(encryptedData: EncryptedData, key: SecretKey): String {
         val cipher = Cipher.getInstance(KEY_CIPHER_TRANSFORMATION).also {
-            it.init(
-                Cipher.DECRYPT_MODE,
-                cryptographyKeyManager.getKey(),
-                IvParameterSpec(encryptedData.iv)
-            )
+            it.init(Cipher.DECRYPT_MODE, key, IvParameterSpec(encryptedData.iv))
         }
 
         return cipher.doFinal(encryptedData.data).toString(Charsets.UTF_8).trim()
     }
 
-    private fun adjustStringLength(value: String): ByteArray {
-        var temp = value
-        while (temp.toByteArray().size % 16 != 0) {
-            temp += SPACE_UNI_CODE
-        }
-
-        return temp.toByteArray(Charsets.UTF_8)
-    }
-
     private companion object {
         const val KEY_CIPHER_TRANSFORMATION = "AES/CBC/NoPadding"
-        const val SPACE_UNI_CODE = "\u0020"
     }
 }
