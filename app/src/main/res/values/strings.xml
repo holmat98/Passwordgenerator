@@ -8,6 +8,7 @@
     <string name="button_next">Następny</string>
     <string name="button_skip">Pomiń</string>
     <string name="button_start">Zaczynamy</string>
+    <string name="button_finish">Zakończ</string>
     <string name="create">Stwórz</string>
     <string name="create_pin_header">Stwórz pin</string>
     <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
@@ -81,7 +82,7 @@
     <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
-    <string name="settings_export_passwords">Import/Eksport haseł</string>
+    <string name="settings_export_passwords">Eksportuj hasła</string>
     <string name="settings_notification_num_of_days">Wybierz ilość dni po których hasło wygaśnie</string>
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
@@ -104,7 +105,11 @@
     <string name="permission_button_settings">Otwórz ustawienia</string>
 
     <!-- Password Export and Import -->
-    <string name="export_screen_description">Wybierz jedną z dwóch opcji eksportu haseł</string>
+    <string name="export_screen_description">Twoje dane zostaną wyeksportowane do pliku w folderze \"Pobrane\" na Twoim urządzeniu. Możesz wybrać czy chcesz dodatkowo zaszyfrować te dane. Do szyfrowania haseł użyty zostanie klucz podany przez Ciebie</string>
+    <string name="export_screen_encryption_password_description">Podaj hasło, które będzie użyte do zaszyfrowania wyeksportowanych haseł:</string>
+    <string name="export_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
+    <string name="export_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
+    <string name="export_screen_button">Eksportuj</string>
     <string name="transfer_type_description">Wybierz czy chcesz wyeksportować lub zaimportować swoje hasła</string>
     <string name="transfer_type_option_import">Importuj</string>
     <string name="transfer_type_option_export">Eksportuj</string>
@@ -112,4 +117,6 @@
     <string name="transfer_encryption_type_option_yes">Tak</string>
     <string name="transfer_encryption_type_option_no">Nie</string>
     <string name="transfer_encryption_password_description">Wprowadź hasło, które będzie użyte do zaszyfrowania lub odszyfrowania Twoich haseł</string>
+    <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
+    <string name="export_result_screen_open_files_button">Otwórz eksplorator plików</string>
 </resources>

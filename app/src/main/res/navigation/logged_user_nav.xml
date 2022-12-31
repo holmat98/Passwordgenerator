@@ -99,12 +99,41 @@
     </fragment>
     <fragment
         android:id="@+id/settings"
-        android:name="com.mateuszholik.passwordgenerator.ui.settings.SettingsFragment" >
+        android:name="com.mateuszholik.passwordgenerator.ui.settings.SettingsFragment">
         <action
-            android:id="@+id/action_settings_to_transferPasswordHostFragment"
-            app:destination="@id/transferPasswordHostFragment" />
+            android:id="@+id/action_settings_to_exportPasswordsFragment"
+            app:destination="@id/exportPasswordsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/transferPasswordHostFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.transfer.TransferPasswordHostFragment" />
+        android:id="@+id/exportPasswordsFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsFragment">
+        <action
+            android:id="@+id/action_exportPasswordsFragment_to_passwordsExportResult"
+            app:destination="@id/passwordsExportResult"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordsExportResult"
+        android:name="com.mateuszholik.passwordgenerator.ui.exportresult.PasswordsExportResult"
+        android:label="PasswordsExportResult">
+        <argument
+            android:name="wasExportSuccessfull"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_passwordsExportResult_to_settings"
+            app:destination="@id/settings"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/settings"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

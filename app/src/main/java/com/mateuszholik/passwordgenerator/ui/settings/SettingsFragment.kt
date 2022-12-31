@@ -35,7 +35,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             lifecycleOwner = viewLifecycleOwner
 
             transferPasswordsButton.setOnClickListener {
-                findNavController().navigate(R.id.action_settings_to_transferPasswordHostFragment)
+                findNavController().navigate(R.id.action_settings_to_exportPasswordsFragment)
             }
 
             passwordValidityButton.setOnClickListener {
