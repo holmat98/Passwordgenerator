@@ -104,7 +104,7 @@ internal val useCaseModule = module {
         ExportPasswordsUseCaseImpl(
             passwordsRepository = get(),
             passwordsListToExportPasswordsListMapper = get(),
-            jsonParser = get(),
+            passwordsParser = get(),
             saveDataToFileUseCase = get(),
             encryptionManager = get(),
             uriFactory = get(named(DOWNLOAD_URI_FACTORY))

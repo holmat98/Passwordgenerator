@@ -121,8 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordsExportResult"
-        android:name="com.mateuszholik.passwordgenerator.ui.exportresult.PasswordsExportResult"
-        android:label="PasswordsExportResult">
+        android:name="com.mateuszholik.passwordgenerator.ui.exportresult.PasswordsExportResult">
         <argument
             android:name="wasExportSuccessfull"
             app:argType="boolean" />

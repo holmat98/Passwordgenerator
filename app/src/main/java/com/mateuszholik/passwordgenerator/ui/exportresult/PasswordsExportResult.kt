@@ -2,7 +2,6 @@ package com.mateuszholik.passwordgenerator.ui.exportresult
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
@@ -21,10 +20,10 @@ class PasswordsExportResult : BaseFragment(R.layout.fragment_passwords_export_re
         super.onViewCreated(view, savedInstanceState)
 
         setUpViews(navArgs.wasExportSuccessfull)
-        setUpButtons()
+        setUpButton()
     }
 
-    private fun setUpButtons() {
+    private fun setUpButton() {
         binding.confirmButton.setOnClickListener {
             findNavController().navigate(R.id.action_passwordsExportResult_to_settings)
         }
@@ -32,7 +31,6 @@ class PasswordsExportResult : BaseFragment(R.layout.fragment_passwords_export_re
 
     private fun setUpViews(wasExportSuccessful: Boolean) {
         with(binding) {
-            openFilesButton.isVisible = wasExportSuccessful
             if (wasExportSuccessful) {
                 animation.setAnimation(R.raw.anim_success)
                 exportResultHeader.text = context?.getString(R.string.export_result_screen_success)

@@ -6,17 +6,18 @@ import com.mateuszholik.domain.factories.UriFactory
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.models.DataToSave
 import com.mateuszholik.domain.models.ExportType
-import com.mateuszholik.domain.parsers.JsonParser
+import com.mateuszholik.domain.parsers.PasswordsParser
 import com.mateuszholik.domain.usecase.base.CompletableUseCase
 import io.reactivex.rxjava3.core.Completable
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 interface ExportPasswordsUseCase : CompletableUseCase<ExportType>
 
 internal class ExportPasswordsUseCaseImpl(
     private val passwordsRepository: PasswordsRepository,
     private val passwordsListToExportPasswordsListMapper: PasswordsListToExportPasswordsListMapper,
-    private val jsonParser: JsonParser,
+    private val passwordsParser: PasswordsParser,
     private val encryptionManager: PasswordBaseEncryptionManager,
     private val saveDataToFileUseCase: SaveDataToFileUseCase,
     private val uriFactory: UriFactory
@@ -25,7 +26,7 @@ internal class ExportPasswordsUseCaseImpl(
     override fun invoke(param: ExportType): Completable =
         passwordsRepository.getAllPasswords()
             .map { passwordsListToExportPasswordsListMapper.map(it) }
-            .map { jsonParser.parseToJson(it) }
+            .map { passwordsParser.parseToString(it) }
             .map { encryptPasswordsIfNeeded(param, it) }
             .flatMapCompletable {
                 saveDataToFileUseCase(
@@ -47,6 +48,7 @@ internal class ExportPasswordsUseCaseImpl(
         }
 
     private companion object {
-        val FILE_NAME = "${LocalDateTime.now()}_passwords"
+        val FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val FILE_NAME = "${LocalDateTime.now().format(FORMATTER)}_passwords"
     }
 }
