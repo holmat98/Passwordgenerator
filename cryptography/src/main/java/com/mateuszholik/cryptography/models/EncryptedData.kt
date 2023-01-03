@@ -19,4 +19,13 @@ data class EncryptedData(val iv: ByteArray, val data: ByteArray) {
         result = 31 * result + data.contentHashCode()
         return result
     }
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(data)
+        stringBuilder.append("\n")
+        stringBuilder.append(iv)
+
+        return stringBuilder.toString()
+    }
 }

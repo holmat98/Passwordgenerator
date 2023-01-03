@@ -11,6 +11,8 @@ interface PasswordsRepository {
 
     fun insertAndGetId(newPassword: NewPassword): Single<Long>
 
+    fun insertPasswords(newPasswords: List<NewPassword>): Completable
+
     fun delete(passwordId: Long): Completable
 
     fun update(updatedPassword: UpdatedPassword): Completable

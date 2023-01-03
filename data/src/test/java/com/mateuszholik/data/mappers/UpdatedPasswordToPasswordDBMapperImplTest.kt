@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.cryptography.EncryptionManager
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.managers.io.SharedPrefKeys
@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +18,7 @@ import java.time.LocalDateTime
 
 internal class UpdatedPasswordToPasswordDBMapperImplTest {
 
-    private val encryptionManager = mockk<EncryptionManager>()
+    private val encryptionManager = mockk<KeyBaseEncryptionManager>()
     private val sharedPrefManager = mockk<SharedPrefManager> {
         every {
             readLong(SharedPrefKeys.PASSWORD_VALIDITY, any())
@@ -49,19 +50,18 @@ internal class UpdatedPasswordToPasswordDBMapperImplTest {
             encryptionManager.encrypt(PLATFORM_NAME)
         } returns ENCRYPTED_PLATFORM_NAME
 
-        updatedPasswordToPasswordDBMapper
-            .map(TESTED_VALUE)
-            .test()
-            .assertValue(
-                PasswordDB(
-                    id = ID,
-                    platformName = ENCRYPTED_PLATFORM_NAME.data,
-                    platformIV = ENCRYPTED_PLATFORM_NAME.iv,
-                    password = ENCRYPTED_PASSWORD.data,
-                    passwordIV = ENCRYPTED_PASSWORD.iv,
-                    expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
-                )
+        val result = updatedPasswordToPasswordDBMapper.map(TESTED_VALUE)
+
+        assertThat(result).isEqualTo(
+            PasswordDB(
+                id = ID,
+                platformName = ENCRYPTED_PLATFORM_NAME.data,
+                platformIV = ENCRYPTED_PLATFORM_NAME.iv,
+                password = ENCRYPTED_PASSWORD.data,
+                passwordIV = ENCRYPTED_PASSWORD.iv,
+                expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
             )
+        )
     }
 
     private companion object {

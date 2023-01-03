@@ -16,6 +16,9 @@ internal interface PasswordsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAndGetId(passwordDB: PasswordDB): Single<Long>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPasswords(passwords: List<PasswordDB>): Completable
+
     @Update
     fun update(passwordDB: PasswordDB): Completable
 

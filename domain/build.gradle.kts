@@ -38,6 +38,7 @@ dependencies {
 
     // Modules
     implementation(project(":data"))
+    implementation(project(":cryptography"))
 
     // Core ktx
     implementation(Androidx.Core.DEPENDENCY)
