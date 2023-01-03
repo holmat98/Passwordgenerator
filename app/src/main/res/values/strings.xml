@@ -83,6 +83,7 @@
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
     <string name="settings_export_passwords">Eksportuj hasła</string>
+    <string name="settings_import_passwords">Importuj hasła</string>
     <string name="settings_notification_num_of_days">Wybierz ilość dni po których hasło wygaśnie</string>
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
@@ -110,13 +111,10 @@
     <string name="export_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
     <string name="export_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
     <string name="export_screen_button">Eksportuj</string>
-    <string name="transfer_type_description">Wybierz czy chcesz wyeksportować lub zaimportować swoje hasła</string>
-    <string name="transfer_type_option_import">Importuj</string>
-    <string name="transfer_type_option_export">Eksportuj</string>
-    <string name="transfer_encryption_type_description">Wybierz czy hasła są szyfrowane?</string>
-    <string name="transfer_encryption_type_option_yes">Tak</string>
-    <string name="transfer_encryption_type_option_no">Nie</string>
-    <string name="transfer_encryption_password_description">Wprowadź hasło, które będzie użyte do zaszyfrowania lub odszyfrowania Twoich haseł</string>
+    <string name="import_screen_description">Twoje dane zostaną zaimportowane na podstawie danych zawartych w wybranym przez Ciebie pliku. Jedna linia w pliku powinna odpowiadać jednemu hasłu i nazwie platformy, do której to hasło jest przypisane. Nazwa platformy powinna zostać oddzielona od hasła znakiem dwukropka.\nPrzykład: \"nazwa platformy : hasło\"</string>
+    <string name="import_screen_encryption_password_description">Podaj hasło, które będzie użyte do zaszyfrowania wyeksportowanych haseł:</string>
+    <string name="import_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
+    <string name="import_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
+    <string name="import_screen_button">Importuj</string>
     <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
-    <string name="export_result_screen_open_files_button">Otwórz eksplorator plików</string>
 </resources>

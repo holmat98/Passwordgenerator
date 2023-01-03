@@ -23,7 +23,6 @@ class ExportPasswordsViewModel(
     val encryptionPassword = MutableLiveData(EMPTY_STRING)
 
     val isButtonEnabled = MediatorLiveData<Boolean>().apply {
-        value = false
         addSource(shouldExportedPasswordBeEncrypted) {
             value = areInputsFilledCorrectly()
         }

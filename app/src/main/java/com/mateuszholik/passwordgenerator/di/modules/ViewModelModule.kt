@@ -5,6 +5,7 @@ import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_W
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
@@ -85,4 +86,6 @@ val viewModelModule = module {
             exportPasswordsUseCase = get()
         )
     }
+
+    viewModel { ImportPasswordsViewModel() }
 }

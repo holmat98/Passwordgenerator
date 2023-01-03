@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.exportresult
+package com.mateuszholik.passwordgenerator.ui.result
 
 import android.os.Bundle
 import android.view.View

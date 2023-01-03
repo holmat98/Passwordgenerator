@@ -107,6 +107,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settings_to_importPasswordsFragment"
+            app:destination="@id/importPasswordsFragment" />
     </fragment>
     <fragment
         android:id="@+id/exportPasswordsFragment"
@@ -121,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordsExportResult"
-        android:name="com.mateuszholik.passwordgenerator.ui.exportresult.PasswordsExportResult">
+        android:name="com.mateuszholik.passwordgenerator.ui.result.PasswordsExportResult">
         <argument
             android:name="wasExportSuccessfull"
             app:argType="boolean" />
@@ -134,5 +137,12 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/settings"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/importPasswordsFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsFragment">
+        <action
+            android:id="@+id/action_importPasswordsFragment_to_passwordsExportResult"
+            app:destination="@id/passwordsExportResult" />
     </fragment>
 </navigation>

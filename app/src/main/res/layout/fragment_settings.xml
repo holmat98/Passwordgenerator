@@ -45,11 +45,20 @@
                 app:buttonText="@string/settings_notification_num_of_days" />
 
             <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
-                android:id="@+id/transferPasswordsButton"
+                android:id="@+id/exportPasswordsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_16"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
                 app:buttonText="@string/settings_export_passwords" />
+
+            <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+                android:id="@+id/importPasswordsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                app:buttonText="@string/settings_import_passwords" />
 
         </LinearLayout>
 
