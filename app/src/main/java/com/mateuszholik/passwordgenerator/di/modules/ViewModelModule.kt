@@ -87,5 +87,7 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { ImportPasswordsViewModel() }
+    viewModel {
+        ImportPasswordsViewModel(importPasswordsUseCase = get())
+    }
 }

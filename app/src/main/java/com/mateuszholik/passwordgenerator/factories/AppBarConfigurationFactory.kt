@@ -18,7 +18,7 @@ class AppBarConfigurationFactoryImpl : AppBarConfigurationFactory {
             R.id.generatePassword,
             R.id.testPassword,
             R.id.settings,
-            R.id.passwordsExportResult
+            R.id.result
         )
     )
 }

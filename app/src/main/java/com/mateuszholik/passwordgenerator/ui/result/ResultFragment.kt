@@ -9,10 +9,10 @@ import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsExportRes
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 
-class PasswordsExportResult : BaseFragment(R.layout.fragment_passwords_export_result) {
+class ResultFragment : BaseFragment(R.layout.fragment_passwords_export_result) {
 
     private val binding by viewBinding(FragmentPasswordsExportResultBinding::bind)
-    private val navArgs: PasswordsExportResultArgs by navArgs()
+    private val navArgs: ResultFragmentArgs by navArgs()
 
     override val isBottomNavVisible: Boolean = true
 
@@ -25,18 +25,18 @@ class PasswordsExportResult : BaseFragment(R.layout.fragment_passwords_export_re
 
     private fun setUpButton() {
         binding.confirmButton.setOnClickListener {
-            findNavController().navigate(R.id.action_passwordsExportResult_to_settings)
+            findNavController().navigate(R.id.action_result_to_settings)
         }
     }
 
-    private fun setUpViews(wasExportSuccessful: Boolean) {
+    private fun setUpViews(wasSuccessful: Boolean) {
         with(binding) {
-            if (wasExportSuccessful) {
+            if (wasSuccessful) {
                 animation.setAnimation(R.raw.anim_success)
-                exportResultHeader.text = context?.getString(R.string.export_result_screen_success)
+                exportResultHeader.text = context?.getString(navArgs.headerTextForSuccess)
             } else {
                 animation.setAnimation(R.raw.anim_failure)
-                exportResultHeader.text = context?.getString(R.string.export_result_screen_failure)
+                exportResultHeader.text = context?.getString(navArgs.headerTextForError)
             }
             animation.playAnimation()
         }

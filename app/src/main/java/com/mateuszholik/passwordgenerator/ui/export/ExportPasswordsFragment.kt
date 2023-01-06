@@ -24,13 +24,24 @@ class ExportPasswordsFragment : BaseFragment(R.layout.fragment_export_passwords)
             viewModel = this@ExportPasswordsFragment.viewModel
         }
 
-        viewModel.exportResult.observe(viewLifecycleOwner) { navigateToExportResult(it) }
+        setUpViewTexts()
+
+        viewModel.exportResult.observe(viewLifecycleOwner) { navigateToResultScreen(it) }
     }
 
-    private fun navigateToExportResult(wasExportSuccessful: Boolean) {
+    private fun setUpViewTexts() {
+        with(binding.exportForm) {
+            description.text = context?.getString(R.string.export_screen_description)
+            passwordValueET.hint = context?.getString(R.string.export_screen_hint)
+        }
+    }
+
+    private fun navigateToResultScreen(wasExportSuccessful: Boolean) {
         val action =
-            ExportPasswordsFragmentDirections.actionExportPasswordsFragmentToPasswordsExportResult(
-                wasExportSuccessful
+            ExportPasswordsFragmentDirections.actionExportPasswordsFragmentToResult(
+                wasExportSuccessful,
+                R.string.export_result_screen_success,
+                R.string.export_result_screen_failure
             )
         findNavController().navigate(action)
     }
