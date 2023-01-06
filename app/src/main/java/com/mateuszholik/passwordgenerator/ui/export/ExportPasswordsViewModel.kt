@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.models.ExportType
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
+import com.mateuszholik.passwordgenerator.extensions.addSources
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
@@ -22,15 +23,10 @@ class ExportPasswordsViewModel(
     val shouldExportedPasswordBeEncrypted = MutableLiveData(false)
     val encryptionPassword = MutableLiveData(EMPTY_STRING)
 
-    val isButtonEnabled = MediatorLiveData<Boolean>().apply {
-        value = false
-        addSource(shouldExportedPasswordBeEncrypted) {
-            value = areInputsFilledCorrectly()
-        }
-        addSource(encryptionPassword) {
-            value = areInputsFilledCorrectly()
-        }
-    }
+    val isButtonEnabled = MediatorLiveData<Boolean>().addSources(
+        shouldExportedPasswordBeEncrypted,
+        encryptionPassword
+    ) { areInputsFilledCorrectly() }
 
     fun exportPasswords() {
         val exportType = getExportType()
@@ -50,7 +46,7 @@ class ExportPasswordsViewModel(
 
     private fun getExportType(): ExportType =
         if (shouldExportedPasswordBeEncrypted.value == true) {
-            ExportType.EncryptedExport(encryptionPassword.value ?: EMPTY_STRING)
+            ExportType.EncryptedExport(encryptionPassword.value.orEmpty())
         } else {
             ExportType.Export
         }

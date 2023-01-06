@@ -107,26 +107,29 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settings_to_importPasswordsFragment"
+            app:destination="@id/importPasswordsFragment" />
     </fragment>
     <fragment
         android:id="@+id/exportPasswordsFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsFragment">
         <action
-            android:id="@+id/action_exportPasswordsFragment_to_passwordsExportResult"
-            app:destination="@id/passwordsExportResult"
+            android:id="@+id/action_exportPasswordsFragment_to_result"
+            app:destination="@id/result"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/passwordsExportResult"
-        android:name="com.mateuszholik.passwordgenerator.ui.exportresult.PasswordsExportResult">
+        android:id="@+id/result"
+        android:name="com.mateuszholik.passwordgenerator.ui.result.ResultFragment">
         <argument
             android:name="wasExportSuccessfull"
             app:argType="boolean" />
         <action
-            android:id="@+id/action_passwordsExportResult_to_settings"
+            android:id="@+id/action_result_to_settings"
             app:destination="@id/settings"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -134,5 +137,22 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/settings"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="headerTextForSuccess"
+            app:argType="integer" />
+        <argument
+            android:name="headerTextForError"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/importPasswordsFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsFragment">
+        <action
+            android:id="@+id/action_importPasswordsFragment_to_result"
+            app:destination="@id/result"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

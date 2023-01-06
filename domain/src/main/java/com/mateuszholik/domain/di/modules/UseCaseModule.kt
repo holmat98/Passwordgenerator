@@ -11,6 +11,8 @@ import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.domain.usecase.GetPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.ImportPasswordsUseCase
+import com.mateuszholik.domain.usecase.ImportPasswordsUseCaseImpl
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCorrectToSaveUseCase
@@ -19,6 +21,8 @@ import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCaseImpl
+import com.mateuszholik.domain.usecase.ReadDataFromFileUseCase
+import com.mateuszholik.domain.usecase.ReadDataFromFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCase
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
@@ -108,6 +112,20 @@ internal val useCaseModule = module {
             saveDataToFileUseCase = get(),
             encryptionManager = get(),
             uriFactory = get(named(DOWNLOAD_URI_FACTORY))
+        )
+    }
+
+    factory<ReadDataFromFileUseCase> {
+        ReadDataFromFileUseCaseImpl(context = androidContext())
+    }
+
+    factory<ImportPasswordsUseCase> {
+        ImportPasswordsUseCaseImpl(
+            readDataFromFileUseCase = get(),
+            encryptionManager = get(),
+            passwordsParser = get(),
+            exportedPasswordsMapper = get(),
+            passwordsRepository = get()
         )
     }
 }

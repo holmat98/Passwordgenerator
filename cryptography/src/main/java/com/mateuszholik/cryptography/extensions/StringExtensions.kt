@@ -2,10 +2,19 @@ package com.mateuszholik.cryptography.extensions
 
 import com.mateuszholik.cryptography.models.EncryptedData
 
+internal fun String.convertToByteArray(): ByteArray {
+    val bytes = this.split(' ').map { it.toInt().toByte() }
+
+    return ByteArray(bytes.size) { bytes[it] }
+}
+
 fun String.toEncryptedData(): EncryptedData {
     val (data, iv) = this.split("\n")
 
-    return EncryptedData(iv = iv.toByteArray(), data = data.toByteArray())
+    return EncryptedData(
+        iv = iv.convertToByteArray(),
+        data = data.convertToByteArray()
+    )
 }
 
 internal fun String.adjustLengthAndReturnByteArray(intendedLength: Int): ByteArray {

@@ -1,5 +1,9 @@
 package com.mateuszholik.domain.di.modules
 
+import com.mateuszholik.domain.mappers.ExportedPasswordToNewPasswordMapper
+import com.mateuszholik.domain.mappers.ExportedPasswordToNewPasswordMapperImpl
+import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapper
+import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapperImpl
 import com.mateuszholik.domain.mappers.NewPasswordMapper
 import com.mateuszholik.domain.mappers.NewPasswordMapperImpl
 import com.mateuszholik.domain.mappers.PasswordToExportedPasswordMapper
@@ -35,6 +39,16 @@ internal val mappersModule = module {
     single<PasswordsListToExportPasswordsListMapper> {
         PasswordsListToExportPasswordsListMapperImpl(
             passwordToExportedPasswordMapper = get()
+        )
+    }
+
+    single<ExportedPasswordToNewPasswordMapper> {
+        ExportedPasswordToNewPasswordMapperImpl()
+    }
+
+    single<ExportedPasswordsListToNewPasswordsListMapper> {
+        ExportedPasswordsListToNewPasswordsListMapperImpl(
+            exportedPasswordToNewPasswordMapper = get()
         )
     }
 }
