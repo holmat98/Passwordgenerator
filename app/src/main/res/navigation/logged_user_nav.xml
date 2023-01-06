@@ -149,6 +149,10 @@
         android:name="com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsFragment">
         <action
             android:id="@+id/action_importPasswordsFragment_to_result"
-            app:destination="@id/result" />
+            app:destination="@id/result"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

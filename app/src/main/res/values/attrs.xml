@@ -13,9 +13,6 @@
     <declare-styleable name="AnimatedCheckbox">
         <attr name="checkBoxText" format="string" />
     </declare-styleable>
-    <declare-styleable name="TextSwitch">
-        <attr name="text" format="string" />
-    </declare-styleable>
     <declare-styleable name="SettingsButton">
         <attr name="buttonText" format="string" />
     </declare-styleable>

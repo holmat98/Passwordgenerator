@@ -25,40 +25,64 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="@dimen/margin_16"
                 app:lottie_autoPlay="true"
-                app:lottie_loop="false"
+                app:lottie_loop="true"
                 app:lottie_rawRes="@raw/settings_animation" />
 
-            <com.mateuszholik.passwordgenerator.uicomponents.switches.TextSwitch
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                style="@style/DefaultText"
                 android:id="@+id/shouldUseBiometricAuthBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_16"
+                android:text="@string/settings_screen_biometric_auth_option"
                 app:onSwitchValueChanged="@{(value) -> viewModel.onValueChanged(value)}"
-                app:setSwitchValue="@{viewModel.shouldUseBiometricAuthentication}"
-                app:text="@string/settings_screen_biometric_auth_option" />
+                app:setSwitchValue="@{viewModel.shouldUseBiometricAuthentication}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
 
             <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
                 android:id="@+id/passwordValidityButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_margin="@dimen/margin_16"
                 app:buttonText="@string/settings_notification_num_of_days" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
 
             <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
                 android:id="@+id/exportPasswordsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_margin="@dimen/margin_16"
                 app:buttonText="@string/settings_export_passwords" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
 
             <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
                 android:id="@+id/importPasswordsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_16"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_margin="@dimen/margin_16"
                 app:buttonText="@string/settings_import_passwords" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
 
         </LinearLayout>
 

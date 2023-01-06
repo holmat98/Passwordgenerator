@@ -107,14 +107,13 @@
 
     <!-- Password Export and Import -->
     <string name="export_screen_description">Twoje dane zostaną wyeksportowane do pliku w folderze \"Pobrane\" na Twoim urządzeniu. Możesz wybrać czy chcesz je dodatkowo zaszyfrować.</string>
-    <string name="export_screen_hint">Hasło do zaszyfrowania danych w pliku</string>
     <string name="export_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
     <string name="export_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
     <string name="export_screen_button">Eksportuj</string>
     <string name="import_screen_description">Po naciśnięciu przycisku \"Importuj\" zostaniesz przeniesiony do ekranu, na którym będziesz mógł wybrać plik z Twoimi danymi.\nPrzykład formatu, w którym powinny być zapisane dane: \"nazwa platformy : hasło\"</string>
-    <string name="import_screen_hint">Hasło, którym zaszyfrowano dane w pliku</string>
     <string name="import_result_screen_success">Hasła zostały poprawnie zaimportowane</string>
     <string name="import_result_screen_failure">Wystąpił błąd podczas importowania haseł.</string>
     <string name="import_screen_button">Importuj</string>
     <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
+    <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
 </resources>

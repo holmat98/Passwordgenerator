@@ -38,7 +38,6 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
     private fun setUpViewTexts() {
         with(binding.importForm) {
             description.text = context?.getString(R.string.import_screen_description)
-            passwordValueET.hint = context?.getString(R.string.import_screen_hint)
         }
     }
 

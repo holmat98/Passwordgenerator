@@ -32,7 +32,6 @@ class ExportPasswordsFragment : BaseFragment(R.layout.fragment_export_passwords)
     private fun setUpViewTexts() {
         with(binding.exportForm) {
             description.text = context?.getString(R.string.export_screen_description)
-            passwordValueET.hint = context?.getString(R.string.export_screen_hint)
         }
     }
 
