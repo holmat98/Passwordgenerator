@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), BottomNavController {
     private val appBarConfigurationFactory: AppBarConfigurationFactory by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_PasswordGenerator)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
