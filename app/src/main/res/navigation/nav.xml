@@ -2,18 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav"
-    app:startDestination="@id/authenticationHostFragment">
+    app:startDestination="@id/notificationPermissionFragment">
     <fragment
-        android:id="@+id/authenticationHostFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostFragment">
+        android:id="@+id/notificationPermissionFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.permissions.notification.NotificationPermissionFragment">
         <action
-            android:id="@+id/action_authenticationHostFragment_to_logged_user_nav"
+            android:id="@+id/action_notificationPermissionFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/notificationPermissionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.login.LogInFragment">
+
+        <action
+            android:id="@+id/action_logInFragment_to_logged_user_nav"
             app:destination="@id/logged_user_nav"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/authenticationHostFragment"
+            app:popUpTo="@id/logInFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <include app:graph="@navigation/logged_user_nav" />

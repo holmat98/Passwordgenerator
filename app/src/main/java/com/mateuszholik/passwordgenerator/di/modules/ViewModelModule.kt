@@ -2,15 +2,14 @@ package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
-import com.mateuszholik.passwordgenerator.ui.authentication.AuthenticationHostViewModel
-import com.mateuszholik.passwordgenerator.ui.authentication.createpin.CreatePinViewModel
-import com.mateuszholik.passwordgenerator.ui.authentication.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsViewModel
+import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreViewModel
-import com.mateuszholik.passwordgenerator.ui.passwordvalidationresult.PasswordValidationResultViewModel
 import com.mateuszholik.passwordgenerator.ui.savepassword.SavePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,21 +19,14 @@ import org.koin.dsl.module
 val viewModelModule = module {
 
     viewModel {
-        CreatePinViewModel(
-            isPinCorrectToSaveUseCase = get(),
-            savePinUseCase = get()
-        )
-    }
-
-    viewModel {
         LogInViewModel(
             isPinCorrectUseCase = get(),
-            shouldUseBiometricAuthenticationUseCase = get()
+            shouldUseBiometricAuthenticationUseCase = get(),
+            isPinCorrectToSaveUseCase = get(),
+            savePinUseCase = get(),
+            isPinCreatedUseCase = get(),
+            stringResToStringMapper = get()
         )
-    }
-
-    viewModel {
-        AuthenticationHostViewModel(isPinCreatedUseCase = get())
     }
 
     viewModel {
@@ -44,38 +36,32 @@ val viewModelModule = module {
     viewModel { (password: String) ->
         PasswordScoreViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get()
+            validatePasswordUseCase = get()
         )
     }
 
     viewModel { (password: String?) ->
         SavePasswordViewModel(
             generatedPassword = password,
-            savePasswordUseCase = get()
+            getPasswordUseCase = get(),
+            insertPasswordAndGetIdUseCase = get(),
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
         )
     }
 
     viewModel {
         PasswordsViewModel(
-            getPasswordsUseCase = get(),
-            passwordsScoreProvider = get()
-        )
-    }
-
-    viewModel { (password: String) ->
-        PasswordValidationResultViewModel(
-            password = password,
-            validatePasswordUseCase = get()
+            getPasswordsUseCase = get()
         )
     }
 
     viewModel { (password: Password) ->
         PasswordDetailsViewModel(
             password = password,
-            calculatePasswordScoreUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
-            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            validatePasswordUseCase = get()
         )
     }
 
@@ -93,5 +79,15 @@ val viewModelModule = module {
             shouldUseBiometricAuthenticationUseCase = get(),
             savePasswordValidityValueUseCase = get()
         )
+    }
+
+    viewModel {
+        ExportPasswordsViewModel(
+            exportPasswordsUseCase = get()
+        )
+    }
+
+    viewModel {
+        ImportPasswordsViewModel(importPasswordsUseCase = get())
     }
 }

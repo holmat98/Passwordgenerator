@@ -19,9 +19,9 @@ abstract class SharedPrefManager {
         edit.apply()
     }
 
-    fun readString(key: String): String? = sharedPreferences.getString(key, EMPTY_STRING)
+    fun readString(key: String, defValue: String? = null): String? = sharedPreferences.getString(key, defValue)
 
-    fun readLong(key: String): Long = sharedPreferences.getLong(key, 0)
+    fun readLong(key: String, defValue: Long = 0): Long = sharedPreferences.getLong(key, defValue)
 
     fun readBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
 

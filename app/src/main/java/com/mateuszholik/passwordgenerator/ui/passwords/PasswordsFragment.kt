@@ -1,16 +1,15 @@
 package com.mateuszholik.passwordgenerator.ui.passwords
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
+import com.mateuszholik.passwordgenerator.factories.ViewHolderFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -20,78 +19,64 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
-class PasswordsFragment : BaseFragment() {
+class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
 
-    private var binding: FragmentPasswordsBinding? = null
+    private val binding by viewBinding(FragmentPasswordsBinding::bind)
     private val viewModel: PasswordsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
     private val gsonFactory: GsonFactory by inject()
-    private val adapter = PasswordsAdapter(
-        copyToClipboard = { label, password ->
-            clipboardManager.copyToClipboard(label, password)
-        },
-        calculateProgress = { viewModel.getPasswordScore(it) },
-        navigateToPasswordDetails = { navigateToPasswordDetails(it) }
-    )
+    private val viewHolderFactory: ViewHolderFactory by inject()
+    private var adapter: PasswordsAdapter? = null
 
-    override val isBottomNavVisible: Boolean
-        get() = true
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate<FragmentPasswordsBinding?>(
-            inflater,
-            R.layout.fragment_passwords,
-            container,
-            false
-        ).apply {
-            viewModel = this@PasswordsFragment.viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }
-
-        return binding?.root
-    }
+    override val isBottomNavVisible: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpRecyclerView()
-        setUpObservers()
-
-        binding?.run {
-            swipeRefreshLayout.setOnRefreshListener {
-                viewModel?.getAllPasswords()
-
-                swipeRefreshLayout.isRefreshing = false
-            }
-
-            goToCreatePasswordScreenBtn.setOnClickListener {
-                navigateToCreatePasswordScreen()
-            }
+        binding.apply {
+            viewModel = this@PasswordsFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
         }
+
+        binding.goToCreatePasswordScreenBtn.setOnClickListener {
+            navigateToCreatePasswordScreen()
+        }
+
+        setUpObservers()
     }
 
     override fun onResume() {
         super.onResume()
+        setUpRecyclerView()
         viewModel.getAllPasswords()
     }
 
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
+        binding.recyclerView.adapter = null
+        adapter = null
     }
 
     private fun setUpRecyclerView() {
-        binding?.recyclerView?.adapter = adapter
+        adapter = PasswordsAdapter(
+            copyToClipboard = { label, password ->
+                clipboardManager.copyToClipboard(label, password)
+            },
+            navigateToPasswordDetails = { navigateToPasswordDetails(it) },
+            createPasswordViewHolder = { viewGroup, viewType ->
+                viewHolderFactory.create(
+                    viewGroup,
+                    viewType
+                )
+            }
+        )
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setUpObservers() {
         with(viewModel) {
-            passwords.observe(viewLifecycleOwner) { adapter.addPasswords(it) }
+            passwords.observe(viewLifecycleOwner) { adapter?.addPasswords(it) }
             errorOccurred.observe(viewLifecycleOwner) { messageProvider.show(it) }
         }
     }

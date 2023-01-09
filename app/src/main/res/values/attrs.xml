@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PinEditText">
-        <attr name="pinTextColor" format="color" />
+    <declare-styleable name="PinView">
+        <attr name="pinPrimaryColor" format="color" />
+        <attr name="pinSecondaryColor" format="color" />
+        <attr name="android:radius" format="dimension" />
+        <attr name="android:textSize" format="dimension" />
     </declare-styleable>
     <declare-styleable name="PinCode">
         <attr name="pinInputsTextColor" format="color" />
@@ -10,10 +13,12 @@
     <declare-styleable name="AnimatedCheckbox">
         <attr name="checkBoxText" format="string" />
     </declare-styleable>
-    <declare-styleable name="TextSwitch">
-        <attr name="text" format="string" />
-    </declare-styleable>
     <declare-styleable name="SettingsButton">
         <attr name="buttonText" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CircularProgressBar">
+        <attr name="primaryColor" format="color" />
+        <attr name="secondaryColor" format="color" />
+        <attr name="android:textSize" format="dimension" />
     </declare-styleable>
 </resources>

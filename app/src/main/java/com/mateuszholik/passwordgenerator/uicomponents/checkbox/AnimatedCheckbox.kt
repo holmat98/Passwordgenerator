@@ -14,6 +14,12 @@ class AnimatedCheckbox(context: Context, attrs: AttributeSet) : LinearLayout(con
         this
     )
 
+    var text: String = ""
+        set(value) {
+            binding.textView.text = value
+            field = value
+        }
+
     var isPositive: Boolean = false
         set(value) {
             startAnimation(value)

@@ -13,6 +13,11 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="Info" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="Header" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_40</item>
         <item name="android:textAlignment">center</item>
@@ -20,14 +25,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="OnboardingText" parent="DefaultText">
+    <style name="Title" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="Description" parent="DefaultText">
         <item name="android:textAlignment">center</item>
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
 
     <style name="ErrorText" parent="DefaultText">
-        <item name="android:textColor">@color/error</item>
+        <item name="android:textColor">@color/red</item>
         <item name="android:textAlignment">center</item>
     </style>
 
@@ -46,6 +57,7 @@
         <item name="android:padding">@dimen/padding_8</item>
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
         <item name="android:letterSpacing">0.03</item>
+        <item name="android:minHeight">@dimen/min_button_height</item>
     </style>
 
     <style name="BottomNavigationView">
@@ -59,8 +71,10 @@
         <item name="hintTextColor">@color/secondary_dark</item>
     </style>
 
-    <style name="PinEditText">
-        <item name="android:textSize">@dimen/text_size_35</item>
-        <item name="android:textAlignment">center</item>
+    <style name="CheckBox">
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:layout_marginBottom">@dimen/margin_16</item>
     </style>
 </resources>

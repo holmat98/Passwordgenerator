@@ -1,72 +1,93 @@
 package com.mateuszholik.data.repositories
 
-import com.mateuszholik.cryptography.EncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
-import com.mateuszholik.data.managers.io.SharedPrefManager
-import com.mateuszholik.data.mappers.PasswordListMapper
+import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
+import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
+import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
+import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.data.repositories.models.Password
-import io.mockk.*
+import com.mateuszholik.data.repositories.models.UpdatedPassword
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-@RunWith(JUnit4::class)
 class PasswordsRepositoryImplTest {
 
     private val passwordsDao = mockk<PasswordsDao> {
-        every { insert(PASSWORD_DB) } returns Completable.complete()
+        every { insertAndGetId(PASSWORD_DB) } returns Single.just(ID)
+        every { insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2)) } returns Completable.complete()
         every { update(PASSWORD_DB) } returns Completable.complete()
         every { deletePassword(MAPPED_PASSWORD.id) } returns Completable.complete()
+        every { getPassword(ID) } returns Maybe.just(PASSWORD_DB)
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD_DB))
     }
-    private val passwordListMapper = mockk<PasswordListMapper> {
+
+    private val passwordDBListToPasswordListMapper = mockk<PasswordDBListToPasswordListMapper> {
         every { map(listOf(PASSWORD_DB)) } returns listOf(MAPPED_PASSWORD)
     }
-    private val encryptionManager = mockk<EncryptionManager> {
-        every { encrypt(PLATFORM_NAME) } returns ENCRYPTED_PLATFORM
-        every { encrypt(PASSWORD) } returns ENCRYPTED_PASSWORD
+
+    private val passwordDBToPasswordMapper = mockk<PasswordDBToPasswordMapper> {
+        every { map(PASSWORD_DB) } returns MAPPED_PASSWORD
     }
-    private val sharedPrefManager = mockk<SharedPrefManager> {
-        every { readLong(any()) } returns PASSWORD_VALIDITY_IN_DAYS
+
+    private val newPasswordToPasswordDBMapper = mockk<NewPasswordToPasswordDBMapper> {
+        every { map(NEW_PASSWORD) } returns PASSWORD_DB
     }
+
+    private val newPasswordsListToPasswordDBListMapper =
+        mockk<NewPasswordsListToPasswordDBListMapper> {
+            every { map(listOf(NEW_PASSWORD, NEW_PASSWORD_2)) } returns listOf(
+                PASSWORD_DB,
+                PASSWORD_DB_2
+            )
+        }
+
+    private val updatedPasswordToPasswordDBMapper = mockk<UpdatedPasswordToPasswordDBMapper> {
+        every { map(UPDATED_PASSWORD) } returns PASSWORD_DB
+    }
+
 
     private val passwordsRepository = PasswordsRepositoryImpl(
-        passwordsDao,
-        passwordListMapper,
-        encryptionManager,
-        sharedPrefManager
+        passwordsDao = passwordsDao,
+        passwordDBListToPasswordListMapper = passwordDBListToPasswordListMapper,
+        passwordDBToPasswordMapper = passwordDBToPasswordMapper,
+        newPasswordToPasswordDBMapper = newPasswordToPasswordDBMapper,
+        newPasswordsListToPasswordDBListMapper = newPasswordsListToPasswordDBListMapper,
+        updatedPasswordToPasswordDBMapper = updatedPasswordToPasswordDBMapper
     )
 
-    @Before
-    fun setUp() {
-        mockkStatic(LocalDateTime.now()::class)
-        every { LocalDateTime.now() } returns TODAY_DATE
-    }
+    @Test
+    fun `Password is saved correctly to the database and its id is returned`() {
+        passwordsRepository.insertAndGetId(NEW_PASSWORD)
+            .test()
+            .assertValue(ID)
 
-    @After
-    fun tearDown() {
-        unmockkStatic(LocalDateTime::class)
+        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_DB) }
     }
 
     @Test
-    fun `Password is saved correctly to the database`() {
-        passwordsRepository.insert(PLATFORM_NAME, PASSWORD)
+    fun `List of passwords is saved correctly to the database`() {
+        passwordsRepository.insertPasswords(listOf(NEW_PASSWORD, NEW_PASSWORD_2))
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsDao.insert(PASSWORD_DB) }
+        verify(exactly = 1) {
+            passwordsDao.insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2))
+        }
     }
 
     @Test
     fun `Password is updated correctly in the database`() {
-        passwordsRepository.update(MAPPED_PASSWORD)
+        passwordsRepository.update(UPDATED_PASSWORD)
             .test()
             .assertComplete()
 
@@ -85,6 +106,28 @@ class PasswordsRepositoryImplTest {
     }
 
     @Test
+    fun `Password with given id is correctly provided and mapper to Password object`() {
+        passwordsRepository.getPassword(ID)
+            .test()
+            .assertValue(MAPPED_PASSWORD)
+
+        verify(exactly = 1) { passwordsDao.getPassword(ID) }
+    }
+
+    @Test
+    fun `When dao does not return password, repository will return empty also`() {
+        every {
+            passwordsDao.getPassword(ID_2)
+        } returns Maybe.empty()
+
+        passwordsRepository.getPassword(ID_2)
+            .test()
+            .assertNoValues()
+
+        verify(exactly = 1) { passwordsDao.getPassword(ID_2) }
+    }
+
+    @Test
     fun `All passwords are correctly provided and mapped to list of Password objects`() {
         passwordsRepository.getAllPasswords()
             .test()
@@ -96,9 +139,25 @@ class PasswordsRepositoryImplTest {
     }
 
     private companion object {
-        const val ID = 0L
+        const val ID = 1L
+        const val ID_2 = 2L
         const val PLATFORM_NAME = "platform"
+        const val PLATFORM_NAME_2 = "platform2"
         const val PASSWORD = "password"
+        const val PASSWORD_2 = "password2"
+        val NEW_PASSWORD = NewPassword(
+            platformName = PLATFORM_NAME,
+            password = PASSWORD
+        )
+        val NEW_PASSWORD_2 = NewPassword(
+            platformName = PLATFORM_NAME_2,
+            password = PASSWORD_2
+        )
+        val UPDATED_PASSWORD = UpdatedPassword(
+            id = ID,
+            platformName = PLATFORM_NAME,
+            password = PASSWORD
+        )
         val ENCRYPTED_PLATFORM = EncryptedData(
             iv = ByteArray(10),
             data = ByteArray(11)
@@ -107,21 +166,36 @@ class PasswordsRepositoryImplTest {
             iv = ByteArray(12),
             data = ByteArray(13)
         )
-        val TODAY_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        const val PASSWORD_VALIDITY_IN_DAYS = 90L
+        val ENCRYPTED_PLATFORM_2 = EncryptedData(
+            iv = ByteArray(14),
+            data = ByteArray(15)
+        )
+        val ENCRYPTED_PASSWORD_2 = EncryptedData(
+            iv = ByteArray(16),
+            data = ByteArray(17)
+        )
+        val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
         val PASSWORD_DB = PasswordDB(
             id = ID,
             platformName = ENCRYPTED_PLATFORM.data,
             platformIV = ENCRYPTED_PLATFORM.iv,
             password = ENCRYPTED_PASSWORD.data,
             passwordIV = ENCRYPTED_PASSWORD.iv,
-            expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
+            expiringDate = EXPIRING_DATE
+        )
+        val PASSWORD_DB_2 = PasswordDB(
+            id = ID_2,
+            platformName = ENCRYPTED_PLATFORM_2.data,
+            platformIV = ENCRYPTED_PLATFORM_2.iv,
+            password = ENCRYPTED_PASSWORD_2.data,
+            passwordIV = ENCRYPTED_PASSWORD_2.iv,
+            expiringDate = EXPIRING_DATE
         )
         val MAPPED_PASSWORD = Password(
             id = ID,
             platformName = PLATFORM_NAME,
             password = PASSWORD,
-            expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
+            expiringDate = EXPIRING_DATE
         )
     }
 }

@@ -3,6 +3,7 @@
     package="com.mateuszholik.passwordgenerator">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".App"
@@ -11,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PasswordGenerator">
+        android:theme="@style/Theme.AppSplashScreen">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -22,5 +23,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

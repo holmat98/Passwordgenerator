@@ -2,15 +2,15 @@ package com.mateuszholik.passwordgenerator.ui.adapters
 
 import android.view.View
 import androidx.annotation.RawRes
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
 import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
-import com.mateuszholik.passwordgenerator.uicomponents.chart.ProgressChartView
 import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
-import com.mateuszholik.passwordgenerator.uicomponents.switches.TextSwitch
+import com.mateuszholik.passwordgenerator.uicomponents.progressbar.CircularProgressBar
 
 object BindingAdapters {
 
@@ -41,20 +41,25 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:setProggress")
-    fun setProgress(chartView: ProgressChartView, progress: Int) {
-        chartView.progress = progress
+    @BindingAdapter("app:setProgress")
+    fun setProgress(chartView: CircularProgressBar, progress: Int) {
+        chartView.animateProgress(progress)
     }
 
     @JvmStatic
     @BindingAdapter("app:onSwitchValueChanged")
-    fun setOnSwitchValueChanged(textSwitch: TextSwitch, listener: OnSwitchChangedValueListener) {
-        textSwitch.doOnSwitchChangedValue = { listener.onValueChanged(it) }
+    fun setOnSwitchValueChanged(
+        switchCompat: SwitchCompat,
+        listener: OnSwitchChangedValueListener
+    ) {
+        switchCompat.setOnCheckedChangeListener { _, isChecked ->
+            listener.onValueChanged(isChecked)
+        }
     }
 
     @JvmStatic
     @BindingAdapter("app:setSwitchValue")
-    fun setSwitchValue(textSwitch: TextSwitch, isChecked: Boolean) {
-        textSwitch.switchValue = isChecked
+    fun setSwitchValue(switchCompat: SwitchCompat, isChecked: Boolean) {
+        switchCompat.isChecked = isChecked
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="min_button_height">56dp</dimen>
+
+    <dimen name="radius_13">13dp</dimen>
     <dimen name="radius_15">15dp</dimen>
     <dimen name="radius_25">25dp</dimen>
 
@@ -18,4 +21,5 @@
     <dimen name="text_size_25">25sp</dimen>
     <dimen name="text_size_35">35sp</dimen>
     <dimen name="text_size_40">40sp</dimen>
+    <dimen name="text_size_45">45sp</dimen>
 </resources>

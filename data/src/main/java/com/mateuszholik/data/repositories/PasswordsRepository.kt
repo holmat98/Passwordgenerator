@@ -1,16 +1,23 @@
 package com.mateuszholik.data.repositories
 
+import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.UpdatedPassword
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 interface PasswordsRepository {
 
-    fun insert(platform: String, password: String): Completable
+    fun insertAndGetId(newPassword: NewPassword): Single<Long>
+
+    fun insertPasswords(newPasswords: List<NewPassword>): Completable
 
     fun delete(passwordId: Long): Completable
 
-    fun update(password: Password): Completable
+    fun update(updatedPassword: UpdatedPassword): Completable
+
+    fun getPassword(passwordId: Long): Maybe<Password>
 
     fun getAllPasswords(): Single<List<Password>>
 }

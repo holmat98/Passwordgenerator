@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinEditText
+    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/firstPinCodeElement"
-        style="@style/PinEditText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:radius="@dimen/radius_25"
+        android:textSize="@dimen/text_size_35"
+        app:pinPrimaryColor="@color/primary"
+        app:pinSecondaryColor="@color/secondary_dark" />
 
-    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinEditText
+    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/secondPinCodeElement"
-        style="@style/PinEditText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:radius="@dimen/radius_25"
+        android:textSize="@dimen/text_size_35"
+        app:pinPrimaryColor="@color/primary"
+        app:pinSecondaryColor="@color/secondary_dark" />
 
-    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinEditText
+    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/thirdPinCodeElement"
-        style="@style/PinEditText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:radius="@dimen/radius_25"
+        android:textSize="@dimen/text_size_35"
+        app:pinPrimaryColor="@color/primary"
+        app:pinSecondaryColor="@color/secondary_dark" />
 
-    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinEditText
+    <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/fourthPinCodeElement"
-        style="@style/PinEditText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:radius="@dimen/radius_25"
+        android:textSize="@dimen/text_size_35"
+        app:pinPrimaryColor="@color/primary"
+        app:pinSecondaryColor="@color/secondary_dark" />
 
 </merge>

@@ -1,10 +1,7 @@
 package com.mateuszholik.passwordgenerator.ui.editpassword
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,6 +9,7 @@ import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentEditPasswordBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import org.koin.android.ext.android.inject
@@ -19,9 +17,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-class EditPasswordFragment : Fragment() {
+class EditPasswordFragment : Fragment(R.layout.fragment_edit_password) {
 
-    private var binding: FragmentEditPasswordBinding? = null
+    private val binding by viewBinding(FragmentEditPasswordBinding::bind)
     private val navArgs: EditPasswordFragmentArgs by navArgs()
     private val gsonFactory: GsonFactory by inject()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
@@ -32,33 +30,15 @@ class EditPasswordFragment : Fragment() {
         parametersOf(password)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate<FragmentEditPasswordBinding?>(
-            inflater,
-            R.layout.fragment_edit_password,
-            container,
-            false
-        ).apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
             viewModel = this@EditPasswordFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
 
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setUpObservers()
-    }
-
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
+            setUpObservers()
     }
 
     private fun setUpObservers() {

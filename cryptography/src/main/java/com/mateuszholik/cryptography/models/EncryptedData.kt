@@ -1,5 +1,7 @@
 package com.mateuszholik.cryptography.models
 
+import com.mateuszholik.cryptography.extensions.convertToString
+
 data class EncryptedData(val iv: ByteArray, val data: ByteArray) {
 
     override fun equals(other: Any?): Boolean {
@@ -18,5 +20,14 @@ data class EncryptedData(val iv: ByteArray, val data: ByteArray) {
         var result = iv.contentHashCode()
         result = 31 * result + data.contentHashCode()
         return result
+    }
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(data.convertToString())
+        stringBuilder.append("\n")
+        stringBuilder.append(iv.convertToString())
+
+        return stringBuilder.toString()
     }
 }

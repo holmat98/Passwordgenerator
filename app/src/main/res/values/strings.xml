@@ -8,8 +8,9 @@
     <string name="button_next">Następny</string>
     <string name="button_skip">Pomiń</string>
     <string name="button_start">Zaczynamy</string>
+    <string name="button_finish">Zakończ</string>
     <string name="create">Stwórz</string>
-    <string name="create_password_header">Stwórz hasło</string>
+    <string name="create_pin_header">Stwórz pin</string>
     <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
     <string name="create_pin_wrong_pin">Podany pin nie spełnia warunków</string>
     <string name="dialog_button_cancel">Anuluj</string>
@@ -54,15 +55,23 @@
     <string name="password_details_password_score_error">Wystąpił błąd przy wyliczaniu siły hasła</string>
     <string name="password_details_password_strength">Siła hasła</string>
     <string name="passwords_get_passwords_error">Wystąpił błąd przy pobieraniu haseł</string>
-    <string name="password_score_length">Ma co najmniej 8 znaków</string>
-    <string name="password_score_letter">Zawiera literę</string>
-    <string name="password_score_number">Zawiera cyfrę</string>
-    <string name="password_score_special_character">Zawiera znak specjalny</string>
-    <string name="password_score_uppercase">Zawiera dużą literę</string>
+
+    <!-- Password validation -->
+    <string name="password_validation_alphabetical_pattern">Nie zawiera powtórzeń alfabetycznych</string>
+    <string name="password_validation_common_password">Nie jest to popularne hasło</string>
+    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
+    <string name="password_validation_keyboard_pattern">Nie zawiera powtórzeń klawiaturowych</string>
+    <string name="password_validation_length">Ma co najmniej 8 znaków</string>
+    <string name="password_validation_letter">Zawiera literę</string>
+    <string name="password_validation_name">Nie zawiera imienia</string>
+    <string name="password_validation_number">Zawiera cyfrę</string>
+    <string name="password_validation_special_character">Zawiera znak specjalny</string>
+    <string name="password_validation_uppercase">Zawiera dużą literę</string>
+    <string name="password_validation_word">Nie zawiera słowa</string>
+
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="password_test_hint">Wprowadź hasło</string>
-    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
-    <string name="progress_value">%1$d</string>
+    <string name="progress_value">%d%%</string>
     <string name="save_password_error">Wystąpił błąd przy zapisie hasła</string>
     <string name="save_password_saved">Hasło zostało zapisane</string>
     <string name="save_password_platform_name">Nazwa platformy</string>
@@ -73,9 +82,38 @@
     <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
+    <string name="settings_export_passwords">Eksportuj hasła</string>
+    <string name="settings_import_passwords">Importuj hasła</string>
     <string name="settings_notification_num_of_days">Wybierz ilość dni po których hasło wygaśnie</string>
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
     <string name="test">Przetestuj</string>
     <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
+    <string name="copy_button">Przycisk kopiowania hasła</string>
+    <string name="warning_icon">Ikona informująca o zbliżającym się wygaśnięciu hasła</string>
+    <string name="warning_password_expired">Twoje hasło wygasło!</string>
+    <string name="warning_password_correct">Twoje hasło jest bezpieczne</string>
+    <string name="warning_password_expiring">Twoje hasło wkrótce wygaśnie!</string>
+
+    <string name="notification_permission_title">Pozwól nam na wysyłanie Tobie powiadomień</string>
+    <string name="notification_permission_description">Dzięki powiadomieniom będziemy mogli przypomnieć o potrzebie zaktualizowania Twoich przedawnionych haseł</string>
+    <string name="permission_rationale_title">Odrzucono uprawnienie</string>
+    <string name="notification_permission_rationale">Uprawnienie jest potrzebne do poprawnego działania aplikacji. Powiadomienia będą wysyłane tylko aby przypomnieć o zmianie wygasającego hasła</string>
+
+    <!-- Permission screen -->
+    <string name="permission_image_description">Ikona ekranu uprawnień</string>
+    <string name="permission_button_access">Nadaj uprawnienie</string>
+    <string name="permission_button_settings">Otwórz ustawienia</string>
+
+    <!-- Password Export and Import -->
+    <string name="export_screen_description">Twoje dane zostaną wyeksportowane do pliku w folderze \"Pobrane\" na Twoim urządzeniu. Możesz wybrać czy chcesz je dodatkowo zaszyfrować.</string>
+    <string name="export_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
+    <string name="export_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
+    <string name="export_screen_button">Eksportuj</string>
+    <string name="import_screen_description">Po naciśnięciu przycisku \"Importuj\" zostaniesz przeniesiony do ekranu, na którym będziesz mógł wybrać plik z Twoimi danymi.\nPrzykład formatu, w którym powinny być zapisane dane: \"nazwa platformy : hasło\"</string>
+    <string name="import_result_screen_success">Hasła zostały poprawnie zaimportowane</string>
+    <string name="import_result_screen_failure">Wystąpił błąd podczas importowania haseł.</string>
+    <string name="import_screen_button">Importuj</string>
+    <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
+    <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
 </resources>

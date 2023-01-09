@@ -1,24 +1,46 @@
 package com.mateuszholik.data.di.modules
 
-import com.mateuszholik.data.mappers.*
-import com.mateuszholik.data.mappers.PasswordDBMapper
-import com.mateuszholik.data.mappers.PasswordListMapper
-import com.mateuszholik.data.mappers.PasswordListMapperImpl
-import com.mateuszholik.data.mappers.PasswordMapper
-import com.mateuszholik.data.mappers.PasswordMapperImpl
+import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapperImpl
+import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
+import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapperImpl
+import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
+import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapperImpl
+import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
+import com.mateuszholik.data.mappers.PasswordDBToPasswordMapperImpl
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapperImpl
 import org.koin.dsl.module
 
 internal val mappersModule = module {
 
-    factory<PasswordMapper> {
-        PasswordMapperImpl(encryptionManager = get())
+    factory<PasswordDBToPasswordMapper> {
+        PasswordDBToPasswordMapperImpl(encryptionManager = get())
     }
 
-    factory<PasswordListMapper> {
-        PasswordListMapperImpl(passwordMapper = get())
+    factory<PasswordDBListToPasswordListMapper> {
+        PasswordDBListToPasswordListMapperImpl(
+            passwordDBToPasswordMapper = get()
+        )
     }
 
-    factory<PasswordDBMapper> {
-        PasswordDBMapperImpl(encryptionManager = get())
+    factory<NewPasswordToPasswordDBMapper> {
+        NewPasswordToPasswordDBMapperImpl(
+            encryptionManager = get(),
+            sharedPrefManager = get()
+        )
+    }
+
+    factory<UpdatedPasswordToPasswordDBMapper> {
+        UpdatedPasswordToPasswordDBMapperImpl(
+            encryptionManager = get(),
+            sharedPrefManager = get()
+        )
+    }
+
+    factory<NewPasswordsListToPasswordDBListMapper> {
+        NewPasswordsListToPasswordDBListMapperImpl(
+            newPasswordToPasswordDBMapper = get()
+        )
     }
 }

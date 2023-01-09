@@ -19,6 +19,19 @@ fun <T: Any> Single<T>.subscribeWithObserveOnMainThread(
         { doOnError(it) }
     )
 
+fun <T: Any> Observable<T>.subscribeWithObserveOnMainThread(
+    scheduler: Scheduler = Schedulers.io(),
+    doOnNext: (T) -> Unit,
+    doOnSuccess: (T) -> Unit,
+    doOnError: (Throwable) -> Unit
+): Disposable = this.subscribeOn(scheduler)
+    .observeOn(AndroidSchedulers.mainThread())
+    .doOnNext { doOnNext(it) }
+    .subscribe(
+        { doOnSuccess(it) },
+        { doOnError(it) }
+    )
+
 fun Completable.subscribeWithObserveOnMainThread(
     scheduler: Scheduler = Schedulers.io(),
     doOnSuccess: () -> Unit = {},
