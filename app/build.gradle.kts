@@ -128,6 +128,9 @@ dependencies {
 
     // leak canary
     debugImplementation(SquareUp.LeakCanary.DEPENDENCY)
+
+    // splash screen
+    implementation(Androidx.SplashScreen.DEPENDENCY)
 }
 
 tasks.withType(Test::class) {

@@ -115,6 +115,12 @@ object Androidx {
 
         const val DEPENDENCY = "androidx.biometric:biometric:$version"
     }
+
+    object SplashScreen {
+        private const val version = "1.0.0"
+
+        const val DEPENDENCY = "androidx.core:core-splashscreen:$version"
+    }
 }
 
 object Google {
