@@ -2,7 +2,6 @@ package com.mateuszholik.passwordgenerator.ui.generatepassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
@@ -16,7 +15,7 @@ class GeneratePasswordViewModel(
     private val createPasswordUseCase: CreatePasswordUseCase
 ) : BaseViewModel(), OnValueChangedListener {
 
-    private val _generatedPassword = MutableLiveData(EMPTY_STRING)
+    private val _generatedPassword = MutableLiveData<String>()
     val generatedPassword: LiveData<String>
         get() = _generatedPassword
 
@@ -28,7 +27,7 @@ class GeneratePasswordViewModel(
                 scheduler = Schedulers.computation(),
                 doOnSuccess = { _generatedPassword.postValue(it) },
                 doOnError = {
-                    Timber.e(it)
+                    Timber.e("Error during generating password", it)
                     _errorOccurred.postValue(R.string.generate_password_error)
                 }
             )

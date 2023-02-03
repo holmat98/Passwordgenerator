@@ -116,4 +116,5 @@
     <string name="import_screen_button">Importuj</string>
     <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
     <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
+    <string name="generated_password">Stworzone hasło:</string>
 </resources>
