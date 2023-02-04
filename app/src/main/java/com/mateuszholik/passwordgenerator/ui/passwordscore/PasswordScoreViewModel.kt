@@ -2,9 +2,10 @@ package com.mateuszholik.passwordgenerator.ui.passwordscore
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
+import com.mateuszholik.passwordgenerator.models.MessageType
+import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
@@ -12,7 +13,8 @@ import timber.log.Timber
 
 class PasswordScoreViewModel(
     private val password: String,
-    private val validatePasswordUseCase: ValidatePasswordUseCase
+    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val textProvider: TextProvider
 ) : BaseViewModel() {
 
     private var currentScore = 0f
@@ -42,7 +44,7 @@ class PasswordScoreViewModel(
                 doOnSuccess = { Timber.i("Password validation has finished") },
                 doOnError = {
                     Timber.e(it, "Error occurred during password validation")
-                    _errorOccurred.value = R.string.password_validation_error
+                    _errorOccurred.value = textProvider.provide(MessageType.VALIDATION_ERROR)
                 }
             )
             .addTo(compositeDisposable)

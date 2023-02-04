@@ -36,7 +36,7 @@ class SavePasswordFragment : Fragment(R.layout.fragment_save_password) {
 
     private fun setUpObservers() {
         with(viewModel) {
-            savedPassword.observe(viewLifecycleOwner) {
+            savePasswordSuccess.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
                 findNavController().navigate(R.id.action_savePasswordFragment_to_passwords)
             }

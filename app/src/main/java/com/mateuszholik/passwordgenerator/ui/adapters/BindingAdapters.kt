@@ -6,9 +6,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.material.slider.Slider
 import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
-import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import com.mateuszholik.passwordgenerator.uicomponents.checkbox.AnimatedCheckbox
 import com.mateuszholik.passwordgenerator.uicomponents.progressbar.CircularProgressBar
 
@@ -24,14 +22,6 @@ object BindingAdapters {
     @JvmStatic
     fun setVisibility(view: View, isVisible: Boolean) {
         view.isVisible = isVisible
-    }
-
-    @JvmStatic
-    @BindingAdapter(value = ["onValueChangeListener"])
-    fun setOnValueChangeListener(slider: Slider, listener: OnValueChangedListener) {
-        slider.addOnChangeListener { _, value, _ ->
-            listener.onValueChanged(value)
-        }
     }
 
     @JvmStatic

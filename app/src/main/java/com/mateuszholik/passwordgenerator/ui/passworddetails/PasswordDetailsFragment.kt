@@ -83,7 +83,7 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
             }
             passwordDeletedSuccessfully.observe(viewLifecycleOwner) {
                 if (it) {
-                    messageProvider.show(R.string.password_details_password_deleted)
+                    messageProvider.show(requireContext().getString(R.string.password_details_password_deleted))
                     findNavController().popBackStack()
                 }
             }

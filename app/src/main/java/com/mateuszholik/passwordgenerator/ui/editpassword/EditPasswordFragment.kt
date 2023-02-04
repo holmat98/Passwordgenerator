@@ -38,19 +38,19 @@ class EditPasswordFragment : Fragment(R.layout.fragment_edit_password) {
             lifecycleOwner = viewLifecycleOwner
         }
 
-            setUpObservers()
+        setUpObservers()
     }
 
     private fun setUpObservers() {
         viewModel.run {
             passwordEditedCorrectly.observe(viewLifecycleOwner) {
                 if (it) {
-                    messageProvider.show(R.string.edit_password_edited_successfully)
+                    messageProvider.show(requireContext().getString(R.string.edit_password_edited_successfully))
                     findNavController().navigate(R.id.action_editPasswordFragment_to_passwords)
                 }
             }
             errorOccurred.observe(viewLifecycleOwner) {
-                messageProvider.show(R.string.error_message)
+                messageProvider.show(it)
             }
         }
     }

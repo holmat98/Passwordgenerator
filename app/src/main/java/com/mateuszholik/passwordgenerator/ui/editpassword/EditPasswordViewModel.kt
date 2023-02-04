@@ -6,9 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.models.UpdatedPassword
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
-import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
+import com.mateuszholik.passwordgenerator.models.MessageType
+import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
@@ -17,6 +18,7 @@ import timber.log.Timber
 class EditPasswordViewModel(
     private val password: Password,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
+    private val textProvider: TextProvider,
     private val workScheduler: WorkScheduler
 ) : BaseViewModel() {
 
@@ -58,7 +60,7 @@ class EditPasswordViewModel(
                 },
                 doOnError = {
                     Timber.e(it)
-                    _errorOccurred.postValue(R.string.edit_password_error)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.PASSWORD_EDITION_ERROR))
                 }
             )
             .addTo(compositeDisposable)

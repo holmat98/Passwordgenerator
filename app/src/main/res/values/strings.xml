@@ -24,7 +24,7 @@
     <string name="error_message">Coś poszło nie tak</string>
     <string name="generate_create_password">Stwórz hasło</string>
     <string name="generate_password_error">Wystąpił błąd przy tworzeniu hasła</string>
-    <string name="generate_password_length">Wybierz długość hasła:</string>
+    <string name="generate_password_length">Długość hasła:</string>
     <string name="generate_password_save_button_description">save password button</string>
     <string name="item_password_expire_date">Data ważności: %1$s</string>
     <string name="item_password_password">Hasło: %1$s</string>
@@ -116,4 +116,7 @@
     <string name="import_screen_button">Importuj</string>
     <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
     <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
+    <string name="generated_password">Stworzone hasło:</string>
+    <string name="generate_password">Stwórz</string>
+    <string name="generate_password_description">bezpieczne hasło hasło o wybranej długości</string>
 </resources>

@@ -18,7 +18,8 @@ val managersModule = module {
     single<ClipboardManager> {
         ClipboardManagerImpl(
             context = androidContext(),
-            messageProvider = get(named(TOAST_MESSAGE_PROVIDER))
+            messageProvider = get(named(TOAST_MESSAGE_PROVIDER)),
+            textProvider = get()
         )
     }
 
