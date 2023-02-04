@@ -6,23 +6,23 @@ import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
-import com.mateuszholik.passwordgenerator.listeners.OnValueChangedListener
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 
 class GeneratePasswordViewModel(
     private val createPasswordUseCase: CreatePasswordUseCase
-) : BaseViewModel(), OnValueChangedListener {
+) : BaseViewModel() {
 
     private val _generatedPassword = MutableLiveData<String>()
     val generatedPassword: LiveData<String>
         get() = _generatedPassword
 
-    private var passwordLength: Int = 8
+    val passwordLength = MutableLiveData(DEFAULT_PASSWORD_LENGTH)
 
     fun createPassword() {
-        createPasswordUseCase(passwordLength)
+        val length = passwordLength.value ?: DEFAULT_PASSWORD_LENGTH
+        createPasswordUseCase(length)
             .subscribeWithObserveOnMainThread(
                 scheduler = Schedulers.computation(),
                 doOnSuccess = { _generatedPassword.postValue(it) },
@@ -33,8 +33,7 @@ class GeneratePasswordViewModel(
             )
             .addTo(compositeDisposable)
     }
-
-    override fun onValueChanged(value: Float) {
-        passwordLength = value.toInt()
+    private companion object {
+        const val DEFAULT_PASSWORD_LENGTH = 8
     }
 }

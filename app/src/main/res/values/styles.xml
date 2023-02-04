@@ -25,6 +25,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="MediumHeader" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_35</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Title" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_25</item>
         <item name="android:textAlignment">center</item>
@@ -76,5 +83,10 @@
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:layout_marginBottom">@dimen/margin_16</item>
+    </style>
+
+    <style name="NumberPicker">
+        <item name="android:textColorPrimary">@color/secondary</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 </resources>
