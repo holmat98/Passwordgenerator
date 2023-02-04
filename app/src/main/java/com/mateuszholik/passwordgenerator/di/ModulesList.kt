@@ -11,7 +11,6 @@ private val appModules = listOf(
     providersModule,
     managersModule,
     serializersModule,
-    callbacksModule,
     schedulerModule,
     mappersModule
 )

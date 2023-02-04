@@ -12,6 +12,8 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.mappers.StringResToStringMapper
+import com.mateuszholik.passwordgenerator.models.MessageType
+import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import timber.log.Timber
 
@@ -21,7 +23,8 @@ class LogInViewModel(
     private val savePinUseCase: SavePinUseCase,
     private val isPinCorrectUseCase: IsPinCorrectUseCase,
     private val shouldUseBiometricAuthenticationUseCase: ShouldUseBiometricAuthenticationUseCase,
-    private val stringResToStringMapper: StringResToStringMapper
+    private val stringResToStringMapper: StringResToStringMapper,
+    private val textProvider: TextProvider
 ) : BaseViewModel() {
 
     private var isPinCreated: Boolean = false
@@ -30,8 +33,8 @@ class LogInViewModel(
     val headerText: LiveData<String>
         get() = _headerText
 
-    private val _wrongPin = MutableLiveData<Int>()
-    val wrongPin: LiveData<Int>
+    private val _wrongPin = MutableLiveData<String>()
+    val wrongPin: LiveData<String>
         get() = _wrongPin
 
     private val _shouldUseBiometricAuthentication = MutableLiveData<Boolean>()
@@ -55,7 +58,7 @@ class LogInViewModel(
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { managePinState(it) },
                 doOnError = {
-                    _errorOccurred.postValue(R.string.log_in_error)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.LOGIN_ERROR))
                     Timber.e(it)
                 }
             )
@@ -65,8 +68,8 @@ class LogInViewModel(
     private fun managePinState(pinState: PinState) =
         when (pinState) {
             PinState.CORRECT -> getIfShouldUseBiometricAuth()
-            PinState.WRONG -> _wrongPin.postValue(R.string.log_in_wrong_pin)
-            else -> _errorOccurred.postValue(R.string.error_message)
+            PinState.WRONG -> _wrongPin.postValue(textProvider.provide(MessageType.LOGIN_WRONG_PIN_ERROR))
+            else -> _errorOccurred.postValue(textProvider.provide(MessageType.DEFAULT_ERROR))
         }
 
     private fun savePinIfCorrect(pin: String) {
@@ -76,11 +79,11 @@ class LogInViewModel(
                     if (isPinCorrectToSave) {
                         savePin(pin)
                     } else {
-                        _wrongPin.postValue(R.string.create_pin_wrong_pin)
+                        _wrongPin.postValue(textProvider.provide(MessageType.CREATE_PIN_WRONG_PIN_ERROR))
                     }
                 },
                 doOnError = {
-                    _errorOccurred.postValue(R.string.create_pin_error)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.CREATE_PIN_ERROR))
                     Timber.e(it)
                 }
             )
@@ -92,7 +95,7 @@ class LogInViewModel(
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { getIfShouldUseBiometricAuth() },
                 doOnError = {
-                    _errorOccurred.postValue(R.string.create_pin_error)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.CREATE_PIN_ERROR))
                     Timber.e(it)
                 }
             )
@@ -104,7 +107,7 @@ class LogInViewModel(
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { _shouldUseBiometricAuthentication.postValue(it) },
                 doOnError = {
-                    _errorOccurred.postValue(R.string.error_message)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.DEFAULT_ERROR))
                     Timber.e(it)
                 }
             )

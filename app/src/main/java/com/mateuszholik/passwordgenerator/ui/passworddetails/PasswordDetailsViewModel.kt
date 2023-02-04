@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
-import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
+import com.mateuszholik.passwordgenerator.models.MessageType
+import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
@@ -20,7 +21,8 @@ class PasswordDetailsViewModel(
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val clipboardManager: ClipboardManager,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
-    val workScheduler: WorkScheduler
+    private val textProvider: TextProvider,
+    private val workScheduler: WorkScheduler
 ) : BaseViewModel() {
 
     private var currentScore = 0f
@@ -54,7 +56,7 @@ class PasswordDetailsViewModel(
                 doOnSuccess = { Timber.i("Successfully validated password") },
                 doOnError = {
                     Timber.e(it, "Error during password validation")
-                    _errorOccurred.value = R.string.password_validation_error
+                    _errorOccurred.value = textProvider.provide(MessageType.VALIDATION_ERROR)
                 }
             )
             .addTo(compositeDisposable)
@@ -76,7 +78,7 @@ class PasswordDetailsViewModel(
                 },
                 doOnError = {
                     Timber.e(it)
-                    _errorOccurred.postValue(R.string.password_details_delete_password_error)
+                    _errorOccurred.postValue(textProvider.provide(MessageType.DELETE_PASSWORD_ERROR))
                 }
             )
             .addTo(compositeDisposable)

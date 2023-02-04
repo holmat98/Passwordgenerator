@@ -7,8 +7,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val _errorOccurred = MutableLiveData<Int>()
-    val errorOccurred: LiveData<Int>
+    protected val _errorOccurred = MutableLiveData<String>()
+    val errorOccurred: LiveData<String>
         get() = _errorOccurred
 
     protected val compositeDisposable = CompositeDisposable()

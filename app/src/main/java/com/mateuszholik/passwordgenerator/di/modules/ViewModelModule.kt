@@ -25,18 +25,23 @@ val viewModelModule = module {
             isPinCorrectToSaveUseCase = get(),
             savePinUseCase = get(),
             isPinCreatedUseCase = get(),
-            stringResToStringMapper = get()
+            stringResToStringMapper = get(),
+            textProvider = get()
         )
     }
 
     viewModel {
-        GeneratePasswordViewModel(createPasswordUseCase = get())
+        GeneratePasswordViewModel(
+            createPasswordUseCase = get(),
+            textProvider = get()
+        )
     }
 
     viewModel { (password: String) ->
         PasswordScoreViewModel(
             password = password,
-            validatePasswordUseCase = get()
+            validatePasswordUseCase = get(),
+            textProvider = get()
         )
     }
 
@@ -45,13 +50,15 @@ val viewModelModule = module {
             generatedPassword = password,
             getPasswordUseCase = get(),
             insertPasswordAndGetIdUseCase = get(),
-            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            textProvider = get()
         )
     }
 
     viewModel {
         PasswordsViewModel(
-            getPasswordsUseCase = get()
+            getPasswordsUseCase = get(),
+            textProvider = get()
         )
     }
 
@@ -61,7 +68,8 @@ val viewModelModule = module {
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
-            validatePasswordUseCase = get()
+            validatePasswordUseCase = get(),
+            textProvider = get()
         )
     }
 
@@ -69,7 +77,8 @@ val viewModelModule = module {
         EditPasswordViewModel(
             password = password,
             updatePasswordUseCase = get(),
-            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER))
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            textProvider = get()
         )
     }
 
@@ -77,7 +86,8 @@ val viewModelModule = module {
         SettingsViewModel(
             saveIfShouldUseBiometricAuthenticationUseCase = get(),
             shouldUseBiometricAuthenticationUseCase = get(),
-            savePasswordValidityValueUseCase = get()
+            savePasswordValidityValueUseCase = get(),
+            textProvider = get()
         )
     }
 
