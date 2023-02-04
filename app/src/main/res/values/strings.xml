@@ -121,4 +121,5 @@
     <string name="generate_password_description">bezpieczne hasło hasło o wybranej długości</string>
     <string name="test_password">Przetestuj</string>
     <string name="test_password_description">hasło i sprawdź czy jest wystarczająco bezpieczne</string>
+    <string name="settings_button">Przycisk opcji w ustawieniach</string>
 </resources>

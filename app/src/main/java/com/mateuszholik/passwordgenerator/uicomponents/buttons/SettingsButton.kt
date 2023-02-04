@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ViewSettingsButtonBinding
 
@@ -14,8 +15,11 @@ class SettingsButton(context: Context, attrs: AttributeSet) : LinearLayout(conte
         this
     )
 
+    var onClick: () -> Unit = {}
+
     init {
         setAttributes(attrs)
+        setUpButton()
     }
 
     private fun setAttributes(attrs: AttributeSet) {
@@ -28,6 +32,12 @@ class SettingsButton(context: Context, attrs: AttributeSet) : LinearLayout(conte
 
         binding.buttonText.text = newText
 
+        background = ContextCompat.getDrawable(context, R.drawable.rounded_dark_background)
+
         typedArray.recycle()
+    }
+
+    private fun setUpButton() {
+        binding.button.setOnClickListener { onClick() }
     }
 }
