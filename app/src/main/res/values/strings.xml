@@ -95,10 +95,8 @@
     <string name="warning_password_correct">Twoje hasło jest bezpieczne</string>
     <string name="warning_password_expiring">Twoje hasło wkrótce wygaśnie!</string>
 
-    <string name="notification_permission_title">Pozwól nam na wysyłanie Tobie powiadomień</string>
-    <string name="notification_permission_description">Dzięki powiadomieniom będziemy mogli przypomnieć o potrzebie zaktualizowania Twoich przedawnionych haseł</string>
-    <string name="permission_rationale_title">Odrzucono uprawnienie</string>
-    <string name="notification_permission_rationale">Uprawnienie jest potrzebne do poprawnego działania aplikacji. Powiadomienia będą wysyłane tylko aby przypomnieć o zmianie wygasającego hasła</string>
+    <string name="notification_permission_title">Powiadomienia</string>
+    <string name="notification_permission_description">będą używane do przypomnienia Tobie o wygasających hasłach</string>
 
     <!-- Permission screen -->
     <string name="permission_image_description">Ikona ekranu uprawnień</string>
@@ -116,7 +114,7 @@
     <string name="import_screen_header">Importuj</string>
     <string name="import_screen_description">swoje hasła z wybranego przez Ciebie pliku. Dane powinny być zapisane w danym formacie:\n\"nazwa : hasło\"</string>
     <string name="import_result_screen_success_header">Hasła</string>
-    <string name="import_result_screen_success_description">Hasła</string>
+    <string name="import_result_screen_success_description">zostały poprawnie zaimportowane</string>
     <string name="import_result_screen_failure_header">Wystąpił</string>
     <string name="import_result_screen_failure_description">błąd podczas importowania haseł.</string>
     <string name="import_screen_button">Importuj</string>
