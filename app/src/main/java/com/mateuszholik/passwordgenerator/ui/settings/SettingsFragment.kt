@@ -34,15 +34,15 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             viewModel = this@SettingsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
 
-            exportPasswordsButton.setOnClickListener {
+            exportPasswordsButton.onClick = {
                 findNavController().navigate(R.id.action_settings_to_exportPasswordsFragment)
             }
 
-            importPasswordsButton.setOnClickListener {
+            importPasswordsButton.onClick = {
                 findNavController().navigate(R.id.action_settings_to_importPasswordsFragment)
             }
 
-            passwordValidityButton.setOnClickListener {
+            passwordValidityButton.onClick = {
                 showNumberPickerDialog(
                     R.string.settings_dialog_password_validity,
                     minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,

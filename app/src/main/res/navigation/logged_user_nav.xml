@@ -142,10 +142,10 @@
             app:popUpTo="@id/settings"
             app:popUpToInclusive="true" />
         <argument
-            android:name="headerTextForSuccess"
+            android:name="headerText"
             app:argType="integer" />
         <argument
-            android:name="headerTextForError"
+            android:name="descriptionText"
             app:argType="integer" />
     </fragment>
     <fragment

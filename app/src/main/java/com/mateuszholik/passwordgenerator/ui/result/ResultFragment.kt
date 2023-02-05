@@ -31,13 +31,15 @@ class ResultFragment : BaseFragment(R.layout.fragment_passwords_export_result) {
 
     private fun setUpViews(wasSuccessful: Boolean) {
         with(binding) {
-            if (wasSuccessful) {
-                animation.setAnimation(R.raw.anim_success)
-                exportResultHeader.text = context?.getString(navArgs.headerTextForSuccess)
-            } else {
-                animation.setAnimation(R.raw.anim_failure)
-                exportResultHeader.text = context?.getString(navArgs.headerTextForError)
-            }
+            exportResultHeader.text = context?.getString(navArgs.headerText)
+            exportResultDescription.text = context?.getString(navArgs.descriptionText)
+            animation.setAnimation(
+                if (wasSuccessful) {
+                    R.raw.anim_success
+                } else {
+                    R.raw.anim_failure
+                }
+            )
             animation.playAnimation()
         }
     }

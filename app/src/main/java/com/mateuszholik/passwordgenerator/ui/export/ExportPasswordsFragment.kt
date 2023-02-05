@@ -31,6 +31,7 @@ class ExportPasswordsFragment : BaseFragment(R.layout.fragment_export_passwords)
 
     private fun setUpViewTexts() {
         with(binding.exportForm) {
+            header.text = context?.getString(R.string.export_screen_header)
             description.text = context?.getString(R.string.export_screen_description)
         }
     }
@@ -39,8 +40,16 @@ class ExportPasswordsFragment : BaseFragment(R.layout.fragment_export_passwords)
         val action =
             ExportPasswordsFragmentDirections.actionExportPasswordsFragmentToResult(
                 wasExportSuccessful,
-                R.string.export_result_screen_success,
-                R.string.export_result_screen_failure
+                if (wasExportSuccessful) {
+                    R.string.export_result_screen_success_header
+                } else {
+                    R.string.export_result_screen_failure_header
+                },
+                if (wasExportSuccessful) {
+                    R.string.export_result_screen_success_description
+                } else {
+                    R.string.export_result_screen_failure_description
+                }
             )
         findNavController().navigate(action)
     }
