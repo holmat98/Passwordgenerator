@@ -15,9 +15,10 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
 
     private val binding by viewBinding(FragmentImportPasswordsBinding::bind)
     private val viewModel: ImportPasswordsViewModel by viewModel()
-    private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        uri?.let { viewModel.importPasswords(it) }
-    }
+    private val filePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let { viewModel.importPasswords(it) }
+        }
 
     override val isBottomNavVisible: Boolean = true
 
@@ -37,6 +38,7 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
 
     private fun setUpViewTexts() {
         with(binding.importForm) {
+            header.text = context?.getString(R.string.import_screen_header)
             description.text = context?.getString(R.string.import_screen_description)
         }
     }
@@ -51,8 +53,16 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
         val action =
             ImportPasswordsFragmentDirections.actionImportPasswordsFragmentToResult(
                 wasImportSuccessful,
-                R.string.import_result_screen_success,
-                R.string.import_result_screen_failure
+                if (wasImportSuccessful) {
+                    R.string.import_result_screen_success_header
+                } else {
+                    R.string.import_result_screen_failure_header
+                },
+                if (wasImportSuccessful) {
+                    R.string.import_result_screen_success_description
+                } else {
+                    R.string.import_result_screen_failure_description
+                }
             )
         findNavController().navigate(action)
     }

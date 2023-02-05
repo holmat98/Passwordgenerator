@@ -106,19 +106,25 @@
     <string name="permission_button_settings">Otwórz ustawienia</string>
 
     <!-- Password Export and Import -->
-    <string name="export_screen_description">Twoje dane zostaną wyeksportowane do pliku w folderze \"Pobrane\" na Twoim urządzeniu. Możesz wybrać czy chcesz je dodatkowo zaszyfrować.</string>
-    <string name="export_result_screen_success">Hasła zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
-    <string name="export_result_screen_failure">Wystąpił błąd podczas eksportowania haseł.</string>
+    <string name="export_screen_header">Eksportuj</string>
+    <string name="export_screen_description">swoje hasła do pliku w folderze \"Pobrane\". Możesz wybrać czy chcesz je dodatkowo zaszyfrować.</string>
+    <string name="export_result_screen_success_header">Hasła</string>
+    <string name="export_result_screen_success_description">zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
+    <string name="export_result_screen_failure_header">Wystąpił</string>
+    <string name="export_result_screen_failure_description">błąd podczas eksportowania haseł.</string>
     <string name="export_screen_button">Eksportuj</string>
-    <string name="import_screen_description">Po naciśnięciu przycisku \"Importuj\" zostaniesz przeniesiony do ekranu, na którym będziesz mógł wybrać plik z Twoimi danymi.\nPrzykład formatu, w którym powinny być zapisane dane: \"nazwa platformy : hasło\"</string>
-    <string name="import_result_screen_success">Hasła zostały poprawnie zaimportowane</string>
-    <string name="import_result_screen_failure">Wystąpił błąd podczas importowania haseł.</string>
+    <string name="import_screen_header">Importuj</string>
+    <string name="import_screen_description">swoje hasła z wybranego przez Ciebie pliku. Dane powinny być zapisane w danym formacie:\n\"nazwa : hasło\"</string>
+    <string name="import_result_screen_success_header">Hasła</string>
+    <string name="import_result_screen_success_description">Hasła</string>
+    <string name="import_result_screen_failure_header">Wystąpił</string>
+    <string name="import_result_screen_failure_description">błąd podczas importowania haseł.</string>
     <string name="import_screen_button">Importuj</string>
     <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
     <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
     <string name="generated_password">Stworzone hasło:</string>
     <string name="generate_password">Stwórz</string>
-    <string name="generate_password_description">bezpieczne hasło hasło o wybranej długości</string>
+    <string name="generate_password_description">bezpieczne hasło o wybranej długości</string>
     <string name="test_password">Przetestuj</string>
     <string name="test_password_description">hasło i sprawdź czy jest wystarczająco bezpieczne</string>
     <string name="settings_button">Przycisk opcji w ustawieniach</string>
