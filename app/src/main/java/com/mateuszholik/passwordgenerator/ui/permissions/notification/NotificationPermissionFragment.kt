@@ -1,9 +1,6 @@
 package com.mateuszholik.passwordgenerator.ui.permissions.notification
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -11,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPermissionScreenBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_PERMISSION
-import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.permissions.PermissionManager
 import com.mateuszholik.passwordgenerator.managers.permissions.models.PermissionState
@@ -24,16 +20,10 @@ class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission
     private val binding by viewBinding(FragmentPermissionScreenBinding::bind)
     private val permissionManager by inject<PermissionManager>(named(NOTIFICATION_PERMISSION))
 
-    private val appPermissionsSettingsLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        handlePermissionState()
-    }
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
-        handlePermissionState()
+        navigateToLoginFragment()
     }
 
     override val isBottomNavVisible: Boolean = false
@@ -46,32 +36,21 @@ class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission
 
     private fun handlePermissionState() {
         when (permissionManager.checkPermission(requireActivity())) {
-            PermissionState.NOT_REQUESTED -> {
+            PermissionState.NOT_REQUESTED,
+            PermissionState.SHOW_RATIONALE -> {
                 updateButton {
                     requestPermissionLauncher.launch(permissionManager.permission)
                     permissionManager.savePermissionRequested()
                 }
             }
-            PermissionState.GRANTED -> {
-                findNavController().navigate(R.id.action_notificationPermissionFragment_to_logInFragment)
-            }
-            PermissionState.DENIED -> {
-                updateButton(
-                    textResId = R.string.permission_button_settings,
-                    doOnClick = ::openSettings
-                )
-            }
-            PermissionState.SHOW_RATIONALE -> {
-                showDialog(
-                    titleRes = R.string.permission_rationale_title,
-                    messageRes = R.string.notification_permission_rationale,
-                    positiveButtonRes = R.string.permission_button_access,
-                    doOnPositiveButton = {
-                        requestPermissionLauncher.launch(permissionManager.permission)
-                    }
-                )
+            else -> {
+                navigateToLoginFragment()
             }
         }
+    }
+
+    private fun navigateToLoginFragment() {
+        findNavController().navigate(R.id.action_notificationPermissionFragment_to_logInFragment)
     }
 
     private fun updateButton(
@@ -82,12 +61,5 @@ class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission
             text = context.getString(textResId)
             setOnClickListener { doOnClick() }
         }
-    }
-
-    private fun openSettings() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", requireActivity().packageName, null)
-        }
-        appPermissionsSettingsLauncher.launch(intent)
     }
 }
