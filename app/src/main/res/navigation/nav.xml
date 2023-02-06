@@ -7,14 +7,8 @@
         android:id="@+id/notificationPermissionFragment"
         android:name="com.mateuszholik.passwordgenerator.ui.permissions.notification.NotificationPermissionFragment">
         <action
-            android:id="@+id/action_notificationPermissionFragment_to_logInFragment"
-            app:destination="@id/logInFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/notificationPermissionFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_notificationPermissionFragment_to_loginTransitionFragment"
+            app:destination="@id/loginTransitionFragment" />
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
@@ -27,8 +21,31 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/logInFragment"
+            app:popUpTo="@id/notificationPermissionFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <include app:graph="@navigation/logged_user_nav" />
+    <fragment
+        android:id="@+id/loginTransitionFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.logintransition.LoginTransitionFragment">
+        <action
+            android:id="@+id/action_loginTransitionFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_loginTransitionFragment_to_createPinFragment"
+            app:destination="@id/createPinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createPinFragment"
+        android:name="com.mateuszholik.passwordgenerator.ui.createpin.CreatePinFragment">
+        <action
+            android:id="@+id/action_createPinFragment_to_logged_user_nav"
+            app:destination="@id/logged_user_nav"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/notificationPermissionFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

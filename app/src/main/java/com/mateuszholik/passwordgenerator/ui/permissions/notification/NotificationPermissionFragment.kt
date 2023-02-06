@@ -50,7 +50,7 @@ class NotificationPermissionFragment : BaseFragment(R.layout.fragment_permission
     }
 
     private fun navigateToLoginFragment() {
-        findNavController().navigate(R.id.action_notificationPermissionFragment_to_logInFragment)
+        findNavController().navigate(R.id.action_notificationPermissionFragment_to_loginTransitionFragment)
     }
 
     private fun updateButton(

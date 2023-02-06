@@ -30,11 +30,6 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.apply {
-            viewModel = this@LogInFragment.viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }
-
         setUpObservers()
         setUpKeyboard()
     }
@@ -46,7 +41,7 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
             }
-            keyboard.doOnConfirmedClicked = { viewModel?.onSubmitButtonClicked(pinCode.pin) }
+            keyboard.doOnConfirmedClicked = { viewModel.logIn(pinCode.pin) }
         }
     }
 
@@ -73,7 +68,8 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
         activity?.let {
             biometricManager.showBiometricPrompt(
                 activity = it,
-                biometricAuthenticationCallback = object : BiometricPrompt.AuthenticationCallback() {
+                biometricAuthenticationCallback = object :
+                    BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
 
