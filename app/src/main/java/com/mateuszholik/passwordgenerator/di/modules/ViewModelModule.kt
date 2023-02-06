@@ -2,11 +2,13 @@ package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
+import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
+import com.mateuszholik.passwordgenerator.ui.logintransition.LoginTransitionViewModel
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreViewModel
@@ -19,13 +21,21 @@ import org.koin.dsl.module
 val viewModelModule = module {
 
     viewModel {
+        LoginTransitionViewModel(isPinCreatedUseCase = get())
+    }
+
+    viewModel {
+        CreatePinViewModel(
+            isPinCorrectToSaveUseCase = get(),
+            savePinUseCase = get(),
+            textProvider = get(),
+        )
+    }
+
+    viewModel {
         LogInViewModel(
             isPinCorrectUseCase = get(),
             shouldUseBiometricAuthenticationUseCase = get(),
-            isPinCorrectToSaveUseCase = get(),
-            savePinUseCase = get(),
-            isPinCreatedUseCase = get(),
-            stringResToStringMapper = get(),
             textProvider = get()
         )
     }

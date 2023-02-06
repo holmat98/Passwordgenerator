@@ -13,6 +13,8 @@ class AppBarConfigurationFactoryImpl : AppBarConfigurationFactory {
     override fun create(): AppBarConfiguration = AppBarConfiguration(
         setOf(
             R.id.notificationPermissionFragment,
+            R.id.loginTransitionFragment,
+            R.id.createPinFragment,
             R.id.logInFragment,
             R.id.passwords,
             R.id.generatePassword,

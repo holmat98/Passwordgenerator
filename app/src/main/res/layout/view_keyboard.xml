@@ -146,8 +146,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/numberZeroBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/numberSevenBtn"
-        app:tint="@color/primary" />
+        app:layout_constraintTop_toBottomOf="@id/numberSevenBtn" />
 
     <Button
         android:id="@+id/numberZeroBtn"
@@ -175,7 +174,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/numberZeroBtn"
-        app:layout_constraintTop_toBottomOf="@id/numberNineBtn"
-        app:tint="@color/primary" />
+        app:layout_constraintTop_toBottomOf="@id/numberNineBtn" />
 
 </merge>
