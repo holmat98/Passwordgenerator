@@ -8,6 +8,7 @@ buildscript {
         classpath(Gradle.DEPENDENCY)
         classpath(Jetbrains.KotlinGradlePlugin.DEPENDENCY)
         classpath(Androidx.Navigation.SAFE_ARGS_DEPENDENCY)
+        classpath(GradlePlugins.OSS_LICENSES)
     }
 }
 

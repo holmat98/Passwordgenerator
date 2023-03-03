@@ -51,6 +51,11 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                     viewModel?.savePasswordValidity(it.toLong())
                 }
             }
+
+            goToLicensesButton.onClick = {
+                findNavController().navigate(R.id.action_settings_to_licensesFragment)
+            }
+
             activity?.let {
                 shouldUseBiometricAuthBtn.isVisible = biometricManager.isBiometricAvailable(it)
             }

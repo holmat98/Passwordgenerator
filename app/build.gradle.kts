@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     kotlin("kapt")
     id("androidx.navigation.safeargs")
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 apply(from="../jacoco.gradle")
@@ -131,6 +132,9 @@ dependencies {
 
     // splash screen
     implementation(Androidx.SplashScreen.DEPENDENCY)
+
+    // oss licenses
+    implementation(Google.PlayServices.OssLicences.DEPENDENCY)
 }
 
 tasks.withType(Test::class) {

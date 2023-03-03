@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+            android:id="@+id/allLicencesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            app:buttonText="@string/licenses_libraries" />
+
+        <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+            android:id="@+id/graphicsLicensesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16"
+            app:buttonText="@string/licenses_graphics" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -74,6 +74,14 @@
                 android:layout_marginBottom="@dimen/margin_16"
                 app:buttonText="@string/settings_import_passwords" />
 
+            <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+                android:id="@+id/goToLicensesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_16"
+                app:buttonText="@string/licenses_title" />
+
         </LinearLayout>
 
     </ScrollView>

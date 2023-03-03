@@ -8,6 +8,9 @@ object DefaultConfig {
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
+object GradlePlugins {
+    const val OSS_LICENSES = "com.google.android.gms:oss-licenses-plugin:0.10.6"
+}
 object Proguard {
     const val FILE = "proguard-android-optimize.txt"
     const val RULES = "proguard-rules.pro"
@@ -129,6 +132,15 @@ object Google {
         private const val version = "1.5.0"
 
         const val DEPENDENCY = "com.google.android.material:material:$version"
+    }
+
+    object PlayServices {
+
+        object OssLicences {
+            private const val version = "17.0.0"
+
+            const val DEPENDENCY = "com.google.android.gms:play-services-oss-licenses:$version"
+        }
     }
 }
 

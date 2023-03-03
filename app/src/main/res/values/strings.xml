@@ -128,4 +128,9 @@
     <string name="test_password_description">hasło i sprawdź czy jest wystarczająco bezpieczne</string>
     <string name="settings_button">Przycisk opcji w ustawieniach</string>
     <string name="edit_password_header">Edytuj hasło</string>
+
+    <!-- Licenses -->
+    <string name="licenses_title">Licencje</string>
+    <string name="licenses_libraries">Licencje open source</string>
+    <string name="licenses_graphics">Licencje na grafiki</string>
 </resources>
