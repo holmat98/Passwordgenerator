@@ -3,8 +3,8 @@ object DefaultConfig {
     const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
     const val MIN_SDK = 30
     const val TARGET_SDK = 33
-    const val VERSION_CODE = 3
-    const val VERSION_NAME = "3.0.0"
+    const val VERSION_CODE = 1
+    const val VERSION_NAME = "1.0.0"
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
@@ -135,11 +135,24 @@ object Google {
     }
 
     object PlayServices {
+        private const val version = "4.3.15"
+
+        const val DEPENDENCY = "com.google.gms:google-services:$version"
 
         object OssLicences {
             private const val version = "17.0.0"
 
             const val DEPENDENCY = "com.google.android.gms:play-services-oss-licenses:$version"
+        }
+
+        object Firebase {
+            object Crashlytics {
+                private const val gradleVersion = "2.9.2"
+                private const val version = "18.3.3"
+
+                const val GRADLE = "com.google.firebase:firebase-crashlytics-gradle:$gradleVersion"
+                const val DEPENDENCY = "com.google.firebase:firebase-crashlytics:$version"
+            }
         }
     }
 }

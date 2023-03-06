@@ -9,6 +9,8 @@ buildscript {
         classpath(Jetbrains.KotlinGradlePlugin.DEPENDENCY)
         classpath(Androidx.Navigation.SAFE_ARGS_DEPENDENCY)
         classpath(GradlePlugins.OSS_LICENSES)
+        classpath(Google.PlayServices.DEPENDENCY)
+        classpath(Google.PlayServices.Firebase.Crashlytics.GRADLE)
     }
 }
 

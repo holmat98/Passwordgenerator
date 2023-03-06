@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("androidx.navigation.safeargs")
     id("com.google.android.gms.oss-licenses-plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 apply(from="../jacoco.gradle")
@@ -135,6 +137,9 @@ dependencies {
 
     // oss licenses
     implementation(Google.PlayServices.OssLicences.DEPENDENCY)
+
+    // crashlytics
+    implementation(Google.PlayServices.Firebase.Crashlytics.DEPENDENCY)
 }
 
 tasks.withType(Test::class) {
