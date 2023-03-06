@@ -2,6 +2,9 @@ package com.mateuszholik.cryptography
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import com.mateuszholik.cryptography.utils.CryptographyKeyUtils.BLOCK_MODE
+import com.mateuszholik.cryptography.utils.CryptographyKeyUtils.ENCRYPTION_PADDING
+import com.mateuszholik.cryptography.utils.CryptographyKeyUtils.KEY_ALGORITHM
 import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -36,14 +39,14 @@ internal class CryptographyKeyManagerImpl : CryptographyKeyManager {
 
     override fun createKey() {
         val keyGenerator =
-            KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
+            KeyGenerator.getInstance(KEY_ALGORITHM, ANDROID_KEY_STORE)
 
         val keyGenParamSpec = KeyGenParameterSpec.Builder(
             KEY_NAME,
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         )
-            .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setBlockModes(BLOCK_MODE)
+            .setEncryptionPaddings(ENCRYPTION_PADDING)
             .build()
 
         keyGenerator.run {

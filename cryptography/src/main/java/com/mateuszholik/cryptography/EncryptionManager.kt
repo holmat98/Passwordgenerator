@@ -1,7 +1,7 @@
 package com.mateuszholik.cryptography
 
-import com.mateuszholik.cryptography.extensions.adjustLengthAndReturnByteArray
 import com.mateuszholik.cryptography.models.EncryptedData
+import com.mateuszholik.cryptography.utils.CryptographyKeyUtils.KEY_CIPHER_TRANSFORMATION
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
@@ -35,9 +35,9 @@ internal class EncryptionManagerImpl : EncryptionManager {
             it.init(Cipher.ENCRYPT_MODE, key)
         }
 
-        val adjustedValue = value.adjustLengthAndReturnByteArray(16)
+        val valueByteArray = value.toByteArray(Charsets.UTF_8)
 
-        return EncryptedData(cipher.iv, cipher.doFinal(adjustedValue))
+        return EncryptedData(cipher.iv, cipher.doFinal(valueByteArray))
     }
 
     override fun decrypt(encryptedData: EncryptedData, key: SecretKey): String {
@@ -46,9 +46,5 @@ internal class EncryptionManagerImpl : EncryptionManager {
         }
 
         return cipher.doFinal(encryptedData.data).toString(Charsets.UTF_8).trim()
-    }
-
-    private companion object {
-        const val KEY_CIPHER_TRANSFORMATION = "AES/CBC/NoPadding"
     }
 }
