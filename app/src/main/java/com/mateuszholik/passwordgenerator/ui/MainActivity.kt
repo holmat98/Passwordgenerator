@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.ui
 
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity(), BottomNavController {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        window.addFlags(LayoutParams.FLAG_SECURE)
         setContentView(binding.root)
 
         val navController = findNavController(R.id.userFragmentContainerView)
