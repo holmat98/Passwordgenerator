@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
-import com.mateuszholik.domain.utils.ImportExportUtils.MIME_TYPE
+import com.mateuszholik.domain.utils.ImportExportUtils.BINARY_DATA_MIME_TYPE
+import com.mateuszholik.domain.utils.ImportExportUtils.PLAIN_TEXT_MIME_TYPE
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentImportPasswordsBinding
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
@@ -45,10 +46,19 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
 
     private fun setUpButton() {
         binding.confirmButton.setOnClickListener {
-            filePickerLauncher.launch(MIME_TYPE)
+            openFilePicker()
         }
     }
 
+    private fun openFilePicker() {
+        val mimeType = if (binding.importForm.shouldDataBeEncryptedSwitch.isChecked) {
+            BINARY_DATA_MIME_TYPE
+        } else {
+            PLAIN_TEXT_MIME_TYPE
+        }
+
+        filePickerLauncher.launch(mimeType)
+    }
     private fun navigateToResultScreen(wasImportSuccessful: Boolean) {
         val action =
             ImportPasswordsFragmentDirections.actionImportPasswordsFragmentToResult(

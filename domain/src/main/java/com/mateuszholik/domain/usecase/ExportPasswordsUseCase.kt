@@ -32,7 +32,7 @@ internal class ExportPasswordsUseCaseImpl(
                 saveDataToFileUseCase(
                     DataToSave(
                         data = it,
-                        uri = uriFactory.create(FILE_NAME)
+                        uri = uriFactory.create(FILE_NAME, param is ExportType.EncryptedExport)
                     )
                 )
             }
