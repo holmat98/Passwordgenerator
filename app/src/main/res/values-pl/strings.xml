@@ -6,7 +6,7 @@
     <string name="biometric_authentication_header">Zaloguj się przy użyciu biometrii</string>
     <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
     <string name="button_next">Następny</string>
-    <string name="button_ok">OK</string>
+    <string name="button_ok">Ok</string>
     <string name="button_skip">Pomiń</string>
     <string name="button_start">Zaczynamy</string>
     <string name="button_finish">Zakończ</string>
