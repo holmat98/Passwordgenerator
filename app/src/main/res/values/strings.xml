@@ -6,6 +6,7 @@
     <string name="biometric_authentication_header">Zaloguj się przy użyciu biometrii</string>
     <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
     <string name="button_next">Następny</string>
+    <string name="button_ok">Ok</string>
     <string name="button_skip">Pomiń</string>
     <string name="button_start">Zaczynamy</string>
     <string name="button_finish">Zakończ</string>
@@ -80,6 +81,8 @@
     <string name="save_password_button_save">Zapisz hasło</string>
     <string name="settings">Ustawienia</string>
     <string name="settings_dialog_password_validity">Wybierz ile dni hasło będzie ważne</string>
+    <string name="settings_info_dialog_title">Format importowanych danych</string>
+    <string name="settings_info_dialog_message">Dane, które nie są zaszyfrowane powinny być zapisane w pliku txt w podanym formacie:\n\nplatforma:hasło\nplatforma2:hasło2</string>
     <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
     <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
     <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
@@ -134,4 +137,5 @@
     <string name="licenses_libraries">Licencje open source</string>
     <string name="licenses_graphics">Animacje lottie</string>
     <string name="licenses_font">M PLUS Rounded 1c</string>
+    <string name="import_info">Import info</string>
 </resources>

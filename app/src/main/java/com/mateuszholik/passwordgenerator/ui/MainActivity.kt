@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity(), BottomNavController {
         binding = ActivityMainBinding.inflate(layoutInflater)
         window.addFlags(LayoutParams.FLAG_SECURE)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        title = null
 
         val navController = findNavController(R.id.userFragmentContainerView)
 

@@ -53,8 +53,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
 
             passwordValidityButton.apply {
-                onClick = { showDialog() }
-                setOnClickListener { showDialog() }
+                onClick = { showPasswordValidityDialog() }
+                setOnClickListener { showPasswordValidityDialog() }
             }
 
             goToLicensesButton.apply {
@@ -78,7 +78,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
     }
 
-    private fun showDialog() {
+    private fun showPasswordValidityDialog() {
         showNumberPickerDialog(
             R.string.settings_dialog_password_validity,
             minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
