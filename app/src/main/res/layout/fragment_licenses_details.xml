@@ -22,8 +22,16 @@
             android:id="@+id/graphicsLicensesButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_16"
+            android:layout_marginHorizontal="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
             app:buttonText="@string/licenses_graphics" />
+
+        <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+            android:id="@+id/fontLicensesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16"
+            app:buttonText="@string/licenses_font" />
 
     </LinearLayout>
 

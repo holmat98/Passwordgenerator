@@ -19,12 +19,19 @@ class LicensesFragment : BaseFragment(R.layout.fragment_licenses_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.allLicencesButton.onClick = {
-            openActivityWithLicenses()
+        binding.allLicencesButton.apply {
+            onClick = { openActivityWithLicenses() }
+            setOnClickListener { openActivityWithLicenses() }
         }
 
-        binding.graphicsLicensesButton.onClick = {
-            openWebsite(LOTTIE_FILES_LICENSE_LINK)
+        binding.graphicsLicensesButton.apply {
+            onClick = { openWebsite(LOTTIE_FILES_LICENSE_LINK) }
+            setOnClickListener { openWebsite(LOTTIE_FILES_LICENSE_LINK) }
+        }
+
+        binding.fontLicensesButton.apply {
+            onClick = { openWebsite(FONT_LICENSE_LINK) }
+            setOnClickListener { openWebsite(FONT_LICENSE_LINK) }
         }
     }
 
@@ -44,5 +51,6 @@ class LicensesFragment : BaseFragment(R.layout.fragment_licenses_details) {
 
     private companion object {
         const val LOTTIE_FILES_LICENSE_LINK = "https://lottiefiles.com/page/license"
+        const val FONT_LICENSE_LINK = "https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL"
     }
 }

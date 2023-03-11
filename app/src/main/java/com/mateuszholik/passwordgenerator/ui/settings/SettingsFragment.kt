@@ -34,26 +34,36 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             viewModel = this@SettingsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
 
-            exportPasswordsButton.onClick = {
-                findNavController().navigate(R.id.action_settings_to_exportPasswordsFragment)
-            }
-
-            importPasswordsButton.onClick = {
-                findNavController().navigate(R.id.action_settings_to_importPasswordsFragment)
-            }
-
-            passwordValidityButton.onClick = {
-                showNumberPickerDialog(
-                    R.string.settings_dialog_password_validity,
-                    minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
-                    maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
-                ) {
-                    viewModel?.savePasswordValidity(it.toLong())
+            exportPasswordsButton.apply {
+                onClick = {
+                    findNavController().navigate(R.id.action_settings_to_exportPasswordsFragment)
+                }
+                setOnClickListener {
+                    findNavController().navigate(R.id.action_settings_to_exportPasswordsFragment)
                 }
             }
 
-            goToLicensesButton.onClick = {
-                findNavController().navigate(R.id.action_settings_to_licensesFragment)
+            importPasswordsButton.apply {
+                onClick = {
+                    findNavController().navigate(R.id.action_settings_to_importPasswordsFragment)
+                }
+                setOnClickListener {
+                    findNavController().navigate(R.id.action_settings_to_importPasswordsFragment)
+                }
+            }
+
+            passwordValidityButton.apply {
+                onClick = { showDialog() }
+                setOnClickListener { showDialog() }
+            }
+
+            goToLicensesButton.apply {
+                onClick = {
+                    findNavController().navigate(R.id.action_settings_to_licensesFragment)
+                }
+                setOnClickListener {
+                    findNavController().navigate(R.id.action_settings_to_licensesFragment)
+                }
             }
 
             activity?.let {
@@ -65,6 +75,16 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private fun setUpObservers() {
         viewModel.errorOccurred.observe(viewLifecycleOwner) {
             messageProvider.show(it)
+        }
+    }
+
+    private fun showDialog() {
+        showNumberPickerDialog(
+            R.string.settings_dialog_password_validity,
+            minValue = MIN_PASSWORD_VALIDITY_IN_DAYS,
+            maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
+        ) {
+            viewModel.savePasswordValidity(it.toLong())
         }
     }
 

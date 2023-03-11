@@ -116,7 +116,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_settings_to_licensesFragment"
-            app:destination="@id/licensesFragment" />
+            app:destination="@id/licensesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/exportPasswordsFragment"
@@ -164,9 +168,5 @@
     </fragment>
     <fragment
         android:id="@+id/licensesFragment"
-        android:name="com.mateuszholik.passwordgenerator.ui.licenses.LicensesFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
+        android:name="com.mateuszholik.passwordgenerator.ui.licenses.LicensesFragment" />
 </navigation>
