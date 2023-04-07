@@ -20,7 +20,7 @@ Application is available on Google play store under this [link](https://play.goo
 
 ### Supported Android versions
 
-Application is available for device with at least Android 11 version.
+Application is available for devices with at least Android 11 version.
 
 ### Tech stack
 
@@ -42,7 +42,7 @@ There are also five modules to separate specific parts of the app:
 
 * App - Primary module where are placed all ViewModels, Fragments, Activities, resources and code related to Android.
 * Data - Module for data management. Database, shared preferences management is placed here.
-* Domain - Module that is used as a bridge between Data and App module. App modules uses UseCases from Domain module which are calling specific methods from repositories from Data module.
+* Domain - Module that is used as a bridge between Data and App module. App module uses UseCases from Domain module which are calling specific methods from repositories from Data module.
 * PasswordValidation - Password validation code was separated and moved to this module. Every type of validation is handled there.
 * Cryptography - All code related to encryption and decryption of data is moved here.
 
