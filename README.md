@@ -4,15 +4,7 @@
 <img src="images/background.png" alt="Icon">
 </p>
 
-Android application for storing, generating and testing passwords. Passwords are encrypted and stored in local database. User is also allowed to export and import passwords (exported passwords can be additionally encrypted with password provided by the user).
-
-<p align="center">
-<img src="images/logging_screen.png" alt="Logging screen">
-<img src="images/password_list.png" alt="List of passwords screen">
-<img src="images/password_details.png" alt="Password details screen">
-<img src="images/generate_password.png" alt="Generate password screen">
-<img src="images/test_password.png" alt="Test password screen">
-</p>
+<b>Android application for storing, generating and testing passwords. Passwords are encrypted and stored in local database. User is also allowed to export and import passwords (exported passwords can be additionally encrypted with password provided by the user).</b>
 
 ### Table of contents
 * [Where to find latest version](#where-to-find-latest-version)
@@ -20,6 +12,7 @@ Android application for storing, generating and testing passwords. Passwords are
 * [Tech stack](#tech-stack)
 * [Architecture and modularization](#architecture-and-modularization)
 * [Plans for future](#plans-for-future)
+* [App design](#app-design)
 
 ### Where to find latest version
 
@@ -58,3 +51,13 @@ There are also five modules to separate specific parts of the app:
 * Logging out if the app is in the background for a longer period of time
 * Migration to Material Design 3
 * Adding more information about passwords (link to website, custom expiration data, etc.)
+
+### App design
+
+<p align="center">
+<img src="images/logging_screen.png" alt="Logging screen">
+<img src="images/password_list.png" alt="List of passwords screen">
+<img src="images/password_details.png" alt="Password details screen">
+<img src="images/generate_password.png" alt="Generate password screen">
+<img src="images/test_password.png" alt="Test password screen">
+</p>
