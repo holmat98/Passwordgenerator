@@ -1,17 +1,17 @@
 # Password Manager
 
 <p align="center">
-<img src="images/icon.png" alt="Icon">
+<img src="images/background.png" alt="Icon">
 </p>
 
 Android application for storing, generating and testing passwords. Passwords are encrypted and stored in local database. User is also allowed to export and import passwords (exported passwords can be additionally encrypted with password provided by the user).
 
 <p align="center">
-<img src="images/logging_screen.png" alt="Logging screen" width="216" height="384">
-<img src="images/password_list.png" alt="List of passwords screen" width="216" height="384">
-<img src="images/password_details.png" alt="Password details screen" width="216" height="384">
-<img src="images/generate_password.png" alt="Generate password screen" width="216" height="384">
-<img src="images/test_password.png" alt="Test password screen" width="216" height="384">
+<img src="images/logging_screen.png" alt="Logging screen">
+<img src="images/password_list.png" alt="List of passwords screen">
+<img src="images/password_details.png" alt="Password details screen">
+<img src="images/generate_password.png" alt="Generate password screen">
+<img src="images/test_password.png" alt="Test password screen">
 </p>
 
 ### Table of contents
@@ -37,6 +37,10 @@ Application is available for device with at least Android 11 version.
 * Database - [Room](https://developer.android.com/training/data-storage/room)
 * Unit Tests - [JUnit 5](https://junit.org/junit5/), [Mockk](https://mockk.io/)
 * Data Encryption - [Jetpack Security](https://developer.android.com/jetpack/androidx/releases/security)
+* Logging - [Timber](https://github.com/JakeWharton/timber)
+* Animations - [Lottie Animations](https://airbnb.design/lottie/)
+* [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics?hl=pl)
+* [Leak Canary](https://square.github.io/leakcanary/)
 
 ### Architecture and modularization
 
