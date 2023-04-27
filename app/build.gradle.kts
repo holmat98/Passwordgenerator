@@ -6,9 +6,16 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id(AndroidGitVersion.PLUGIN)
 }
 
 apply(from="../jacoco.gradle")
+
+androidGitVersion {
+    format = "%tag%%-commit%%-dirty%"
+    parts = 4
+    multiplier = 100
+}
 
 android {
     compileSdk = DefaultConfig.COMPILE_SDK
@@ -17,8 +24,8 @@ android {
         applicationId = DefaultConfig.APPLICATION_ID
         minSdk = DefaultConfig.MIN_SDK
         targetSdk = DefaultConfig.TARGET_SDK
-        versionCode = DefaultConfig.VERSION_CODE
-        versionName = DefaultConfig.VERSION_NAME
+        versionCode = androidGitVersion.code()
+        versionName = androidGitVersion.name()
 
         testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
     }

@@ -245,3 +245,8 @@ object Timber {
 
     const val DEPENDENCY = "com.jakewharton.timber:timber:$version"
 }
+
+object AndroidGitVersion {
+    const val VERSION = "0.4.14"
+    const val PLUGIN = "com.gladed.androidgitversion"
+}
