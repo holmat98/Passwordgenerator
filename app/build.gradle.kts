@@ -12,7 +12,6 @@ plugins {
 apply(from="../jacoco.gradle")
 
 androidGitVersion {
-    baseCode = 1
     format = "%tag%%-commit%%-dirty%"
     parts = 4
     multiplier = 100
