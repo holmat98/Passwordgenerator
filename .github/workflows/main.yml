@@ -1,0 +1,39 @@
+name: Android Build Pipeline
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - name: Create google-services.json
+        run: cat /home/runner/work/Passwordgenerator/Passwordgenerator/app/google-services.json | base64
+      - name: Put data to google-services.json
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/Passwordgenerator/Passwordgenerator/app/google-services.json
+      - name: Test
+        run: ./gradlew clean :app:testDebugUnitTest :data:testDebugUnitTest :domain:testDebugUnitTest :passwordvalidation:testDebugUnitTest
+      - name: Test Coverage
+        run: ./gradlew testDebugUnitTestCoverage
+      - name: Upload Test Coverage Report
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: test_coverage
+          path: /home/runner/work/Passwordgenerator/Passwordgenerator/*/build/reports/jacoco
+      - name: Build
+        run: ./gradlew :app:assemble
+      - run: npm install -g appcenter-cli    
+      - name: Upload APK to App Center
+        run: appcenter distribute release --app ${{secrets.APP_NAME}} --file /home/runner/work/Passwordgenerator/Passwordgenerator/app/build/outputs/apk/debug/*.apk --group Pr --token ${{secrets.APP_CENTER_TOKEN}}
+        

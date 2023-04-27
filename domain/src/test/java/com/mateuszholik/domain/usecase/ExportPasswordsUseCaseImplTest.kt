@@ -38,7 +38,7 @@ internal class ExportPasswordsUseCaseImplTest {
     private val encryptionManager = mockk<PasswordBaseEncryptionManager>()
     private val saveDataToFileUseCase = mockk<SaveDataToFileUseCase>()
     private val uriFactory = mockk<UriFactory> {
-        every { create(any()) } returns URI
+        every { create(any(), any()) } returns URI
     }
 
     @BeforeEach
