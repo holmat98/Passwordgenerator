@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Build, Test and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,17 +24,17 @@ jobs:
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA > /home/runner/work/Passwordgenerator/Passwordgenerator/app/google-services.json
-      - name: Test
-        run: ./gradlew clean :app:testDebugUnitTest :data:testDebugUnitTest :domain:testDebugUnitTest :passwordvalidation:testDebugUnitTest
-      - name: Test Coverage
-        run: ./gradlew testDebugUnitTestCoverage
-      - name: Upload Test Coverage Report
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: test_coverage
-          path: /home/runner/work/Passwordgenerator/Passwordgenerator/*/build/reports/jacoco
       - name: Build
         run: ./gradlew :app:assemble
+      - name: Test
+          run: ./gradlew :app:testDebugUnitTest :data:testDebugUnitTest :domain:testDebugUnitTest :passwordvalidation:testDebugUnitTest
+            - name: Test Coverage
+              run: ./gradlew testDebugUnitTestCoverage
+            - name: Upload Test Coverage Report
+              uses: actions/upload-artifact@v3.1.2
+              with:
+                name: test_coverage
+                path: /home/runner/work/Passwordgenerator/Passwordgenerator/*/build/reports/jacoco
       - run: npm install -g appcenter-cli    
       - name: Upload APK to App Center
         run: appcenter distribute release --app ${{secrets.APP_NAME}} --file /home/runner/work/Passwordgenerator/Passwordgenerator/app/build/outputs/apk/debug/*.apk --group Pr --token ${{secrets.APP_CENTER_TOKEN}}
