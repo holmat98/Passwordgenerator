@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.DialogGeneratedPasswordBinding
 
 class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
@@ -15,6 +17,11 @@ class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
     private var binding: DialogGeneratedPasswordBinding? = null
 
     var listener: Listener? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_Material3_BottomSheetDialog)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
