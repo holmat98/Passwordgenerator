@@ -9,7 +9,6 @@ import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.factories.GsonFactory
-import com.mateuszholik.passwordgenerator.factories.ViewHolderFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -26,7 +25,6 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
     private val gsonFactory: GsonFactory by inject()
-    private val viewHolderFactory: ViewHolderFactory by inject()
     private var adapter: PasswordsAdapter? = null
 
     override val isBottomNavVisible: Boolean = true
@@ -64,12 +62,6 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
                 clipboardManager.copyToClipboard(label, password)
             },
             navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-            createPasswordViewHolder = { viewGroup, viewType ->
-                viewHolderFactory.create(
-                    viewGroup,
-                    viewType
-                )
-            }
         )
         binding.recyclerView.adapter = adapter
     }

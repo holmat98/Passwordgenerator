@@ -37,15 +37,10 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
+        style="@style/Widget.Material3.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?colorSurface"
-        android:background="?colorSurface"
         android:visibility="gone"
-        app:itemIconTint="?colorOnSurface"
-        app:itemTextAppearanceActive="@style/BottomNavigationView"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextColor="?colorOnSurface"
         app:menu="@menu/user_menu" />
 
 </LinearLayout>
