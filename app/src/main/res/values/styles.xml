@@ -32,6 +32,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="SmallHeader" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Title" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_25</item>
         <item name="android:textAlignment">center</item>
@@ -85,5 +92,18 @@
     <style name="NumberPicker">
         <item name="android:textColorPrimary">?colorSecondary</item>
         <item name="colorControlNormal">?colorOnSurface</item>
+    </style>
+
+    <style name="SwitchCompatStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:background">@drawable/rounded_dark_background</item>
+    </style>
+
+    <style name="TextButtonStyle" parent="Widget.Material3.Button.TextButton">
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/margin_8</item>
+        <item name="android:textAlignment">textStart</item>
     </style>
 </resources>

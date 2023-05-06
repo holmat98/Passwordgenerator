@@ -7,6 +7,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id(AndroidGitVersion.PLUGIN)
+    id("kotlin-parcelize")
 }
 
 apply(from="../jacoco.gradle")

@@ -107,5 +107,4 @@ class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 this.listener = listener
             }
     }
-
 }
