@@ -1,20 +1,26 @@
 package com.mateuszholik.passwordgenerator.ui.dialogs
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.databinding.DialogGeneratedPasswordBinding
+import com.mateuszholik.passwordgenerator.databinding.DialogCustomBottomSheetBinding
+import com.mateuszholik.passwordgenerator.extensions.fromParcelable
+import kotlinx.parcelize.Parcelize
 
 class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
-    private var binding: DialogGeneratedPasswordBinding? = null
+    private var binding: DialogCustomBottomSheetBinding? = null
 
     var listener: Listener? = null
 
@@ -28,7 +34,7 @@ class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DialogGeneratedPasswordBinding.inflate(inflater, container, false)
+        binding = DialogCustomBottomSheetBinding.inflate(inflater, container, false)
 
         return binding?.root
     }
@@ -41,69 +47,73 @@ class CustomBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private fun setUpViews() {
         arguments?.let {
-            val firstButtonRes = it.getInt(FIRST_BUTTON_IMAGE_RES_KEY)
-            val secondButtonRes = it.getInt(SECOND_BUTTON_IMAGE_RES_KEY)
-            val text = it.getString(TEXT_KEY)
+            val title = it.getString(TITLE_TEXT_KEY)
+            val firstButtonSetup: ButtonSetup? =
+                it.fromParcelable(FIRST_BUTTON_KEY, ButtonSetup::class.java)
+            val secondButtonSetup: ButtonSetup? =
+                it.fromParcelable(SECOND_BUTTON_KEY, ButtonSetup::class.java)
+            val thirdButtonSetup: ButtonSetup? =
+                it.fromParcelable(THIRD_BUTTON_KEY, ButtonSetup::class.java)
 
-            setUpLeftButton(firstButtonRes)
-            setUpRightButton(secondButtonRes)
-            binding?.text?.text = text
-        }
-    }
-
-    private fun setUpLeftButton(imageRes: Int) {
-        binding?.leftButton?.apply {
-            setImageDrawable(ContextCompat.getDrawable(requireContext(), imageRes))
-            setOnClickListener {
-                listener?.onFirstButtonClicked()
-                dismiss()
+            binding?.run {
+                titleText.text = title
+                setUpButton(firstButton, firstButtonSetup) { listener?.onFirstButtonClicked() }
+                setUpButton(secondButton, secondButtonSetup) { listener?.onSecondButtonClicked() }
+                setUpButton(thirdButton, thirdButtonSetup) { listener?.onThirdButtonClicked() }
             }
         }
     }
 
-    private fun setUpRightButton(imageRes: Int) {
-        binding?.rightButton?.apply {
-            setImageDrawable(ContextCompat.getDrawable(requireContext(), imageRes))
-            setOnClickListener {
-                listener?.onSecondButtonClicked()
-                dismiss()
+    private fun setUpButton(
+        button: MaterialButton,
+        buttonSetup: ButtonSetup?,
+        onClick: () -> Unit
+    ) {
+        buttonSetup?.let {
+            button.apply {
+                text = context.getString(buttonSetup.textResId)
+                icon = ContextCompat.getDrawable(context, buttonSetup.iconResId)
+                setOnClickListener {
+                    onClick()
+                    dismiss()
+                }
             }
+        } ?: run {
+            button.isVisible = false
         }
-    }
-
-    override fun onDestroyView() {
-        binding = null
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        listener = null
-        super.onDestroy()
     }
 
     interface Listener {
 
         fun onFirstButtonClicked()
         fun onSecondButtonClicked()
+        fun onThirdButtonClicked()
     }
 
+    @Parcelize
+    data class ButtonSetup(
+        @DrawableRes val iconResId: Int,
+        @StringRes val textResId: Int,
+    ) : Parcelable
+
     companion object {
-        private const val FIRST_BUTTON_IMAGE_RES_KEY = "FIRST_BUTTON_IMAGE_RES_KEY"
-        private const val SECOND_BUTTON_IMAGE_RES_KEY = "SECOND_BUTTON_IMAGE_RES_KEY"
-        private const val TEXT_KEY = "TEXT_KEY"
+        private const val FIRST_BUTTON_KEY = "FIRST_BUTTON_KEY"
+        private const val SECOND_BUTTON_KEY = "SECOND_BUTTON_KEY"
+        private const val THIRD_BUTTON_KEY = "THIRD_BUTTON_KEY"
+        private const val TITLE_TEXT_KEY = "TEXT_KEY"
 
         fun newInstance(
-            @DrawableRes firstButtonImageRes: Int,
-            @DrawableRes secondButtonImageRes: Int,
-            text: String,
-            listener: Listener
+            title: String,
+            listener: Listener,
+            firstButtonSetup: ButtonSetup? = null,
+            secondButtonSetup: ButtonSetup? = null,
+            thirdButtonSetup: ButtonSetup? = null,
         ): CustomBottomSheetDialogFragment =
             CustomBottomSheetDialogFragment().apply {
-                arguments = bundleOf(
-                    FIRST_BUTTON_IMAGE_RES_KEY to firstButtonImageRes,
-                    SECOND_BUTTON_IMAGE_RES_KEY to secondButtonImageRes,
-                    TEXT_KEY to text
-                )
+                arguments = bundleOf(TITLE_TEXT_KEY to title)
+                arguments?.putParcelable(FIRST_BUTTON_KEY, firstButtonSetup)
+                arguments?.putParcelable(SECOND_BUTTON_KEY, secondButtonSetup)
+                arguments?.putParcelable(THIRD_BUTTON_KEY, thirdButtonSetup)
                 this.listener = listener
             }
     }

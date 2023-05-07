@@ -18,9 +18,9 @@ import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.mappers.PasswordValidationTypeToTextMapper
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.adapters.PasswordValidationAdapter
-import com.mateuszholik.passwordgenerator.ui.dialogs.ThreeButtonsBottomSheetDialog
-import com.mateuszholik.passwordgenerator.ui.dialogs.ThreeButtonsBottomSheetDialog.ButtonSetup
-import com.mateuszholik.passwordgenerator.ui.dialogs.ThreeButtonsBottomSheetDialog.Listener
+import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment
+import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.ButtonSetup
+import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.Listener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -81,8 +81,8 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private fun showOptionsDialog() {
         activity?.supportFragmentManager?.let {
-            ThreeButtonsBottomSheetDialog.newInstance(
-                titleResId = R.string.options,
+            CustomBottomSheetDialogFragment.newInstance(
+                title = context?.getString(R.string.options).orEmpty(),
                 firstButtonSetup = ButtonSetup(
                     iconResId = R.drawable.ic_copy,
                     textResId = R.string.button_copy
