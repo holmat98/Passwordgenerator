@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?colorSurface"
+    android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,8 +21,8 @@
             android:background="@null"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:iconTint="?colorOnSurface"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:src="@drawable/ic_launcher_foreground"
+            app:tint="?colorOnSurface" />
 
     </androidx.appcompat.widget.Toolbar>
 

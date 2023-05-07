@@ -2,12 +2,16 @@ package com.mateuszholik.passwordgenerator.uicomponents.pin
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Color
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
 
 class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -80,12 +84,12 @@ class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         val primaryColor = typedArray.getColor(
             R.styleable.PinView_pinPrimaryColor,
-            ContextCompat.getColor(context, R.color.black)
+            context.getAttrColor(R.attr.colorPrimary)
         )
 
         val secondaryColor = typedArray.getColor(
             R.styleable.PinView_pinSecondaryColor,
-            ContextCompat.getColor(context, R.color.white)
+            context.getAttrColor(R.attr.colorOnPrimary)
         )
 
         val textSize = typedArray.getDimension(
@@ -130,11 +134,11 @@ class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun animateSuccess() {
-        animateColors(ContextCompat.getColor(context, R.color.green))
+        animateColors(context.getAttrColor(R.attr.colorSecondary))
     }
 
     fun animateFailure() {
-        animateColors(ContextCompat.getColor(context, R.color.red))
+        animateColors(context.getAttrColor(R.attr.colorError))
         shake()
     }
 

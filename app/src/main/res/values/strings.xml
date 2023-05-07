@@ -142,4 +142,5 @@
     <string name="button_copy">Kopiuj</string>
     <string name="button_edit">Edytuj</string>
     <string name="button_delete">Usuń</string>
+    <string name="no_passwords">Nie masz jeszcze dodanych haseł</string>
 </resources>

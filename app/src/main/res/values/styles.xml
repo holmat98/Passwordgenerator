@@ -83,7 +83,7 @@
     <style name="DefaultEditText" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense" />
 
     <style name="CheckBox">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:layout_marginBottom">@dimen/margin_16</item>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.AppSplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primary</item>
+        <item name="windowSplashScreenBackground">@color/md_theme_dark_surface</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="windowSplashScreenIconBackgroundColor">@color/primary</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/md_theme_dark_onSurface</item>
         <item name="postSplashScreenTheme">@style/Theme.PasswordGenerator</item>
     </style>
 </resources>
