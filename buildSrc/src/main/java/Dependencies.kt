@@ -129,7 +129,7 @@ object Androidx {
 object Google {
 
     object MaterialDesign {
-        private const val version = "1.5.0"
+        private const val version = "1.9.0"
 
         const val DEPENDENCY = "com.google.android.material:material:$version"
     }

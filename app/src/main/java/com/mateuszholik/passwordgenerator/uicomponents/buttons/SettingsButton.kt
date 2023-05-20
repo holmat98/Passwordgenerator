@@ -3,12 +3,11 @@ package com.mateuszholik.passwordgenerator.uicomponents.buttons
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import com.google.android.material.card.MaterialCardView
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ViewSettingsButtonBinding
 
-class SettingsButton(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class SettingsButton(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {
 
     private val binding = ViewSettingsButtonBinding.inflate(
         LayoutInflater.from(context),
@@ -31,8 +30,6 @@ class SettingsButton(context: Context, attrs: AttributeSet) : LinearLayout(conte
         val newText = typedArray.getString(R.styleable.SettingsButton_buttonText)
 
         binding.buttonText.text = newText
-
-        background = ContextCompat.getDrawable(context, R.drawable.rounded_dark_background)
 
         typedArray.recycle()
     }

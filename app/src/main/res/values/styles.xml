@@ -3,12 +3,12 @@
 
     <style name="DefaultText">
         <item name="android:textSize">@dimen/text_size_18</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
 
     <style name="DialogText" parent="DefaultText">
-        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
         <item name="android:textAlignment">center</item>
     </style>
@@ -32,11 +32,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="SmallHeader" parent="DefaultText">
+        <item name="android:textSize">@dimen/text_size_25</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="fontFamily">@font/mplus_rounded1c_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Title" parent="DefaultText">
         <item name="android:textSize">@dimen/text_size_25</item>
         <item name="android:textAlignment">center</item>
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
-        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textColor">?colorSecondary</item>
     </style>
 
     <style name="Description" parent="DefaultText">
@@ -45,20 +52,22 @@
     </style>
 
     <style name="ErrorText" parent="DefaultText">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">?colorError</item>
         <item name="android:textAlignment">center</item>
     </style>
 
     <style name="PasswordItemText">
         <item name="android:textSize">@dimen/text_size_20</item>
-        <item name="android:textColor">@color/white</item>
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-    <style name="Button">
-        <item name="android:textColor">@color/white</item>
+    <style name="PasswordItem" parent="Widget.Material3.CardView.Elevated">
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Button" parent="ThemeOverlay.Material3.Button">
         <item name="android:textSize">@dimen/text_size_25</item>
         <item name="textAllCaps">false</item>
         <item name="android:padding">@dimen/padding_8</item>
@@ -71,22 +80,30 @@
         <item name="fontFamily">@font/mplus_rounded1c_regular</item>
     </style>
 
-    <style name="DefaultEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/selector_edit_text</item>
-        <item name="android:textColorHint">@color/secondary</item>
-        <item name="counterTextColor">@color/white</item>
-        <item name="hintTextColor">@color/secondary_dark</item>
-    </style>
+    <style name="DefaultEditText" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense" />
 
     <style name="CheckBox">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="fontFamily">@font/mplus_rounded1c_medium</item>
         <item name="android:textSize">@dimen/text_size_20</item>
         <item name="android:layout_marginBottom">@dimen/margin_16</item>
     </style>
 
     <style name="NumberPicker">
-        <item name="android:textColorPrimary">@color/secondary</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">?colorSecondary</item>
+        <item name="colorControlNormal">?colorOnSurface</item>
+    </style>
+
+    <style name="SwitchCompatStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="fontFamily">@font/mplus_rounded1c_regular</item>
+        <item name="android:background">@drawable/rounded_outline</item>
+    </style>
+
+    <style name="TextButtonStyle" parent="Widget.Material3.Button.TextButton">
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/margin_8</item>
+        <item name="android:textAlignment">textStart</item>
     </style>
 </resources>

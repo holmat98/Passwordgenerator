@@ -11,6 +11,8 @@ import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment
+import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.ButtonSetup
+import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.Listener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
@@ -39,11 +41,16 @@ class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_passwor
     private fun showBottomSheetDialog(text: String) {
         activity?.supportFragmentManager?.let {
             CustomBottomSheetDialogFragment.newInstance(
-                firstButtonImageRes = R.drawable.ic_copy,
-                secondButtonImageRes = R.drawable.ic_save,
-                text = text,
-                listener = object : CustomBottomSheetDialogFragment.Listener {
-
+                title = text,
+                firstButtonSetup = ButtonSetup(
+                    iconResId = R.drawable.ic_copy,
+                    textResId = R.string.button_copy
+                ),
+                secondButtonSetup = ButtonSetup(
+                    iconResId = R.drawable.ic_save,
+                    textResId = R.string.dialog_button_save
+                ),
+                listener = object : Listener {
                     override fun onFirstButtonClicked() {
                         clipboardManager.copyToClipboard(
                             label = COPIED_PASSWORD_LABEL,
@@ -54,6 +61,8 @@ class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_passwor
                     override fun onSecondButtonClicked() {
                         goToSavePasswordScreen(text)
                     }
+
+                    override fun onThirdButtonClicked() {}
                 }
             ).show(it, BOTTOM_SHEET_DIALOG_TAG)
         }

@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/importInfo"
-        android:icon="@drawable/ic_info"
+        android:id="@+id/menuOptions"
+        android:icon="@drawable/ic_options"
         android:iconTint="?attr/colorOnSurface"
-        android:title="@string/import_info"
+        android:title="@string/options"
         app:showAsAction="always"/>
 </menu>

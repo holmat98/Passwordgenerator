@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.DialogNumberPickerBinding
 
@@ -17,7 +18,7 @@ fun Fragment.showDialog(
     doOnPositiveButton: () -> Unit
 ) {
     context?.let {
-        AlertDialog.Builder(it).apply {
+        MaterialAlertDialogBuilder(it).apply {
             setCancelable(isCancellable)
             setTitle(it.getString(titleRes))
             setMessage(it.getString(messageRes))
@@ -48,7 +49,7 @@ fun Fragment.showNumberPickerDialog(
             numberPicker.maxValue = maxValue
         }
 
-        AlertDialog.Builder(it).apply {
+        MaterialAlertDialogBuilder(it).apply {
             setView(customView.root)
             setNegativeButton(R.string.dialog_button_cancel) { dialog, _ -> dialog.dismiss() }
             setPositiveButton(R.string.dialog_button_save) { dialog, _ ->

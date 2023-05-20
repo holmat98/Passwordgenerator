@@ -138,4 +138,9 @@
     <string name="licenses_graphics">Animacje lottie</string>
     <string name="licenses_font">M PLUS Rounded 1c</string>
     <string name="import_info">Import info</string>
+    <string name="options">Opcje</string>
+    <string name="button_copy">Kopiuj</string>
+    <string name="button_edit">Edytuj</string>
+    <string name="button_delete">Usuń</string>
+    <string name="no_passwords">Nie masz jeszcze dodanych haseł</string>
 </resources>

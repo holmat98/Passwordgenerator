@@ -7,6 +7,7 @@
     <dimen name="radius_15">15dp</dimen>
     <dimen name="radius_25">25dp</dimen>
 
+    <dimen name="stroke_1">1dp</dimen>
     <dimen name="stroke_2">2dp</dimen>
 
     <dimen name="margin_4">4dp</dimen>
