@@ -1,40 +1,73 @@
 <resources>
-    <string name="app_name">Menedżer haseł</string>
-    <string name="biometric_authentication_cancelled">Autentykacja biometrią została anulowana</string>
-    <string name="biometric_authentication_error">Wystąpił błąd podczas autentykacji</string>
-    <string name="biometric_authentication_failed">Autentykacja nie powiodła się</string>
-    <string name="biometric_authentication_header">Zaloguj się przy użyciu biometrii</string>
-    <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
-    <string name="button_next">Następny</string>
+    <!--  App name  -->
+    <string name="app_name">Password manager</string>
+
+    <!--  Buttons  -->
+    <string name="button_next">Next</string>
     <string name="button_ok">OK</string>
-    <string name="button_skip">Pomiń</string>
-    <string name="button_start">Zaczynamy</string>
-    <string name="button_finish">Zakończ</string>
-    <string name="create">Stwórz</string>
-    <string name="create_pin_header">Stwórz pin</string>
-    <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
-    <string name="create_pin_wrong_pin">Podany pin nie spełnia warunków</string>
-    <string name="dialog_button_cancel">Anuluj</string>
-    <string name="dialog_button_delete">Usuń</string>
-    <string name="dialog_button_no">Nie</string>
-    <string name="dialog_button_save">Zapisz</string>
-    <string name="dialog_button_yes">Tak</string>
-    <string name="edit_password_button_edit">Edytuj hasło</string>
-    <string name="edit_password_edited_successfully">Hasło zostało zaktualizowane</string>
-    <string name="edit_password_error">Wystąpił błąd przy edycji hasła</string>
-    <string name="error_message">Coś poszło nie tak</string>
-    <string name="generate_create_password">Stwórz hasło</string>
-    <string name="generate_password_error">Wystąpił błąd przy tworzeniu hasła</string>
-    <string name="generate_password_length">Długość hasła:</string>
-    <string name="generate_password_save_button_description">save password button</string>
-    <string name="item_password_expire_date">Data ważności: %1$s</string>
-    <string name="item_password_password">Hasło: %1$s</string>
-    <string name="log_in_error">Wystąpił błąd przy sprawdzaniu pinu</string>
-    <string name="log_in_header">Zaloguj się</string>
-    <string name="log_in_wrong_pin">Błędny pin</string>
-    <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
-    <string name="notification_worker_message">Twoje hasło z %1$s wygasło. Rozważ jego zmianę</string>
-    <string name="notification_worker_title">Twoje hasło wygasło</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_start">Start</string>
+    <string name="button_finish">Finish</string>
+    <string name="passwords_create_password_button">Create password</string>
+    <string name="password_test_button_test">Test password</string>
+    <string name="button_copy">Copy</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Delete</string>
+
+    <!--  Bottom navigation  -->
+    <string name="passwords">Passwords</string>
+    <string name="create">Generate</string>
+    <string name="test">Test</string>
+    <string name="settings">Settings</string>
+
+    <!--  Dialog buttons  -->
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_delete">Delete</string>
+    <string name="dialog_button_no">No</string>
+    <string name="dialog_button_save">Save</string>
+    <string name="dialog_button_yes">Yes</string>
+
+    <!--  Error default message  -->
+    <string name="error_message">Something went wrong</string>
+    <string name="view_error_text">Unexpected error occurred</string>
+
+    <!--  Biometric authentication prompt  -->
+    <string name="biometric_authentication_cancelled">Biometric authentication was cancelled</string>
+    <string name="biometric_authentication_error">Error occurred while authenticating</string>
+    <string name="biometric_authentication_failed">Biometric authentication failed</string>
+    <string name="biometric_authentication_header">Log in with biometrics</string>
+    <string name="biometric_authentication_prompt_title">Biometric login</string>
+
+    <!--  Create pin screen  -->
+    <string name="create_pin_header">Create pin</string>
+    <string name="create_pin_error">Error occurred while creating the pin</string>
+    <string name="create_pin_wrong_pin">Pin does not meet the conditions</string>
+
+    <!--  Log in screen  -->
+    <string name="log_in_error">Error occurred while checking the pin</string>
+    <string name="log_in_header">Log in</string>
+    <string name="log_in_wrong_pin">Pin is incorrect</string>
+
+    <!--  Edit password screen  -->
+    <string name="edit_password_button_edit">Edit password</string>
+    <string name="edit_password_edited_successfully">Password was updated</string>
+    <string name="edit_password_error">Error occurred while editing the password</string>
+
+    <!--  Generate password screen  -->
+    <string name="generate_create_password">Generate password</string>
+    <string name="generate_password_error">Error occurred while creating the password</string>
+    <string name="generate_password_length">Password length:</string>
+    <string name="generate_password_save_button_description">Save password button</string>
+
+    <!--  Item password  -->
+    <string name="item_password_expire_date">Expiration date: %1$s</string>
+    <string name="item_password_password">Password: %1$s</string>
+
+    <!--  Notifications  -->
+    <string name="notification_worker_message">Your password from %1$s expired. Please consider the update of this password</string>
+    <string name="notification_worker_title">Your password expired</string>
+
+    <!--  Numbers -->
     <string name="number_1">1</string>
     <string name="number_2">2</string>
     <string name="number_3">3</string>
@@ -45,102 +78,108 @@
     <string name="number_8">8</string>
     <string name="number_9">9</string>
     <string name="number_0">0</string>
-    <string name="passwords">Hasła</string>
-    <string name="passwords_create_password_button">Stwórz hasło</string>
-    <string name="password_details_delete_password_error">Wystąpił błąd przy usuwaniu hasła</string>
-    <string name="password_details_delete_password_message">Czy na pewno chcesz usunąć to hasło?</string>
-    <string name="password_details_delete_password_title">Usuń hasło</string>
-    <string name="password_details_expiring_date_proposal">Proponowana data zmiany hasła:</string>
-    <string name="password_details_notification_set">Przypomnienie zostało ustawione</string>
-    <string name="password_details_password_deleted">Hasło zostało usunięte</string>
-    <string name="password_details_password_score_error">Wystąpił błąd przy wyliczaniu siły hasła</string>
-    <string name="password_details_password_strength">Siła hasła</string>
-    <string name="passwords_get_passwords_error">Wystąpił błąd przy pobieraniu haseł</string>
+
+    <!--  Password details screen  -->
+    <string name="password_details_delete_password_error">Error occurred while deleting the password</string>
+    <string name="password_details_delete_password_message">Are you sure you want to remove this password?</string>
+    <string name="password_details_delete_password_title">Delete password</string>
+    <string name="password_details_notification_set">Password expiration notification was scheduled</string>
+    <string name="password_details_password_deleted">Password was deleted</string>
+    <string name="password_details_password_score_error">Error occurred while checking passwords strength</string>
+    <string name="password_details_password_strength">Password strength:</string>
+
+    <!--  Passwords screen  -->
+    <string name="passwords_get_passwords_error">Error occurred while getting the passwords</string>
+    <string name="passwords_no_passwords">You did not add passwords yet.</string>
 
     <!-- Password validation -->
-    <string name="password_validation_alphabetical_pattern">Nie zawiera powtórzeń alfabetycznych</string>
-    <string name="password_validation_common_password">Nie jest to popularne hasło</string>
-    <string name="password_validation_error">Wystąpił błąd przy walidowaniu hasła</string>
-    <string name="password_validation_keyboard_pattern">Nie zawiera powtórzeń klawiaturowych</string>
-    <string name="password_validation_length">Ma co najmniej 8 znaków</string>
-    <string name="password_validation_letter">Zawiera literę</string>
-    <string name="password_validation_name">Nie zawiera imienia</string>
-    <string name="password_validation_number">Zawiera cyfrę</string>
-    <string name="password_validation_special_character">Zawiera znak specjalny</string>
-    <string name="password_validation_uppercase">Zawiera dużą literę</string>
-    <string name="password_validation_word">Nie zawiera słowa</string>
+    <string name="password_validation_alphabetical_pattern">Does not contain alphabetical repetitions</string>
+    <string name="password_validation_common_password">Not popular password</string>
+    <string name="password_validation_error">Error occurred while validating the password</string>
+    <string name="password_validation_keyboard_pattern">Does not contain keyboard repetitions</string>
+    <string name="password_validation_length">Has at least 8 characters</string>
+    <string name="password_validation_letter">Contains letter</string>
+    <string name="password_validation_name">Does not contain first name</string>
+    <string name="password_validation_number">Contains number</string>
+    <string name="password_validation_special_character">Contains special character</string>
+    <string name="password_validation_uppercase">Contains a capital letter</string>
+    <string name="password_validation_word">Does not contain any word</string>
 
-    <string name="password_test_button_test">Przetestuj hasło</string>
-    <string name="password_test_hint">Wprowadź hasło</string>
-    <string name="progress_value">%d%%</string>
-    <string name="save_password_error">Wystąpił błąd przy zapisie hasła</string>
-    <string name="save_password_header">Zapisz hasło</string>
-    <string name="save_password_saved">Hasło zostało zapisane</string>
-    <string name="save_password_platform_name">Nazwa platformy</string>
-    <string name="save_password_password">Hasło</string>
-    <string name="save_password_button_save">Zapisz hasło</string>
-    <string name="settings">Ustawienia</string>
-    <string name="settings_dialog_password_validity">Wybierz ile dni hasło będzie ważne</string>
-    <string name="settings_info_dialog_title">Format importowanych danych</string>
-    <string name="settings_info_dialog_message">Dane, które nie są zaszyfrowane powinny być zapisane w pliku txt w podanym formacie:\n\nplatforma:hasło\nplatforma2:hasło2</string>
-    <string name="settings_error_get_biometric_auth_setting">Wystąpił błąd przy pobieraniu zapisanych opcji</string>
-    <string name="settings_error_on_saving_biometric_auth_setting">Wystąpił błąd przy zapisywaniu opcji</string>
-    <string name="settings_error_saving_password_validity">Wystąpił błąd przy zapisywaniu długości ważności hasła</string>
-    <string name="settings_export_passwords">Eksportuj hasła</string>
-    <string name="settings_import_passwords">Importuj hasła</string>
-    <string name="settings_notification_num_of_days">Wybierz ilość dni po których hasło wygaśnie</string>
-    <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
-    <string name="settings_screen_title">Ustawienia</string>
-    <string name="test">Przetestuj</string>
-    <string name="view_error_text">Wystąpił nieoczekiwany błąd</string>
-    <string name="copy_button">Przycisk kopiowania hasła</string>
-    <string name="warning_icon">Ikona informująca o zbliżającym się wygaśnięciu hasła</string>
-    <string name="warning_password_expired">Twoje hasło wygasło!</string>
-    <string name="warning_password_correct">Twoje hasło jest bezpieczne</string>
-    <string name="warning_password_expiring">Twoje hasło wkrótce wygaśnie!</string>
+    <!--  Save password screen  -->
+    <string name="save_password_error">Error occurred while saving the password</string>
+    <string name="save_password_header">Save password</string>
+    <string name="save_password_saved">Password was saved</string>
+    <string name="save_password_platform_name">Platform name</string>
+    <string name="save_password_password">Password</string>
+    <string name="save_password_button_save">Save password</string>
 
-    <string name="notification_permission_title">Powiadomienia</string>
-    <string name="notification_permission_description">będą używane do przypomnienia Tobie o wygasających hasłach</string>
+    <!--  Settings  -->
+    <string name="settings_dialog_password_validity">Choose for how long the password will be valid</string>
+    <string name="settings_info_dialog_title">The format of imported data</string>
+    <string name="settings_info_dialog_message">Data which are not encrypted should be saved in txt file with given format:\n\nplatform:password\nplatform2:password2</string>
+    <string name="settings_error_get_biometric_auth_setting">Error occurred while getting saved options</string>
+    <string name="settings_error_on_saving_biometric_auth_setting">Error occurred while saving options</string>
+    <string name="settings_error_saving_password_validity">Error occurred while saving the password validity time</string>
+    <string name="settings_export_passwords">Export passwords</string>
+    <string name="settings_import_passwords">Import passwords</string>
+    <string name="settings_notification_num_of_days">Select the number of days after which the password will expire</string>
+    <string name="settings_screen_biometric_auth_option">Turn on biometric authentication</string>
+    <string name="settings_screen_title">Settings</string>
 
-    <!-- Permission screen -->
-    <string name="permission_image_description">Ikona ekranu uprawnień</string>
-    <string name="permission_button_access">Nadaj uprawnienie</string>
-    <string name="permission_button_settings">Otwórz ustawienia</string>
+    <!--  Warnings  -->
+    <string name="warning_icon">Icon informing about password expiration</string>
+    <string name="warning_password_expired">Your password expired!</string>
+    <string name="warning_password_correct">Your password is save</string>
+    <string name="warning_password_expiring">Your password will expire soon!</string>
 
-    <!-- Password Export and Import -->
-    <string name="export_screen_header">Eksportuj</string>
-    <string name="export_screen_description">swoje hasła do pliku w folderze \"Pobrane\". Możesz wybrać czy chcesz je dodatkowo zaszyfrować.</string>
-    <string name="export_result_screen_success_header">Hasła</string>
-    <string name="export_result_screen_success_description">zostały poprawnie wyeksportowane. Znajdziesz je w folderze \"Pobrane\" na Twoim urządzeniu.</string>
-    <string name="export_result_screen_failure_header">Wystąpił</string>
-    <string name="export_result_screen_failure_description">błąd podczas eksportowania haseł.</string>
-    <string name="export_screen_button">Eksportuj</string>
-    <string name="import_screen_header">Importuj</string>
-    <string name="import_screen_description">swoje hasła z wybranego przez Ciebie pliku. Dane powinny być zapisane w danym formacie:\n\"nazwa : hasło\"</string>
-    <string name="import_result_screen_success_header">Hasła</string>
-    <string name="import_result_screen_success_description">zostały poprawnie zaimportowane</string>
-    <string name="import_result_screen_failure_header">Wystąpił</string>
-    <string name="import_result_screen_failure_description">błąd podczas importowania haseł.</string>
-    <string name="import_screen_button">Importuj</string>
-    <string name="password_transfer_encryption_question">Czy dane są szyfrowane</string>
-    <string name="password_transfer_screen_hint">Hasło do szyfrowania danych</string>
-    <string name="generated_password">Stworzone hasło:</string>
-    <string name="generate_password">Stwórz</string>
-    <string name="generate_password_description">bezpieczne hasło o wybranej długości</string>
-    <string name="test_password">Przetestuj</string>
-    <string name="test_password_description">hasło i sprawdź czy jest wystarczająco bezpieczne</string>
-    <string name="settings_button">Przycisk opcji w ustawieniach</string>
-    <string name="edit_password_header">Edytuj hasło</string>
+    <!--  Notification permission screen  -->
+    <string name="notification_permission_title">Notifications</string>
+    <string name="notification_permission_description">will be used to remind you about expired passwords</string>
+
+    <!--  Permission screen  -->
+    <string name="permission_image_description">Icon of permission screen</string>
+    <string name="permission_button_access">Provide permission</string>
+    <string name="permission_button_settings">Open settings</string>
+
+    <!--  Password Export and Import Screens  -->
+    <string name="export_screen_header">Export</string>
+    <string name="export_screen_description">your passwords to file in \"Download\" folder. You can also encrypt exported passwords.</string>
+    <string name="export_result_screen_success_header">Passwords</string>
+    <string name="export_result_screen_success_description">were successfully exported. You can find them in \"Download\" folder on your device.</string>
+    <string name="export_result_screen_failure_header">Error</string>
+    <string name="export_result_screen_failure_description">occurred while exporting the passwords.</string>
+    <string name="export_screen_button">Export</string>
+    <string name="import_screen_header">Import</string>
+    <string name="import_screen_description">your passwords from chosen file.</string>
+    <string name="import_result_screen_success_header">Passwords</string>
+    <string name="import_result_screen_success_description">were successfully imported.</string>
+    <string name="import_result_screen_failure_header">Error</string>
+    <string name="import_result_screen_failure_description">occurred while importing the passwords.</string>
+    <string name="import_screen_button">Import</string>
+    <string name="password_transfer_encryption_question">Are data encrypted?</string>
+    <string name="password_transfer_screen_hint">Password to encrypted data</string>
+
+    <!--  Generate password screen  -->
+    <string name="generate_password">Generate</string>
+    <string name="generate_password_description">save password with chosen length</string>
+
+    <!--  Test password screen  -->
+    <string name="test_password">Test</string>
+    <string name="test_password_description">the password and check if it\'s save enough</string>
 
     <!-- Licenses -->
-    <string name="licenses_title">Licencje</string>
-    <string name="licenses_libraries">Licencje open source</string>
-    <string name="licenses_graphics">Animacje lottie</string>
+    <string name="licenses_title">Licences</string>
+    <string name="licenses_libraries">Open source licenses</string>
+    <string name="licenses_graphics">Lottie animations</string>
     <string name="licenses_font">M PLUS Rounded 1c</string>
+
+    <!--  Other  -->
+    <string name="password_test_hint">Provide password</string>
+    <string name="progress_value">%d%%</string>
+    <string name="copy_button">Copy password button</string>
+    <string name="settings_button">Settings button</string>
+    <string name="edit_password_header">Edit password</string>
+    <string name="options">Options</string>
     <string name="import_info">Import info</string>
-    <string name="options">Opcje</string>
-    <string name="button_copy">Kopiuj</string>
-    <string name="button_edit">Edytuj</string>
-    <string name="button_delete">Usuń</string>
-    <string name="no_passwords">Nie masz jeszcze dodanych haseł</string>
+    <string name="message_password_copied_to_clipboard">Password was copied</string>
 </resources>
