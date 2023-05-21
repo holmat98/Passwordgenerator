@@ -14,7 +14,7 @@
         android:radius="@dimen/radius_25"
         android:textSize="@dimen/text_size_35"
         app:pinPrimaryColor="?colorSurface"
-        app:pinSecondaryColor="?colorSecondary" />
+        app:pinSecondaryColor="?colorPrimary" />
 
     <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/secondPinCodeElement"
@@ -25,7 +25,7 @@
         android:radius="@dimen/radius_25"
         android:textSize="@dimen/text_size_35"
         app:pinPrimaryColor="?colorSurface"
-        app:pinSecondaryColor="?colorSecondary" />
+        app:pinSecondaryColor="?colorPrimary" />
 
     <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/thirdPinCodeElement"
@@ -35,7 +35,7 @@
         android:radius="@dimen/radius_25"
         android:textSize="@dimen/text_size_35"
         app:pinPrimaryColor="?colorSurface"
-        app:pinSecondaryColor="?colorSecondary" />
+        app:pinSecondaryColor="?colorPrimary" />
 
     <com.mateuszholik.passwordgenerator.uicomponents.pin.PinView
         android:id="@+id/fourthPinCodeElement"
@@ -46,6 +46,6 @@
         android:radius="@dimen/radius_25"
         android:textSize="@dimen/text_size_35"
         app:pinPrimaryColor="?colorSurface"
-        app:pinSecondaryColor="?colorSecondary" />
+        app:pinSecondaryColor="?colorPrimary" />
 
 </merge>

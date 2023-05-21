@@ -11,7 +11,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16"
-        android:layout_marginBottom="@dimen/margin_16"
         android:text="@string/log_in_header"
         app:layout_constraintBottom_toTopOf="@id/pinCode"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
-        app:pinInputsTextColor="?colorSecondary" />
+        app:pinInputsTextColor="?colorPrimary" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLine"

@@ -35,7 +35,7 @@ class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context
         return when {
             now.isBefore(dateTime.minusDays(7)) ->
                 WarningViewDetails(
-                    attrColor = R.attr.colorSecondary,
+                    attrColor = R.attr.colorPrimary,
                     stringRes = R.string.warning_password_correct
                 )
             now.isAfter(dateTime) ->

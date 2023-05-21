@@ -71,7 +71,7 @@ class PasswordsAdapter(
             when (this) {
                 is PasswordType.ExpiringPassword -> R.attr.colorTertiary
                 is PasswordType.OutdatedPassword -> R.attr.colorError
-                is PasswordType.ValidPassword -> R.attr.colorSecondary
+                is PasswordType.ValidPassword -> R.attr.colorPrimary
             }
     }
 }
