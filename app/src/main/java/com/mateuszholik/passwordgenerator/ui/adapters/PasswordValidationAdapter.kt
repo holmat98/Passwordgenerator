@@ -15,8 +15,9 @@ class PasswordValidationAdapter(
     private val validationResults: MutableList<PasswordValidationResult> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addValidationResult(result: PasswordValidationResult) {
-        validationResults.add(result)
+    fun addValidationResult(result: List<PasswordValidationResult>) {
+        validationResults.clear()
+        validationResults.addAll(result)
         notifyDataSetChanged()
     }
 

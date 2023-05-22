@@ -39,6 +39,7 @@ dependencies {
     // Modules
     implementation(project(":data"))
     implementation(project(":cryptography"))
+    implementation(project(":passwordvalidation"))
 
     // Core ktx
     implementation(Androidx.Core.DEPENDENCY)

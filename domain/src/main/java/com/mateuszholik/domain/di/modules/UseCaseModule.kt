@@ -9,6 +9,8 @@ import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordUseCaseImpl
+import com.mateuszholik.domain.usecase.GetPasswordValidationResultUseCase
+import com.mateuszholik.domain.usecase.GetPasswordValidationResultUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.domain.usecase.GetPasswordsUseCaseImpl
 import com.mateuszholik.domain.usecase.ImportPasswordsUseCase
@@ -126,6 +128,12 @@ internal val useCaseModule = module {
             passwordsParser = get(),
             exportedPasswordsMapper = get(),
             passwordsRepository = get()
+        )
+    }
+
+    factory<GetPasswordValidationResultUseCase> {
+        GetPasswordValidationResultUseCaseImpl(
+            validatePasswordUseCase = get()
         )
     }
 }
