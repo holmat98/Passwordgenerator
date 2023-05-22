@@ -10,8 +10,6 @@ import com.mateuszholik.domain.mappers.PasswordToExportedPasswordMapper
 import com.mateuszholik.domain.mappers.PasswordToExportedPasswordMapperImpl
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapperImpl
-import com.mateuszholik.domain.mappers.PasswordsListToPasswordsTypeListMapper
-import com.mateuszholik.domain.mappers.PasswordsListToPasswordsTypeListMapperImpl
 import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapper
 import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapperImpl
 import com.mateuszholik.domain.mappers.UpdatedPasswordMapper
@@ -25,12 +23,6 @@ internal val mappersModule = module {
     single<UpdatedPasswordMapper> { UpdatedPasswordMapperImpl() }
 
     single<PasswordToPasswordTypeMapper> { PasswordToPasswordTypeMapperImpl() }
-
-    single<PasswordsListToPasswordsTypeListMapper> {
-        PasswordsListToPasswordsTypeListMapperImpl(
-            passwordToPasswordTypeMapper = get()
-        )
-    }
 
     single<PasswordToExportedPasswordMapper> {
         PasswordToExportedPasswordMapperImpl()

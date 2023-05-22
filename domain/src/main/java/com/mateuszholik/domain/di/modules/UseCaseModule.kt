@@ -69,7 +69,8 @@ internal val useCaseModule = module {
     single<GetPasswordsUseCase> {
         GetPasswordsUseCaseImpl(
             passwordsRepository = get(),
-            passwordsListToPasswordsTypeListMapper = get()
+            passwordToPasswordTypeMapper = get(),
+            getPasswordValidationResultUseCase = get()
         )
     }
 
