@@ -55,8 +55,11 @@ class PasswordsAdapter(
             copyToClipboard: (String, String) -> Unit
         ) {
             with(binding) {
-                root.strokeColor = root.context.getAttrColor(passwordType.getAttrColorResId())
+                val color = root.context.getAttrColor(passwordType.getAttrColorResId())
+
+                root.strokeColor = color
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
+                circularProgressBar.secondaryColor = color
                 circularProgressBar.animateProgress(passwordType.score)
                 platformNameTV.text = passwordType.password.platformName
                 copyPasswordIB.setOnClickListener {
