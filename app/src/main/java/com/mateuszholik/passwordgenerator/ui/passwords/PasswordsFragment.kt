@@ -10,7 +10,6 @@ import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.animateVisibility
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -26,7 +25,6 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val viewModel: PasswordsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
-    private val gsonFactory: GsonFactory by inject()
     private var adapter: PasswordsAdapter? = null
     private val scrollListener = object : RecyclerView.OnScrollListener() {
 
@@ -85,9 +83,8 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     }
 
     private fun navigateToPasswordDetails(password: Password) {
-        val passwordJson = gsonFactory.create().toJson(password)
         val action =
-            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(passwordJson)
+            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(password.id)
         findNavController().navigate(action)
     }
 

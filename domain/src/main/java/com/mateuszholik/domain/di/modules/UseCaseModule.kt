@@ -7,6 +7,8 @@ import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.GetPasswordTypeUseCase
+import com.mateuszholik.domain.usecase.GetPasswordTypeUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordValidationResultUseCase
@@ -135,6 +137,14 @@ internal val useCaseModule = module {
     factory<GetPasswordValidationResultUseCase> {
         GetPasswordValidationResultUseCaseImpl(
             validatePasswordUseCase = get()
+        )
+    }
+
+    factory<GetPasswordTypeUseCase> {
+        GetPasswordTypeUseCaseImpl(
+            passwordsRepository = get(),
+            passwordToPasswordTypeMapper = get(),
+            getPasswordValidationResultUseCase = get()
         )
     }
 }

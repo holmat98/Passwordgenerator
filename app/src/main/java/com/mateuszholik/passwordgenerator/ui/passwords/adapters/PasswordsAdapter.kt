@@ -9,6 +9,7 @@ import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
+import com.mateuszholik.passwordgenerator.extensions.getAttrColorResId
 
 class PasswordsAdapter(
     private val copyToClipboard: (String, String) -> Unit,
@@ -70,12 +71,5 @@ class PasswordsAdapter(
                 }
             }
         }
-
-        private fun PasswordType.getAttrColorResId(): Int =
-            when (this) {
-                is PasswordType.ExpiringPassword -> R.attr.colorTertiary
-                is PasswordType.OutdatedPassword -> R.attr.colorError
-                is PasswordType.ValidPassword -> R.attr.colorPrimary
-            }
     }
 }

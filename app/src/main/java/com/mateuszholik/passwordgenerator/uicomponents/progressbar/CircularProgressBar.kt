@@ -24,10 +24,6 @@ class CircularProgressBar @JvmOverloads constructor(
     private var textSize: Float = NONE.toFloat()
 
     var secondaryColor: Int = Color.WHITE
-        set(value) {
-            field = value
-            invalidate()
-        }
 
     private val radius: Float
         get() = (min(width, height) - (strokeWidth * 2)) / 2

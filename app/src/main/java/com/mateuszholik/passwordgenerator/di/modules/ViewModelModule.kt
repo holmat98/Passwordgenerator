@@ -72,9 +72,10 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (password: Password) ->
+    viewModel { (passwordId: Long) ->
         PasswordDetailsViewModel(
-            password = password,
+            passwordId = passwordId,
+            getPasswordTypeUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
