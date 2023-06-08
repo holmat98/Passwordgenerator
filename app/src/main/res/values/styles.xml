@@ -106,4 +106,13 @@
         <item name="iconPadding">@dimen/margin_8</item>
         <item name="android:textAlignment">textStart</item>
     </style>
+
+    <style name="BottomNavBarStyle" parent="Base.Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/ItemActiveIndicatorStyle</item>
+        <item name="itemIconTint">@color/bottom_nav_bar_selected_item_color</item>
+    </style>
+
+    <style name="ItemActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?colorPrimary</item>
+    </style>
 </resources>
