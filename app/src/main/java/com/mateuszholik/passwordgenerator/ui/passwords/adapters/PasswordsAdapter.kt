@@ -9,6 +9,7 @@ import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
+import com.mateuszholik.passwordgenerator.extensions.getAttrColorResId
 
 class PasswordsAdapter(
     private val copyToClipboard: (String, String) -> Unit,
@@ -55,8 +56,11 @@ class PasswordsAdapter(
             copyToClipboard: (String, String) -> Unit
         ) {
             with(binding) {
-                root.strokeColor = root.context.getAttrColor(passwordType.getAttrColorResId())
+                val color = root.context.getAttrColor(passwordType.getAttrColorResId())
+
+                root.strokeColor = color
                 root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
+                circularProgressBar.secondaryColor = color
                 circularProgressBar.animateProgress(passwordType.score)
                 platformNameTV.text = passwordType.password.platformName
                 copyPasswordIB.setOnClickListener {
@@ -67,12 +71,5 @@ class PasswordsAdapter(
                 }
             }
         }
-
-        private fun PasswordType.getAttrColorResId(): Int =
-            when (this) {
-                is PasswordType.ExpiringPassword -> R.attr.colorTertiary
-                is PasswordType.OutdatedPassword -> R.attr.colorError
-                is PasswordType.ValidPassword -> R.attr.colorPrimary
-            }
     }
 }

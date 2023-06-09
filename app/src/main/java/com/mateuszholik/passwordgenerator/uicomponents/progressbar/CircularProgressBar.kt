@@ -21,8 +21,9 @@ class CircularProgressBar @JvmOverloads constructor(
     private var strokeWidth = DEFAULT_STROKE_WIDTH
     private var animatedProgressValue: Int = NONE
     private var primaryColor: Int = Color.BLACK
-    private var secondaryColor: Int = Color.WHITE
     private var textSize: Float = NONE.toFloat()
+
+    var secondaryColor: Int = Color.WHITE
 
     private val radius: Float
         get() = (min(width, height) - (strokeWidth * 2)) / 2

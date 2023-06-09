@@ -32,14 +32,12 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
     private val gsonFactory: GsonFactory by inject()
     private val typeToTextMapper: PasswordValidationTypeToTextMapper by inject()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
-    private val password: Password by lazy {
-        gsonFactory.create().fromJson(navArgs.password, Password::class.java)
-    }
     private val viewModel: PasswordDetailsViewModel by viewModel {
-        parametersOf(password)
+        parametersOf(navArgs.passwordId)
     }
     private val binding by viewBinding(FragmentPasswordDetailsBinding::bind)
     private var adapter: PasswordValidationAdapter? = null
+    private var currentPassword: Password? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +48,9 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            password = this@PasswordDetailsFragment.password
             viewModel = this@PasswordDetailsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-
-        binding.passwordInfoView.date = password.expiringDate
 
         setUpRecyclerView()
         setUpObservers()
@@ -101,12 +96,14 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
                     }
 
                     override fun onSecondButtonClicked() {
-                        val passwordJson = gsonFactory.create().toJson(password)
-                        val action =
-                            PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
-                                passwordJson
-                            )
-                        findNavController().navigate(action)
+                        currentPassword?.let { password ->
+                            val passwordJson = gsonFactory.create().toJson(password)
+                            val action =
+                                PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
+                                    passwordJson
+                                )
+                            findNavController().navigate(action)
+                        }
                     }
 
                     override fun onThirdButtonClicked() {
@@ -123,6 +120,10 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private fun setUpObservers() {
         with(viewModel) {
+            passwordType.observe(viewLifecycleOwner) {
+                currentPassword = it.password
+                binding.passwordInfoView.date = it.password.expiringDate
+            }
             passwordValidationResult.observe(viewLifecycleOwner) {
                 adapter?.addValidationResult(it)
             }
