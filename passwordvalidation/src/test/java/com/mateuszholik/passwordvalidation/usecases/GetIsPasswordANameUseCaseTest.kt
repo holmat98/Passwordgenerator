@@ -24,82 +24,82 @@ internal class GetIsPasswordANameUseCaseTest {
         listOf(
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = true
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_NAME_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_NAME_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_NAME_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_NAME_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = listOf(MATCHING_NAME),
+                firstResult = false,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = listOf(MATCHING_NAME),
+                firstResult = false,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_NAME_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = listOf(MATCHING_NAME),
+                firstResult = false,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_NAME_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_NAME,
-                firstReturn = listOf(MATCHING_NAME),
+                firstResult = false,
                 secondString = CHECKED_NAME_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_NAME_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_NAME_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_NAME_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
         ).map { testCase ->
             DynamicTest.dynamicTest(
                 "When matching names from database for " +
-                        "(same text) ${testCase.testedValue} are ${testCase.firstReturn}, " +
-                        "(leet speek removed) ${testCase.secondString} are ${testCase.secondReturn} " +
-                        "and (numbers removed) ${testCase.thirdString} are ${testCase.thirdReturn} " +
+                        "(same text) ${testCase.testedValue} are ${testCase.firstResult}, " +
+                        "(leet speek removed) ${testCase.secondString} are ${testCase.secondResult} " +
+                        "and (numbers removed) ${testCase.thirdString} are ${testCase.thirdResult} " +
                         "for given ${testCase.testedValue} then result is ${testCase.expected}"
             ) {
                 setStringTransformerDefaultValue(
@@ -109,11 +109,11 @@ internal class GetIsPasswordANameUseCaseTest {
                 )
                 setDaoReturns(
                     testedValue = testCase.testedValue,
-                    matchingWords = testCase.firstReturn,
+                    hasMatchingWords = testCase.firstResult,
                     textWithoutNumbers = testCase.thirdString,
-                    matchingWordsForTextWithoutNumbers = testCase.thirdReturn,
+                    hasMatchingWordsForTextWithoutNumbers = testCase.thirdResult,
                     textWithoutLeetSpeek = testCase.secondString,
-                    matchingWordsForTextWithoutLeetSpeek = testCase.secondReturn
+                    hasMatchingWordsForTextWithoutLeetSpeek = testCase.secondResult
                 )
 
                 getIsPasswordANameUseCase(testCase.testedValue)
@@ -137,21 +137,21 @@ internal class GetIsPasswordANameUseCaseTest {
 
     private fun setDaoReturns(
         testedValue: String,
-        matchingWords: List<String>,
+        hasMatchingWords: Boolean,
         textWithoutNumbers: String,
-        matchingWordsForTextWithoutNumbers: List<String>,
+        hasMatchingWordsForTextWithoutNumbers: Boolean,
         textWithoutLeetSpeek: String,
-        matchingWordsForTextWithoutLeetSpeek: List<String>
+        hasMatchingWordsForTextWithoutLeetSpeek: Boolean
     ) {
         every {
             commonNameDao.getMatchingNames(testedValue)
-        } returns Single.just(matchingWords)
+        } returns Single.just(hasMatchingWords)
         every {
             commonNameDao.getMatchingNames(textWithoutNumbers)
-        } returns Single.just(matchingWordsForTextWithoutNumbers)
+        } returns Single.just(hasMatchingWordsForTextWithoutNumbers)
         every {
             commonNameDao.getMatchingNames(textWithoutLeetSpeek)
-        } returns Single.just(matchingWordsForTextWithoutLeetSpeek)
+        } returns Single.just(hasMatchingWordsForTextWithoutLeetSpeek)
     }
 
 
@@ -159,8 +159,5 @@ internal class GetIsPasswordANameUseCaseTest {
         const val CHECKED_NAME = "J@nu$2"
         const val CHECKED_NAME_WITHOUT_LEET_SPEAK = "Janusz"
         const val CHECKED_NAME_WITHOUT_NUMBERS = "J@nu$"
-        const val MATCHING_NAME = "J@nu$2"
-        const val MATCHING_NAME_WITHOUT_LEET_SPEAK = "Janusz"
-        const val MATCHING_NAME_WITHOUT_NUMBERS = "J@nu$"
     }
 }
