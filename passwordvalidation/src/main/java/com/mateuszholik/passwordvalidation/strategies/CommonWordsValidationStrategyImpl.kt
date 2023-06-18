@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Single
 
 internal class CommonWordsValidationStrategyImpl(
     private val commonWordDao: CommonWordDao,
-    private val stringTransformer: StringTransformer
+    private val stringTransformer: StringTransformer,
 ) : PasswordValidationStrategy {
 
     override fun validate(password: String): Single<PasswordValidationResult> =
@@ -17,12 +17,9 @@ internal class CommonWordsValidationStrategyImpl(
             commonWordDao.getMatchingWords(password),
             commonWordDao.getMatchingWords(stringTransformer.removeLeetSpeak(password)),
             commonWordDao.getMatchingWords(stringTransformer.removeNumbers(password)),
-        ) { matchingWordsWithPassword,
-            matchingWordsWithEditedPassword,
-            matchingWordsWithoutNumbers ->
-            val result = matchingWordsWithPassword.isEmpty()
-                    && matchingWordsWithEditedPassword.isEmpty()
-                    && matchingWordsWithoutNumbers.isEmpty()
+        ) { matchingWordsWithPassword, matchingWordsWithEditedPassword, matchingWordsWithoutNumbers ->
+            val result =
+                matchingWordsWithPassword && matchingWordsWithEditedPassword && matchingWordsWithoutNumbers
 
             PasswordValidationResult(
                 validationType = COMMON_WORD,

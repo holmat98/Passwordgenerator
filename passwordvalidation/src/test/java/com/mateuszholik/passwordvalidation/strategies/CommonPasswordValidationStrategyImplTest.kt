@@ -1,15 +1,12 @@
 package com.mateuszholik.passwordvalidation.strategies
 
 import com.mateuszholik.passwordvalidation.db.daos.CommonPasswordDao
-import com.mateuszholik.passwordvalidation.db.models.CommonPassword
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
 import com.mateuszholik.passwordvalidation.models.PasswordValidationType.COMMON_PASSWORD
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Single
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 
 class CommonPasswordValidationStrategyImplTest {
@@ -20,10 +17,10 @@ class CommonPasswordValidationStrategyImplTest {
     )
 
     @Test
-    fun `When there is no matching common passwords with tested password the result is true and score is equal to the maxScore`() {
+    fun `When getMatchingPasswords returns true then the result is true and score is equal to the maxScore`() {
         every {
             commonPasswordDao.getMatchingPasswords(PASSWORD)
-        } returns Single.just(emptyList())
+        } returns Single.just(true)
 
         commonWordsValidationStrategy
             .validate(PASSWORD)
@@ -39,10 +36,10 @@ class CommonPasswordValidationStrategyImplTest {
     }
 
     @Test
-    fun `When there are matching common passwords with tested password the result is false and score is equal to 0`() {
+    fun `When getMatchingPasswords returns false then the result is false and score is equal to 0`() {
         every {
             commonPasswordDao.getMatchingPasswords(PASSWORD)
-        } returns Single.just(MATCHING_PASSWORDS)
+        } returns Single.just(false)
 
         commonWordsValidationStrategy
             .validate(PASSWORD)
@@ -59,10 +56,5 @@ class CommonPasswordValidationStrategyImplTest {
 
     private companion object {
         const val PASSWORD = "123456789"
-        val MATCHING_PASSWORDS = listOf(
-            CommonPassword(1, "12345"),
-            CommonPassword(2, "1234"),
-            CommonPassword(3, "123456789")
-        )
     }
 }

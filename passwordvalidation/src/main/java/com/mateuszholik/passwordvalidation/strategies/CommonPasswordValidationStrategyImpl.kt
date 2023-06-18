@@ -7,12 +7,11 @@ import com.mateuszholik.passwordvalidation.utils.Numbers.NONE
 import io.reactivex.rxjava3.core.Single
 
 internal class CommonPasswordValidationStrategyImpl(
-    private val commonPasswordDao: CommonPasswordDao
+    private val commonPasswordDao: CommonPasswordDao,
 ) : PasswordValidationStrategy {
 
     override fun validate(password: String): Single<PasswordValidationResult> =
-        commonPasswordDao.getMatchingPasswords(password).map { matchingPasswords ->
-            val result = matchingPasswords.isEmpty()
+        commonPasswordDao.getMatchingPasswords(password).map { result ->
 
             PasswordValidationResult(
                 validationType = COMMON_PASSWORD,

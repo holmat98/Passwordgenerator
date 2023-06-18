@@ -7,10 +7,17 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 internal interface CommonPetsNameDao {
 
-    @Query("select name from most_common_pets_names where " +
-            ":name like \"%\" || name || \"%\" " +
-            "or name like \"%\" || :name || \"%\" " +
-            "or name = :name"
+    @Query(
+        """
+            SELECT CASE WHEN EXISTS (
+                SELECT name FROM most_common_pets_names WHERE
+                LENGTH(:name) > 1 AND
+                (:name LIKE "%" || name || "%"
+                OR name LIKE "%" || :name || "%")
+            )
+            THEN CAST(0 AS BIT)
+            ELSE CAST(1 AS BIT) END
+        """
     )
-    fun getMatchingPetNames(name: String): Single<List<String>>
+    fun getMatchingPetNames(name: String): Single<Boolean>
 }
