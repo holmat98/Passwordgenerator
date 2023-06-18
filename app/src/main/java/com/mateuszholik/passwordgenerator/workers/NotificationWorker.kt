@@ -9,8 +9,8 @@ import com.mateuszholik.passwordgenerator.managers.NotificationManager
 import com.mateuszholik.passwordgenerator.utils.WorkersInputDataKeys.PASSWORD_ID
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class NotificationWorker(
     val context: Context,

@@ -6,6 +6,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.domain.utils.ImportExportUtils.BINARY_DATA_MIME_TYPE
 import com.mateuszholik.domain.utils.ImportExportUtils.PLAIN_TEXT_MIME_TYPE
@@ -27,11 +30,6 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
 
     override val isBottomNavVisible: Boolean = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,20 +40,31 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
 
         setUpViewTexts()
         setUpButton()
+        setUpMenu()
 
         viewModel.importResult.observe(viewLifecycleOwner) { navigateToResultScreen(it) }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.info_menu, menu)
-    }
+    private fun setUpMenu() {
+        activity?.let {
+            val menuHost = it as MenuHost
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.importInfo) {
-            showInfoDialog()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+            menuHost.addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                        menuInflater.inflate(R.menu.info_menu, menu)
+                    }
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                        if (menuItem.itemId == R.id.importInfo) {
+                            showInfoDialog()
+                            true
+                        } else {
+                            true
+                        }
+                },
+                viewLifecycleOwner, Lifecycle.State.RESUMED
+            )
         }
     }
 

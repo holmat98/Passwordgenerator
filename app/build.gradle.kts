@@ -1,13 +1,13 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    kotlin("kapt")
-    id("androidx.navigation.safeargs")
-    id("com.google.android.gms.oss-licenses-plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    id(Plugins.ANDROID_APPLICATION)
+    id(Plugins.KOTLIN_ANDROID)
+    kotlin(Plugins.KAPT)
+    id(Plugins.SAFE_ARGS)
+    id(Plugins.OSS_LICENSES)
+    id(Plugins.GOOGLE_SERVICES)
+    id(Plugins.FIREBASE_CRASHLYTICS)
     id(AndroidGitVersion.PLUGIN)
-    id("kotlin-parcelize")
+    id(Plugins.KOTLIN_PARCELIZE)
 }
 
 apply(from="../jacoco.gradle")
@@ -70,6 +70,9 @@ dependencies {
     // Core ktx
     implementation(Androidx.Core.DEPENDENCY)
 
+    // Activity
+    implementation(Androidx.Activity.DEPENDENCY)
+
     // Appcompat
     implementation(Androidx.AppCompat.DEPENDENCY)
 
@@ -78,7 +81,6 @@ dependencies {
     testCompileOnly(Testing.JUnit.API_DEPENDENCY)
     testRuntimeOnly(Testing.JUnit.ENGINE)
     testImplementation(Testing.JUnit.PARAMS)
-    androidTestImplementation(Testing.Espresso.DEPENDENCY)
     testImplementation(Testing.AssertJ.DEPENDENCY)
     testImplementation(Androidx.Core.Testing.DEPENDENCY)
 
@@ -114,15 +116,10 @@ dependencies {
 
     // koin
     implementation(Koin.DEPENDENCY)
-    implementation(Koin.ViewModel.DEPENDENCY)
-    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
     testImplementation(Mockk.DEPENDENCY)
     androidTestImplementation(Mockk.Android.DEPENDENCY)
-
-    // viewpager
-    implementation(Androidx.ViewPager.DEPENDENCY)
 
     // lottie
     implementation(Lottie.DEPENDENCY)
