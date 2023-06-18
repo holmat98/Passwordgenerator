@@ -15,8 +15,6 @@ internal class GetIsPasswordAPetNameUseCase(
             commonPetsNameDao.getMatchingPetNames(stringTransformer.removeLeetSpeak(password))
         ) { matchingNames, matchingNamesWithoutNumbers, matchingNamesWithoutLeetSpeek ->
 
-            matchingNames.isEmpty()
-                    && matchingNamesWithoutNumbers.isEmpty()
-                    && matchingNamesWithoutLeetSpeek.isEmpty()
+            matchingNames && matchingNamesWithoutNumbers && matchingNamesWithoutLeetSpeek
         }
 }
