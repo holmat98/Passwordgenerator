@@ -63,7 +63,8 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
                             true
                         }
                 },
-                viewLifecycleOwner, Lifecycle.State.RESUMED
+                viewLifecycleOwner,
+                Lifecycle.State.RESUMED
             )
         }
     }

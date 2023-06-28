@@ -73,7 +73,8 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
                             true
                         }
                 },
-                viewLifecycleOwner, Lifecycle.State.RESUMED
+                viewLifecycleOwner,
+                Lifecycle.State.RESUMED
             )
         }
     }

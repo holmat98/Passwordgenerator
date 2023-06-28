@@ -206,6 +206,10 @@ object Koin {
     private const val version = "3.4.2"
 
     const val DEPENDENCY = "io.insert-koin:koin-android:$version"
+
+    object Worker {
+        const val DEPENDENCY = "io.insert-koin:koin-androidx-workmanager:$version"
+    }
 }
 
 object Mockk {

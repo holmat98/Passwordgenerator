@@ -116,6 +116,7 @@ dependencies {
 
     // koin
     implementation(Koin.DEPENDENCY)
+    implementation(Koin.Worker.DEPENDENCY)
 
     // mockk
     testImplementation(Mockk.DEPENDENCY)
