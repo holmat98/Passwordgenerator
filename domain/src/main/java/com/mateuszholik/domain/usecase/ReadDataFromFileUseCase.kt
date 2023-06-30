@@ -3,9 +3,7 @@ package com.mateuszholik.domain.usecase
 import android.content.Context
 import android.net.Uri
 import com.mateuszholik.domain.usecase.base.ParameterizedMaybeUseCase
-import com.mateuszholik.domain.usecase.base.ParameterizedSingleUseCase
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Single
 
 internal interface ReadDataFromFileUseCase : ParameterizedMaybeUseCase<Uri, String>
 

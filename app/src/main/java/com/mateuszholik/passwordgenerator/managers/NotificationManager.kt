@@ -1,6 +1,8 @@
 package com.mateuszholik.passwordgenerator.managers
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
+import android.app.PendingIntent
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
@@ -12,32 +14,41 @@ interface NotificationManager {
         @DrawableRes smallIcon: Int,
         title: String,
         message: String,
-        notificationId: Int
+        notificationId: Int,
+        pendingIntent: PendingIntent? = null,
     )
 }
 
 class NotificationManagerImpl(
-    private val context: Context
+    private val context: Context,
 ) : NotificationManager {
 
+    private val notificationManager: NotificationManagerCompat by lazy {
+        NotificationManagerCompat.from(context)
+    }
+
+    @SuppressLint("MissingPermission")
     override fun showNotification(
         smallIcon: Int,
         title: String,
         message: String,
-        notificationId: Int
+        notificationId: Int,
+        pendingIntent: PendingIntent?,
     ) {
-        createNotificationChannel()
+        if (notificationManager.areNotificationsEnabled()) {
+            createNotificationChannel()
 
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle(title)
-            .setContentText(message)
-            .setSmallIcon(smallIcon)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .build()
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(smallIcon)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(pendingIntent != null)
+                .build()
 
-        val notificationManager = NotificationManagerCompat.from(context)
-
-        notificationManager.notify(notificationId, notification)
+            notificationManager.notify(notificationId, notification)
+        }
     }
 
     private fun createNotificationChannel() {
@@ -55,6 +66,6 @@ class NotificationManagerImpl(
 
     private companion object {
         const val CHANNEL_ID = "1"
-        const val CHANNEL_NAME = "NotificationChannel"
+        const val CHANNEL_NAME = "Expired passwords"
     }
 }
