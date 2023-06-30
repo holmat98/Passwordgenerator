@@ -1,21 +1,22 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.domain.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
 import java.time.LocalDateTime
 
-internal interface PasswordToPasswordTypeMapper : Mapper<Password, PasswordType>
+internal interface PasswordToPasswordTypeMapper : Mapper<PasswordInfo, PasswordType>
 
 internal class PasswordToPasswordTypeMapperImpl : PasswordToPasswordTypeMapper {
 
-    override fun map(param: Password): PasswordType {
+    override fun map(param: PasswordInfo): PasswordType {
         val now = LocalDateTime.now()
 
         return when {
-            now.isBefore(param.expiringDate.minusDays(EXPIRING_PASSWORD_TIME_IN_DAYS)) ->
-                PasswordType.ValidPassword(param)
-            now.isAfter(param.expiringDate) -> PasswordType.OutdatedPassword(param)
-            else -> PasswordType.ExpiringPassword(param)
+            now.isBefore(param.password.expiringDate.minusDays(EXPIRING_PASSWORD_TIME_IN_DAYS)) ->
+                PasswordType.ValidPassword(param.password, param.passwordScore)
+            now.isAfter(param.password.expiringDate) ->
+                PasswordType.OutdatedPassword(param.password, param.passwordScore)
+            else -> PasswordType.ExpiringPassword(param.password, param.passwordScore)
         }
     }
 

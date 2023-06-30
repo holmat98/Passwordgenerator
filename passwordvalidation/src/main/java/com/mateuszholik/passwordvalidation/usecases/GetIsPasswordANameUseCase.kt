@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Single
 
 internal class GetIsPasswordANameUseCase(
     private val commonNameDao: CommonNameDao,
-    private val stringTransformer: StringTransformer
+    private val stringTransformer: StringTransformer,
 ) {
     operator fun invoke(password: String): Single<Boolean> =
         Single.zip(
@@ -15,8 +15,6 @@ internal class GetIsPasswordANameUseCase(
             commonNameDao.getMatchingNames(stringTransformer.removeLeetSpeak(password))
         ) { matchingNames, matchingNamesWithoutNumbers, matchingNamesWithoutLeetSpeek ->
 
-            matchingNames.isEmpty()
-                    && matchingNamesWithoutNumbers.isEmpty()
-                    && matchingNamesWithoutLeetSpeek.isEmpty()
+            matchingNames && matchingNamesWithoutNumbers && matchingNamesWithoutLeetSpeek
         }
 }

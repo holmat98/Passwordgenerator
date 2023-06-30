@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id(Plugins.ANDROID_LIBRARY)
+    id(Plugins.KOTLIN_ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 apply(from="../jacoco.gradle")
@@ -39,6 +39,7 @@ dependencies {
     // Modules
     implementation(project(":data"))
     implementation(project(":cryptography"))
+    implementation(project(":passwordvalidation"))
 
     // Core ktx
     implementation(Androidx.Core.DEPENDENCY)
@@ -51,7 +52,6 @@ dependencies {
     testCompileOnly(Testing.JUnit.API_DEPENDENCY)
     testRuntimeOnly(Testing.JUnit.ENGINE)
     testImplementation(Testing.JUnit.PARAMS)
-    androidTestImplementation(Testing.Espresso.DEPENDENCY)
     testImplementation(Testing.AssertJ.DEPENDENCY)
     testImplementation(Androidx.Core.Testing.DEPENDENCY)
 
@@ -68,8 +68,6 @@ dependencies {
 
     // koin
     implementation(Koin.DEPENDENCY)
-    implementation(Koin.ViewModel.DEPENDENCY)
-    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
     testImplementation(Mockk.DEPENDENCY)

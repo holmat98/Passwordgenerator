@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id(Plugins.ANDROID_LIBRARY)
+    id(Plugins.KOTLIN_ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 apply(from="../jacoco.gradle")
@@ -56,7 +56,6 @@ dependencies {
     androidTestCompileOnly(Testing.JUnit.API_DEPENDENCY)
     androidTestRuntimeOnly(Testing.JUnit.ENGINE)
     androidTestImplementation(Testing.JUnit.PARAMS)
-    androidTestImplementation(Testing.Espresso.DEPENDENCY)
     androidTestImplementation(Testing.AssertJ.DEPENDENCY)
 
     //room
@@ -72,8 +71,6 @@ dependencies {
 
     // koin
     implementation(Koin.DEPENDENCY)
-    implementation(Koin.ViewModel.DEPENDENCY)
-    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
     testImplementation(Mockk.DEPENDENCY)

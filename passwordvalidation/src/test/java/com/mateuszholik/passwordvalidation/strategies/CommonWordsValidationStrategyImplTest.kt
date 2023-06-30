@@ -25,82 +25,82 @@ class CommonWordsValidationStrategyImplTest {
         listOf(
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = true
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_WORD_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_WORD_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = emptyList(),
+                firstResult = true,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_WORD_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_WORD_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = listOf(MATCHING_WORD),
+                firstResult = false,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = listOf(MATCHING_WORD),
+                firstResult = false,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = emptyList(),
+                secondResult = true,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_WORD_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = listOf(MATCHING_WORD),
+                firstResult = false,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_WORD_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = emptyList(),
+                thirdResult = true,
                 expected = false
             ),
             DatabaseBasedValidationTestCase(
                 testedValue = CHECKED_WORD,
-                firstReturn = listOf(MATCHING_WORD),
+                firstResult = false,
                 secondString = CHECKED_WORD_WITHOUT_LEET_SPEAK,
-                secondReturn = listOf(MATCHING_WORD_WITHOUT_LEET_SPEAK),
+                secondResult = false,
                 thirdString = CHECKED_WORD_WITHOUT_NUMBERS,
-                thirdReturn = listOf(MATCHING_WORD_WITHOUT_NUMBERS),
+                thirdResult = false,
                 expected = false
             ),
         ).map { testCase ->
             dynamicTest(
                 "When matching words from database for " +
-                        "(same text) ${testCase.testedValue} are ${testCase.firstReturn}, " +
-                        "(leet speek removed) ${testCase.secondString} are ${testCase.secondReturn} " +
-                        "and (numbers removed) ${testCase.thirdString} are ${testCase.thirdReturn} " +
+                        "(same text) ${testCase.testedValue} are ${testCase.firstResult}, " +
+                        "(leet speek removed) ${testCase.secondString} are ${testCase.secondResult} " +
+                        "and (numbers removed) ${testCase.thirdString} are ${testCase.thirdResult} " +
                         "for given ${testCase.testedValue} then validation result is ${testCase.expected}"
             ) {
                 setStringTransformerDefaultValue(
@@ -110,11 +110,11 @@ class CommonWordsValidationStrategyImplTest {
                 )
                 setDaoReturns(
                     testedValue = testCase.testedValue,
-                    matchingWords = testCase.firstReturn,
+                    hasMatchingWords = testCase.firstResult,
                     textWithoutNumbers = testCase.thirdString,
-                    matchingWordsForTextWithoutNumbers = testCase.thirdReturn,
+                    hasMatchingWordsForTextWithoutNumbers = testCase.thirdResult,
                     textWithoutLeetSpeek = testCase.secondString,
-                    matchingWordsForTextWithoutLeetSpeek = testCase.secondReturn
+                    hasMatchingWordsForTextWithoutLeetSpeek = testCase.secondResult
                 )
 
                 commonWordsValidationStrategy
@@ -146,21 +146,21 @@ class CommonWordsValidationStrategyImplTest {
 
     private fun setDaoReturns(
         testedValue: String,
-        matchingWords: List<String>,
+        hasMatchingWords: Boolean,
         textWithoutNumbers: String,
-        matchingWordsForTextWithoutNumbers: List<String>,
+        hasMatchingWordsForTextWithoutNumbers: Boolean,
         textWithoutLeetSpeek: String,
-        matchingWordsForTextWithoutLeetSpeek: List<String>
+        hasMatchingWordsForTextWithoutLeetSpeek: Boolean
     ) {
         every {
             commonWordDao.getMatchingWords(testedValue)
-        } returns Single.just(matchingWords)
+        } returns Single.just(hasMatchingWords)
         every {
             commonWordDao.getMatchingWords(textWithoutNumbers)
-        } returns Single.just(matchingWordsForTextWithoutNumbers)
+        } returns Single.just(hasMatchingWordsForTextWithoutNumbers)
         every {
             commonWordDao.getMatchingWords(textWithoutLeetSpeek)
-        } returns Single.just(matchingWordsForTextWithoutLeetSpeek)
+        } returns Single.just(hasMatchingWordsForTextWithoutLeetSpeek)
     }
 
 
@@ -168,8 +168,5 @@ class CommonWordsValidationStrategyImplTest {
         const val CHECKED_WORD = "l33tsp34k"
         const val CHECKED_WORD_WITHOUT_LEET_SPEAK = "leetspeak"
         const val CHECKED_WORD_WITHOUT_NUMBERS = "ltspk"
-        const val MATCHING_WORD = "l33tsp34k"
-        const val MATCHING_WORD_WITHOUT_LEET_SPEAK = "leetspeak"
-        const val MATCHING_WORD_WITHOUT_NUMBERS = "ltspk"
     }
 }

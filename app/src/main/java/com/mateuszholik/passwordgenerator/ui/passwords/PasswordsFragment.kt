@@ -3,13 +3,13 @@ package com.mateuszholik.passwordgenerator.ui.passwords
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
+import com.mateuszholik.passwordgenerator.extensions.animateVisibility
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.factories.GsonFactory
-import com.mateuszholik.passwordgenerator.factories.ViewHolderFactory
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
@@ -25,9 +25,13 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val viewModel: PasswordsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val clipboardManager: ClipboardManager by inject()
-    private val gsonFactory: GsonFactory by inject()
-    private val viewHolderFactory: ViewHolderFactory by inject()
     private var adapter: PasswordsAdapter? = null
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            binding.goToCreatePasswordScreenBtn.animateVisibility(isVisible = dy <= 0)
+        }
+    }
 
     override val isBottomNavVisible: Boolean = true
 
@@ -64,14 +68,11 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
                 clipboardManager.copyToClipboard(label, password)
             },
             navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-            createPasswordViewHolder = { viewGroup, viewType ->
-                viewHolderFactory.create(
-                    viewGroup,
-                    viewType
-                )
-            }
         )
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.apply {
+            adapter = this@PasswordsFragment.adapter
+            addOnScrollListener(scrollListener)
+        }
     }
 
     private fun setUpObservers() {
@@ -82,9 +83,8 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     }
 
     private fun navigateToPasswordDetails(password: Password) {
-        val passwordJson = gsonFactory.create().toJson(password)
         val action =
-            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(passwordJson)
+            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(password.id)
         findNavController().navigate(action)
     }
 

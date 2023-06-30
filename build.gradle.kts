@@ -5,8 +5,8 @@ buildscript {
     }
 
     dependencies {
-        classpath(Gradle.DEPENDENCY)
-        classpath(Jetbrains.KotlinGradlePlugin.DEPENDENCY)
+        classpath(GradlePlugins.ANDROID_GRADLE_PLUGIN)
+        classpath(GradlePlugins.KOTLIN_GRADLE_PLUGIN)
         classpath(Androidx.Navigation.SAFE_ARGS_DEPENDENCY)
         classpath(GradlePlugins.OSS_LICENSES)
         classpath(Google.PlayServices.DEPENDENCY)
@@ -15,6 +15,7 @@ buildscript {
 }
 
 plugins {
+    id(GradlePlugins.KOTLIN_JVM) version GradlePlugins.kotlinVersion apply false
     id(AndroidGitVersion.PLUGIN) version AndroidGitVersion.VERSION apply false
 }
 

@@ -1,18 +1,20 @@
 package com.mateuszholik.passwordgenerator.ui.passwords.adapters
 
 import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.models.PasswordsViewHolder
+import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
+import com.mateuszholik.passwordgenerator.extensions.getAttrColor
+import com.mateuszholik.passwordgenerator.extensions.getAttrColorResId
 
 class PasswordsAdapter(
     private val copyToClipboard: (String, String) -> Unit,
     private val navigateToPasswordDetails: (Password) -> Unit,
-    private val createPasswordViewHolder: (ViewGroup, Int) -> PasswordsViewHolder
-) : RecyclerView.Adapter<PasswordsViewHolder>() {
+) : RecyclerView.Adapter<PasswordsAdapter.PasswordViewHolder>() {
 
     private val passwords: MutableList<PasswordType> = mutableListOf()
 
@@ -23,36 +25,51 @@ class PasswordsAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordsViewHolder =
-        createPasswordViewHolder(parent, viewType)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PasswordViewHolder =
+        PasswordViewHolder(
+            ItemPasswordBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
-    override fun onBindViewHolder(holder: PasswordsViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: PasswordViewHolder, position: Int) {
         val passwordType = passwords[position]
-        when (holder) {
-            is PasswordsViewHolder.ValidPasswordViewHolder -> holder.bind(
-                passwordType,
-                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-                copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
-            )
-            is PasswordsViewHolder.OutdatedPasswordViewHolder -> holder.bind(
-                passwordType,
-                copyToClipboard = { platform, password -> copyToClipboard(platform, password) },
-                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-            )
-            is PasswordsViewHolder.ExpiringPasswordViewHolder -> holder.bind(
-                passwordType,
-                navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-                copyToClipboard = { platform, password -> copyToClipboard(platform, password) }
-            )
-        }
+
+        holder.bind(
+            passwordType = passwordType,
+            navigateToPasswordDetails = navigateToPasswordDetails,
+            copyToClipboard = copyToClipboard
+        )
     }
 
     override fun getItemCount(): Int = passwords.size
 
-    override fun getItemViewType(position: Int): Int =
-        when(passwords[position]) {
-            is PasswordType.ValidPassword -> R.layout.item_password
-            is PasswordType.ExpiringPassword -> R.layout.item_password_expiring
-            is PasswordType.OutdatedPassword -> R.layout.item_password_outdated
+    class PasswordViewHolder(private val binding: ItemPasswordBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(
+            passwordType: PasswordType,
+            navigateToPasswordDetails: (Password) -> Unit,
+            copyToClipboard: (String, String) -> Unit
+        ) {
+            with(binding) {
+                val color = root.context.getAttrColor(passwordType.getAttrColorResId())
+
+                root.strokeColor = color
+                root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
+                circularProgressBar.secondaryColor = color
+                circularProgressBar.animateProgress(passwordType.score)
+                platformNameTV.text = passwordType.password.platformName
+                copyPasswordIB.setOnClickListener {
+                    copyToClipboard(
+                        passwordType.password.platformName,
+                        passwordType.password.password
+                    )
+                }
+            }
         }
+    }
 }

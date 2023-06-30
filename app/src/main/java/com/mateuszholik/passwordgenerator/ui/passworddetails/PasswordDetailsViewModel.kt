@@ -3,7 +3,10 @@ package com.mateuszholik.passwordgenerator.ui.passworddetails
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
+import com.mateuszholik.domain.usecase.GetPasswordTypeUseCase
+import com.mateuszholik.domain.usecase.GetPasswordValidationResultUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
@@ -12,50 +15,58 @@ import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
 import com.mateuszholik.passwordvalidation.models.PasswordValidationResult
-import com.mateuszholik.passwordvalidation.usecases.ValidatePasswordUseCase
 import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
 class PasswordDetailsViewModel(
-    private val password: Password,
+    private val passwordId: Long,
+    private val getPasswordTypeUseCase: GetPasswordTypeUseCase,
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val clipboardManager: ClipboardManager,
-    private val validatePasswordUseCase: ValidatePasswordUseCase,
+    private val validatePasswordUseCase: GetPasswordValidationResultUseCase,
     private val textProvider: TextProvider,
-    private val workScheduler: WorkScheduler
+    private val workScheduler: WorkScheduler,
 ) : BaseViewModel() {
-
-    private var currentScore = 0f
-    private var currentMaxScore = 0f
 
     private val _passwordDeletedSuccessfully = MutableLiveData<Boolean>()
     val passwordDeletedSuccessfully: LiveData<Boolean>
         get() = _passwordDeletedSuccessfully
 
-    private val _passwordScore = MutableLiveData(0)
-    val passwordScore: LiveData<Int>
-        get() = _passwordScore
+    private val _passwordType = MutableLiveData<PasswordType>()
+    val passwordType: LiveData<PasswordType>
+        get() = _passwordType
 
-    private val _passwordValidationResult = MutableLiveData<PasswordValidationResult>()
-    val passwordValidationResult: LiveData<PasswordValidationResult>
+    private val _passwordValidationResult = MutableLiveData<List<PasswordValidationResult>>()
+    val passwordValidationResult: LiveData<List<PasswordValidationResult>>
         get() = _passwordValidationResult
 
     init {
-        validatePassword()
+        getPassword()
     }
 
-    private fun validatePassword() {
+    private fun getPassword() {
+        getPasswordTypeUseCase(passwordId)
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = {
+                    _passwordType.value = it
+                    validatePassword(it.password)
+                },
+                doOnError = {
+                    Timber.e(it, "Error while getting the password")
+                    _errorOccurred.value = textProvider.provide(MessageType.GET_PASSWORDS_ERROR)
+                }
+            )
+            .addTo(compositeDisposable)
+    }
+
+    private fun validatePassword(password: Password) {
         validatePasswordUseCase(password.password)
             .subscribeWithObserveOnMainThread(
-                doOnNext = {
+                doOnSuccess = {
                     _passwordValidationResult.value = it
-                    currentScore += it.score
-                    currentMaxScore += it.maxScore
-                    _passwordScore.value = ((currentScore / currentMaxScore) * 100).toInt()
                 },
-                doOnSuccess = { Timber.i("Successfully validated password") },
                 doOnError = {
-                    Timber.e(it, "Error during password validation")
+                    Timber.e(it, "Error while validating the password")
                     _errorOccurred.value = textProvider.provide(MessageType.VALIDATION_ERROR)
                 }
             )
@@ -63,13 +74,16 @@ class PasswordDetailsViewModel(
     }
 
     fun copyPasswordToClipboard() =
-        clipboardManager.copyToClipboard(password.platformName, password.password)
+        clipboardManager.copyToClipboard(
+            passwordType.value?.password?.platformName.orEmpty(),
+            passwordType.value?.password?.password.orEmpty()
+        )
 
     fun deletePassword() {
-        deletePasswordUseCase(password.id)
+        deletePasswordUseCase(passwordId)
             .andThen(
                 Completable.fromAction {
-                    workScheduler.cancelWorker(password.id)
+                    workScheduler.cancelWorker(passwordId)
                 }
             )
             .subscribeWithObserveOnMainThread(
@@ -77,7 +91,7 @@ class PasswordDetailsViewModel(
                     _passwordDeletedSuccessfully.postValue(true)
                 },
                 doOnError = {
-                    Timber.e(it)
+                    Timber.e(it, "Error while deleting the password")
                     _errorOccurred.postValue(textProvider.provide(MessageType.DELETE_PASSWORD_ERROR))
                 }
             )

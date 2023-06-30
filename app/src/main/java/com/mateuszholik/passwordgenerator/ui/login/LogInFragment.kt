@@ -3,6 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.login
 import android.os.Bundle
 import android.view.View
 import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
@@ -40,6 +41,7 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             keyboard.doOnUndoClicked = {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
+                keyboard.background = ContextCompat.getDrawable(keyboard.context, R.drawable.view_background)
             }
             keyboard.doOnConfirmedClicked = { viewModel.logIn(pinCode.pin) }
         }
@@ -50,6 +52,9 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             wrongPin.observe(viewLifecycleOwner) {
                 messageProvider.show(it)
                 binding.pinCode.animateFailure()
+                binding.keyboard.apply {
+                    background = ContextCompat.getDrawable(context, R.drawable.view_background_error)
+                }
             }
             errorOccurred.observe(viewLifecycleOwner) {
                 messageProvider.show(it)

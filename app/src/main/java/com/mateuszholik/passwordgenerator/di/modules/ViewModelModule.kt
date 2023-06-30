@@ -2,6 +2,7 @@ package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
+import com.mateuszholik.passwordgenerator.ui.MainViewModel
 import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsViewModel
@@ -72,9 +73,10 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (password: Password) ->
+    viewModel { (passwordId: Long) ->
         PasswordDetailsViewModel(
-            password = password,
+            passwordId = passwordId,
+            getPasswordTypeUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
@@ -110,4 +112,6 @@ val viewModelModule = module {
     viewModel {
         ImportPasswordsViewModel(importPasswordsUseCase = get())
     }
+
+    viewModel { MainViewModel() }
 }

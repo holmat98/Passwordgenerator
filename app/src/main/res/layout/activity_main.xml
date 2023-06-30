@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorSurface"
     android:orientation="vertical"
-    android:background="@color/primary"
     tools:context=".ui.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:theme="@style/ToolbarTheme">
 
         <ImageView
@@ -22,7 +21,8 @@
             android:background="@null"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:src="@drawable/ic_launcher_foreground"
+            app:tint="?colorOnSurface" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -37,14 +37,10 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
+        style="@style/BottomNavBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:visibility="gone"
-        app:itemIconTint="@color/white"
-        app:itemTextAppearanceActive="@style/BottomNavigationView"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView"
-        app:itemTextColor="@color/white"
         app:menu="@menu/user_menu" />
 
 </LinearLayout>

@@ -8,10 +8,9 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
-import timber.log.Timber
 import kotlin.math.min
 
 class CircularProgressBar @JvmOverloads constructor(
@@ -22,8 +21,9 @@ class CircularProgressBar @JvmOverloads constructor(
     private var strokeWidth = DEFAULT_STROKE_WIDTH
     private var animatedProgressValue: Int = NONE
     private var primaryColor: Int = Color.BLACK
-    private var secondaryColor: Int = Color.WHITE
     private var textSize: Float = NONE.toFloat()
+
+    var secondaryColor: Int = Color.WHITE
 
     private val radius: Float
         get() = (min(width, height) - (strokeWidth * 2)) / 2
@@ -69,12 +69,12 @@ class CircularProgressBar @JvmOverloads constructor(
 
         val primaryColor = typedArray.getColor(
             R.styleable.CircularProgressBar_primaryColor,
-            ContextCompat.getColor(context, R.color.primary)
+            context.getAttrColor(R.attr.colorPrimary)
         )
 
         val secondaryColor = typedArray.getColor(
             R.styleable.CircularProgressBar_secondaryColor,
-            ContextCompat.getColor(context, R.color.secondary)
+            context.getAttrColor(R.attr.colorOnPrimary)
         )
 
         val textSize = typedArray.getDimension(

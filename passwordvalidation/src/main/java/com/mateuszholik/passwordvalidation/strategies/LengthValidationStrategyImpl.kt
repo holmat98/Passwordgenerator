@@ -20,7 +20,8 @@ internal class LengthValidationStrategyImpl : PasswordValidationStrategy {
     private fun getPointsForPasswordLength(password: String) =
         when (password.length) {
             in 0..7 -> NONE
-            in 8..11 -> LENGTH.maxScore / 2
+            in 8..11 -> LENGTH.maxScore / 3
+            in 12..16 -> (LENGTH.maxScore * 2) / 3
             else -> LENGTH.maxScore
         }
 

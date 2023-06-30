@@ -1,24 +1,24 @@
 package com.mateuszholik.passwordgenerator.workers
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.work.WorkerParameters
 import androidx.work.rxjava3.RxWorker
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.managers.NotificationManager
+import com.mateuszholik.passwordgenerator.ui.MainActivity
 import com.mateuszholik.passwordgenerator.utils.WorkersInputDataKeys.PASSWORD_ID
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 class NotificationWorker(
+    private val notificationManager: NotificationManager,
+    private val getPasswordUseCase: GetPasswordUseCase,
     val context: Context,
-    workerParameters: WorkerParameters
-) : RxWorker(context, workerParameters), KoinComponent {
-
-    private val notificationManager: NotificationManager by inject()
-    private val getPasswordUseCase: GetPasswordUseCase by inject()
+    workerParameters: WorkerParameters,
+) : RxWorker(context, workerParameters) {
 
     override fun createWork(): Single<Result> =
         getPasswordUseCase(inputData.getLong(PASSWORD_ID, 0L))
@@ -32,13 +32,28 @@ class NotificationWorker(
                             R.string.notification_worker_message,
                             password.platformName
                         ),
-                        password.id.toInt()
+                        password.id.toInt(),
+                        createMainActivityPendingIntent()
                     )
                 }.andThen(Single.just(Result.success()))
             }
             .onErrorReturn { Result.failure() }
 
+    private fun createMainActivityPendingIntent(): PendingIntent {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }
+
+        return PendingIntent.getActivity(
+            context,
+            PENDING_INTENT_REQUEST_ID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    }
+
     companion object {
         const val NOTIFICATION_WORKER_TAG = "NOTIFICATION_WORKER_TAG"
+        const val PENDING_INTENT_REQUEST_ID = 54321
     }
 }

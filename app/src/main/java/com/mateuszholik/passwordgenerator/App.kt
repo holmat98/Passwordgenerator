@@ -4,6 +4,7 @@ import android.app.Application
 import com.mateuszholik.passwordgenerator.di.allModules
 import com.mateuszholik.passwordgenerator.logging.CrashReportingTree
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
@@ -20,6 +21,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
+            workManagerFactory()
             modules(allModules)
         }
     }

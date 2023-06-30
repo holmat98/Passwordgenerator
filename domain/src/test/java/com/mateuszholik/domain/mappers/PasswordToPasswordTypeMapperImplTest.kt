@@ -1,6 +1,7 @@
 package com.mateuszholik.domain.mappers
 
 import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.domain.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
 import io.mockk.every
 import io.mockk.mockkStatic
@@ -30,38 +31,57 @@ internal class PasswordToPasswordTypeMapperImplTest {
 
     @Test
     fun `When password will expire in 14 days then mapper will return PasswordType ValidPassword`() {
-        val testedValue = PASSWORD.copy(expiringDate = TODAY.plusDays(14))
+        val testedValue =
+            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.plusDays(14)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
         assertThat(result)
             .isInstanceOf(PasswordType.ValidPassword::class.java)
-            .isEqualTo(PasswordType.ValidPassword(testedValue))
+            .isEqualTo(
+                PasswordType.ValidPassword(
+                    testedValue.password,
+                    testedValue.passwordScore
+                )
+            )
     }
 
     @Test
     fun `When password will expire after in 5 days then mapper will return PasswordType ExpiringPassword`() {
-        val testedValue = PASSWORD.copy(expiringDate = TODAY.plusDays(5))
+        val testedValue =
+            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.plusDays(5)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
         assertThat(result)
             .isInstanceOf(PasswordType.ExpiringPassword::class.java)
-            .isEqualTo(PasswordType.ExpiringPassword(testedValue))
+            .isEqualTo(
+                PasswordType.ExpiringPassword(
+                    testedValue.password,
+                    testedValue.passwordScore
+                )
+            )
     }
 
     @Test
     fun `When password expired day before then mapper will return PasswordType OutdatedPassword`() {
-        val testedValue = PASSWORD.copy(expiringDate = TODAY.minusDays(1))
+        val testedValue =
+            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.minusDays(1)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
         assertThat(result)
             .isInstanceOf(PasswordType.OutdatedPassword::class.java)
-            .isEqualTo(PasswordType.OutdatedPassword(testedValue))
+            .isEqualTo(
+                PasswordType.OutdatedPassword(
+                    testedValue.password,
+                    testedValue.passwordScore
+                )
+            )
     }
 
     private companion object {
+        const val PASSWORD_SCORE = 100
         val TODAY: LocalDateTime = LocalDateTime.of(2022, 12, 26, 12, 0, 0)
         val PASSWORD = Password(
             id = 1L,
