@@ -30,10 +30,14 @@
         android:name="com.mateuszholik.passwordgenerator.ui.logintransition.LoginTransitionFragment">
         <action
             android:id="@+id/action_loginTransitionFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/notificationPermissionFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginTransitionFragment_to_createPinFragment"
-            app:destination="@id/createPinFragment" />
+            app:destination="@id/createPinFragment"
+            app:popUpTo="@id/notificationPermissionFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/createPinFragment"
@@ -46,6 +50,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/notificationPermissionFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
