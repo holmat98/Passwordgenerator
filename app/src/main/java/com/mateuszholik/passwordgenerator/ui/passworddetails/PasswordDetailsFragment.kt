@@ -5,7 +5,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.data.repositories.models.Password
@@ -39,11 +42,6 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
     private var adapter: PasswordValidationAdapter? = null
     private var currentPassword: Password? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,18 +52,30 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
         setUpRecyclerView()
         setUpObservers()
+        setUpMenu()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.options_menu, menu)
-    }
+    private fun setUpMenu() {
+        activity?.let {
+            val menuHost = it as MenuHost
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.menuOptions) {
-            showOptionsDialog()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+            menuHost.addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                        menuInflater.inflate(R.menu.options_menu, menu)
+                    }
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                        if (menuItem.itemId == R.id.menuOptions) {
+                            showOptionsDialog()
+                            true
+                        } else {
+                            true
+                        }
+                },
+                viewLifecycleOwner,
+                Lifecycle.State.RESUMED
+            )
         }
     }
 

@@ -9,16 +9,13 @@ import com.mateuszholik.passwordgenerator.managers.NotificationManager
 import com.mateuszholik.passwordgenerator.utils.WorkersInputDataKeys.PASSWORD_ID
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
 class NotificationWorker(
+    private val notificationManager: NotificationManager,
+    private val getPasswordUseCase: GetPasswordUseCase,
     val context: Context,
     workerParameters: WorkerParameters
-) : RxWorker(context, workerParameters), KoinComponent {
-
-    private val notificationManager: NotificationManager by inject()
-    private val getPasswordUseCase: GetPasswordUseCase by inject()
+) : RxWorker(context, workerParameters) {
 
     override fun createWork(): Single<Result> =
         getPasswordUseCase(inputData.getLong(PASSWORD_ID, 0L))

@@ -13,7 +13,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Maybe
 import org.junit.jupiter.api.Test
 
 internal class ImportPasswordsUseCaseImplTest {
@@ -42,7 +42,7 @@ internal class ImportPasswordsUseCaseImplTest {
     fun `Passwords are imported from file and saved and are not decrypted`() {
         val input = ImportType.Import(URI)
 
-        every { readDataFromFileUseCase(URI) } returns Single.just(NOT_ENCRYPTED_DATA_FROM_FILE)
+        every { readDataFromFileUseCase(URI) } returns Maybe.just(NOT_ENCRYPTED_DATA_FROM_FILE)
 
         importPasswordsUseCase(input)
             .test()
@@ -59,7 +59,7 @@ internal class ImportPasswordsUseCaseImplTest {
     fun `Passwords are imported from file and saved and are decrypted`() {
         val input = ImportType.EncryptedImport(URI, ENCRYPTION_PASSWORD)
 
-        every { readDataFromFileUseCase(URI) } returns Single.just(ENCRYPTED_DATA_FROM_FILE)
+        every { readDataFromFileUseCase(URI) } returns Maybe.just(ENCRYPTED_DATA_FROM_FILE)
 
         every {
             encryptionManager.decrypt(

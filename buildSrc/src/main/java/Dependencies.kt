@@ -1,3 +1,16 @@
+object Plugins {
+    const val ANDROID_APPLICATION = "com.android.application"
+    const val KOTLIN = "kotlin"
+    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
+    const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
+    const val GOOGLE_SERVICES = "com.google.gms.google-services"
+    const val ANDROID_LIBRARY = "com.android.library"
+    const val KAPT = "kapt"
+    const val SAFE_ARGS = "androidx.navigation.safeargs"
+    const val OSS_LICENSES = "com.google.android.gms.oss-licenses-plugin"
+    const val KOTLIN_PARCELIZE = "kotlin-parcelize"
+}
+
 object DefaultConfig {
     const val COMPILE_SDK = 33
     const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
@@ -9,49 +22,47 @@ object DefaultConfig {
 }
 
 object GradlePlugins {
+    const val kotlinVersion = "1.8.22"
+    private const val gradlePluginVersion = "7.4.0"
+
     const val OSS_LICENSES = "com.google.android.gms:oss-licenses-plugin:0.10.6"
+    const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:$gradlePluginVersion"
+    const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
 }
 object Proguard {
     const val FILE = "proguard-android-optimize.txt"
     const val RULES = "proguard-rules.pro"
 }
 
-object Gradle {
-    private const val version = "7.3.1"
-
-    const val DEPENDENCY = "com.android.tools.build:gradle:$version"
-}
-
-object Jetbrains {
-
-    object KotlinGradlePlugin {
-        private const val version = "1.7.20"
-
-        const val DEPENDENCY = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
-    }
-}
-
 object Androidx {
 
     object Core {
-        private const val version = "1.6.0"
-        private const val versionTesting = "2.1.0"
+        private const val version = "1.10.1"
 
         const val DEPENDENCY = "androidx.core:core-ktx:$version"
 
         object Testing {
-            const val DEPENDENCY = "androidx.arch.core:core-testing:$versionTesting"
+            private const val version = "2.2.0"
+
+            const val DEPENDENCY = "androidx.arch.core:core-testing:$version"
         }
     }
 
     object AppCompat {
-        private const val version = "1.4.1"
+        private const val version = "1.6.1"
 
         const val DEPENDENCY = "androidx.appcompat:appcompat:$version"
     }
 
+    object Activity {
+        private const val version = "1.7.2"
+
+        const val DEPENDENCY = "androidx.activity:activity-ktx:$version"
+    }
+
     object Navigation {
-        private const val version = "2.4.1"
+        private const val version = "2.5.3"
 
         const val FRAGMENT_NAVIGATION_DEPENDENCY =
             "androidx.navigation:navigation-fragment-ktx:$version"
@@ -61,13 +72,13 @@ object Androidx {
     }
 
     object ConstraintLayout {
-        private const val version = "2.1.3"
+        private const val version = "2.1.4"
 
         const val DEPENDENCY = "androidx.constraintlayout:constraintlayout:$version"
     }
 
     object Room {
-        private const val version = "2.4.1"
+        private const val version = "2.5.1"
 
         const val RUNTIME_DEPENDENCY = "androidx.room:room-runtime:$version"
         const val COMPILER_DEPENDENCY = "androidx.room:room-compiler:$version"
@@ -79,7 +90,7 @@ object Androidx {
     object Lifecycle {
 
         object ViewModel {
-            private const val version = "2.4.1"
+            private const val version = "2.6.1"
 
             const val DEPENDENCY = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
         }
@@ -97,14 +108,8 @@ object Androidx {
             "androidx.security:security-app-authenticator-testing:$version-alpha01"
     }
 
-    object ViewPager {
-        private const val version = "1.0.0"
-
-        const val DEPENDENCY = "androidx.viewpager2:viewpager2:$version"
-    }
-
     object WorkManager {
-        private const val version = "2.7.1"
+        private const val version = "2.8.1"
 
         const val DEPENDENCY = "androidx.work:work-runtime-ktx:$version"
 
@@ -114,7 +119,7 @@ object Androidx {
     }
 
     object Biometric {
-        private const val version = "1.0.0-beta01"
+        private const val version = "1.1.0"
 
         const val DEPENDENCY = "androidx.biometric:biometric:$version"
     }
@@ -147,8 +152,8 @@ object Google {
 
         object Firebase {
             object Crashlytics {
-                private const val gradleVersion = "2.9.2"
-                private const val version = "18.3.3"
+                private const val gradleVersion = "2.9.6"
+                private const val version = "18.3.7"
 
                 const val GRADLE = "com.google.firebase:firebase-crashlytics-gradle:$gradleVersion"
                 const val DEPENDENCY = "com.google.firebase:firebase-crashlytics:$version"
@@ -168,12 +173,6 @@ object Testing {
         const val PARAMS = "org.junit.jupiter:junit-jupiter-params:$version"
     }
 
-    object Espresso {
-        private const val version = "3.4.0"
-
-        const val DEPENDENCY = "androidx.test.espresso:espresso-core:$version"
-    }
-
     object AssertJ {
         private const val version = "3.21.0"
 
@@ -185,39 +184,36 @@ object Testing {
 object SquareUp {
 
     object LeakCanary {
-        private const val version = "2.8.1"
+        private const val version = "2.11"
 
         const val DEPENDENCY = "com.squareup.leakcanary:leakcanary-android:$version"
     }
 }
 
 object RxJava {
-    private const val version = "3.1.3"
-    private const val versionAndroid = "3.0.0"
+    private const val version = "3.1.6"
 
     const val DEPENDENCY = "io.reactivex.rxjava3:rxjava:$version"
 
     object Android {
-        const val DEPENDENCY = "io.reactivex.rxjava3:rxandroid:$versionAndroid"
+        private const val version = "3.0.2"
+
+        const val DEPENDENCY = "io.reactivex.rxjava3:rxandroid:$version"
     }
 }
 
 object Koin {
-    private const val version = "2.0.1"
+    private const val version = "3.4.2"
 
     const val DEPENDENCY = "io.insert-koin:koin-android:$version"
 
-    object ViewModel {
-        const val DEPENDENCY = "io.insert-koin:koin-androidx-viewmodel:$version"
-    }
-
-    object Scope {
-        const val DEPENDENCY = "io.insert-koin:koin-androidx-scope:$version"
+    object Worker {
+        const val DEPENDENCY = "io.insert-koin:koin-androidx-workmanager:$version"
     }
 }
 
 object Mockk {
-    private const val version = "1.12.1"
+    private const val version = "1.13.5"
 
     const val DEPENDENCY = "io.mockk:mockk:$version"
 
@@ -227,7 +223,7 @@ object Mockk {
 }
 
 object Lottie {
-    private const val version = "5.0.2"
+    private const val version = "6.0.1"
 
     const val DEPENDENCY = "com.airbnb.android:lottie:$version"
 }

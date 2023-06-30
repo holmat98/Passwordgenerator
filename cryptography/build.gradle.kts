@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id(Plugins.ANDROID_LIBRARY)
+    id(Plugins.KOTLIN_ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 apply(from="../jacoco.gradle")
@@ -52,8 +52,6 @@ dependencies {
 
     // koin
     implementation(Koin.DEPENDENCY)
-    implementation(Koin.ViewModel.DEPENDENCY)
-    implementation(Koin.Scope.DEPENDENCY)
 
     // mockk
     testImplementation(Mockk.DEPENDENCY)
