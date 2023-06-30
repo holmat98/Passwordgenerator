@@ -56,6 +56,7 @@ class PasswordDetailsViewModel(
                     _errorOccurred.value = textProvider.provide(MessageType.GET_PASSWORDS_ERROR)
                 }
             )
+            .addTo(compositeDisposable)
     }
 
     private fun validatePassword(password: Password) {
@@ -69,6 +70,7 @@ class PasswordDetailsViewModel(
                     _errorOccurred.value = textProvider.provide(MessageType.VALIDATION_ERROR)
                 }
             )
+            .addTo(compositeDisposable)
     }
 
     fun copyPasswordToClipboard() =
