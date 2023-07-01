@@ -2,7 +2,6 @@ package com.mateuszholik.passwordgenerator.ui
 
 import android.os.Bundle
 import android.view.WindowManager.LayoutParams
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
@@ -13,6 +12,7 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ActivityMainBinding
 import com.mateuszholik.passwordgenerator.factories.AppBarConfigurationFactory
 import com.mateuszholik.passwordgenerator.ui.models.BottomNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), BottomNavController {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), BottomNavController {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val appBarConfigurationFactory: AppBarConfigurationFactory by inject()
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
