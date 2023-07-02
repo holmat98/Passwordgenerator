@@ -1,5 +1,6 @@
 package com.mateuszholik.passwordgenerator.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager.LayoutParams
@@ -58,7 +59,7 @@ class MainActivity : AppCompatActivity(), BottomNavController {
     }
 
     private fun logOut() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = newIntent(this)
 
         finish()
         startActivity(intent)
@@ -68,5 +69,14 @@ class MainActivity : AppCompatActivity(), BottomNavController {
         if (::binding.isInitialized) {
             binding.bottomNavigationView.isVisible = isVisible
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context, clearTop: Boolean = false): Intent =
+            Intent(context, MainActivity::class.java).apply {
+                if (clearTop) {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                }
+            }
     }
 }

@@ -2,7 +2,6 @@ package com.mateuszholik.passwordgenerator.workers
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.work.WorkerParameters
 import androidx.work.rxjava3.RxWorker
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
@@ -39,18 +38,13 @@ class NotificationWorker(
             }
             .onErrorReturn { Result.failure() }
 
-    private fun createMainActivityPendingIntent(): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
-
-        return PendingIntent.getActivity(
+    private fun createMainActivityPendingIntent(): PendingIntent =
+        PendingIntent.getActivity(
             context,
             PENDING_INTENT_REQUEST_ID,
-            intent,
+            MainActivity.newIntent(context, true),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
-    }
 
     companion object {
         const val NOTIFICATION_WORKER_TAG = "NOTIFICATION_WORKER_TAG"
