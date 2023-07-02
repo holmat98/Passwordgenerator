@@ -1,5 +1,6 @@
 package com.mateuszholik.passwordgenerator.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
@@ -57,7 +58,10 @@ class MainActivity : AppCompatActivity(), BottomNavController {
     }
 
     private fun logOut() {
-        navController.navigate(R.id.loginTransitionFragment)
+        val intent = Intent(this, MainActivity::class.java)
+
+        finish()
+        startActivity(intent)
     }
 
     override fun onBottomNavVisibilityChanged(isVisible: Boolean) {
