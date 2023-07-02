@@ -54,10 +54,10 @@
     <string name="edit_password_error">Wystąpił błąd przy edycji hasła</string>
 
     <!--  Generate password screen  -->
-    <string name="generate_create_password">Generate password</string>
-    <string name="generate_password_error">Error occurred while creating the password</string>
-    <string name="generate_password_length">Password\'s length:</string>
-    <string name="generate_password_save_button_description">Save password button</string>
+    <string name="generate_create_password">Stwórz hasło</string>
+    <string name="generate_password_error">Wystąpił błąd przy tworzeniu hasła</string>
+    <string name="generate_password_length">Długość hasła:</string>
+    <string name="generate_password_save_button_description">Zapisz hasło</string>
 
     <!--  Item password  -->
     <string name="item_password_expire_date">Data ważności: %1$s</string>
@@ -150,7 +150,7 @@
     <string name="export_result_screen_failure_description">błąd podczas eksportowania haseł.</string>
     <string name="export_screen_button">Eksportuj</string>
     <string name="import_screen_header">Importuj</string>
-    <string name="import_screen_description">swoje hasła z wybranego przez Ciebie pliku. Dane powinny być zapisane w danym formacie:\n\"nazwa : hasło\"</string>
+    <string name="import_screen_description">swoje hasła z wybranego przez Ciebie pliku.</string>
     <string name="import_result_screen_success_header">Hasła</string>
     <string name="import_result_screen_success_description">zostały poprawnie zaimportowane</string>
     <string name="import_result_screen_failure_header">Wystąpił</string>
