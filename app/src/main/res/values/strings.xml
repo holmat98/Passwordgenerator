@@ -170,8 +170,9 @@
     <!-- Licenses -->
     <string name="licenses_title">Licences</string>
     <string name="licenses_libraries">Open source licenses</string>
-    <string name="licenses_graphics">Lottie animations</string>
+    <string name="licenses_animations">Lottie animations</string>
     <string name="licenses_font">M PLUS Rounded 1c</string>
+    <string name="licenses_graphics">Graphics licenses</string>
 
     <!--  Other  -->
     <string name="password_test_hint">Provide password</string>
