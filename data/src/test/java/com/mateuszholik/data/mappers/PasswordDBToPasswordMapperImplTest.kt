@@ -51,7 +51,7 @@ class PasswordDBToPasswordMapperImplTest {
             platformIV = ByteArray(11),
             password = ByteArray(12),
             passwordIV = ByteArray(13),
-            expiringDate = EXPIRING_DATE
+            expirationDate = EXPIRING_DATE
         )
         val EXPECTED = Password(
             id = 1,

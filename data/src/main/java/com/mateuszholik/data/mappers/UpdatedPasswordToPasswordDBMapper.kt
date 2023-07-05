@@ -21,11 +21,14 @@ internal class UpdatedPasswordToPasswordDBMapperImpl(
 
         return PasswordDB(
             id = param.id,
+            platform = "",
             platformName = encryptedPlatformName.data,
             platformIV = encryptedPlatformName.iv,
             password = encryptedPassword.data,
             passwordIV = encryptedPassword.iv,
-            expiringDate = LocalDateTime.now().plusDays(expiringDate)
+            passwordScore = 0,
+            website = "",
+            expirationDate = LocalDateTime.now().plusDays(expiringDate)
         )
     }
 

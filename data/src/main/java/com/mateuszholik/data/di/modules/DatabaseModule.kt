@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.mateuszholik.data.db.PasswordsDatabase
 import com.mateuszholik.data.db.converters.Converters
+import com.mateuszholik.data.db.migrations.MIGRATION_2_3
 import com.mateuszholik.data.di.models.Constants.DATABASE_NAME
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -35,4 +36,5 @@ private fun provideDatabase(
     DATABASE_NAME
 )
     .addTypeConverter(converter)
+    .addMigrations(MIGRATION_2_3)
     .build()

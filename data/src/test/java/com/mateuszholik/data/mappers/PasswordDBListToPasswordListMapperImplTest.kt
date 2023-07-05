@@ -36,7 +36,7 @@ class PasswordDBListToPasswordListMapperImplTest {
             platformIV = ByteArray(11),
             password = ByteArray(12),
             passwordIV = ByteArray(13),
-            expiringDate = EXPIRING_DATE
+            expirationDate = EXPIRING_DATE
         )
         val PASSWORD_DB_2 = PasswordDB(
             id = 2,
@@ -44,7 +44,7 @@ class PasswordDBListToPasswordListMapperImplTest {
             platformIV = ByteArray(11),
             password = ByteArray(12),
             passwordIV = ByteArray(13),
-            expiringDate = EXPIRING_DATE
+            expirationDate = EXPIRING_DATE
         )
         val MAPPED_PASSWORD_1 = Password(
             id = 1,

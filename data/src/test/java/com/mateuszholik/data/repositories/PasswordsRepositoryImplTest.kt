@@ -181,7 +181,7 @@ class PasswordsRepositoryImplTest {
             platformIV = ENCRYPTED_PLATFORM.iv,
             password = ENCRYPTED_PASSWORD.data,
             passwordIV = ENCRYPTED_PASSWORD.iv,
-            expiringDate = EXPIRING_DATE
+            expirationDate = EXPIRING_DATE
         )
         val PASSWORD_DB_2 = PasswordDB(
             id = ID_2,
@@ -189,7 +189,7 @@ class PasswordsRepositoryImplTest {
             platformIV = ENCRYPTED_PLATFORM_2.iv,
             password = ENCRYPTED_PASSWORD_2.data,
             passwordIV = ENCRYPTED_PASSWORD_2.iv,
-            expiringDate = EXPIRING_DATE
+            expirationDate = EXPIRING_DATE
         )
         val MAPPED_PASSWORD = Password(
             id = ID,

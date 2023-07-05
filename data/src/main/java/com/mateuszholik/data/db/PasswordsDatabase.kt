@@ -9,7 +9,7 @@ import com.mateuszholik.data.db.models.PasswordDB
 
 @Database(
     entities = [PasswordDB::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)

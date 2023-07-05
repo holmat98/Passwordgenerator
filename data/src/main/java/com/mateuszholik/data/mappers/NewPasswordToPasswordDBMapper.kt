@@ -21,11 +21,14 @@ internal class NewPasswordToPasswordDBMapperImpl(
 
         return PasswordDB(
             id = DEFAULT_ID,
+            platform = "",
             platformName = encryptedPlatformName.data,
             platformIV = encryptedPlatformName.iv,
             password = encryptedPassword.data,
             passwordIV = encryptedPassword.iv,
-            expiringDate = LocalDateTime.now().plusDays(expiringDate)
+            passwordScore = 0,
+            website = "",
+            expirationDate = LocalDateTime.now().plusDays(expiringDate)
         )
     }
 

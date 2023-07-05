@@ -26,6 +26,6 @@ internal class PasswordDBToPasswordMapperImpl(
                     data = param.password
                 )
             ),
-            expiringDate = param.expiringDate
+            expiringDate = param.expirationDate
         )
 }

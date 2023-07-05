@@ -59,7 +59,7 @@ internal class UpdatedPasswordToPasswordDBMapperImplTest {
                 platformIV = ENCRYPTED_PLATFORM_NAME.iv,
                 password = ENCRYPTED_PASSWORD.data,
                 passwordIV = ENCRYPTED_PASSWORD.iv,
-                expiringDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
+                expirationDate = TODAY_DATE.plusDays(PASSWORD_VALIDITY_IN_DAYS)
             )
         )
     }
