@@ -2,10 +2,10 @@ package com.mateuszholik.domain.usecase
 
 import android.content.Context
 import com.mateuszholik.domain.models.DataToSave
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 
-internal interface SaveDataToFileUseCase : CompletableUseCase<DataToSave>
+internal interface SaveDataToFileUseCase : CompletableParameterizedUseCase<DataToSave>
 
 internal class SaveDataToFileUseCaseImpl(
     private val context: Context

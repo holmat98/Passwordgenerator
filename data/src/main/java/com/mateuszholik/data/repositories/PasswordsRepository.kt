@@ -20,4 +20,14 @@ interface PasswordsRepository {
     fun getPassword(passwordId: Long): Maybe<Password>
 
     fun getAllPasswords(): Single<List<Password>>
+
+    /**
+     * This method is supposed to be used only for updating the database to the correct state
+     * after migrating from version 2 to 3
+     */
+    fun updatePlatformAndPasswordScoreFor(
+        id: Long,
+        platform: String,
+        passwordScore: Int,
+    ): Completable
 }

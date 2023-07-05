@@ -7,6 +7,8 @@ import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
+import com.mateuszholik.domain.usecase.GetPasswordScoreUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordTypeUseCase
 import com.mateuszholik.domain.usecase.GetPasswordTypeUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
@@ -25,6 +27,8 @@ import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCaseImpl
+import com.mateuszholik.domain.usecase.MigrateDataToTheCorrectStateUseCase
+import com.mateuszholik.domain.usecase.MigrateDataToTheCorrectStateUseCaseImpl
 import com.mateuszholik.domain.usecase.ReadDataFromFileUseCase
 import com.mateuszholik.domain.usecase.ReadDataFromFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCase
@@ -145,6 +149,19 @@ internal val useCaseModule = module {
             passwordsRepository = get(),
             passwordToPasswordTypeMapper = get(),
             getPasswordValidationResultUseCase = get()
+        )
+    }
+
+    factory<GetPasswordScoreUseCase> {
+        GetPasswordScoreUseCaseImpl(
+            getPasswordValidationResultUseCase = get()
+        )
+    }
+
+    factory<MigrateDataToTheCorrectStateUseCase> {
+        MigrateDataToTheCorrectStateUseCaseImpl(
+            passwordsRepository = get(),
+            getPasswordScoreUseCase = get()
         )
     }
 }

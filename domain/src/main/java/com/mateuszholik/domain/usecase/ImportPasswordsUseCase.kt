@@ -6,10 +6,10 @@ import com.mateuszholik.data.repositories.PasswordsRepository
 import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapper
 import com.mateuszholik.domain.models.ImportType
 import com.mateuszholik.domain.parsers.PasswordsParser
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 
-interface ImportPasswordsUseCase : CompletableUseCase<ImportType>
+interface ImportPasswordsUseCase : CompletableParameterizedUseCase<ImportType>
 
 internal class ImportPasswordsUseCaseImpl(
     private val readDataFromFileUseCase: ReadDataFromFileUseCase,

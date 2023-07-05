@@ -19,7 +19,7 @@ internal class PasswordsRepositoryImpl(
     private val passwordDBToPasswordMapper: PasswordDBToPasswordMapper,
     private val newPasswordToPasswordDBMapper: NewPasswordToPasswordDBMapper,
     private val newPasswordsListToPasswordDBListMapper: NewPasswordsListToPasswordDBListMapper,
-    private val updatedPasswordToPasswordDBMapper: UpdatedPasswordToPasswordDBMapper
+    private val updatedPasswordToPasswordDBMapper: UpdatedPasswordToPasswordDBMapper,
 ) : PasswordsRepository {
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
@@ -44,4 +44,11 @@ internal class PasswordsRepositoryImpl(
     override fun getAllPasswords(): Single<List<Password>> =
         passwordsDao.getAllPasswords()
             .map { passwordDBListToPasswordListMapper.map(it) }
+
+    override fun updatePlatformAndPasswordScoreFor(
+        id: Long,
+        platform: String,
+        passwordScore: Int,
+    ): Completable =
+        passwordsDao.updatePlatformAndPasswordScoreFor(id, platform, passwordScore)
 }

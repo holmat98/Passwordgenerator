@@ -3,10 +3,10 @@ package com.mateuszholik.domain.usecase
 import com.mateuszholik.data.repositories.PasswordsRepository
 import com.mateuszholik.domain.mappers.UpdatedPasswordMapper
 import com.mateuszholik.domain.models.UpdatedPassword
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 
-interface UpdatePasswordUseCase : CompletableUseCase<UpdatedPassword>
+interface UpdatePasswordUseCase : CompletableParameterizedUseCase<UpdatedPassword>
 
 internal class UpdatePasswordUseCaseImpl(
     private val passwordsRepository: PasswordsRepository,

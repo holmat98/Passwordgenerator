@@ -2,10 +2,10 @@ package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 
-interface SavePasswordValidityValueUseCase : CompletableUseCase<Long>
+interface SavePasswordValidityValueUseCase : CompletableParameterizedUseCase<Long>
 
 internal class SavePasswordValidityValueUseCaseImpl(
     private val sharedPrefManager: SharedPrefManager
