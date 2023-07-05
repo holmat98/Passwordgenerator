@@ -14,6 +14,12 @@ android {
         targetSdk = DefaultConfig.TARGET_SDK
 
         testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas"
+            }
+        }
     }
 
     buildTypes {
