@@ -2,7 +2,7 @@ package com.mateuszholik.data.repositories
 
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.OldPasswordsDao
-import com.mateuszholik.data.db.models.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d98f8e08911cb2e95f5d395ef8965c69",
+    "identityHash": "8e6f1f9a14c95faf39ed22f7f317aeed",
     "entities": [
       {
         "tableName": "names",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `column_name` BLOB NOT NULL, `column_name_iv` BLOB NOT NULL, `package_name` BLOB, `package_name_iv` BLOB, `website` BLOB, `website_iv` BLOB)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` BLOB NOT NULL, `name_iv` BLOB NOT NULL, `package_name` BLOB, `package_name_iv` BLOB, `website` BLOB, `website_iv` BLOB)",
         "fields": [
           {
             "fieldPath": "id",
@@ -16,13 +16,13 @@
           },
           {
             "fieldPath": "platformName",
-            "columnName": "column_name",
+            "columnName": "name",
             "affinity": "BLOB",
             "notNull": true
           },
           {
             "fieldPath": "platformNameIv",
-            "columnName": "column_name_iv",
+            "columnName": "name_iv",
             "affinity": "BLOB",
             "notNull": true
           },
@@ -173,10 +173,15 @@
         "foreignKeys": []
       }
     ],
-    "views": [],
+    "views": [
+      {
+        "viewName": "PasswordInfoView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
+      }
+    ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd98f8e08911cb2e95f5d395ef8965c69')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8e6f1f9a14c95faf39ed22f7f317aeed')"
     ]
   }
 }

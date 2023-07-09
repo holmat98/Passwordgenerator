@@ -5,9 +5,9 @@ import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.NamesDao
 import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.db.models.NamesEntity
-import com.mateuszholik.data.db.models.OldPasswordEntity
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.entities.NamesEntity
+import com.mateuszholik.data.db.models.entities.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.PasswordEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

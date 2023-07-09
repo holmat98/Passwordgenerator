@@ -2,7 +2,7 @@ package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
-import com.mateuszholik.data.db.models.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.managers.io.SharedPrefKeys
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.repositories.models.UpdatedPassword

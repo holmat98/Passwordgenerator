@@ -8,15 +8,19 @@ import com.mateuszholik.data.db.converters.Converters
 import com.mateuszholik.data.db.daos.NamesDao
 import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.db.models.NamesEntity
-import com.mateuszholik.data.db.models.OldPasswordEntity
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.entities.NamesEntity
+import com.mateuszholik.data.db.models.entities.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.PasswordEntity
+import com.mateuszholik.data.db.models.views.PasswordInfoView
 
 @Database(
     entities = [
         NamesEntity::class,
         PasswordEntity::class,
         OldPasswordEntity::class,
+    ],
+    views = [
+        PasswordInfoView::class
     ],
     version = 3,
     autoMigrations = [

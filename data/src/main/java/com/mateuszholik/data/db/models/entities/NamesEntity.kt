@@ -1,9 +1,9 @@
-package com.mateuszholik.data.db.models
+package com.mateuszholik.data.db.models.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mateuszholik.data.db.models.NamesEntity.Companion.TABLE_NAME
+import com.mateuszholik.data.db.models.entities.NamesEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 internal data class NamesEntity(
@@ -49,8 +49,8 @@ internal data class NamesEntity(
     companion object {
         const val TABLE_NAME = "names"
         const val COLUMN_ID = "id"
-        const val COLUMN_NAME = "column_name"
-        const val COLUMN_NAME_IV = "column_name_iv"
+        const val COLUMN_NAME = "name"
+        const val COLUMN_NAME_IV = "name_iv"
         const val COLUMN_PACKAGE_NAME = "package_name"
         const val COLUMN_PACKAGE_NAME_IV = "package_name_iv"
         const val COLUMN_WEBSITE = "website"

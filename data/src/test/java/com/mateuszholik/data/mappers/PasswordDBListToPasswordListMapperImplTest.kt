@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.data.db.models.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
