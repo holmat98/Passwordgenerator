@@ -1,6 +1,6 @@
 package com.mateuszholik.data.repositories
 
-import com.mateuszholik.data.db.daos.PasswordsDao
+import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 internal class PasswordsRepositoryImpl(
-    private val passwordsDao: PasswordsDao,
+    private val oldPasswordsDao: OldPasswordsDao,
     private val passwordDBListToPasswordListMapper: PasswordDBListToPasswordListMapper,
     private val passwordDBToPasswordMapper: PasswordDBToPasswordMapper,
     private val newPasswordToPasswordDBMapper: NewPasswordToPasswordDBMapper,
@@ -24,25 +24,25 @@ internal class PasswordsRepositoryImpl(
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
         Single.just(newPasswordToPasswordDBMapper.map(newPassword))
-            .flatMap { passwordsDao.insertAndGetId(it) }
+            .flatMap { oldPasswordsDao.insertAndGetId(it) }
 
     override fun insertPasswords(newPasswords: List<NewPassword>): Completable =
         Single.just(newPasswordsListToPasswordDBListMapper.map(newPasswords))
-            .flatMapCompletable { passwordsDao.insertPasswords(it) }
+            .flatMapCompletable { oldPasswordsDao.insertPasswords(it) }
 
     override fun delete(passwordId: Long): Completable =
-        passwordsDao.deletePassword(passwordId)
+        oldPasswordsDao.deletePassword(passwordId)
 
     override fun update(updatedPassword: UpdatedPassword): Completable =
         Single.just(updatedPasswordToPasswordDBMapper.map(updatedPassword))
-            .flatMapCompletable { passwordsDao.update(it) }
+            .flatMapCompletable { oldPasswordsDao.update(it) }
 
     override fun getPassword(passwordId: Long): Maybe<Password> =
-        passwordsDao.getPassword(passwordId)
+        oldPasswordsDao.getPassword(passwordId)
             .map { passwordDBToPasswordMapper.map(it) }
 
     override fun getAllPasswords(): Single<List<Password>> =
-        passwordsDao.getAllPasswords()
+        oldPasswordsDao.getAllPasswords()
             .map { passwordDBListToPasswordListMapper.map(it) }
 
     override fun updatePlatformAndPasswordScoreFor(

@@ -1,32 +1,30 @@
 package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.OldPasswordEntity
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.repositories.models.NewPassword
 import java.time.LocalDateTime
 
-internal interface NewPasswordToPasswordDBMapper : Mapper<NewPassword, PasswordEntity>
+internal interface NewPasswordToPasswordDBMapper : Mapper<NewPassword, OldPasswordEntity>
 
 internal class NewPasswordToPasswordDBMapperImpl(
     private val encryptionManager: KeyBaseEncryptionManager,
     private val sharedPrefManager: SharedPrefManager
 ) : NewPasswordToPasswordDBMapper {
 
-    override fun map(param: NewPassword): PasswordEntity {
+    override fun map(param: NewPassword): OldPasswordEntity {
         val encryptedPlatformName = encryptionManager.encrypt(param.platformName)
         val encryptedPassword = encryptionManager.encrypt(param.password)
         val expiringDate = sharedPrefManager.readLong(PASSWORD_VALIDITY, DEFAULT_PASSWORD_VALIDITY)
 
-        return PasswordEntity(
+        return OldPasswordEntity(
             id = DEFAULT_ID,
-            nameId = 1,
             platformName = encryptedPlatformName.data,
             platformIV = encryptedPlatformName.iv,
             password = encryptedPassword.data,
             passwordIV = encryptedPassword.iv,
-            passwordScore = 0,
             expirationDate = LocalDateTime.now().plusDays(expiringDate)
         )
     }

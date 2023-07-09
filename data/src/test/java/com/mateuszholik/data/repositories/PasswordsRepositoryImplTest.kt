@@ -1,8 +1,8 @@
 package com.mateuszholik.data.repositories
 
 import com.mateuszholik.cryptography.models.EncryptedData
-import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.daos.OldPasswordsDao
+import com.mateuszholik.data.db.models.OldPasswordEntity
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 
 class PasswordsRepositoryImplTest {
 
-    private val passwordsDao = mockk<PasswordsDao> {
+    private val oldPasswordsDao = mockk<OldPasswordsDao> {
         every { insertAndGetId(PASSWORD_DB) } returns Single.just(ID)
         every { insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2)) } returns Completable.complete()
         every { update(PASSWORD_DB) } returns Completable.complete()
@@ -57,7 +57,7 @@ class PasswordsRepositoryImplTest {
 
 
     private val passwordsRepository = PasswordsRepositoryImpl(
-        passwordsDao = passwordsDao,
+        oldPasswordsDao = oldPasswordsDao,
         passwordDBListToPasswordListMapper = passwordDBListToPasswordListMapper,
         passwordDBToPasswordMapper = passwordDBToPasswordMapper,
         newPasswordToPasswordDBMapper = newPasswordToPasswordDBMapper,
@@ -71,7 +71,7 @@ class PasswordsRepositoryImplTest {
             .test()
             .assertValue(ID)
 
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_DB) }
+        verify(exactly = 1) { oldPasswordsDao.insertAndGetId(PASSWORD_DB) }
     }
 
     @Test
@@ -81,7 +81,7 @@ class PasswordsRepositoryImplTest {
             .assertComplete()
 
         verify(exactly = 1) {
-            passwordsDao.insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2))
+            oldPasswordsDao.insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2))
         }
     }
 
@@ -91,7 +91,7 @@ class PasswordsRepositoryImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsDao.update(PASSWORD_DB) }
+        verify(exactly = 1) { oldPasswordsDao.update(PASSWORD_DB) }
     }
 
     @Test
@@ -101,7 +101,7 @@ class PasswordsRepositoryImplTest {
             .assertComplete()
 
         verify(exactly = 1) {
-            passwordsDao.deletePassword(MAPPED_PASSWORD.id)
+            oldPasswordsDao.deletePassword(MAPPED_PASSWORD.id)
         }
     }
 
@@ -111,20 +111,20 @@ class PasswordsRepositoryImplTest {
             .test()
             .assertValue(MAPPED_PASSWORD)
 
-        verify(exactly = 1) { passwordsDao.getPassword(ID) }
+        verify(exactly = 1) { oldPasswordsDao.getPassword(ID) }
     }
 
     @Test
     fun `When dao does not return password, repository will return empty also`() {
         every {
-            passwordsDao.getPassword(ID_2)
+            oldPasswordsDao.getPassword(ID_2)
         } returns Maybe.empty()
 
         passwordsRepository.getPassword(ID_2)
             .test()
             .assertNoValues()
 
-        verify(exactly = 1) { passwordsDao.getPassword(ID_2) }
+        verify(exactly = 1) { oldPasswordsDao.getPassword(ID_2) }
     }
 
     @Test
@@ -134,7 +134,7 @@ class PasswordsRepositoryImplTest {
             .assertValue(listOf(MAPPED_PASSWORD))
 
         verify(exactly = 1) {
-            passwordsDao.getAllPasswords()
+            oldPasswordsDao.getAllPasswords()
         }
     }
 
@@ -175,7 +175,7 @@ class PasswordsRepositoryImplTest {
             data = ByteArray(17)
         )
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB = PasswordEntity(
+        val PASSWORD_DB = OldPasswordEntity(
             id = ID,
             platformName = ENCRYPTED_PLATFORM.data,
             platformIV = ENCRYPTED_PLATFORM.iv,
@@ -183,7 +183,7 @@ class PasswordsRepositoryImplTest {
             passwordIV = ENCRYPTED_PASSWORD.iv,
             expirationDate = EXPIRING_DATE
         )
-        val PASSWORD_DB_2 = PasswordEntity(
+        val PASSWORD_DB_2 = OldPasswordEntity(
             id = ID_2,
             platformName = ENCRYPTED_PLATFORM_2.data,
             platformIV = ENCRYPTED_PLATFORM_2.iv,

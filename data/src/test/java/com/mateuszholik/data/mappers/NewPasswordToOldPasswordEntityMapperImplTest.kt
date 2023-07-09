@@ -2,7 +2,7 @@ package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.OldPasswordEntity
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.repositories.models.NewPassword
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class NewPasswordToPasswordEntityMapperImplTest {
+internal class NewPasswordToOldPasswordEntityMapperImplTest {
 
     private val encryptionManager = mockk<KeyBaseEncryptionManager>()
     private val sharedPrefManager = mockk<SharedPrefManager> {
@@ -53,7 +53,7 @@ internal class NewPasswordToPasswordEntityMapperImplTest {
         val result = passwordToPasswordDBMapper.map(TESTED_VALUE)
 
         assertThat(result).isEqualTo(
-            PasswordEntity(
+            OldPasswordEntity(
                 id = ID,
                 platformName = ENCRYPTED_PLATFORM_NAME.data,
                 platformIV = ENCRYPTED_PLATFORM_NAME.iv,

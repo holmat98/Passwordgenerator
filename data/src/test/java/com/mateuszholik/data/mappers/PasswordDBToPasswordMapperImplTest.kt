@@ -2,7 +2,7 @@ package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.OldPasswordEntity
 import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
@@ -45,7 +45,7 @@ class PasswordDBToPasswordMapperImplTest {
         const val PLATFORM_NAME = "platform"
         const val PASSWORD = "password1234"
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB = PasswordEntity(
+        val PASSWORD_DB = OldPasswordEntity(
             id = 1,
             platformName = ByteArray(10),
             platformIV = ByteArray(11),

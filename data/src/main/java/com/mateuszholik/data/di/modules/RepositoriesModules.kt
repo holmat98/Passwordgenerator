@@ -8,7 +8,7 @@ internal val repositoriesModule = module {
 
     single<PasswordsRepository> {
         PasswordsRepositoryImpl(
-            passwordsDao = get(),
+            oldPasswordsDao = get(),
             passwordDBListToPasswordListMapper = get(),
             passwordDBToPasswordMapper = get(),
             newPasswordToPasswordDBMapper = get(),

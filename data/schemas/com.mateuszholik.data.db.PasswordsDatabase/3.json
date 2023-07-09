@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "057f14319dd46bb7e0133787d507d36f",
+    "identityHash": "9f47d29e3556c1264fd1fa3e3a87fdf7",
     "entities": [
       {
         "tableName": "names",
@@ -61,8 +61,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "passwords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `platform_name_id` INTEGER NOT NULL, `platformName` BLOB NOT NULL, `platformIV` BLOB NOT NULL, `password` BLOB NOT NULL, `passwordIV` BLOB NOT NULL, `password_score` INTEGER NOT NULL, `expiringDate` INTEGER NOT NULL, FOREIGN KEY(`platform_name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "new_passwords",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -72,7 +72,57 @@
           },
           {
             "fieldPath": "nameId",
-            "columnName": "platform_name_id",
+            "columnName": "name_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordIV",
+            "columnName": "password_iv",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expirationDate",
+            "columnName": "expiration_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "names",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "name_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "passwords",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `platformName` BLOB NOT NULL, `platformIV` BLOB NOT NULL, `password` BLOB NOT NULL, `passwordIV` BLOB NOT NULL, `expiringDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -101,12 +151,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "passwordScore",
-            "columnName": "password_score",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "expirationDate",
             "columnName": "expiringDate",
             "affinity": "INTEGER",
@@ -120,25 +164,13 @@
           ]
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "names",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "platform_name_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '057f14319dd46bb7e0133787d507d36f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f47d29e3556c1264fd1fa3e3a87fdf7')"
     ]
   }
 }

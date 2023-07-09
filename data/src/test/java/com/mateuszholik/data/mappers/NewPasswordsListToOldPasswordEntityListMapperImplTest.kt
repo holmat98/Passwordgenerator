@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.OldPasswordEntity
 import com.mateuszholik.data.repositories.models.NewPassword
 import io.mockk.every
 import io.mockk.mockk
@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class NewPasswordsListToPasswordEntityListMapperImplTest {
+internal class NewPasswordsListToOldPasswordEntityListMapperImplTest {
 
     private val newPasswordToPasswordDBMapper = mockk<NewPasswordToPasswordDBMapper> {
         every { map(NEW_PASSWORD) } returns PASSWORD_DB
@@ -32,7 +32,7 @@ internal class NewPasswordsListToPasswordEntityListMapperImplTest {
         const val PLATFORM_NAME_2 = "platform2"
         const val PASSWORD_2 = "password12345"
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB = PasswordEntity(
+        val PASSWORD_DB = OldPasswordEntity(
             id = 1,
             nameId = 1,
             platformName = ByteArray(10),
@@ -42,7 +42,7 @@ internal class NewPasswordsListToPasswordEntityListMapperImplTest {
             passwordScore = 1,
             expirationDate = EXPIRING_DATE
         )
-        val PASSWORD_DB_2 = PasswordEntity(
+        val PASSWORD_DB_2 = OldPasswordEntity(
             id = 2,
             nameId = 1,
             platformName = ByteArray(10),
