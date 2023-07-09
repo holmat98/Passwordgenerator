@@ -52,8 +52,8 @@ internal class MigrationRepositoryImpl(
                             passwordScore = it.second,
                             expirationDate = oldPassword.expirationDate
                         )
-                    )
-                }
+                    ).andThen(oldPasswordsDao.deletePassword(oldPassword.id))
+                }.onErrorComplete()
             }
 
     private fun decryptPasswordAndCalculateScore(
@@ -67,7 +67,7 @@ internal class MigrationRepositoryImpl(
                     iv = oldPasswordEntity.passwordIV
                 )
             )
-        ).flatMap {
-            calculatePasswordScore(it)
-        }
+        )
+            .flatMap { calculatePasswordScore(it) }
+            .onErrorReturn { 0 }
 }

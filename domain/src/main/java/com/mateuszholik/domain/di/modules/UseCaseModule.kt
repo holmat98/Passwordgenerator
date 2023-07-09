@@ -160,7 +160,7 @@ internal val useCaseModule = module {
 
     factory<MigrateDataToTheCorrectStateUseCase> {
         MigrateDataToTheCorrectStateUseCaseImpl(
-            oldPasswordsRepository = get(),
+            migrationRepository = get(),
             getPasswordScoreUseCase = get()
         )
     }
