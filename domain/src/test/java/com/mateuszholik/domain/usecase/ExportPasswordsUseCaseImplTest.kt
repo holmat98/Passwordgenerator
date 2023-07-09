@@ -3,7 +3,7 @@ package com.mateuszholik.domain.usecase
 import android.net.Uri
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.factories.UriFactory
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 
 internal class ExportPasswordsUseCaseImplTest {
 
-    private val passwordsRepository = mockk<PasswordsRepository> {
+    private val oldPasswordsRepository = mockk<OldPasswordsRepository> {
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD))
     }
     private val passwordsListToExportPasswordsListMapper =
@@ -54,7 +54,7 @@ internal class ExportPasswordsUseCaseImplTest {
     }
 
     private val exportPasswordsUseCase = ExportPasswordsUseCaseImpl(
-        passwordsRepository = passwordsRepository,
+        oldPasswordsRepository = oldPasswordsRepository,
         passwordsListToExportPasswordsListMapper = passwordsListToExportPasswordsListMapper,
         passwordsParser = passwordsParser,
         encryptionManager = encryptionManager,
@@ -77,7 +77,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { oldPasswordsRepository.getAllPasswords() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
@@ -104,7 +104,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { oldPasswordsRepository.getAllPasswords() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 1) { encryptionManager.encrypt(ENCRYPTION_PASSWORD, PARSED_PASSWORDS) }

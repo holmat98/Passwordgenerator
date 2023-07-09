@@ -1,7 +1,7 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.domain.factories.UriFactory
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.models.DataToSave
@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter
 interface ExportPasswordsUseCase : CompletableParameterizedUseCase<ExportType>
 
 internal class ExportPasswordsUseCaseImpl(
-    private val passwordsRepository: PasswordsRepository,
+    private val oldPasswordsRepository: OldPasswordsRepository,
     private val passwordsListToExportPasswordsListMapper: PasswordsListToExportPasswordsListMapper,
     private val passwordsParser: PasswordsParser,
     private val encryptionManager: PasswordBaseEncryptionManager,
@@ -24,7 +24,7 @@ internal class ExportPasswordsUseCaseImpl(
 ) : ExportPasswordsUseCase {
 
     override fun invoke(param: ExportType): Completable =
-        passwordsRepository.getAllPasswords()
+        oldPasswordsRepository.getAllPasswords()
             .map { passwordsListToExportPasswordsListMapper.map(it) }
             .map { passwordsParser.parseToString(it) }
             .map { encryptPasswordsIfNeeded(param, it) }

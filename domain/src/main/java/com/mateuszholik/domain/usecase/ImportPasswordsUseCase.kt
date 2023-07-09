@@ -2,7 +2,7 @@ package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
 import com.mateuszholik.cryptography.extensions.toEncryptedData
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapper
 import com.mateuszholik.domain.models.ImportType
 import com.mateuszholik.domain.parsers.PasswordsParser
@@ -16,7 +16,7 @@ internal class ImportPasswordsUseCaseImpl(
     private val encryptionManager: PasswordBaseEncryptionManager,
     private val passwordsParser: PasswordsParser,
     private val exportedPasswordsMapper: ExportedPasswordsListToNewPasswordsListMapper,
-    private val passwordsRepository: PasswordsRepository
+    private val oldPasswordsRepository: OldPasswordsRepository
 ) : ImportPasswordsUseCase {
 
     override fun invoke(param: ImportType): Completable =
@@ -24,7 +24,7 @@ internal class ImportPasswordsUseCaseImpl(
             .map { decryptImportedDataIfNeeded(param, it) }
             .map { passwordsParser.parseFromString(it) }
             .map { exportedPasswordsMapper.map(it) }
-            .flatMapCompletable { passwordsRepository.insertPasswords(it) }
+            .flatMapCompletable { oldPasswordsRepository.insertPasswords(it) }
 
     private fun decryptImportedDataIfNeeded(importType: ImportType, importedData: String): String =
         if (importType is ImportType.EncryptedImport) {

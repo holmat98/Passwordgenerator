@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.domain.mappers.NewPasswordMapper
 import com.mateuszholik.domain.models.NewPassword
 import io.mockk.every
@@ -12,10 +12,10 @@ import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 internal class InsertPasswordAndGetIdUseCaseImplTest {
 
     private val newPasswordMapper = mockk<NewPasswordMapper>()
-    private val passwordsRepository = mockk<PasswordsRepository>()
+    private val oldPasswordsRepository = mockk<OldPasswordsRepository>()
 
     private val insertPasswordAndGetIdUseCase = InsertPasswordAndGetIdUseCaseImpl(
-        passwordsRepository = passwordsRepository,
+        oldPasswordsRepository = oldPasswordsRepository,
         newPasswordMapper = newPasswordMapper
     )
 
@@ -26,7 +26,7 @@ internal class InsertPasswordAndGetIdUseCaseImplTest {
         } returns DATA_NEW_PASSWORD
 
         every {
-            passwordsRepository.insertAndGetId(DATA_NEW_PASSWORD)
+            oldPasswordsRepository.insertAndGetId(DATA_NEW_PASSWORD)
         } returns Single.just(ID)
 
         insertPasswordAndGetIdUseCase(NEW_PASSWORD)

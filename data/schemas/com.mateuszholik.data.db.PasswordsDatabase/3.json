@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "9f47d29e3556c1264fd1fa3e3a87fdf7",
+    "identityHash": "d98f8e08911cb2e95f5d395ef8965c69",
     "entities": [
       {
         "tableName": "names",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "new_passwords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER NOT NULL, `password_score` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -91,6 +91,12 @@
           {
             "fieldPath": "expirationDate",
             "columnName": "expiration_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordScore",
+            "columnName": "password_score",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -170,7 +176,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f47d29e3556c1264fd1fa3e3a87fdf7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd98f8e08911cb2e95f5d395ef8965c69')"
     ]
   }
 }

@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
-interface PasswordsRepository {
+interface OldPasswordsRepository {
 
     fun insertAndGetId(newPassword: NewPassword): Single<Long>
 

@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.core.Single
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-class PasswordsRepositoryImplTest {
+class OldPasswordsRepositoryImplTest {
 
     private val oldPasswordsDao = mockk<OldPasswordsDao> {
         every { insertAndGetId(PASSWORD_DB) } returns Single.just(ID)
@@ -56,7 +56,7 @@ class PasswordsRepositoryImplTest {
     }
 
 
-    private val passwordsRepository = PasswordsRepositoryImpl(
+    private val passwordsRepository = OldPasswordsRepositoryImpl(
         oldPasswordsDao = oldPasswordsDao,
         passwordDBListToPasswordListMapper = passwordDBListToPasswordListMapper,
         passwordDBToPasswordMapper = passwordDBToPasswordMapper,

@@ -34,22 +34,18 @@ internal class NewPasswordsListToOldPasswordEntityListMapperImplTest {
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
         val PASSWORD_DB = OldPasswordEntity(
             id = 1,
-            nameId = 1,
             platformName = ByteArray(10),
             platformIV = ByteArray(11),
             password = ByteArray(12),
             passwordIV = ByteArray(13),
-            passwordScore = 1,
             expirationDate = EXPIRING_DATE
         )
         val PASSWORD_DB_2 = OldPasswordEntity(
             id = 2,
-            nameId = 1,
             platformName = ByteArray(10),
             platformIV = ByteArray(11),
             password = ByteArray(12),
             passwordIV = ByteArray(13),
-            passwordScore = 1,
             expirationDate = EXPIRING_DATE
         )
         val NEW_PASSWORD = NewPassword(

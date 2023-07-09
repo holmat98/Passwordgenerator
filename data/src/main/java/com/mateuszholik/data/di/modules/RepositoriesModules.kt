@@ -1,13 +1,13 @@
 package com.mateuszholik.data.di.modules
 
-import com.mateuszholik.data.repositories.PasswordsRepository
-import com.mateuszholik.data.repositories.PasswordsRepositoryImpl
+import com.mateuszholik.data.repositories.OldPasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepositoryImpl
 import org.koin.dsl.module
 
 internal val repositoriesModule = module {
 
-    single<PasswordsRepository> {
-        PasswordsRepositoryImpl(
+    single<OldPasswordsRepository> {
+        OldPasswordsRepositoryImpl(
             oldPasswordsDao = get(),
             passwordDBListToPasswordListMapper = get(),
             passwordDBToPasswordMapper = get(),

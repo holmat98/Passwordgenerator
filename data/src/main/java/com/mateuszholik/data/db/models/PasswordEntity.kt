@@ -26,6 +26,7 @@ internal data class PasswordEntity(
     @ColumnInfo(name = COLUMN_PASSWORD_NAME) val password: ByteArray,
     @ColumnInfo(name = COLUMN_PASSWORD_IV_NAME) val passwordIV: ByteArray,
     @ColumnInfo(name = COLUMN_EXPIRATION_DATE_NAME) val expirationDate: LocalDateTime,
+    @ColumnInfo(name = COLUMN_PASSWORD_SCORE) val passwordScore: Int,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -59,5 +60,6 @@ internal data class PasswordEntity(
         const val COLUMN_PASSWORD_NAME = "password"
         const val COLUMN_PASSWORD_IV_NAME = "password_iv"
         const val COLUMN_EXPIRATION_DATE_NAME = "expiration_date"
+        const val COLUMN_PASSWORD_SCORE = "password_score"
     }
 }

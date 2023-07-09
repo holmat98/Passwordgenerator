@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.domain.mappers.UpdatedPasswordMapper
 import com.mateuszholik.domain.models.UpdatedPassword
 import io.mockk.every
@@ -14,16 +14,16 @@ internal class UpdatePasswordUseCaseImplTest {
     private val updatedPasswordMapper = mockk<UpdatedPasswordMapper> {
         every { map(UPDATED_PASSWORD) } returns DATA_UPDATED_PASSWORD
     }
-    private val passwordsRepository = mockk<PasswordsRepository>()
+    private val oldPasswordsRepository = mockk<OldPasswordsRepository>()
 
     private val updatePasswordUseCase = UpdatePasswordUseCaseImpl(
         updatedPasswordMapper = updatedPasswordMapper,
-        passwordsRepository = passwordsRepository
+        oldPasswordsRepository = oldPasswordsRepository
     )
 
     @Test
     fun `When repository successfully updated password then use case also completed successfully`() {
-        every { passwordsRepository.update(DATA_UPDATED_PASSWORD) } returns Completable.complete()
+        every { oldPasswordsRepository.update(DATA_UPDATED_PASSWORD) } returns Completable.complete()
 
         updatePasswordUseCase(UPDATED_PASSWORD)
             .test()
@@ -32,7 +32,7 @@ internal class UpdatePasswordUseCaseImplTest {
 
     @Test
     fun `When repository returned error then use case also will return error`() {
-        every { passwordsRepository.update(DATA_UPDATED_PASSWORD) } returns Completable.error(ERROR)
+        every { oldPasswordsRepository.update(DATA_UPDATED_PASSWORD) } returns Completable.error(ERROR)
 
         updatePasswordUseCase(UPDATED_PASSWORD)
             .test()

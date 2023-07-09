@@ -13,14 +13,14 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
-internal class PasswordsRepositoryImpl(
+internal class OldPasswordsRepositoryImpl(
     private val oldPasswordsDao: OldPasswordsDao,
     private val passwordDBListToPasswordListMapper: PasswordDBListToPasswordListMapper,
     private val passwordDBToPasswordMapper: PasswordDBToPasswordMapper,
     private val newPasswordToPasswordDBMapper: NewPasswordToPasswordDBMapper,
     private val newPasswordsListToPasswordDBListMapper: NewPasswordsListToPasswordDBListMapper,
     private val updatedPasswordToPasswordDBMapper: UpdatedPasswordToPasswordDBMapper,
-) : PasswordsRepository {
+) : OldPasswordsRepository {
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
         Single.just(newPasswordToPasswordDBMapper.map(newPassword))

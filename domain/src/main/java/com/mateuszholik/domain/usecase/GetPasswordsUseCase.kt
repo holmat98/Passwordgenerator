@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapper
 import com.mateuszholik.domain.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
@@ -11,13 +11,13 @@ import io.reactivex.rxjava3.core.Single
 interface GetPasswordsUseCase : UseCase<List<PasswordType>>
 
 internal class GetPasswordsUseCaseImpl(
-    private val passwordsRepository: PasswordsRepository,
+    private val oldPasswordsRepository: OldPasswordsRepository,
     private val passwordToPasswordTypeMapper: PasswordToPasswordTypeMapper,
     private val getPasswordValidationResultUseCase: GetPasswordValidationResultUseCase,
 ) : GetPasswordsUseCase {
 
     override fun invoke(): Single<List<PasswordType>> =
-        passwordsRepository.getAllPasswords()
+        oldPasswordsRepository.getAllPasswords()
             .flatMapObservable {
                 Observable.fromIterable(it)
             }

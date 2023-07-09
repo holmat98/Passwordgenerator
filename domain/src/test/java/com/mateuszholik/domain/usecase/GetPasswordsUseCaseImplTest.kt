@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.OldPasswordsRepository
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapper
 import com.mateuszholik.domain.models.PasswordInfo
@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 
 class GetPasswordsUseCaseImplTest {
 
-    private val passwordsRepository = mockk<PasswordsRepository> {
+    private val oldPasswordsRepository = mockk<OldPasswordsRepository> {
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD))
     }
 
@@ -24,7 +24,7 @@ class GetPasswordsUseCaseImplTest {
     private val getPasswordValidationResultUseCase = mockk<GetPasswordValidationResultUseCase>()
 
     private val getPasswordUseCase = GetPasswordsUseCaseImpl(
-        passwordsRepository = passwordsRepository,
+        oldPasswordsRepository = oldPasswordsRepository,
         passwordToPasswordTypeMapper = passwordToPasswordTypeMapper,
         getPasswordValidationResultUseCase = getPasswordValidationResultUseCase,
     )
