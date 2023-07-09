@@ -25,6 +25,10 @@ internal val databaseModule = module {
     single {
         get<PasswordsDatabase>().passwordsDao()
     }
+
+    single {
+        get<PasswordsDatabase>().namesDao()
+    }
 }
 
 private fun provideDatabase(

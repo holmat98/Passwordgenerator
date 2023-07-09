@@ -5,11 +5,11 @@ import androidx.room.Insert
 import androidx.room.Update
 import androidx.room.Query
 import androidx.room.OnConflictStrategy
-import com.mateuszholik.data.db.models.PasswordDB
-import com.mateuszholik.data.db.models.PasswordDB.Companion.COLUMN_ID_NAME
-import com.mateuszholik.data.db.models.PasswordDB.Companion.COLUMN_PASSWORD_SCORE_NAME
-import com.mateuszholik.data.db.models.PasswordDB.Companion.COLUMN_PLATFORM_NAME
-import com.mateuszholik.data.db.models.PasswordDB.Companion.TABLE_NAME
+import com.mateuszholik.data.db.models.PasswordEntity
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.COLUMN_ID_NAME
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.COLUMN_NAME_FOREIGN_KEY_ID
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.COLUMN_PASSWORD_SCORE_NAME
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.TABLE_NAME
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
@@ -18,19 +18,19 @@ import io.reactivex.rxjava3.core.Single
 internal interface PasswordsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAndGetId(passwordDB: PasswordDB): Single<Long>
+    fun insertAndGetId(passwordEntity: PasswordEntity): Single<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPasswords(passwords: List<PasswordDB>): Completable
+    fun insertPasswords(passwords: List<PasswordEntity>): Completable
 
     @Update
-    fun update(passwordDB: PasswordDB): Completable
+    fun update(passwordEntity: PasswordEntity): Completable
 
     @Query("select * from passwords where id = :passwordId")
-    fun getPassword(passwordId: Long): Maybe<PasswordDB>
+    fun getPassword(passwordId: Long): Maybe<PasswordEntity>
 
     @Query("select * from passwords")
-    fun getAllPasswords(): Single<List<PasswordDB>>
+    fun getAllPasswords(): Single<List<PasswordEntity>>
 
     @Query("delete from passwords where id = :passwordId")
     fun deletePassword(passwordId: Long): Completable
@@ -38,18 +38,18 @@ internal interface PasswordsDao {
     /**
      * This method is supposed to be used only for updating the database to the correct state
      * after migrating from version 2 to 3
-     */
+     *//*
     @Query(
         """
             UPDATE $TABLE_NAME SET
-            $COLUMN_PLATFORM_NAME = :platform
+            $COLUMN_NAME_FOREIGN_KEY_ID = :nameId
             $COLUMN_PASSWORD_SCORE_NAME = :passwordScore
             WHERE $COLUMN_ID_NAME = :id
         """
     )
     fun updatePlatformAndPasswordScoreFor(
         id: Long,
-        platform: String,
+        nameId: Long,
         passwordScore: Int,
-    ): Completable
+    ): Completable*/
 }

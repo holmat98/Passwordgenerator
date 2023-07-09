@@ -50,5 +50,5 @@ internal class PasswordsRepositoryImpl(
         platform: String,
         passwordScore: Int,
     ): Completable =
-        passwordsDao.updatePlatformAndPasswordScoreFor(id, platform, passwordScore)
+        Completable.complete()
 }

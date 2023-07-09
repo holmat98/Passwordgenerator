@@ -2,7 +2,7 @@ package com.mateuszholik.data.repositories
 
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.db.models.PasswordDB
+import com.mateuszholik.data.db.models.PasswordEntity
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
@@ -175,7 +175,7 @@ class PasswordsRepositoryImplTest {
             data = ByteArray(17)
         )
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB = PasswordDB(
+        val PASSWORD_DB = PasswordEntity(
             id = ID,
             platformName = ENCRYPTED_PLATFORM.data,
             platformIV = ENCRYPTED_PLATFORM.iv,
@@ -183,7 +183,7 @@ class PasswordsRepositoryImplTest {
             passwordIV = ENCRYPTED_PASSWORD.iv,
             expirationDate = EXPIRING_DATE
         )
-        val PASSWORD_DB_2 = PasswordDB(
+        val PASSWORD_DB_2 = PasswordEntity(
             id = ID_2,
             platformName = ENCRYPTED_PLATFORM_2.data,
             platformIV = ENCRYPTED_PLATFORM_2.iv,

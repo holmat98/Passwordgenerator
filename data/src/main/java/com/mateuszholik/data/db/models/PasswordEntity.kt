@@ -2,22 +2,32 @@ package com.mateuszholik.data.db.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.mateuszholik.data.db.models.PasswordDB.Companion.TABLE_NAME
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.COLUMN_NAME_FOREIGN_KEY_ID
+import com.mateuszholik.data.db.models.PasswordEntity.Companion.TABLE_NAME
 import java.time.LocalDateTime
 
-@Entity(tableName = TABLE_NAME)
-internal data class PasswordDB(
+@Entity(
+    tableName = TABLE_NAME,
+    foreignKeys = [
+        ForeignKey(
+            entity = NamesEntity::class,
+            childColumns = [COLUMN_NAME_FOREIGN_KEY_ID],
+            parentColumns = [NamesEntity.COLUMN_ID]
+        )
+    ]
+)
+internal data class PasswordEntity(
     @ColumnInfo(name = COLUMN_ID_NAME)
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    @ColumnInfo(name = COLUMN_PLATFORM_NAME) val platform: String,
+    @ColumnInfo(name = COLUMN_NAME_FOREIGN_KEY_ID) val nameId: Long,
     @ColumnInfo(name = COLUMN_PLATFORM_NAME_NAME) val platformName: ByteArray,
     @ColumnInfo(name = COLUMN_PLATFORM_IV_NAME) val platformIV: ByteArray,
     @ColumnInfo(name = COLUMN_PASSWORD_NAME) val password: ByteArray,
     @ColumnInfo(name = COLUMN_PASSWORD_IV_NAME) val passwordIV: ByteArray,
     @ColumnInfo(name = COLUMN_PASSWORD_SCORE_NAME) val passwordScore: Int,
-    @ColumnInfo(name = COLUMN_WEBSITE_NAME) val website: String,
     @ColumnInfo(name = COLUMN_EXPIRATION_DATE_NAME) val expirationDate: LocalDateTime,
 ) {
 
@@ -25,7 +35,7 @@ internal data class PasswordDB(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as PasswordDB
+        other as PasswordEntity
 
         if (id != other.id) return false
         if (!platformName.contentEquals(other.platformName)) return false
@@ -50,13 +60,12 @@ internal data class PasswordDB(
     companion object {
         const val TABLE_NAME = "passwords"
         const val COLUMN_ID_NAME = "id"
-        const val COLUMN_PLATFORM_NAME = "platform_name"
+        const val COLUMN_NAME_FOREIGN_KEY_ID = "platform_name_id"
         const val COLUMN_PLATFORM_NAME_NAME = "platformName"
         const val COLUMN_PLATFORM_IV_NAME = "platformIV"
         const val COLUMN_PASSWORD_NAME = "password"
         const val COLUMN_PASSWORD_IV_NAME = "passwordIV"
         const val COLUMN_EXPIRATION_DATE_NAME = "expiringDate"
         const val COLUMN_PASSWORD_SCORE_NAME = "password_score"
-        const val COLUMN_WEBSITE_NAME = "website"
     }
 }

@@ -1,6 +1,6 @@
 package com.mateuszholik.data.mappers
 
-import com.mateuszholik.data.db.models.PasswordDB
+import com.mateuszholik.data.db.models.PasswordEntity
 import com.mateuszholik.data.repositories.models.Password
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +30,7 @@ class PasswordDBListToPasswordListMapperImplTest {
         const val PLATFORM_NAME_2 = "platform2"
         const val PASSWORD_2 = "password12345"
         val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB_1 = PasswordDB(
+        val PASSWORD_DB_1 = PasswordEntity(
             id = 1,
             platformName = ByteArray(10),
             platformIV = ByteArray(11),
@@ -38,7 +38,7 @@ class PasswordDBListToPasswordListMapperImplTest {
             passwordIV = ByteArray(13),
             expirationDate = EXPIRING_DATE
         )
-        val PASSWORD_DB_2 = PasswordDB(
+        val PASSWORD_DB_2 = PasswordEntity(
             id = 2,
             platformName = ByteArray(10),
             platformIV = ByteArray(11),

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7fa23798609c740e2dde5346e2881c7e",
+    "identityHash": "057f14319dd46bb7e0133787d507d36f",
     "entities": [
       {
-        "tableName": "passwords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `platform_name` TEXT NOT NULL, `platformName` BLOB NOT NULL, `platformIV` BLOB NOT NULL, `password` BLOB NOT NULL, `passwordIV` BLOB NOT NULL, `password_score` INTEGER NOT NULL, `website` TEXT NOT NULL, `expiringDate` INTEGER NOT NULL)",
+        "tableName": "names",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `column_name` BLOB NOT NULL, `column_name_iv` BLOB NOT NULL, `package_name` BLOB, `package_name_iv` BLOB, `website` BLOB, `website_iv` BLOB)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,9 +15,65 @@
             "notNull": true
           },
           {
-            "fieldPath": "platform",
-            "columnName": "platform_name",
-            "affinity": "TEXT",
+            "fieldPath": "platformName",
+            "columnName": "column_name",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platformNameIv",
+            "columnName": "column_name_iv",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "package_name",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packageNameIv",
+            "columnName": "package_name_iv",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "website",
+            "columnName": "website",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "websiteIv",
+            "columnName": "website_iv",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "passwords",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `platform_name_id` INTEGER NOT NULL, `platformName` BLOB NOT NULL, `platformIV` BLOB NOT NULL, `password` BLOB NOT NULL, `passwordIV` BLOB NOT NULL, `password_score` INTEGER NOT NULL, `expiringDate` INTEGER NOT NULL, FOREIGN KEY(`platform_name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "platform_name_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -51,12 +107,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "website",
-            "columnName": "website",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
             "fieldPath": "expirationDate",
             "columnName": "expiringDate",
             "affinity": "INTEGER",
@@ -70,13 +120,25 @@
           ]
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "names",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "platform_name_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7fa23798609c740e2dde5346e2881c7e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '057f14319dd46bb7e0133787d507d36f')"
     ]
   }
 }
