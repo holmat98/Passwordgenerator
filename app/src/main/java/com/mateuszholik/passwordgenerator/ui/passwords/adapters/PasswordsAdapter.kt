@@ -4,22 +4,19 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mateuszholik.data.repositories.models.Password
-import com.mateuszholik.domain.models.PasswordType
-import com.mateuszholik.passwordgenerator.R
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.databinding.ItemPasswordBinding
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.extensions.getAttrColorResId
 
 class PasswordsAdapter(
-    private val copyToClipboard: (String, String) -> Unit,
-    private val navigateToPasswordDetails: (Password) -> Unit,
+    private val navigateToPasswordDetails: (PasswordInfo) -> Unit,
 ) : RecyclerView.Adapter<PasswordsAdapter.PasswordViewHolder>() {
 
-    private val passwords: MutableList<PasswordType> = mutableListOf()
+    private val passwords: MutableList<PasswordInfo> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addPasswords(list: List<PasswordType>) {
+    fun addPasswords(list: List<PasswordInfo>) {
         passwords.clear()
         passwords.addAll(list)
         notifyDataSetChanged()
@@ -39,9 +36,8 @@ class PasswordsAdapter(
         val passwordType = passwords[position]
 
         holder.bind(
-            passwordType = passwordType,
-            navigateToPasswordDetails = navigateToPasswordDetails,
-            copyToClipboard = copyToClipboard
+            passwordInfo = passwordType,
+            navigateToPasswordDetails = navigateToPasswordDetails
         )
     }
 
@@ -51,24 +47,18 @@ class PasswordsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            passwordType: PasswordType,
-            navigateToPasswordDetails: (Password) -> Unit,
-            copyToClipboard: (String, String) -> Unit
+            passwordInfo: PasswordInfo,
+            navigateToPasswordDetails: (PasswordInfo) -> Unit,
         ) {
             with(binding) {
-                val color = root.context.getAttrColor(passwordType.getAttrColorResId())
+                val color =
+                    root.context.getAttrColor(passwordInfo.passwordValidity.getAttrColorResId())
 
                 root.strokeColor = color
-                root.setOnClickListener { navigateToPasswordDetails(passwordType.password) }
+                root.setOnClickListener { navigateToPasswordDetails(passwordInfo) }
                 circularProgressBar.secondaryColor = color
-                circularProgressBar.animateProgress(passwordType.score)
-                platformNameTV.text = passwordType.password.platformName
-                copyPasswordIB.setOnClickListener {
-                    copyToClipboard(
-                        passwordType.password.platformName,
-                        passwordType.password.password
-                    )
-                }
+                circularProgressBar.animateProgress(passwordInfo.passwordScore)
+                platformNameTV.text = passwordInfo.platformName
             }
         }
     }

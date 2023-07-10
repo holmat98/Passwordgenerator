@@ -55,10 +55,10 @@ class SavePasswordViewModel(
             .flatMap { getPasswordUseCase(it).toSingle() }
             .flatMapCompletable { password ->
                 Completable.fromAction {
-                    workScheduler.schedule(
+                    /*workScheduler.schedule(
                         password.id,
                         password.expiringDate.getDiffFromNowInMilliseconds()
-                    )
+                    )*/
                 }
             }
             .subscribeWithObserveOnMainThread(

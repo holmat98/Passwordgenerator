@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.ui.passworddetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordTypeUseCase
@@ -32,8 +32,8 @@ class PasswordDetailsViewModel(
     val passwordDeletedSuccessfully: LiveData<Boolean>
         get() = _passwordDeletedSuccessfully
 
-    private val _passwordType = MutableLiveData<PasswordType>()
-    val passwordType: LiveData<PasswordType>
+    private val _passwordType = MutableLiveData<PasswordInfo>()
+    val passwordType: LiveData<PasswordInfo>
         get() = _passwordType
 
     private val _passwordValidationResult = MutableLiveData<List<PasswordValidationResult>>()
@@ -48,8 +48,7 @@ class PasswordDetailsViewModel(
         getPasswordTypeUseCase(passwordId)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
-                    _passwordType.value = it
-                    validatePassword(it.password)
+                    validatePassword(it.passwordInfo)
                 },
                 doOnError = {
                     Timber.e(it, "Error while getting the password")
@@ -59,8 +58,8 @@ class PasswordDetailsViewModel(
             .addTo(compositeDisposable)
     }
 
-    private fun validatePassword(password: Password) {
-        validatePasswordUseCase(password.password)
+    private fun validatePassword(passwordInfo: PasswordInfo) {
+        validatePasswordUseCase("")
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
                     _passwordValidationResult.value = it
@@ -75,8 +74,8 @@ class PasswordDetailsViewModel(
 
     fun copyPasswordToClipboard() =
         clipboardManager.copyToClipboard(
-            passwordType.value?.password?.platformName.orEmpty(),
-            passwordType.value?.password?.password.orEmpty()
+            "",
+            ""
         )
 
     fun deletePassword() {

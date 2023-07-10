@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.OldPasswordsRepository
+import com.mateuszholik.data.repositories.PasswordsRepository
 import com.mateuszholik.domain.mappers.NewPasswordMapper
 import com.mateuszholik.domain.models.NewPassword
 import io.mockk.every
@@ -9,13 +9,13 @@ import io.reactivex.rxjava3.core.Single
 import org.junit.jupiter.api.Test
 import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 
-internal class InsertPasswordAndGetIdUseCaseImplTest {
+internal class InsertPasswordAndGetIdUseCaseImplTestInfp {
 
     private val newPasswordMapper = mockk<NewPasswordMapper>()
-    private val oldPasswordsRepository = mockk<OldPasswordsRepository>()
+    private val passwordsRepository = mockk<PasswordsRepository>()
 
     private val insertPasswordAndGetIdUseCase = InsertPasswordAndGetIdUseCaseImpl(
-        oldPasswordsRepository = oldPasswordsRepository,
+        passwordsRepository = passwordsRepository,
         newPasswordMapper = newPasswordMapper
     )
 
@@ -26,7 +26,7 @@ internal class InsertPasswordAndGetIdUseCaseImplTest {
         } returns DATA_NEW_PASSWORD
 
         every {
-            oldPasswordsRepository.insertAndGetId(DATA_NEW_PASSWORD)
+            passwordsRepository.insertAndGetId(DATA_NEW_PASSWORD)
         } returns Single.just(ID)
 
         insertPasswordAndGetIdUseCase(NEW_PASSWORD)

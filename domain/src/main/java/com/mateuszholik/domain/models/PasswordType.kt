@@ -1,24 +1,24 @@
 package com.mateuszholik.domain.models
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 
 sealed class PasswordType(
-    open val password: Password,
+    open val passwordInfo: PasswordInfo,
     open val score: Int,
 ) {
 
     data class ValidPassword(
-        override val password: Password,
+        override val passwordInfo: PasswordInfo,
         override val score: Int
-    ) : PasswordType(password, score)
+    ) : PasswordType(passwordInfo, score)
 
     data class OutdatedPassword(
-        override val password: Password,
+        override val passwordInfo: PasswordInfo,
         override val score: Int
-    ) : PasswordType(password, score)
+    ) : PasswordType(passwordInfo, score)
 
     data class ExpiringPassword(
-        override val password: Password,
+        override val passwordInfo: PasswordInfo,
         override val score: Int,
-    ) : PasswordType(password, score)
+    ) : PasswordType(passwordInfo, score)
 }

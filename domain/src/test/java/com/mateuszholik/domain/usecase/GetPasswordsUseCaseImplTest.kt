@@ -1,7 +1,7 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.OldPasswordsRepository
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapper
 import com.mateuszholik.domain.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
@@ -15,8 +15,8 @@ import java.time.LocalDateTime
 
 class GetPasswordsUseCaseImplTest {
 
-    private val oldPasswordsRepository = mockk<OldPasswordsRepository> {
-        every { getAllPasswords() } returns Single.just(listOf(PASSWORD))
+    private val passwordsRepository = mockk<PasswordsRepository> {
+        every { getAllPasswords() } returns Single.just(listOf(PASSWORDInfo))
     }
 
     private val passwordToPasswordTypeMapper = mockk<PasswordToPasswordTypeMapper>()
@@ -24,7 +24,7 @@ class GetPasswordsUseCaseImplTest {
     private val getPasswordValidationResultUseCase = mockk<GetPasswordValidationResultUseCase>()
 
     private val getPasswordUseCase = GetPasswordsUseCaseImpl(
-        oldPasswordsRepository = oldPasswordsRepository,
+        passwordsRepository = passwordsRepository,
         passwordToPasswordTypeMapper = passwordToPasswordTypeMapper,
         getPasswordValidationResultUseCase = getPasswordValidationResultUseCase,
     )
@@ -32,11 +32,11 @@ class GetPasswordsUseCaseImplTest {
     @Test
     fun `When repository returns all passwords use case will return them correctly`() {
         every {
-            getPasswordValidationResultUseCase(PASSWORD.password)
+            getPasswordValidationResultUseCase(PASSWORDInfo.password)
         } returns Single.just(VALIDATION_RESULTS)
 
         every {
-            passwordToPasswordTypeMapper.map(PasswordInfo(PASSWORD, PASSWORD_SCORE))
+            passwordToPasswordTypeMapper.map(PasswordInfo(PASSWORDInfo, PASSWORD_SCORE))
         } returns VALID_PASSWORD
 
         getPasswordUseCase.invoke()
@@ -46,7 +46,7 @@ class GetPasswordsUseCaseImplTest {
     }
 
     private companion object {
-        val PASSWORD = Password(
+        val PASSWORDInfo = com.mateuszholik.data.repositories.models.PasswordInfo(
             id = 0L,
             platformName = "platform",
             password = "password",
@@ -73,6 +73,6 @@ class GetPasswordsUseCaseImplTest {
                 maxScore = 10
             )
         )
-        val VALID_PASSWORD = PasswordType.ValidPassword(PASSWORD, PASSWORD_SCORE)
+        val VALID_PASSWORD = PasswordType.ValidPassword(PASSWORDInfo, PASSWORD_SCORE)
     }
 }

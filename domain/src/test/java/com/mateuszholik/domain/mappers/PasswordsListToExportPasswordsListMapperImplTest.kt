@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.models.ExportedPassword
 import io.mockk.every
 import io.mockk.mockk
@@ -19,10 +19,10 @@ internal class PasswordsListToExportPasswordsListMapperImplTest {
     @Test
     fun `List of passwords objects is properly mapped to list of ExportedPassword objects`() {
         every {
-            passwordToExportedPasswordMapper.map(PASSWORD)
+            passwordToExportedPasswordMapper.map(PASSWORDInfo)
         } returns EXPORTED_PASSWORD
 
-        val result = passwordsListToExportedPasswordsListMapper.map(listOf(PASSWORD))
+        val result = passwordsListToExportedPasswordsListMapper.map(listOf(PASSWORDInfo))
 
         assertThat(result).isEqualTo(listOf(EXPORTED_PASSWORD))
     }
@@ -30,7 +30,7 @@ internal class PasswordsListToExportPasswordsListMapperImplTest {
     private companion object {
         const val PASSWORD_STRING = "password"
         const val PLATFORM_NAME = "platformName"
-        val PASSWORD = Password(
+        val PASSWORDInfo = PasswordInfo(
             id = 1L,
             password = PASSWORD_STRING,
             platformName = PLATFORM_NAME,

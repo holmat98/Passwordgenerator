@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.assertThrows
 
-internal class PasswordFactoryImplTest {
+internal class PasswordInfoFactoryImplTest {
 
     private val passwordFactory = PasswordFactoryImpl()
 

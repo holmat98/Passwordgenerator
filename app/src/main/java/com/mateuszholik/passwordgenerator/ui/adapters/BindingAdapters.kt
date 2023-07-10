@@ -4,7 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import com.mateuszholik.domain.models.PasswordType
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.extensions.getAttrColorResId
 import com.mateuszholik.passwordgenerator.listeners.OnSwitchChangedValueListener
@@ -43,10 +43,10 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("setSecondaryColor")
-    fun setSecondaryColor(circularProgressBar: CircularProgressBar, passwordType: PasswordType?) {
-        passwordType?.let {
+    fun setSecondaryColor(circularProgressBar: CircularProgressBar, passwordInfo: PasswordInfo?) {
+        passwordInfo?.let {
             circularProgressBar.secondaryColor =
-                circularProgressBar.context.getAttrColor(it.getAttrColorResId())
+                circularProgressBar.context.getAttrColor(it.passwordValidity.getAttrColorResId())
         }
     }
 }

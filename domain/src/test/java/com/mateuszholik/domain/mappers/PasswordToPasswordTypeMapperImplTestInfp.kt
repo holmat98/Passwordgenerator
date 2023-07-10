@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordInfo
 import com.mateuszholik.domain.models.PasswordType
 import io.mockk.every
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class PasswordToPasswordTypeMapperImplTest {
+internal class PasswordToPasswordTypeMapperImplTestInfp {
 
     private val passwordToPasswordTypeMapper = PasswordToPasswordTypeMapperImpl()
 
@@ -32,7 +32,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
     @Test
     fun `When password will expire in 14 days then mapper will return PasswordType ValidPassword`() {
         val testedValue =
-            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.plusDays(14)), PASSWORD_SCORE)
+            PasswordInfo(PASSWORDInfo.copy(expiringDate = TODAY.plusDays(14)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
@@ -40,7 +40,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
             .isInstanceOf(PasswordType.ValidPassword::class.java)
             .isEqualTo(
                 PasswordType.ValidPassword(
-                    testedValue.password,
+                    testedValue.passwordInfo,
                     testedValue.passwordScore
                 )
             )
@@ -49,7 +49,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
     @Test
     fun `When password will expire after in 5 days then mapper will return PasswordType ExpiringPassword`() {
         val testedValue =
-            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.plusDays(5)), PASSWORD_SCORE)
+            PasswordInfo(PASSWORDInfo.copy(expiringDate = TODAY.plusDays(5)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
@@ -57,7 +57,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
             .isInstanceOf(PasswordType.ExpiringPassword::class.java)
             .isEqualTo(
                 PasswordType.ExpiringPassword(
-                    testedValue.password,
+                    testedValue.passwordInfo,
                     testedValue.passwordScore
                 )
             )
@@ -66,7 +66,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
     @Test
     fun `When password expired day before then mapper will return PasswordType OutdatedPassword`() {
         val testedValue =
-            PasswordInfo(PASSWORD.copy(expiringDate = TODAY.minusDays(1)), PASSWORD_SCORE)
+            PasswordInfo(PASSWORDInfo.copy(expiringDate = TODAY.minusDays(1)), PASSWORD_SCORE)
 
         val result = passwordToPasswordTypeMapper.map(testedValue)
 
@@ -74,7 +74,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
             .isInstanceOf(PasswordType.OutdatedPassword::class.java)
             .isEqualTo(
                 PasswordType.OutdatedPassword(
-                    testedValue.password,
+                    testedValue.passwordInfo,
                     testedValue.passwordScore
                 )
             )
@@ -83,7 +83,7 @@ internal class PasswordToPasswordTypeMapperImplTest {
     private companion object {
         const val PASSWORD_SCORE = 100
         val TODAY: LocalDateTime = LocalDateTime.of(2022, 12, 26, 12, 0, 0)
-        val PASSWORD = Password(
+        val PASSWORDInfo = com.mateuszholik.data.repositories.models.PasswordInfo(
             id = 1L,
             password = "password",
             platformName = "platform",

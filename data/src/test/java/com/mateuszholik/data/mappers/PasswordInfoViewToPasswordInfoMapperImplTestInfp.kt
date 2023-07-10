@@ -3,14 +3,14 @@ package com.mateuszholik.data.mappers
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-class PasswordDBToPasswordMapperImplTest {
+class PasswordInfoViewToPasswordInfoMapperImplTestInfp {
 
     private val encryptionManager = mockk<KeyBaseEncryptionManager> {
         every {
@@ -32,7 +32,7 @@ class PasswordDBToPasswordMapperImplTest {
         } returns PLATFORM_NAME
     }
 
-    private val passwordMapper = PasswordDBToPasswordMapperImpl(encryptionManager)
+    private val passwordMapper = PasswordInfoViewToPasswordInfoMapperImpl(encryptionManager)
 
     @Test
     fun `PasswordMapper maps correctly PasswordDB object to Password object`() {
@@ -53,7 +53,7 @@ class PasswordDBToPasswordMapperImplTest {
             passwordIV = ByteArray(13),
             expirationDate = EXPIRING_DATE
         )
-        val EXPECTED = Password(
+        val EXPECTED = PasswordInfo(
             id = 1,
             platformName = PLATFORM_NAME,
             password = PASSWORD,

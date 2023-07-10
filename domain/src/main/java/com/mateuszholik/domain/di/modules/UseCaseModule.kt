@@ -67,26 +67,24 @@ internal val useCaseModule = module {
 
     single<InsertPasswordAndGetIdUseCase> {
         InsertPasswordAndGetIdUseCaseImpl(
-            oldPasswordsRepository = get(),
+            passwordsRepository = get(),
             newPasswordMapper = get()
         )
     }
 
     single<GetPasswordsUseCase> {
         GetPasswordsUseCaseImpl(
-            oldPasswordsRepository = get(),
-            passwordToPasswordTypeMapper = get(),
-            getPasswordValidationResultUseCase = get()
+            passwordsRepository = get(),
         )
     }
 
     factory<DeletePasswordUseCase> {
-        DeletePasswordUseCaseImpl(oldPasswordsRepository = get())
+        DeletePasswordUseCaseImpl(passwordsRepository = get())
     }
 
     factory<UpdatePasswordUseCase> {
         UpdatePasswordUseCaseImpl(
-            oldPasswordsRepository = get(),
+            passwordsRepository = get(),
             updatedPasswordMapper = get()
         )
     }
@@ -106,7 +104,7 @@ internal val useCaseModule = module {
     factory<IsPinCorrectToSaveUseCase> { IsPinCorrectToSaveUseCaseImpl(pinValidator = get()) }
 
     factory<GetPasswordUseCase> {
-        GetPasswordUseCaseImpl(oldPasswordsRepository = get())
+        GetPasswordUseCaseImpl(passwordsRepository = get())
     }
 
     factory<SaveDataToFileUseCase> {
@@ -115,7 +113,7 @@ internal val useCaseModule = module {
 
     factory<ExportPasswordsUseCase> {
         ExportPasswordsUseCaseImpl(
-            oldPasswordsRepository = get(),
+            passwordsRepository = get(),
             passwordsListToExportPasswordsListMapper = get(),
             passwordsParser = get(),
             saveDataToFileUseCase = get(),
@@ -134,7 +132,7 @@ internal val useCaseModule = module {
             encryptionManager = get(),
             passwordsParser = get(),
             exportedPasswordsMapper = get(),
-            oldPasswordsRepository = get()
+            passwordsRepository = get()
         )
     }
 
@@ -146,7 +144,7 @@ internal val useCaseModule = module {
 
     factory<GetPasswordTypeUseCase> {
         GetPasswordTypeUseCaseImpl(
-            oldPasswordsRepository = get(),
+            passwordsRepository = get(),
             passwordToPasswordTypeMapper = get(),
             getPasswordValidationResultUseCase = get()
         )

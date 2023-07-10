@@ -1,16 +1,16 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.OldPasswordsRepository
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.usecase.base.ParameterizedMaybeUseCase
 import io.reactivex.rxjava3.core.Maybe
 
-interface GetPasswordUseCase : ParameterizedMaybeUseCase<Long, Password>
+interface GetPasswordUseCase : ParameterizedMaybeUseCase<Long, PasswordInfo>
 
 internal class GetPasswordUseCaseImpl(
-    private val oldPasswordsRepository: OldPasswordsRepository
+    private val passwordsRepository: PasswordsRepository
 ) : GetPasswordUseCase {
 
-    override fun invoke(param: Long): Maybe<Password> =
-        oldPasswordsRepository.getPassword(param)
+    override fun invoke(param: Long): Maybe<PasswordInfo> =
+        passwordsRepository.getPassword(param)
 }

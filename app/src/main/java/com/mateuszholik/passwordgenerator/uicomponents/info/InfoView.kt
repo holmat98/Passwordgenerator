@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import com.google.android.material.card.MaterialCardView
+import com.mateuszholik.data.repositories.models.PasswordValidity
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ViewInfoBinding
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
-import java.time.LocalDateTime
 
 class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {
 
@@ -18,41 +18,39 @@ class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context
         this
     )
 
-    var date: LocalDateTime = LocalDateTime.now()
+    var passwordValidity: PasswordValidity = PasswordValidity.VALID
         set(value) {
             updateView(value)
             field = value
         }
 
-    private fun updateView(dateTime: LocalDateTime) {
-        val style = getDrawableAndStringRes(dateTime)
+    private fun updateView(passwordValidity: PasswordValidity) {
+        val style = getDrawableAndStringRes(passwordValidity)
         strokeColor = context.getAttrColor(style.attrColor)
         binding.infoText.text = context.getString(style.stringRes)
     }
 
-    private fun getDrawableAndStringRes(dateTime: LocalDateTime): WarningViewDetails {
-        val now = LocalDateTime.now()
-        return when {
-            now.isBefore(dateTime.minusDays(7)) ->
+    private fun getDrawableAndStringRes(passwordValidity: PasswordValidity): WarningViewDetails =
+        when (passwordValidity) {
+            PasswordValidity.VALID ->
                 WarningViewDetails(
                     attrColor = R.attr.colorPrimary,
                     stringRes = R.string.warning_password_correct
                 )
-            now.isAfter(dateTime) ->
+            PasswordValidity.EXPIRED ->
                 WarningViewDetails(
                     attrColor = R.attr.colorError,
                     stringRes = R.string.warning_password_expired
                 )
-            else ->
+            PasswordValidity.EXPIRING ->
                 WarningViewDetails(
                     attrColor = R.attr.colorTertiary,
                     stringRes = R.string.warning_password_expiring
                 )
         }
-    }
 
     private data class WarningViewDetails(
         @AttrRes val attrColor: Int,
-        @StringRes val stringRes: Int
+        @StringRes val stringRes: Int,
     )
 }

@@ -3,9 +3,9 @@ package com.mateuszholik.data.mappers
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
-import com.mateuszholik.data.managers.io.SharedPrefKeys
+import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.managers.io.SharedPrefManager
-import com.mateuszholik.data.repositories.models.UpdatedPassword
+import com.mateuszholik.data.repositories.models.NewPassword
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
@@ -16,15 +16,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class UpdatedPasswordToOldPasswordEntityMapperImplTest {
+internal class NewPasswordToOldPasswordEntityMapperImplTestInfp {
 
     private val encryptionManager = mockk<KeyBaseEncryptionManager>()
     private val sharedPrefManager = mockk<SharedPrefManager> {
         every {
-            readLong(SharedPrefKeys.PASSWORD_VALIDITY, any())
+            readLong(PASSWORD_VALIDITY, any())
         } returns PASSWORD_VALIDITY_IN_DAYS
     }
-    private val updatedPasswordToPasswordDBMapper = UpdatedPasswordToPasswordDBMapperImpl(
+    private val passwordToPasswordDBMapper = NewPasswordToPasswordDBMapperImpl(
         encryptionManager = encryptionManager,
         sharedPrefManager = sharedPrefManager
     )
@@ -41,7 +41,7 @@ internal class UpdatedPasswordToOldPasswordEntityMapperImplTest {
     }
 
     @Test
-    fun `For given updatedPassword mapper will properly map it to PasswordDB model`() {
+    fun `For given newPassword mapper will properly map it to PasswordDB model`() {
         every {
             encryptionManager.encrypt(PASSWORD)
         } returns ENCRYPTED_PASSWORD
@@ -50,7 +50,7 @@ internal class UpdatedPasswordToOldPasswordEntityMapperImplTest {
             encryptionManager.encrypt(PLATFORM_NAME)
         } returns ENCRYPTED_PLATFORM_NAME
 
-        val result = updatedPasswordToPasswordDBMapper.map(TESTED_VALUE)
+        val result = passwordToPasswordDBMapper.map(TESTED_VALUE)
 
         assertThat(result).isEqualTo(
             OldPasswordEntity(
@@ -67,11 +67,10 @@ internal class UpdatedPasswordToOldPasswordEntityMapperImplTest {
     private companion object {
         val TODAY_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
         const val PASSWORD_VALIDITY_IN_DAYS = 30L
-        const val ID = 10L
+        const val ID = 0L
         const val PASSWORD = "password"
         const val PLATFORM_NAME = "platform"
-        val TESTED_VALUE = UpdatedPassword(
-            id = ID,
+        val TESTED_VALUE = NewPassword(
             password = PASSWORD,
             platformName = PLATFORM_NAME
         )

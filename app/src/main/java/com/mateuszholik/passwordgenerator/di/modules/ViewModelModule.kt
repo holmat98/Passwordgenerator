@@ -1,6 +1,6 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
 import com.mateuszholik.passwordgenerator.ui.MainViewModel
 import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
@@ -37,7 +37,7 @@ val viewModelModule = module {
         LogInViewModel(
             isPinCorrectUseCase = get(),
             shouldUseBiometricAuthenticationUseCase = get(),
-            textProvider = get()
+            textProvider = get(),
         )
     }
 
@@ -85,9 +85,9 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (password: Password) ->
+    viewModel { (passwordInfo: PasswordInfo) ->
         EditPasswordViewModel(
-            password = password,
+            passwordInfo = passwordInfo,
             updatePasswordUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
             textProvider = get()

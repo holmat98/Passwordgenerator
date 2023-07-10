@@ -3,7 +3,7 @@ package com.mateuszholik.domain.usecase
 import android.net.Uri
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
 import com.mateuszholik.cryptography.extensions.toEncryptedData
-import com.mateuszholik.data.repositories.OldPasswordsRepository
+import com.mateuszholik.data.repositories.PasswordsRepository
 import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapper
 import com.mateuszholik.domain.models.ExportedPassword
@@ -26,7 +26,7 @@ internal class ImportPasswordsUseCaseImplTest {
     private val exportedPasswordsMapper = mockk<ExportedPasswordsListToNewPasswordsListMapper> {
         every { map(listOf(EXPORTED_PASSWORD)) } returns listOf(NEW_PASSWORD)
     }
-    private val oldPasswordsRepository = mockk<OldPasswordsRepository> {
+    private val passwordsRepository = mockk<PasswordsRepository> {
         every { insertPasswords(listOf(NEW_PASSWORD)) } returns Completable.complete()
     }
 
@@ -35,7 +35,7 @@ internal class ImportPasswordsUseCaseImplTest {
         encryptionManager = encryptionManager,
         passwordsParser = passwordsParser,
         exportedPasswordsMapper = exportedPasswordsMapper,
-        oldPasswordsRepository = oldPasswordsRepository
+        passwordsRepository = passwordsRepository
     )
 
     @Test
@@ -52,7 +52,7 @@ internal class ImportPasswordsUseCaseImplTest {
         verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
         verify(exactly = 1) { passwordsParser.parseFromString(NOT_ENCRYPTED_DATA_FROM_FILE) }
         verify(exactly = 1) { exportedPasswordsMapper.map(listOf(EXPORTED_PASSWORD)) }
-        verify(exactly = 1) { oldPasswordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
+        verify(exactly = 1) { passwordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
     }
 
     @Test
@@ -81,7 +81,7 @@ internal class ImportPasswordsUseCaseImplTest {
         }
         verify(exactly = 1) { passwordsParser.parseFromString(NOT_ENCRYPTED_DATA_FROM_FILE) }
         verify(exactly = 1) { exportedPasswordsMapper.map(listOf(EXPORTED_PASSWORD)) }
-        verify(exactly = 1) { oldPasswordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
+        verify(exactly = 1) { passwordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
     }
 
     private companion object {

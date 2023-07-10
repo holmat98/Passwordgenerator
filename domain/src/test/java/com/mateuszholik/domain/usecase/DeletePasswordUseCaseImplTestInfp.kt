@@ -1,21 +1,21 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.OldPasswordsRepository
+import com.mateuszholik.data.repositories.PasswordsRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import org.junit.jupiter.api.Test
 
 
-class DeletePasswordUseCaseImplTest {
+class DeletePasswordUseCaseImplTestInfp {
 
-    private val oldPasswordsRepository = mockk<OldPasswordsRepository>()
+    private val passwordsRepository = mockk<PasswordsRepository>()
 
-    private val deletePasswordUseCase = DeletePasswordUseCaseImpl(oldPasswordsRepository)
+    private val deletePasswordUseCase = DeletePasswordUseCaseImpl(passwordsRepository)
 
     @Test
     fun `When repository correctly removed password use case will return complete`() {
-        every { oldPasswordsRepository.delete(ID) } returns Completable.complete()
+        every { passwordsRepository.delete(ID) } returns Completable.complete()
 
         deletePasswordUseCase.invoke(ID)
             .test()
@@ -24,7 +24,7 @@ class DeletePasswordUseCaseImplTest {
 
     @Test
     fun `When repository did not removed password use case will return error`() {
-        every { oldPasswordsRepository.delete(ID) } returns Completable.error(ERROR)
+        every { passwordsRepository.delete(ID) } returns Completable.error(ERROR)
 
         deletePasswordUseCase.invoke(ID)
             .test()

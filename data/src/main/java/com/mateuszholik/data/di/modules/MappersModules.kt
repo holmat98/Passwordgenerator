@@ -4,23 +4,23 @@ import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapperImpl
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapperImpl
-import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
-import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapperImpl
-import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
-import com.mateuszholik.data.mappers.PasswordDBToPasswordMapperImpl
+import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
+import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapperImpl
+import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
+import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapperImpl
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapperImpl
 import org.koin.dsl.module
 
 internal val mappersModule = module {
 
-    factory<PasswordDBToPasswordMapper> {
-        PasswordDBToPasswordMapperImpl(encryptionManager = get())
+    factory<PasswordInfoViewToPasswordInfoMapper> {
+        PasswordInfoViewToPasswordInfoMapperImpl(encryptionManager = get())
     }
 
-    factory<PasswordDBListToPasswordListMapper> {
-        PasswordDBListToPasswordListMapperImpl(
-            passwordDBToPasswordMapper = get()
+    factory<PasswordInfoViewListToPasswordInfoListMapper> {
+        PasswordInfoViewListToPasswordInfoListMapperImpl(
+            passwordInfoViewToPasswordInfoMapper = get()
         )
     }
 

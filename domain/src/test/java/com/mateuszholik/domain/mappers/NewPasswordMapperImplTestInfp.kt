@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 import org.junit.jupiter.api.Test
 
-internal class NewPasswordMapperImplTest {
+internal class NewPasswordMapperImplTestInfp {
 
     private val newPasswordMapper = NewPasswordMapperImpl()
 

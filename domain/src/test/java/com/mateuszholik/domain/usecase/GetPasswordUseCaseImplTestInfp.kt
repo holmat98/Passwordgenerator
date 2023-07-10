@@ -1,33 +1,33 @@
 package com.mateuszholik.domain.usecase
 
-import com.mateuszholik.data.repositories.OldPasswordsRepository
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Maybe
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class GetPasswordUseCaseImplTest {
+internal class GetPasswordUseCaseImplTestInfp {
 
-    private val oldPasswordsRepository = mockk<OldPasswordsRepository>()
-    private val getPasswordUseCase = GetPasswordUseCaseImpl(oldPasswordsRepository)
+    private val passwordsRepository = mockk<PasswordsRepository>()
+    private val getPasswordUseCase = GetPasswordUseCaseImpl(passwordsRepository)
 
     @Test
     fun `When repository correctly returned password then use case will return this password`() {
         every {
-            oldPasswordsRepository.getPassword(ID)
-        } returns Maybe.just(PASSWORD)
+            passwordsRepository.getPassword(ID)
+        } returns Maybe.just(PASSWORDInfo)
 
         getPasswordUseCase(ID)
             .test()
-            .assertValue(PASSWORD)
+            .assertValue(PASSWORDInfo)
     }
 
     @Test
     fun `When repository did not return password then use case will return empty`() {
         every {
-            oldPasswordsRepository.getPassword(ID)
+            passwordsRepository.getPassword(ID)
         } returns Maybe.empty()
 
         getPasswordUseCase(ID)
@@ -37,7 +37,7 @@ internal class GetPasswordUseCaseImplTest {
 
     private companion object {
         const val ID = 1L
-        val PASSWORD = Password(
+        val PASSWORDInfo = PasswordInfo(
             id = ID,
             password = "password",
             platformName = "platform",

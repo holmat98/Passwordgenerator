@@ -5,7 +5,7 @@ import com.mateuszholik.domain.models.ExportedPassword
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class ExportedPasswordToNewPasswordMapperImplTest {
+internal class ExportedPasswordToNewPasswordMapperImplTestInfp {
 
     private val exportedPasswordToNewPassword = ExportedPasswordToNewPasswordMapperImpl()
 

@@ -5,11 +5,11 @@ import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
-import com.mateuszholik.data.mappers.PasswordDBListToPasswordListMapper
-import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
+import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
+import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
 import com.mateuszholik.data.repositories.models.NewPassword
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.data.repositories.models.UpdatedPassword
 import io.mockk.every
 import io.mockk.mockk
@@ -20,23 +20,23 @@ import io.reactivex.rxjava3.core.Single
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-class OldPasswordsRepositoryImplTest {
+class PasswordsRepositoryImplTest {
 
     private val oldPasswordsDao = mockk<OldPasswordsDao> {
         every { insertAndGetId(PASSWORD_DB) } returns Single.just(ID)
         every { insertPasswords(listOf(PASSWORD_DB, PASSWORD_DB_2)) } returns Completable.complete()
         every { update(PASSWORD_DB) } returns Completable.complete()
-        every { deletePassword(MAPPED_PASSWORD.id) } returns Completable.complete()
+        every { deletePassword(MAPPED_PASSWORDInfo.id) } returns Completable.complete()
         every { getPassword(ID) } returns Maybe.just(PASSWORD_DB)
         every { getAllPasswords() } returns Single.just(listOf(PASSWORD_DB))
     }
 
-    private val passwordDBListToPasswordListMapper = mockk<PasswordDBListToPasswordListMapper> {
-        every { map(listOf(PASSWORD_DB)) } returns listOf(MAPPED_PASSWORD)
+    private val passwordInfoViewListToPasswordInfoListMapper = mockk<PasswordInfoViewListToPasswordInfoListMapper> {
+        every { map(listOf(PASSWORD_DB)) } returns listOf(MAPPED_PASSWORDInfo)
     }
 
-    private val passwordDBToPasswordMapper = mockk<PasswordDBToPasswordMapper> {
-        every { map(PASSWORD_DB) } returns MAPPED_PASSWORD
+    private val passwordInfoViewToPasswordInfoMapper = mockk<PasswordInfoViewToPasswordInfoMapper> {
+        every { map(PASSWORD_DB) } returns MAPPED_PASSWORDInfo
     }
 
     private val newPasswordToPasswordDBMapper = mockk<NewPasswordToPasswordDBMapper> {
@@ -56,10 +56,10 @@ class OldPasswordsRepositoryImplTest {
     }
 
 
-    private val passwordsRepository = OldPasswordsRepositoryImpl(
-        oldPasswordsDao = oldPasswordsDao,
-        passwordDBListToPasswordListMapper = passwordDBListToPasswordListMapper,
-        passwordDBToPasswordMapper = passwordDBToPasswordMapper,
+    private val passwordsRepository = PasswordsRepositoryImpl(
+        passwordsDao = oldPasswordsDao,
+        passwordInfoViewListToPasswordInfoListMapper = passwordInfoViewListToPasswordInfoListMapper,
+        passwordInfoViewToPasswordInfoMapper = passwordInfoViewToPasswordInfoMapper,
         newPasswordToPasswordDBMapper = newPasswordToPasswordDBMapper,
         newPasswordsListToPasswordDBListMapper = newPasswordsListToPasswordDBListMapper,
         updatedPasswordToPasswordDBMapper = updatedPasswordToPasswordDBMapper
@@ -96,12 +96,12 @@ class OldPasswordsRepositoryImplTest {
 
     @Test
     fun `Password is deleted correctly`() {
-        passwordsRepository.delete(MAPPED_PASSWORD.id)
+        passwordsRepository.delete(MAPPED_PASSWORDInfo.id)
             .test()
             .assertComplete()
 
         verify(exactly = 1) {
-            oldPasswordsDao.deletePassword(MAPPED_PASSWORD.id)
+            oldPasswordsDao.deletePassword(MAPPED_PASSWORDInfo.id)
         }
     }
 
@@ -109,7 +109,7 @@ class OldPasswordsRepositoryImplTest {
     fun `Password with given id is correctly provided and mapper to Password object`() {
         passwordsRepository.getPassword(ID)
             .test()
-            .assertValue(MAPPED_PASSWORD)
+            .assertValue(MAPPED_PASSWORDInfo)
 
         verify(exactly = 1) { oldPasswordsDao.getPassword(ID) }
     }
@@ -131,7 +131,7 @@ class OldPasswordsRepositoryImplTest {
     fun `All passwords are correctly provided and mapped to list of Password objects`() {
         passwordsRepository.getAllPasswords()
             .test()
-            .assertValue(listOf(MAPPED_PASSWORD))
+            .assertValue(listOf(MAPPED_PASSWORDInfo))
 
         verify(exactly = 1) {
             oldPasswordsDao.getAllPasswords()
@@ -191,7 +191,7 @@ class OldPasswordsRepositoryImplTest {
             passwordIV = ENCRYPTED_PASSWORD_2.iv,
             expirationDate = EXPIRING_DATE
         )
-        val MAPPED_PASSWORD = Password(
+        val MAPPED_PASSWORDInfo = PasswordInfo(
             id = ID,
             platformName = PLATFORM_NAME,
             password = PASSWORD,
