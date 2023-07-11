@@ -25,7 +25,7 @@ internal data class PasswordEntity(
     @ColumnInfo(name = COLUMN_NAME_ID) val nameId: Long,
     @ColumnInfo(name = COLUMN_PASSWORD_NAME) val password: ByteArray,
     @ColumnInfo(name = COLUMN_PASSWORD_IV_NAME) val passwordIV: ByteArray,
-    @ColumnInfo(name = COLUMN_EXPIRATION_DATE_NAME) val expirationDate: LocalDateTime,
+    @ColumnInfo(name = COLUMN_EXPIRATION_DATE_NAME) val expirationDate: LocalDateTime?,
     @ColumnInfo(name = COLUMN_PASSWORD_SCORE) val passwordScore: Int,
 ) {
 

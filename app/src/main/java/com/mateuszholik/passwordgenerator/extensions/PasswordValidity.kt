@@ -5,7 +5,7 @@ import com.mateuszholik.passwordgenerator.R
 
 internal fun PasswordValidity.getAttrColorResId(): Int =
     when (this) {
-        PasswordValidity.EXPIRING -> R.attr.colorTertiary
-        PasswordValidity.EXPIRED -> R.attr.colorError
-        PasswordValidity.VALID -> R.attr.colorPrimary
+        is PasswordValidity.Expiring -> R.attr.colorTertiary
+        is PasswordValidity.Expired -> R.attr.colorError
+        is PasswordValidity.Valid -> R.attr.colorPrimary
     }

@@ -24,7 +24,7 @@ internal class NewPasswordToOldPasswordEntityMapperImplTestInfp {
             readLong(PASSWORD_VALIDITY, any())
         } returns PASSWORD_VALIDITY_IN_DAYS
     }
-    private val passwordToPasswordDBMapper = NewPasswordToPasswordDBMapperImpl(
+    private val passwordToPasswordDBMapper = NewPasswordToPasswordEntityMapperImpl(
         encryptionManager = encryptionManager,
         sharedPrefManager = sharedPrefManager
     )

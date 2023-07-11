@@ -18,31 +18,31 @@ class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context
         this
     )
 
-    var passwordValidity: PasswordValidity = PasswordValidity.VALID
+    var passwordValidity: PasswordValidity? = null
         set(value) {
             updateView(value)
             field = value
         }
 
-    private fun updateView(passwordValidity: PasswordValidity) {
+    private fun updateView(passwordValidity: PasswordValidity?) {
         val style = getDrawableAndStringRes(passwordValidity)
         strokeColor = context.getAttrColor(style.attrColor)
         binding.infoText.text = context.getString(style.stringRes)
     }
 
-    private fun getDrawableAndStringRes(passwordValidity: PasswordValidity): WarningViewDetails =
+    private fun getDrawableAndStringRes(passwordValidity: PasswordValidity?): WarningViewDetails =
         when (passwordValidity) {
-            PasswordValidity.VALID ->
+            is PasswordValidity.Valid ->
                 WarningViewDetails(
                     attrColor = R.attr.colorPrimary,
                     stringRes = R.string.warning_password_correct
                 )
-            PasswordValidity.EXPIRED ->
+            is PasswordValidity.Expired ->
                 WarningViewDetails(
                     attrColor = R.attr.colorError,
                     stringRes = R.string.warning_password_expired
                 )
-            PasswordValidity.EXPIRING ->
+            else ->
                 WarningViewDetails(
                     attrColor = R.attr.colorTertiary,
                     stringRes = R.string.warning_password_expiring

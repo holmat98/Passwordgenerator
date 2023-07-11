@@ -1,31 +1,38 @@
 package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
-import com.mateuszholik.data.db.models.entities.OldPasswordEntity
+import com.mateuszholik.data.db.models.entities.PasswordEntity
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
+import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper.Param
 import com.mateuszholik.data.managers.io.SharedPrefManager
 import com.mateuszholik.data.repositories.models.NewPassword
 import java.time.LocalDateTime
 
-internal interface NewPasswordToPasswordDBMapper : Mapper<NewPassword, OldPasswordEntity>
+internal interface NewPasswordToPasswordEntityMapper : Mapper<Param, PasswordEntity> {
 
-internal class NewPasswordToPasswordDBMapperImpl(
+    data class Param(
+        val newPassword: NewPassword,
+        val nameId: Long,
+    )
+}
+
+internal class NewPasswordToPasswordEntityMapperImpl(
     private val encryptionManager: KeyBaseEncryptionManager,
-    private val sharedPrefManager: SharedPrefManager
-) : NewPasswordToPasswordDBMapper {
+    private val sharedPrefManager: SharedPrefManager,
+) : NewPasswordToPasswordEntityMapper {
 
-    override fun map(param: NewPassword): OldPasswordEntity {
-        val encryptedPlatformName = encryptionManager.encrypt(param.platformName)
-        val encryptedPassword = encryptionManager.encrypt(param.password)
+    override fun map(param: Param): PasswordEntity {
+        val encryptedPassword = encryptionManager.encrypt(param.newPassword.password)
         val expiringDate = sharedPrefManager.readLong(PASSWORD_VALIDITY, DEFAULT_PASSWORD_VALIDITY)
 
-        return OldPasswordEntity(
+        return PasswordEntity(
             id = DEFAULT_ID,
-            platformName = encryptedPlatformName.data,
-            platformIV = encryptedPlatformName.iv,
+            nameId = param.nameId,
             password = encryptedPassword.data,
             passwordIV = encryptedPassword.iv,
             expirationDate = LocalDateTime.now().plusDays(expiringDate)
+                .takeIf { param.newPassword.isExpiring },
+            passwordScore = param.newPassword.passwordScore
         )
     }
 

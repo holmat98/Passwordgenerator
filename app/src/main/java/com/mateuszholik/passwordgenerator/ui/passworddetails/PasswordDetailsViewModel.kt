@@ -2,10 +2,9 @@ package com.mateuszholik.passwordgenerator.ui.passworddetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.data.repositories.models.PasswordInfo
-import com.mateuszholik.domain.models.PasswordType
+import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.domain.usecase.DeletePasswordUseCase
-import com.mateuszholik.domain.usecase.GetPasswordTypeUseCase
+import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordValidationResultUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
@@ -20,7 +19,7 @@ import timber.log.Timber
 
 class PasswordDetailsViewModel(
     private val passwordId: Long,
-    private val getPasswordTypeUseCase: GetPasswordTypeUseCase,
+    private val getPasswordUseCase: GetPasswordUseCase,
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val clipboardManager: ClipboardManager,
     private val validatePasswordUseCase: GetPasswordValidationResultUseCase,
@@ -32,9 +31,9 @@ class PasswordDetailsViewModel(
     val passwordDeletedSuccessfully: LiveData<Boolean>
         get() = _passwordDeletedSuccessfully
 
-    private val _passwordType = MutableLiveData<PasswordInfo>()
-    val passwordType: LiveData<PasswordInfo>
-        get() = _passwordType
+    private val _passwordDetails = MutableLiveData<PasswordDetails>()
+    val passwordDetails: LiveData<PasswordDetails>
+        get() = _passwordDetails
 
     private val _passwordValidationResult = MutableLiveData<List<PasswordValidationResult>>()
     val passwordValidationResult: LiveData<List<PasswordValidationResult>>
@@ -45,10 +44,10 @@ class PasswordDetailsViewModel(
     }
 
     private fun getPassword() {
-        getPasswordTypeUseCase(passwordId)
+        getPasswordUseCase(passwordId)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
-                    validatePassword(it.passwordInfo)
+                    validatePassword(it.password)
                 },
                 doOnError = {
                     Timber.e(it, "Error while getting the password")
@@ -58,8 +57,8 @@ class PasswordDetailsViewModel(
             .addTo(compositeDisposable)
     }
 
-    private fun validatePassword(passwordInfo: PasswordInfo) {
-        validatePasswordUseCase("")
+    private fun validatePassword(password: String) {
+        validatePasswordUseCase(password)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
                     _passwordValidationResult.value = it
@@ -74,8 +73,8 @@ class PasswordDetailsViewModel(
 
     fun copyPasswordToClipboard() =
         clipboardManager.copyToClipboard(
-            "",
-            ""
+            passwordDetails.value?.platformName.orEmpty(),
+            passwordDetails.value?.password.orEmpty()
         )
 
     fun deletePassword() {

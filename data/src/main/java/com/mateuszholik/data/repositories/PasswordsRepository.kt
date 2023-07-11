@@ -1,16 +1,20 @@
 package com.mateuszholik.data.repositories
 
+import com.mateuszholik.data.db.daos.NamesDao
 import com.mateuszholik.data.db.daos.PasswordsDao
-import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
-import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
+import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
+import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
+import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
-import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
-import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
 import com.mateuszholik.data.repositories.models.NewPassword
+import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.data.repositories.models.UpdatedPassword
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface PasswordsRepository {
@@ -23,42 +27,69 @@ interface PasswordsRepository {
 
     fun update(updatedPassword: UpdatedPassword): Completable
 
-    fun getPassword(passwordId: Long): Maybe<PasswordInfo>
+    fun getPassword(passwordId: Long): Maybe<PasswordDetails>
 
     fun getAllPasswords(): Single<List<PasswordInfo>>
 }
 
 internal class PasswordsRepositoryImpl(
     private val passwordsDao: PasswordsDao,
+    private val namesDao: NamesDao,
     private val passwordInfoViewListToPasswordInfoListMapper: PasswordInfoViewListToPasswordInfoListMapper,
-    private val passwordInfoViewToPasswordInfoMapper: PasswordInfoViewToPasswordInfoMapper,
-    private val newPasswordToPasswordDBMapper: NewPasswordToPasswordDBMapper,
-    private val newPasswordsListToPasswordDBListMapper: NewPasswordsListToPasswordDBListMapper,
-    private val updatedPasswordToPasswordDBMapper: UpdatedPasswordToPasswordDBMapper,
+    private val passwordDetailsViewToPasswordDetailsMapper: PasswordDetailsViewToPasswordDetailsMapper,
+    private val newPasswordToNamesEntityMapper: NewPasswordToNamesEntityMapper,
+    private val newPasswordToPasswordEntityMapper: NewPasswordToPasswordEntityMapper,
+    private val updatedPasswordToUpdatedNamesMapper: UpdatedPasswordToUpdatedNamesMapper,
+    private val updatedPasswordToPasswordEntityMapper: UpdatedPasswordToPasswordEntityMapper,
 ) : PasswordsRepository {
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
-        Single.just(1)
-        /*Single.just(newPasswordToPasswordDBMapper.map(newPassword))
-            .flatMap { passwordsDao.insertAndGetId(it) }*/
+        Single.just(newPasswordToNamesEntityMapper.map(newPassword))
+            .flatMap { namesDao.insertAndGetId(it) }
+            .map {
+                newPasswordToPasswordEntityMapper.map(
+                    NewPasswordToPasswordEntityMapper.Param(
+                        newPassword = newPassword,
+                        nameId = it
+                    )
+                )
+            }
+            .flatMap { passwordsDao.insertAndGetId(it) }
 
     override fun insertPasswords(newPasswords: List<NewPassword>): Completable =
-        Completable.complete()
-        /*Single.just(newPasswordsListToPasswordDBListMapper.map(newPasswords))
-            .flatMapCompletable { passwordsDao.insertPasswords(it) }*/
+        Observable.fromIterable(newPasswords)
+            .flatMapCompletable { insertAndGetId(it).ignoreElement() }
 
     override fun delete(passwordId: Long): Completable =
         passwordsDao.delete(passwordId)
 
     override fun update(updatedPassword: UpdatedPassword): Completable =
-        Completable.complete()
-        /*Single.just(updatedPasswordToPasswordDBMapper.map(updatedPassword))
-            .flatMapCompletable { passwordsDao.update(it) }*/
+        passwordsDao.getNameIdFor(updatedPassword.id)
+            .flatMapSingle {
+                val updatedName = updatedPasswordToUpdatedNamesMapper.map(updatedPassword)
 
-    override fun getPassword(passwordId: Long): Maybe<PasswordInfo> =
-        Maybe.empty()
-        /*passwordsDao.getPassword(passwordId)
-            .map { passwordDBToPasswordMapper.map(it) }*/
+                namesDao.update(
+                    id = it,
+                    name = updatedName.name,
+                    nameIv = updatedName.nameIv,
+                    website = updatedName.website,
+                    websiteIv = updatedName.websiteIv
+                ).andThen(Single.just(it))
+            }.flatMapCompletable {
+                val passwordEntity = updatedPasswordToPasswordEntityMapper.map(
+                    UpdatedPasswordToPasswordEntityMapper.Param(
+                        updatedPassword = updatedPassword,
+                        nameId = it
+                    )
+                )
+
+                passwordsDao.update(passwordEntity)
+            }
+
+    override fun getPassword(passwordId: Long): Maybe<PasswordDetails> =
+        passwordsDao.getPasswordDetailsFor(passwordId)
+            .map { passwordDetailsViewToPasswordDetailsMapper.map(it) }
+
     override fun getAllPasswords(): Single<List<PasswordInfo>> =
         passwordsDao.getAllPasswordsInfo()
             .map { passwordInfoViewListToPasswordInfoListMapper.map(it) }

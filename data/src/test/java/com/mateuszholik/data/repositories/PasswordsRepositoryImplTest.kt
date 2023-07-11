@@ -3,11 +3,11 @@ package com.mateuszholik.data.repositories
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
-import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
-import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
 import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.data.repositories.models.UpdatedPassword
@@ -39,7 +39,7 @@ class PasswordsRepositoryImplTest {
         every { map(PASSWORD_DB) } returns MAPPED_PASSWORDInfo
     }
 
-    private val newPasswordToPasswordDBMapper = mockk<NewPasswordToPasswordDBMapper> {
+    private val newPasswordToPasswordEntityMapper = mockk<NewPasswordToPasswordEntityMapper> {
         every { map(NEW_PASSWORD) } returns PASSWORD_DB
     }
 
@@ -51,7 +51,7 @@ class PasswordsRepositoryImplTest {
             )
         }
 
-    private val updatedPasswordToPasswordDBMapper = mockk<UpdatedPasswordToPasswordDBMapper> {
+    private val updatedPasswordToPasswordEntityMapper = mockk<UpdatedPasswordToPasswordEntityMapper> {
         every { map(UPDATED_PASSWORD) } returns PASSWORD_DB
     }
 
@@ -60,9 +60,9 @@ class PasswordsRepositoryImplTest {
         passwordsDao = oldPasswordsDao,
         passwordInfoViewListToPasswordInfoListMapper = passwordInfoViewListToPasswordInfoListMapper,
         passwordInfoViewToPasswordInfoMapper = passwordInfoViewToPasswordInfoMapper,
-        newPasswordToPasswordDBMapper = newPasswordToPasswordDBMapper,
+        newPasswordToPasswordEntityMapper = newPasswordToPasswordEntityMapper,
         newPasswordsListToPasswordDBListMapper = newPasswordsListToPasswordDBListMapper,
-        updatedPasswordToPasswordDBMapper = updatedPasswordToPasswordDBMapper
+        updatedPasswordToPasswordEntityMapper = updatedPasswordToPasswordEntityMapper
     )
 
     @Test

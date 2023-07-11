@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 @DatabaseView(
     """
         SELECT 
-            new_passwords.id,
+            new_passwords.id as id,
             names.name as platformName,
             names.name_iv as platformNameIv,
             new_passwords.password_score as passwordScore,

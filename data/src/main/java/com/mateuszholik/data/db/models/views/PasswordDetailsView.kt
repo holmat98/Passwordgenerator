@@ -1,7 +1,24 @@
 package com.mateuszholik.data.db.models.views
 
+import androidx.room.DatabaseView
 import java.time.LocalDateTime
 
+@DatabaseView(
+    """
+        SELECT 
+            new_passwords.id as id,
+            names.name as platformName,
+            names.name_iv as platformNameIv,
+            new_passwords.password as password,
+            new_passwords.password_iv as passwordIv,
+            names.website as website,
+            names.website_iv as websiteIv,
+            new_passwords.password_score as passwordScore,
+            new_passwords.expiration_date as expirationDate
+        FROM new_passwords
+        JOIN names ON new_passwords.name_id = names.id
+    """
+)
 internal data class PasswordDetailsView(
     val id: Long,
     val platformName: ByteArray,

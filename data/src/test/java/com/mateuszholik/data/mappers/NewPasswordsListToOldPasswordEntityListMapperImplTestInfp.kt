@@ -10,13 +10,13 @@ import java.time.LocalDateTime
 
 internal class NewPasswordsListToOldPasswordEntityListMapperImplTestInfp {
 
-    private val newPasswordToPasswordDBMapper = mockk<NewPasswordToPasswordDBMapper> {
+    private val newPasswordToPasswordEntityMapper = mockk<NewPasswordToPasswordEntityMapper> {
         every { map(NEW_PASSWORD) } returns PASSWORD_DB
         every { map(NEW_PASSWORD_2) } returns PASSWORD_DB_2
     }
 
     private val newPasswordsListToPasswordDBListMapper = NewPasswordsListToPasswordDBListMapperImpl(
-        newPasswordToPasswordDBMapper = newPasswordToPasswordDBMapper
+        newPasswordToPasswordEntityMapper = newPasswordToPasswordEntityMapper
     )
 
     @Test

@@ -6,8 +6,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.mateuszholik.data.db.models.entities.PasswordEntity
+import com.mateuszholik.data.db.models.views.PasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordInfoView
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 @Dao
@@ -27,4 +29,10 @@ internal interface PasswordsDao {
 
     @Query("SELECT * FROM PasswordInfoView")
     fun getAllPasswordsInfo(): Single<List<PasswordInfoView>>
+
+    @Query("SELECT * FROM PasswordDetailsView WHERE id = :id")
+    fun getPasswordDetailsFor(id: Long): Maybe<PasswordDetailsView>
+
+    @Query("SELECT name_id FROM new_passwords WHERE id = :passwordId")
+    fun getNameIdFor(passwordId: Long): Maybe<Long>
 }

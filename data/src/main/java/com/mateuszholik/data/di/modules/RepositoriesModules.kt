@@ -11,11 +11,13 @@ internal val repositoriesModule = module {
     single<PasswordsRepository> {
         PasswordsRepositoryImpl(
             passwordsDao = get(),
+            namesDao = get(),
             passwordInfoViewListToPasswordInfoListMapper = get(),
-            passwordInfoViewToPasswordInfoMapper = get(),
-            newPasswordToPasswordDBMapper = get(),
-            newPasswordsListToPasswordDBListMapper = get(),
-            updatedPasswordToPasswordDBMapper = get()
+            passwordDetailsViewToPasswordDetailsMapper = get(),
+            newPasswordToNamesEntityMapper = get(),
+            newPasswordToPasswordEntityMapper = get(),
+            updatedPasswordToUpdatedNamesMapper = get(),
+            updatedPasswordToPasswordEntityMapper = get()
         )
     }
 

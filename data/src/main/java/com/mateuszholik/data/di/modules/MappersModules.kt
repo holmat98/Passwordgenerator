@@ -1,21 +1,40 @@
 package com.mateuszholik.data.di.modules
 
-import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapper
-import com.mateuszholik.data.mappers.NewPasswordToPasswordDBMapperImpl
-import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
-import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapperImpl
+import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
+import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapperImpl
+import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
+import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapperImpl
+import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
+import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapperImpl
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapperImpl
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapperImpl
-import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapper
-import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordDBMapperImpl
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapperImpl
+import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
+import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapperImpl
 import org.koin.dsl.module
 
 internal val mappersModule = module {
 
-    factory<PasswordInfoViewToPasswordInfoMapper> {
-        PasswordInfoViewToPasswordInfoMapperImpl(encryptionManager = get())
+    factory<NewPasswordToNamesEntityMapper> {
+        NewPasswordToNamesEntityMapperImpl(
+            encryptionManager = get()
+        )
+    }
+
+    factory<NewPasswordToPasswordEntityMapper> {
+        NewPasswordToPasswordEntityMapperImpl(
+            encryptionManager = get(),
+            sharedPrefManager = get()
+        )
+    }
+
+    factory<PasswordDetailsViewToPasswordDetailsMapper> {
+        PasswordDetailsViewToPasswordDetailsMapperImpl(
+            encryptionManager = get()
+        )
     }
 
     factory<PasswordInfoViewListToPasswordInfoListMapper> {
@@ -24,23 +43,20 @@ internal val mappersModule = module {
         )
     }
 
-    factory<NewPasswordToPasswordDBMapper> {
-        NewPasswordToPasswordDBMapperImpl(
+    factory<PasswordInfoViewToPasswordInfoMapper> {
+        PasswordInfoViewToPasswordInfoMapperImpl(encryptionManager = get())
+    }
+
+    factory<UpdatedPasswordToPasswordEntityMapper> {
+        UpdatedPasswordToPasswordEntityMapperImpl(
             encryptionManager = get(),
             sharedPrefManager = get()
         )
     }
 
-    factory<UpdatedPasswordToPasswordDBMapper> {
-        UpdatedPasswordToPasswordDBMapperImpl(
-            encryptionManager = get(),
-            sharedPrefManager = get()
-        )
-    }
-
-    factory<NewPasswordsListToPasswordDBListMapper> {
-        NewPasswordsListToPasswordDBListMapperImpl(
-            newPasswordToPasswordDBMapper = get()
+    factory<UpdatedPasswordToUpdatedNamesMapper> {
+        UpdatedPasswordToUpdatedNamesMapperImpl(
+            encryptionManager = get()
         )
     }
 }
