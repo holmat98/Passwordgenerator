@@ -20,7 +20,7 @@ internal data class PasswordInfoView(
     val platformName: ByteArray,
     val platformNameIv: ByteArray,
     val passwordScore: Int,
-    val expirationDate: LocalDateTime,
+    val expirationDate: LocalDateTime?,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

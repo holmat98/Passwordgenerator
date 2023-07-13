@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "8e6f1f9a14c95faf39ed22f7f317aeed",
+    "identityHash": "0ebe9e04bbe86b8d2fa80ba4b7c6e5d5",
     "entities": [
       {
         "tableName": "names",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "new_passwords",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER NOT NULL, `password_score` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER, `password_score` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -92,7 +92,7 @@
             "fieldPath": "expirationDate",
             "columnName": "expiration_date",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "passwordScore",
@@ -176,12 +176,16 @@
     "views": [
       {
         "viewName": "PasswordInfoView",
-        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id as id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
+      },
+      {
+        "viewName": "PasswordDetailsView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id as id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password as password,\n            new_passwords.password_iv as passwordIv,\n            names.website as website,\n            names.website_iv as websiteIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8e6f1f9a14c95faf39ed22f7f317aeed')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ebe9e04bbe86b8d2fa80ba4b7c6e5d5')"
     ]
   }
 }

@@ -32,6 +32,7 @@ class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context
 
     private fun getDrawableAndStringRes(passwordValidity: PasswordValidity?): WarningViewDetails =
         when (passwordValidity) {
+            is PasswordValidity.NeverExpires,
             is PasswordValidity.Valid ->
                 WarningViewDetails(
                     attrColor = R.attr.colorPrimary,

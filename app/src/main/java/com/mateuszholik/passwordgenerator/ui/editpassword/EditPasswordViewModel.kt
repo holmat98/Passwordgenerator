@@ -51,6 +51,8 @@ class EditPasswordViewModel(
             id = passwordInfo.id,
             platformName = newPlatformNameValue.value ?: EMPTY_STRING,
             password = newPasswordValue.value ?: EMPTY_STRING,
+            website = null,
+            isExpiring = false
         )
         updatePasswordUseCase(updatedPassword)
             .subscribeWithObserveOnMainThread(

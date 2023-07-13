@@ -10,6 +10,7 @@ import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordVi
 import com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.logintransition.LoginTransitionViewModel
+import com.mateuszholik.passwordgenerator.ui.migration.MigrationViewModel
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreViewModel
@@ -76,7 +77,7 @@ val viewModelModule = module {
     viewModel { (passwordId: Long) ->
         PasswordDetailsViewModel(
             passwordId = passwordId,
-            getPasswordTypeUseCase = get(),
+            getPasswordUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
@@ -114,4 +115,12 @@ val viewModelModule = module {
     }
 
     viewModel { MainViewModel() }
+
+    viewModel {
+        MigrationViewModel(
+            getMigrationStateUseCase = get(),
+            migrateDataToTheCorrectStateUseCase = get(),
+            saveMigrationStateUseCase = get()
+        )
+    }
 }

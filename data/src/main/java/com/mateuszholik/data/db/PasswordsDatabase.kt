@@ -11,6 +11,7 @@ import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.entities.NamesEntity
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.db.models.entities.PasswordEntity
+import com.mateuszholik.data.db.models.views.PasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordInfoView
 
 @Database(
@@ -20,7 +21,8 @@ import com.mateuszholik.data.db.models.views.PasswordInfoView
         OldPasswordEntity::class,
     ],
     views = [
-        PasswordInfoView::class
+        PasswordInfoView::class,
+        PasswordDetailsView::class,
     ],
     version = 3,
     autoMigrations = [

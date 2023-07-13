@@ -47,6 +47,7 @@ class PasswordDetailsViewModel(
         getPasswordUseCase(passwordId)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
+                    _passwordDetails.postValue(it)
                     validatePassword(it.password)
                 },
                 doOnError = {

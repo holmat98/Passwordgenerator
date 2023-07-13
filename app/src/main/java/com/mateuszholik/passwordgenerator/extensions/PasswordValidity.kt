@@ -7,5 +7,6 @@ internal fun PasswordValidity.getAttrColorResId(): Int =
     when (this) {
         is PasswordValidity.Expiring -> R.attr.colorTertiary
         is PasswordValidity.Expired -> R.attr.colorError
+        is PasswordValidity.NeverExpires,
         is PasswordValidity.Valid -> R.attr.colorPrimary
     }
