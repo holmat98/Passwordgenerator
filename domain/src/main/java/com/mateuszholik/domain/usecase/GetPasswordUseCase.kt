@@ -12,5 +12,5 @@ internal class GetPasswordUseCaseImpl(
 ) : GetPasswordUseCase {
 
     override fun invoke(param: Long): Maybe<PasswordDetails> =
-        passwordsRepository.getPassword(param)
+        passwordsRepository.getPasswordDetails(param)
 }

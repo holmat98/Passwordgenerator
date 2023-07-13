@@ -7,6 +7,8 @@ import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCase
+import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
@@ -33,6 +35,8 @@ import com.mateuszholik.domain.usecase.SaveDataToFileUseCase
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.SaveMigrationStateUseCase
+import com.mateuszholik.domain.usecase.SaveMigrationStateUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePinUseCase
@@ -66,7 +70,8 @@ internal val useCaseModule = module {
     single<InsertPasswordAndGetIdUseCase> {
         InsertPasswordAndGetIdUseCaseImpl(
             passwordsRepository = get(),
-            newPasswordMapper = get()
+            newPasswordMapper = get(),
+            getPasswordScoreUseCase = get()
         )
     }
 
@@ -83,7 +88,8 @@ internal val useCaseModule = module {
     factory<UpdatePasswordUseCase> {
         UpdatePasswordUseCaseImpl(
             passwordsRepository = get(),
-            updatedPasswordMapper = get()
+            updatedPasswordMapper = get(),
+            getPasswordScoreUseCase = get()
         )
     }
 
@@ -130,7 +136,7 @@ internal val useCaseModule = module {
             encryptionManager = get(),
             passwordsParser = get(),
             exportedPasswordsMapper = get(),
-            passwordsRepository = get()
+            insertPasswordAndGetIdUseCase = get()
         )
     }
 
@@ -150,6 +156,18 @@ internal val useCaseModule = module {
         MigrateDataToTheCorrectStateUseCaseImpl(
             migrationRepository = get(),
             getPasswordScoreUseCase = get()
+        )
+    }
+
+    factory<GetIfShouldMigrateDataUseCase> {
+        GetIfShouldMigrateDataUseCaseImpl(
+            sharedPrefManager = get()
+        )
+    }
+
+    factory<SaveMigrationStateUseCase> {
+        SaveMigrationStateUseCaseImpl(
+            sharedPrefManager = get()
         )
     }
 }

@@ -107,7 +107,7 @@ class PasswordsRepositoryImplTest {
 
     @Test
     fun `Password with given id is correctly provided and mapper to Password object`() {
-        passwordsRepository.getPassword(ID)
+        passwordsRepository.getPasswordDetails(ID)
             .test()
             .assertValue(MAPPED_PASSWORDInfo)
 
@@ -120,7 +120,7 @@ class PasswordsRepositoryImplTest {
             oldPasswordsDao.getPassword(ID_2)
         } returns Maybe.empty()
 
-        passwordsRepository.getPassword(ID_2)
+        passwordsRepository.getPasswordDetails(ID_2)
             .test()
             .assertNoValues()
 
@@ -129,7 +129,7 @@ class PasswordsRepositoryImplTest {
 
     @Test
     fun `All passwords are correctly provided and mapped to list of Password objects`() {
-        passwordsRepository.getAllPasswords()
+        passwordsRepository.getAllPasswordsInfo()
             .test()
             .assertValue(listOf(MAPPED_PASSWORDInfo))
 

@@ -26,7 +26,7 @@ import java.time.LocalDateTime
 internal class ExportPasswordsUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository> {
-        every { getAllPasswords() } returns Single.just(listOf(PASSWORDInfo))
+        every { getAllPasswordsInfo() } returns Single.just(listOf(PASSWORDInfo))
     }
     private val passwordsListToExportPasswordsListMapper =
         mockk<PasswordsListToExportPasswordsListMapper> {
@@ -77,7 +77,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { passwordsRepository.getAllPasswordsInfo() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORDInfo)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
@@ -104,7 +104,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { passwordsRepository.getAllPasswordsInfo() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORDInfo)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 1) { encryptionManager.encrypt(ENCRYPTION_PASSWORD, PARSED_PASSWORDS) }

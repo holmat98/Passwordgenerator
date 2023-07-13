@@ -10,9 +10,24 @@ interface UpdatePasswordUseCase : CompletableParameterizedUseCase<UpdatedPasswor
 
 internal class UpdatePasswordUseCaseImpl(
     private val passwordsRepository: PasswordsRepository,
-    private val updatedPasswordMapper: UpdatedPasswordMapper
+    private val updatedPasswordMapper: UpdatedPasswordMapper,
+    private val getPasswordScoreUseCase: GetPasswordScoreUseCase,
 ) : UpdatePasswordUseCase {
 
     override fun invoke(param: UpdatedPassword): Completable =
-        passwordsRepository.update(updatedPasswordMapper.map(param))
+        getPasswordScoreUseCase(param.password)
+            .flatMapCompletable { passwordScore ->
+                passwordsRepository.update(
+                    updatedPasswordMapper.map(
+                        UpdatedPasswordMapper.Param(
+                            id = param.id,
+                            password = param.password,
+                            platformName = param.platformName,
+                            website = param.website,
+                            isExpiring = param.isExpiring,
+                            passwordScore = passwordScore
+                        )
+                    )
+                )
+            }
 }

@@ -4,12 +4,16 @@ import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapperImpl
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapperImpl
+import com.mateuszholik.data.mappers.PasswordDBToPasswordMapper
+import com.mateuszholik.data.mappers.PasswordDBToPasswordMapperImpl
 import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
 import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapperImpl
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapperImpl
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapperImpl
+import com.mateuszholik.data.mappers.PasswordsDBListToPasswordsListMapper
+import com.mateuszholik.data.mappers.PasswordsDBListToPasswordsListMapperImpl
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapperImpl
 import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
@@ -31,6 +35,12 @@ internal val mappersModule = module {
         )
     }
 
+    factory<PasswordDBToPasswordMapper> {
+        PasswordDBToPasswordMapperImpl(
+            encryptionManager = get()
+        )
+    }
+
     factory<PasswordDetailsViewToPasswordDetailsMapper> {
         PasswordDetailsViewToPasswordDetailsMapperImpl(
             encryptionManager = get()
@@ -45,6 +55,12 @@ internal val mappersModule = module {
 
     factory<PasswordInfoViewToPasswordInfoMapper> {
         PasswordInfoViewToPasswordInfoMapperImpl(encryptionManager = get())
+    }
+
+    factory<PasswordsDBListToPasswordsListMapper> {
+        PasswordsDBListToPasswordsListMapperImpl(
+            passwordDBToPasswordMapper = get()
+        )
     }
 
     factory<UpdatedPasswordToPasswordEntityMapper> {

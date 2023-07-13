@@ -24,7 +24,7 @@ internal class ExportPasswordsUseCaseImpl(
 ) : ExportPasswordsUseCase {
 
     override fun invoke(param: ExportType): Completable =
-        passwordsRepository.getAllPasswords()
+        passwordsRepository.getPasswords()
             .map { passwordsListToExportPasswordsListMapper.map(it) }
             .map { passwordsParser.parseToString(it) }
             .map { encryptPasswordsIfNeeded(param, it) }

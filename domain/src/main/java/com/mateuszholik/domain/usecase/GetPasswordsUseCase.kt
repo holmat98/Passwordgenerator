@@ -12,5 +12,5 @@ internal class GetPasswordsUseCaseImpl(
 ) : GetPasswordsUseCase {
 
     override fun invoke(): Single<List<PasswordInfo>> =
-        passwordsRepository.getAllPasswords()
+        passwordsRepository.getAllPasswordsInfo()
 }

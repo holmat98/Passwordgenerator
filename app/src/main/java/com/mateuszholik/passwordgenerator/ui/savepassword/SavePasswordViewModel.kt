@@ -49,7 +49,9 @@ class SavePasswordViewModel(
     fun savePassword() {
         val newPassword = NewPassword(
             platformName = platformName.value ?: EMPTY_STRING,
-            password = password.value ?: EMPTY_STRING
+            password = password.value ?: EMPTY_STRING,
+            website = null,
+            isExpiring = true
         )
         insertPasswordAndGetIdUseCase(newPassword)
             .flatMap { getPasswordUseCase(it).toSingle() }

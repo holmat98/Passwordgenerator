@@ -6,9 +6,11 @@ import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
+import com.mateuszholik.data.mappers.PasswordsDBListToPasswordsListMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
 import com.mateuszholik.data.repositories.models.NewPassword
+import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.data.repositories.models.UpdatedPassword
@@ -27,9 +29,11 @@ interface PasswordsRepository {
 
     fun update(updatedPassword: UpdatedPassword): Completable
 
-    fun getPassword(passwordId: Long): Maybe<PasswordDetails>
+    fun getPasswordDetails(passwordId: Long): Maybe<PasswordDetails>
 
-    fun getAllPasswords(): Single<List<PasswordInfo>>
+    fun getAllPasswordsInfo(): Single<List<PasswordInfo>>
+
+    fun getPasswords(): Single<List<Password>>
 }
 
 internal class PasswordsRepositoryImpl(
@@ -41,6 +45,7 @@ internal class PasswordsRepositoryImpl(
     private val newPasswordToPasswordEntityMapper: NewPasswordToPasswordEntityMapper,
     private val updatedPasswordToUpdatedNamesMapper: UpdatedPasswordToUpdatedNamesMapper,
     private val updatedPasswordToPasswordEntityMapper: UpdatedPasswordToPasswordEntityMapper,
+    private val passwordsDBListToPasswordsListMapper: PasswordsDBListToPasswordsListMapper,
 ) : PasswordsRepository {
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
@@ -86,11 +91,15 @@ internal class PasswordsRepositoryImpl(
                 passwordsDao.update(passwordEntity)
             }
 
-    override fun getPassword(passwordId: Long): Maybe<PasswordDetails> =
+    override fun getPasswordDetails(passwordId: Long): Maybe<PasswordDetails> =
         passwordsDao.getPasswordDetailsFor(passwordId)
             .map { passwordDetailsViewToPasswordDetailsMapper.map(it) }
 
-    override fun getAllPasswords(): Single<List<PasswordInfo>> =
+    override fun getAllPasswordsInfo(): Single<List<PasswordInfo>> =
         passwordsDao.getAllPasswordsInfo()
             .map { passwordInfoViewListToPasswordInfoListMapper.map(it) }
+
+    override fun getPasswords(): Single<List<Password>> =
+        passwordsDao.getPasswords()
+            .map { passwordsDBListToPasswordsListMapper.map(it) }
 }

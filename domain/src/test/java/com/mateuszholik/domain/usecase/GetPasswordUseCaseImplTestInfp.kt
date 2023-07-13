@@ -16,7 +16,7 @@ internal class GetPasswordUseCaseImplTestInfp {
     @Test
     fun `When repository correctly returned password then use case will return this password`() {
         every {
-            passwordsRepository.getPassword(ID)
+            passwordsRepository.getPasswordDetails(ID)
         } returns Maybe.just(PASSWORDInfo)
 
         getPasswordUseCase(ID)
@@ -27,7 +27,7 @@ internal class GetPasswordUseCaseImplTestInfp {
     @Test
     fun `When repository did not return password then use case will return empty`() {
         every {
-            passwordsRepository.getPassword(ID)
+            passwordsRepository.getPasswordDetails(ID)
         } returns Maybe.empty()
 
         getPasswordUseCase(ID)

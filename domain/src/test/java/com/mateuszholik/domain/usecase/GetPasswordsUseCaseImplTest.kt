@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 class GetPasswordsUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository> {
-        every { getAllPasswords() } returns Single.just(listOf(PASSWORDInfo))
+        every { getAllPasswordsInfo() } returns Single.just(listOf(PASSWORDInfo))
     }
 
     private val passwordToPasswordTypeMapper = mockk<PasswordToPasswordTypeMapper>()
