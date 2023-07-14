@@ -1,12 +1,17 @@
 package com.mateuszholik.data.mappers
 
 import com.mateuszholik.cryptography.KeyBaseEncryptionManager
-import com.mateuszholik.data.repositories.models.UpdatedPassword
-import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper.UpdatedNames
+import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper.UpdatedPassword
+import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper.UpdatedName
 
-internal interface UpdatedPasswordToUpdatedNamesMapper : Mapper<UpdatedPassword, UpdatedNames> {
+internal interface UpdatedPasswordToUpdatedNamesMapper : Mapper<UpdatedPassword, UpdatedName> {
 
-    data class UpdatedNames(
+    data class UpdatedPassword(
+        val name: String,
+        val website: String?
+    )
+
+    data class UpdatedName(
         val name: ByteArray,
         val nameIv: ByteArray,
         val website: ByteArray?,
@@ -16,7 +21,7 @@ internal interface UpdatedPasswordToUpdatedNamesMapper : Mapper<UpdatedPassword,
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
-            other as UpdatedNames
+            other as UpdatedName
 
             if (!name.contentEquals(other.name)) return false
             if (!nameIv.contentEquals(other.nameIv)) return false
@@ -47,11 +52,11 @@ internal class UpdatedPasswordToUpdatedNamesMapperImpl(
     private val encryptionManager: KeyBaseEncryptionManager
 ) : UpdatedPasswordToUpdatedNamesMapper {
 
-    override fun map(param: UpdatedPassword): UpdatedNames {
-        val encryptedPlatformName = encryptionManager.encrypt(param.platformName)
+    override fun map(param: UpdatedPassword): UpdatedName {
+        val encryptedPlatformName = encryptionManager.encrypt(param.name)
         val encryptedWebsite = param.website?.let { encryptionManager.encrypt(it) }
 
-        return UpdatedNames(
+        return UpdatedName(
             name = encryptedPlatformName.data,
             nameIv = encryptedPlatformName.iv,
             website = encryptedWebsite?.data,

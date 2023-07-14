@@ -5,13 +5,14 @@ import com.mateuszholik.data.db.models.entities.PasswordEntity
 import com.mateuszholik.data.managers.io.SharedPrefKeys.PASSWORD_VALIDITY
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper.Param
 import com.mateuszholik.data.managers.io.SharedPrefManager
-import com.mateuszholik.data.repositories.models.NewPassword
 import java.time.LocalDateTime
 
 internal interface NewPasswordToPasswordEntityMapper : Mapper<Param, PasswordEntity> {
 
     data class Param(
-        val newPassword: NewPassword,
+        val password: String,
+        val passwordScore: Int,
+        val isExpiring: Boolean,
         val nameId: Long,
     )
 }
@@ -22,7 +23,7 @@ internal class NewPasswordToPasswordEntityMapperImpl(
 ) : NewPasswordToPasswordEntityMapper {
 
     override fun map(param: Param): PasswordEntity {
-        val encryptedPassword = encryptionManager.encrypt(param.newPassword.password)
+        val encryptedPassword = encryptionManager.encrypt(param.password)
         val expiringDate = sharedPrefManager.readLong(PASSWORD_VALIDITY, DEFAULT_PASSWORD_VALIDITY)
 
         return PasswordEntity(
@@ -31,8 +32,8 @@ internal class NewPasswordToPasswordEntityMapperImpl(
             password = encryptedPassword.data,
             passwordIV = encryptedPassword.iv,
             expirationDate = LocalDateTime.now().plusDays(expiringDate)
-                .takeIf { param.newPassword.isExpiring },
-            passwordScore = param.newPassword.passwordScore
+                .takeIf { param.isExpiring },
+            passwordScore = param.passwordScore
         )
     }
 

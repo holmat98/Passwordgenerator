@@ -4,7 +4,6 @@ import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.OldPasswordsDao
 import com.mateuszholik.data.db.models.entities.OldPasswordEntity
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
-import com.mateuszholik.data.mappers.NewPasswordsListToPasswordDBListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMapper
 import com.mateuszholik.data.mappers.PasswordInfoViewToPasswordInfoMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper

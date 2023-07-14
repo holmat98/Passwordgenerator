@@ -7,7 +7,7 @@ internal fun LocalDateTime?.toPasswordValidity(): PasswordValidity {
     val now = LocalDateTime.now()
 
     return when {
-        this == null -> PasswordValidity.NeverExpires()
+        this == null -> PasswordValidity.NeverExpires
         now.isBefore(this.minusDays(7L)) ->
             PasswordValidity.Valid(this)
         now.isAfter(this) ->

@@ -54,8 +54,10 @@ internal class PasswordsRepositoryImpl(
             .map {
                 newPasswordToPasswordEntityMapper.map(
                     NewPasswordToPasswordEntityMapper.Param(
-                        newPassword = newPassword,
-                        nameId = it
+                        password = newPassword.password,
+                        nameId = it,
+                        passwordScore = newPassword.passwordScore,
+                        isExpiring = newPassword.isExpiring
                     )
                 )
             }
@@ -71,7 +73,12 @@ internal class PasswordsRepositoryImpl(
     override fun update(updatedPassword: UpdatedPassword): Completable =
         passwordsDao.getNameIdFor(updatedPassword.id)
             .flatMapSingle {
-                val updatedName = updatedPasswordToUpdatedNamesMapper.map(updatedPassword)
+                val updatedName = updatedPasswordToUpdatedNamesMapper.map(
+                    UpdatedPasswordToUpdatedNamesMapper.UpdatedPassword(
+                        name = updatedPassword.platformName,
+                        website = updatedPassword.website
+                    )
+                )
 
                 namesDao.update(
                     id = it,
@@ -83,7 +90,10 @@ internal class PasswordsRepositoryImpl(
             }.flatMapCompletable {
                 val passwordEntity = updatedPasswordToPasswordEntityMapper.map(
                     UpdatedPasswordToPasswordEntityMapper.Param(
-                        updatedPassword = updatedPassword,
+                        id = updatedPassword.id,
+                        password = updatedPassword.password,
+                        passwordScore = updatedPassword.passwordScore,
+                        isExpiring = updatedPassword.isExpiring,
                         nameId = it
                     )
                 )
