@@ -7,6 +7,7 @@ import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.expirationDate
 import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.models.MessageType
@@ -57,10 +58,12 @@ class SavePasswordViewModel(
             .flatMap { getPasswordUseCase(it).toSingle() }
             .flatMapCompletable { password ->
                 Completable.fromAction {
-                    workScheduler.schedule(
-                        password.id,
-                        password.passwordValidity.expirationDate.getDiffFromNowInMilliseconds()
-                    )
+                    password.passwordValidity.expirationDate?.let {
+                        workScheduler.schedule(
+                            password.id,
+                            it.getDiffFromNowInMilliseconds()
+                        )
+                    }
                 }
             }
             .subscribeWithObserveOnMainThread(
