@@ -65,10 +65,22 @@ internal class PasswordsRepositoryImpl(
 
     override fun insertPasswords(newPasswords: List<NewPassword>): Completable =
         Observable.fromIterable(newPasswords)
-            .flatMapCompletable { insertAndGetId(it).ignoreElement() }
+            .flatMapCompletable {
+                insertAndGetId(it)
+                    .ignoreElement()
+                    .onErrorComplete()
+            }
 
     override fun delete(passwordId: Long): Completable =
-        passwordsDao.delete(passwordId)
+        passwordsDao.getNameIdFor(passwordId)
+            .flatMapCompletable {
+                passwordsDao.delete(passwordId)
+                    .andThen(
+                        namesDao
+                            .deleteFor(it)
+                            .onErrorComplete()
+                    )
+            }
 
     override fun update(updatedPassword: UpdatedPassword): Completable =
         passwordsDao.getNameIdFor(updatedPassword.id)

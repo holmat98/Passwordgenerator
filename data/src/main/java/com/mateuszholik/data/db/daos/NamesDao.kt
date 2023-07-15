@@ -31,4 +31,7 @@ internal interface NamesDao {
         website: ByteArray?,
         websiteIv: ByteArray?
     ): Completable
+
+    @Query("DELETE FROM names WHERE id = :id")
+    fun deleteFor(id: Long): Completable
 }

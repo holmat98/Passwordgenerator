@@ -87,6 +87,20 @@ class MigrationRepositoryTest {
         verify(exactly = 1) { oldPasswordsDao.deletePassword(3) }
     }
 
+    @Test
+    fun `When oldPasswordsDao getAllPasswords returns empty list then migrate method returns Completable Complete`() {
+        every { oldPasswordsDao.getAllPasswords() } returns Single.just(emptyList())
+
+        migrationRepository.migrate { Single.just(PASSWORD_SCORE) }
+            .test()
+            .assertComplete()
+
+        verify(exactly = 1) { oldPasswordsDao.getAllPasswords() }
+        verify(exactly = 0) { namesDao.insertAndGetId(any()) }
+        verify(exactly = 0) { passwordsDao.insert(any()) }
+        verify(exactly = 0) { oldPasswordsDao.deletePassword(any()) }
+    }
+
     private companion object {
         const val PASSWORD_SCORE = 50
         const val DECRYPTED_PASSWORD = "Password"
