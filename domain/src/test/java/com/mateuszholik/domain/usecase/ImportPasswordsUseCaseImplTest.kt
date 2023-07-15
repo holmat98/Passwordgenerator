@@ -3,17 +3,16 @@ package com.mateuszholik.domain.usecase
 import android.net.Uri
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
 import com.mateuszholik.cryptography.extensions.toEncryptedData
-import com.mateuszholik.data.repositories.PasswordsRepository
-import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.domain.mappers.ExportedPasswordsListToNewPasswordsListMapper
 import com.mateuszholik.domain.models.ExportedPassword
 import com.mateuszholik.domain.models.ImportType
+import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.parsers.PasswordsParser
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import org.junit.jupiter.api.Test
 
 internal class ImportPasswordsUseCaseImplTest {
@@ -26,16 +25,14 @@ internal class ImportPasswordsUseCaseImplTest {
     private val exportedPasswordsMapper = mockk<ExportedPasswordsListToNewPasswordsListMapper> {
         every { map(listOf(EXPORTED_PASSWORD)) } returns listOf(NEW_PASSWORD)
     }
-    private val passwordsRepository = mockk<PasswordsRepository> {
-        every { insertPasswords(listOf(NEW_PASSWORD)) } returns Completable.complete()
-    }
+    private val insertPasswordAndGetIdUseCase = mockk<InsertPasswordAndGetIdUseCase>()
 
     private val importPasswordsUseCase = ImportPasswordsUseCaseImpl(
         readDataFromFileUseCase = readDataFromFileUseCase,
         encryptionManager = encryptionManager,
         passwordsParser = passwordsParser,
         exportedPasswordsMapper = exportedPasswordsMapper,
-        passwordsRepository = passwordsRepository
+        insertPasswordAndGetIdUseCase = insertPasswordAndGetIdUseCase
     )
 
     @Test
@@ -44,15 +41,17 @@ internal class ImportPasswordsUseCaseImplTest {
 
         every { readDataFromFileUseCase(URI) } returns Maybe.just(NOT_ENCRYPTED_DATA_FROM_FILE)
 
+        every { insertPasswordAndGetIdUseCase(NEW_PASSWORD) } returns Single.just(1)
+
         importPasswordsUseCase(input)
             .test()
             .assertComplete()
 
         verify(exactly = 1) { readDataFromFileUseCase(URI) }
-        verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
+        verify(exactly = 0) { encryptionManager.decrypt(any(), any()) }
         verify(exactly = 1) { passwordsParser.parseFromString(NOT_ENCRYPTED_DATA_FROM_FILE) }
         verify(exactly = 1) { exportedPasswordsMapper.map(listOf(EXPORTED_PASSWORD)) }
-        verify(exactly = 1) { passwordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
+        verify(exactly = 1) { insertPasswordAndGetIdUseCase(NEW_PASSWORD) }
     }
 
     @Test
@@ -60,6 +59,8 @@ internal class ImportPasswordsUseCaseImplTest {
         val input = ImportType.EncryptedImport(URI, ENCRYPTION_PASSWORD)
 
         every { readDataFromFileUseCase(URI) } returns Maybe.just(ENCRYPTED_DATA_FROM_FILE)
+
+        every { insertPasswordAndGetIdUseCase(NEW_PASSWORD) } returns Single.just(1)
 
         every {
             encryptionManager.decrypt(
@@ -81,7 +82,7 @@ internal class ImportPasswordsUseCaseImplTest {
         }
         verify(exactly = 1) { passwordsParser.parseFromString(NOT_ENCRYPTED_DATA_FROM_FILE) }
         verify(exactly = 1) { exportedPasswordsMapper.map(listOf(EXPORTED_PASSWORD)) }
-        verify(exactly = 1) { passwordsRepository.insertPasswords(listOf(NEW_PASSWORD)) }
+        verify(exactly = 1) { insertPasswordAndGetIdUseCase(NEW_PASSWORD) }
     }
 
     private companion object {
@@ -94,7 +95,9 @@ internal class ImportPasswordsUseCaseImplTest {
         const val DECRYPTED_PASSWORDS = NOT_ENCRYPTED_DATA_FROM_FILE
         val NEW_PASSWORD = NewPassword(
             platformName = PLATFORM_NAME,
-            password = PASSWORD
+            password = PASSWORD,
+            website = null,
+            isExpiring = false
         )
         val EXPORTED_PASSWORD = ExportedPassword(
             platformName = PLATFORM_NAME,

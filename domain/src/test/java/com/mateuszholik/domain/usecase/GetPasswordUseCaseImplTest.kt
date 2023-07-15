@@ -1,14 +1,16 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.repositories.PasswordsRepository
+import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.data.repositories.models.PasswordInfo
+import com.mateuszholik.data.repositories.models.PasswordValidity
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Maybe
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
-internal class GetPasswordUseCaseImplTestInfp {
+internal class GetPasswordUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository>()
     private val getPasswordUseCase = GetPasswordUseCaseImpl(passwordsRepository)
@@ -17,11 +19,11 @@ internal class GetPasswordUseCaseImplTestInfp {
     fun `When repository correctly returned password then use case will return this password`() {
         every {
             passwordsRepository.getPasswordDetails(ID)
-        } returns Maybe.just(PASSWORDInfo)
+        } returns Maybe.just(PASSWORD)
 
         getPasswordUseCase(ID)
             .test()
-            .assertValue(PASSWORDInfo)
+            .assertValue(PASSWORD)
     }
 
     @Test
@@ -37,11 +39,13 @@ internal class GetPasswordUseCaseImplTestInfp {
 
     private companion object {
         const val ID = 1L
-        val PASSWORDInfo = PasswordInfo(
+        val PASSWORD = PasswordDetails(
             id = ID,
             password = "password",
             platformName = "platform",
-            expiringDate = LocalDateTime.of(2022, 12, 23, 12, 0, 0)
+            passwordValidity = PasswordValidity.NeverExpires,
+            passwordScore = 50,
+            website = "website"
         )
     }
 }

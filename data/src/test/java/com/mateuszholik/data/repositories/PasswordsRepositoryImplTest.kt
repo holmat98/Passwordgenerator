@@ -135,46 +135,6 @@ class PasswordsRepositoryImplTest {
         }
 
     @Test
-    fun `List of passwords is saved correctly to the database`() {
-        passwordsRepository.insertPasswords(listOf(NEW_PASSWORD, NEW_PASSWORD_2, NEW_PASSWORD_3))
-            .test()
-            .assertComplete()
-
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD) }
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD_2) }
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD_3) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY_2) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY_3) }
-        verify(exactly = 3) { newPasswordToPasswordEntityMapper.map(any()) }
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_ENTITY) }
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_ENTITY_2) }
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_ENTITY_3) }
-    }
-
-    @Test
-    fun `InsertPasswords returns complete even when one of the passwords was not saved to the database`() {
-        every {
-            namesDao.insertAndGetId(NAMES_ENTITY_2)
-        } returns Single.error(Exception("Something went wrong"))
-
-        passwordsRepository.insertPasswords(listOf(NEW_PASSWORD, NEW_PASSWORD_2, NEW_PASSWORD_3))
-            .test()
-            .assertComplete()
-
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD) }
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD_2) }
-        verify(exactly = 1) { newPasswordToNamesEntityMapper.map(NEW_PASSWORD_3) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY_2) }
-        verify(exactly = 1) { namesDao.insertAndGetId(NAMES_ENTITY_3) }
-        verify(exactly = 2) { newPasswordToPasswordEntityMapper.map(any()) }
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_ENTITY) }
-        verify(exactly = 0) { passwordsDao.insertAndGetId(PASSWORD_ENTITY_2) }
-        verify(exactly = 1) { passwordsDao.insertAndGetId(PASSWORD_ENTITY_3) }
-    }
-
-    @Test
     fun `When password is deleted names object related to the password is also deleted`() {
         every { passwordsDao.delete(ID) } returns Completable.complete()
         every { namesDao.deleteFor(ID) } returns Completable.complete()
@@ -299,7 +259,7 @@ class PasswordsRepositoryImplTest {
 
         passwordsRepository.getPasswordDetails(ID)
             .test()
-            .assertComplete()
+            .assertNoValues()
 
         verify(exactly = 0) { passwordDetailsViewToPasswordDetailsMapper.map(any()) }
     }

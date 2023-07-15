@@ -10,8 +10,6 @@ import com.mateuszholik.domain.mappers.PasswordToExportedPasswordMapper
 import com.mateuszholik.domain.mappers.PasswordToExportedPasswordMapperImpl
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapperImpl
-import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapper
-import com.mateuszholik.domain.mappers.PasswordToPasswordTypeMapperImpl
 import com.mateuszholik.domain.mappers.UpdatedPasswordMapper
 import com.mateuszholik.domain.mappers.UpdatedPasswordMapperImpl
 import org.koin.dsl.module
@@ -21,8 +19,6 @@ internal val mappersModule = module {
     single<NewPasswordMapper> { NewPasswordMapperImpl() }
 
     single<UpdatedPasswordMapper> { UpdatedPasswordMapperImpl() }
-
-    single<PasswordToPasswordTypeMapper> { PasswordToPasswordTypeMapperImpl() }
 
     single<PasswordToExportedPasswordMapper> {
         PasswordToExportedPasswordMapperImpl()

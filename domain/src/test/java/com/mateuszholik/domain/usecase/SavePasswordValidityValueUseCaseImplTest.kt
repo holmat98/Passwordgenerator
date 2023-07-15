@@ -7,7 +7,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-internal class SavePasswordValidityValueUseCaseImplTestInfp {
+internal class SavePasswordValidityValueUseCaseImplTest {
 
     private val sharedPrefManager = mockk<SharedPrefManager>()
 

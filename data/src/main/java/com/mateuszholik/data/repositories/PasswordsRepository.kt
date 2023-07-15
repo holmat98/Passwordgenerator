@@ -23,8 +23,6 @@ interface PasswordsRepository {
 
     fun insertAndGetId(newPassword: NewPassword): Single<Long>
 
-    fun insertPasswords(newPasswords: List<NewPassword>): Completable
-
     fun delete(passwordId: Long): Completable
 
     fun update(updatedPassword: UpdatedPassword): Completable
@@ -62,14 +60,6 @@ internal class PasswordsRepositoryImpl(
                 )
             }
             .flatMap { passwordsDao.insertAndGetId(it) }
-
-    override fun insertPasswords(newPasswords: List<NewPassword>): Completable =
-        Observable.fromIterable(newPasswords)
-            .flatMapCompletable {
-                insertAndGetId(it)
-                    .ignoreElement()
-                    .onErrorComplete()
-            }
 
     override fun delete(passwordId: Long): Completable =
         passwordsDao.getNameIdFor(passwordId)

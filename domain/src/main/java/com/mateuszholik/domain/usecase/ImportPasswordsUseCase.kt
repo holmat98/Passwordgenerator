@@ -25,7 +25,11 @@ internal class ImportPasswordsUseCaseImpl(
             .map { passwordsParser.parseFromString(it) }
             .map { exportedPasswordsMapper.map(it) }
             .flatMapObservable { Observable.fromIterable(it) }
-            .flatMapCompletable { insertPasswordAndGetIdUseCase(it).ignoreElement() }
+            .flatMapCompletable {
+                insertPasswordAndGetIdUseCase(it)
+                    .ignoreElement()
+                    .onErrorComplete()
+            }
 
     private fun decryptImportedDataIfNeeded(importType: ImportType, importedData: String): String =
         if (importType is ImportType.EncryptedImport) {

@@ -1,11 +1,10 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.domain.models.UpdatedPassword
-import com.mateuszholik.data.repositories.models.UpdatedPassword as DataUpdatedPassword
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import com.mateuszholik.data.repositories.models.UpdatedPassword as DataUpdatedPassword
 
-internal class UpdatedPasswordMapperImplTestInfp {
+internal class UpdatedPasswordMapperImplTest {
 
     private val updatedPasswordMapper = UpdatedPasswordMapperImpl()
 
@@ -20,15 +19,23 @@ internal class UpdatedPasswordMapperImplTestInfp {
         const val ID = 1L
         const val PASSWORD = "password"
         const val PLATFORM = "platform"
-        val UPDATED_PASSWORD = UpdatedPassword(
+        const val IS_EXPIRING = false
+        const val PASSWORD_SCORE = 50
+        val UPDATED_PASSWORD = UpdatedPasswordMapper.Param(
             id = ID,
             password = PASSWORD,
-            platformName = PLATFORM
+            platformName = PLATFORM,
+            website = null,
+            isExpiring = IS_EXPIRING,
+            passwordScore = PASSWORD_SCORE
         )
         val DATA_UPDATED_PASSWORD = DataUpdatedPassword(
             id = ID,
             password = PASSWORD,
-            platformName = PLATFORM
+            platformName = PLATFORM,
+            website = null,
+            isExpiring = IS_EXPIRING,
+            passwordScore = PASSWORD_SCORE
         )
     }
 }

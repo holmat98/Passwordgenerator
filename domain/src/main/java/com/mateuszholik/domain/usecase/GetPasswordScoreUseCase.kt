@@ -11,10 +11,11 @@ internal class GetPasswordScoreUseCaseImpl(
 
     override fun invoke(param: String): Single<Int> =
         getPasswordValidationResultUseCase(param)
-            .map {validationResult ->
+            .map { validationResult ->
                 val score = validationResult.sumOf { it.score }
                 val maxScore = validationResult.sumOf { it.maxScore }
 
                 ((score.toFloat() / maxScore.toFloat()) * 100).toInt()
             }
+            .onErrorReturn { 0 }
 }

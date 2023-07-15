@@ -5,7 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 
-class CreatePasswordUseCaseImplTestInfp {
+class CreatePasswordUseCaseImplTest {
 
     private val passwordFactory = mockk<PasswordFactory> {
         every { create(PASSWORD_LENGTH) } returns PASSWORD

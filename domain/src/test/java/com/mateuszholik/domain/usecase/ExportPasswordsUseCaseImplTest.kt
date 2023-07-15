@@ -4,17 +4,17 @@ import android.net.Uri
 import com.mateuszholik.cryptography.PasswordBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.repositories.PasswordsRepository
-import com.mateuszholik.data.repositories.models.PasswordInfo
+import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.domain.factories.UriFactory
 import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.models.DataToSave
 import com.mateuszholik.domain.models.ExportType
 import com.mateuszholik.domain.models.ExportedPassword
 import com.mateuszholik.domain.parsers.PasswordsParser
-import io.mockk.mockkStatic
-import io.mockk.mockk
-import io.mockk.unmockkStatic
 import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -26,11 +26,11 @@ import java.time.LocalDateTime
 internal class ExportPasswordsUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository> {
-        every { getAllPasswordsInfo() } returns Single.just(listOf(PASSWORDInfo))
+        every { getPasswords() } returns Single.just(listOf(PASSWORD))
     }
     private val passwordsListToExportPasswordsListMapper =
         mockk<PasswordsListToExportPasswordsListMapper> {
-            every { map(listOf(PASSWORDInfo)) } returns listOf(EXPORTED_PASSWORD)
+            every { map(listOf(PASSWORD)) } returns listOf(EXPORTED_PASSWORD)
         }
     private val passwordsParser = mockk<PasswordsParser> {
         every { parseToString(listOf(EXPORTED_PASSWORD)) } returns PARSED_PASSWORDS
@@ -40,6 +40,15 @@ internal class ExportPasswordsUseCaseImplTest {
     private val uriFactory = mockk<UriFactory> {
         every { create(any(), any()) } returns URI
     }
+
+    private val exportPasswordsUseCase = ExportPasswordsUseCaseImpl(
+        passwordsRepository = passwordsRepository,
+        passwordsListToExportPasswordsListMapper = passwordsListToExportPasswordsListMapper,
+        passwordsParser = passwordsParser,
+        encryptionManager = encryptionManager,
+        saveDataToFileUseCase = saveDataToFileUseCase,
+        uriFactory = uriFactory
+    )
 
     @BeforeEach
     fun setUp() {
@@ -53,15 +62,6 @@ internal class ExportPasswordsUseCaseImplTest {
         unmockkStatic(LocalDateTime.now()::class)
     }
 
-    private val exportPasswordsUseCase = ExportPasswordsUseCaseImpl(
-        passwordsRepository = passwordsRepository,
-        passwordsListToExportPasswordsListMapper = passwordsListToExportPasswordsListMapper,
-        passwordsParser = passwordsParser,
-        encryptionManager = encryptionManager,
-        saveDataToFileUseCase = saveDataToFileUseCase,
-        uriFactory = uriFactory
-    )
-
     @Test
     fun `All passwords are saved to file and are not encrypted`() {
         val input = ExportType.Export
@@ -69,6 +69,7 @@ internal class ExportPasswordsUseCaseImplTest {
             data = PARSED_PASSWORDS,
             uri = URI
         )
+
         every {
             saveDataToFileUseCase(dataToSave)
         } returns Completable.complete()
@@ -77,8 +78,8 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswordsInfo() }
-        verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORDInfo)) }
+        verify(exactly = 1) { passwordsRepository.getPasswords() }
+        verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
         verify(exactly = 1) { saveDataToFileUseCase.invoke(dataToSave) }
@@ -104,8 +105,8 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswordsInfo() }
-        verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORDInfo)) }
+        verify(exactly = 1) { passwordsRepository.getPasswords() }
+        verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 1) { encryptionManager.encrypt(ENCRYPTION_PASSWORD, PARSED_PASSWORDS) }
         verify(exactly = 1) { saveDataToFileUseCase.invoke(dataToSave) }
@@ -117,11 +118,9 @@ internal class ExportPasswordsUseCaseImplTest {
         const val PASSWORD_STRING = "password"
         const val PLATFORM_NAME = "platformName"
         const val PARSED_PASSWORDS = "$PLATFORM_NAME:$PASSWORD_STRING"
-        val PASSWORDInfo = PasswordInfo(
-            id = 1L,
+        val PASSWORD = Password(
             platformName = PLATFORM_NAME,
             password = PASSWORD_STRING,
-            expiringDate = LocalDateTime.of(2023, 1, 7, 12, 0, 0)
         )
         val EXPORTED_PASSWORD = ExportedPassword(
             platformName = PLATFORM_NAME,

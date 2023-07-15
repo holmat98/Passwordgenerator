@@ -6,8 +6,7 @@ import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import org.junit.jupiter.api.Test
 
-
-class DeletePasswordUseCaseImplTestInfp {
+class DeletePasswordUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository>()
 
