@@ -114,6 +114,8 @@
     <string name="save_password_saved">Password was saved</string>
     <string name="save_password_platform_name">Platform name</string>
     <string name="save_password_password">Password</string>
+    <string name="save_password_website">Website</string>
+    <string name="save_password_show_reminder_notification">Would you like to receive a notification reminding you to change your password?</string>
     <string name="save_password_button_save">Save password</string>
 
     <!--  Settings  -->

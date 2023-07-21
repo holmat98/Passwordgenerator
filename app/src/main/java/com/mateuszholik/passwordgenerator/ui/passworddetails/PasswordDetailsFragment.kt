@@ -17,7 +17,6 @@ import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBin
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.factories.GsonFactory
 import com.mateuszholik.passwordgenerator.mappers.PasswordValidationTypeToTextMapper
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.adapters.PasswordValidationAdapter
@@ -32,7 +31,6 @@ import org.koin.core.qualifier.named
 class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private val navArgs: PasswordDetailsFragmentArgs by navArgs()
-    private val gsonFactory: GsonFactory by inject()
     private val typeToTextMapper: PasswordValidationTypeToTextMapper by inject()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
     private val viewModel: PasswordDetailsViewModel by viewModel {
@@ -107,10 +105,9 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
                     override fun onSecondButtonClicked() {
                         currentPasswordDetails?.let { password ->
-                            val passwordJson = gsonFactory.create().toJson(password)
                             val action =
                                 PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
-                                    passwordJson
+                                    password.id
                                 )
                             findNavController().navigate(action)
                         }

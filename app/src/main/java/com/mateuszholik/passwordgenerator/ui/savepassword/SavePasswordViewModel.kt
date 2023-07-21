@@ -32,6 +32,8 @@ class SavePasswordViewModel(
 
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
+    val newWebsiteValue = MutableLiveData(EMPTY_STRING)
+    val isExpiring = MutableLiveData(true)
 
     val isButtonEnabled = MediatorLiveData<Boolean>().apply {
         value = false
@@ -49,10 +51,10 @@ class SavePasswordViewModel(
 
     fun savePassword() {
         val newPassword = NewPassword(
-            platformName = platformName.value ?: EMPTY_STRING,
-            password = password.value ?: EMPTY_STRING,
-            website = null,
-            isExpiring = true
+            platformName = platformName.value.orEmpty(),
+            password = password.value.orEmpty(),
+            website = newWebsiteValue.value.orEmpty(),
+            isExpiring = isExpiring.value ?: false
         )
         insertPasswordAndGetIdUseCase(newPassword)
             .flatMap { getPasswordUseCase(it).toSingle() }

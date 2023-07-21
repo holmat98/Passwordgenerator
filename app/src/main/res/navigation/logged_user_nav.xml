@@ -103,8 +103,8 @@
             app:popUpTo="@id/passwords"
             app:popUpToInclusive="true" />
         <argument
-            android:name="password"
-            app:argType="string" />
+            android:name="passwordId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/settings"

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(value = [RxSchedulerExtension::class, InstantExecutorExtension::class])
-internal class GeneratePasswordViewModelTestInfp {
+internal class GeneratePasswordViewModelTest {
 
     private val createPasswordUseCase = mockk<CreatePasswordUseCase>()
     private val textProvider = mockk<TextProvider> {

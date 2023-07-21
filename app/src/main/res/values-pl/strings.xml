@@ -114,6 +114,8 @@
     <string name="save_password_saved">Hasło zostało zapisane</string>
     <string name="save_password_platform_name">Nazwa platformy</string>
     <string name="save_password_password">Hasło</string>
+    <string name="save_password_website">Strona internetowa</string>
+    <string name="save_password_show_reminder_notification">Czy chcesz otrzymać powiadomienie przypominające o zmianie hasła?</string>
     <string name="save_password_button_save">Zapisz hasło</string>
 
     <!--  Settings  -->
