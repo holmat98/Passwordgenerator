@@ -6,7 +6,6 @@ import com.mateuszholik.passwordgenerator.di.modules.viewModelModule
 import com.mateuszholik.passwordgenerator.di.modules.factoriesModule
 import com.mateuszholik.passwordgenerator.di.modules.providersModule
 import com.mateuszholik.passwordgenerator.di.modules.managersModule
-import com.mateuszholik.passwordgenerator.di.modules.serializersModule
 import com.mateuszholik.passwordgenerator.di.modules.schedulerModule
 import com.mateuszholik.passwordgenerator.di.modules.mappersModule
 import com.mateuszholik.passwordgenerator.di.modules.workersModule
@@ -17,7 +16,6 @@ private val appModules = listOf(
     factoriesModule,
     providersModule,
     managersModule,
-    serializersModule,
     schedulerModule,
     mappersModule,
     workersModule

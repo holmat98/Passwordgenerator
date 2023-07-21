@@ -228,14 +228,6 @@ object Lottie {
     const val DEPENDENCY = "com.airbnb.android:lottie:$version"
 }
 
-object Retrofit {
-    private const val version = "2.9.0"
-
-    object Converter {
-        const val DEPENDENCY = "com.squareup.retrofit2:converter-gson:$version"
-    }
-}
-
 object Timber {
     private const val version = "5.0.1"
 
