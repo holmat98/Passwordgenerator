@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.animateVisibility
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.managers.ClipboardManager
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.passwords.adapters.PasswordsAdapter
@@ -24,7 +23,6 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     private val binding by viewBinding(FragmentPasswordsBinding::bind)
     private val viewModel: PasswordsViewModel by viewModel()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
-    private val clipboardManager: ClipboardManager by inject()
     private var adapter: PasswordsAdapter? = null
     private val scrollListener = object : RecyclerView.OnScrollListener() {
 
@@ -63,12 +61,7 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
     }
 
     private fun setUpRecyclerView() {
-        adapter = PasswordsAdapter(
-            copyToClipboard = { label, password ->
-                clipboardManager.copyToClipboard(label, password)
-            },
-            navigateToPasswordDetails = { navigateToPasswordDetails(it) },
-        )
+        adapter = PasswordsAdapter { navigateToPasswordDetails(it) }
         binding.recyclerView.apply {
             adapter = this@PasswordsFragment.adapter
             addOnScrollListener(scrollListener)
@@ -82,9 +75,9 @@ class PasswordsFragment : BaseFragment(R.layout.fragment_passwords) {
         }
     }
 
-    private fun navigateToPasswordDetails(password: Password) {
+    private fun navigateToPasswordDetails(passwordInfo: PasswordInfo) {
         val action =
-            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(password.id)
+            PasswordsFragmentDirections.actionPasswordsToPasswordDetailsFragment(passwordInfo.id)
         findNavController().navigate(action)
     }
 

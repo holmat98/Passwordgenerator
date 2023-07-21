@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.ui.passwords
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.domain.models.PasswordType
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.usecase.GetPasswordsUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
@@ -16,8 +16,8 @@ class PasswordsViewModel(
     private val textProvider: TextProvider
 ) : BaseViewModel() {
 
-    private val _passwords = MutableLiveData<List<PasswordType>>()
-    val passwords: LiveData<List<PasswordType>>
+    private val _passwords = MutableLiveData<List<PasswordInfo>>()
+    val passwords: LiveData<List<PasswordInfo>>
         get() = _passwords
 
     private val _isProgressBarVisible = MutableLiveData(true)
@@ -36,7 +36,7 @@ class PasswordsViewModel(
                 doOnSuccess = { _passwords.postValue(it) },
                 doOnError = {
                     _errorOccurred.postValue(textProvider.provide(MessageType.GET_PASSWORDS_ERROR))
-                    Timber.e(it)
+                    Timber.e(it, "Error while getting passwords")
                 }
             )
             .addTo(compositeDisposable)

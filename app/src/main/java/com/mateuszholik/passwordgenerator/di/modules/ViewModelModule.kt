@@ -1,6 +1,6 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
 import com.mateuszholik.passwordgenerator.ui.MainViewModel
 import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
@@ -10,6 +10,7 @@ import com.mateuszholik.passwordgenerator.ui.generatepassword.GeneratePasswordVi
 import com.mateuszholik.passwordgenerator.ui.imports.ImportPasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
 import com.mateuszholik.passwordgenerator.ui.logintransition.LoginTransitionViewModel
+import com.mateuszholik.passwordgenerator.ui.migration.MigrationViewModel
 import com.mateuszholik.passwordgenerator.ui.passworddetails.PasswordDetailsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwords.PasswordsViewModel
 import com.mateuszholik.passwordgenerator.ui.passwordscore.PasswordScoreViewModel
@@ -37,7 +38,7 @@ val viewModelModule = module {
         LogInViewModel(
             isPinCorrectUseCase = get(),
             shouldUseBiometricAuthenticationUseCase = get(),
-            textProvider = get()
+            textProvider = get(),
         )
     }
 
@@ -76,7 +77,7 @@ val viewModelModule = module {
     viewModel { (passwordId: Long) ->
         PasswordDetailsViewModel(
             passwordId = passwordId,
-            getPasswordTypeUseCase = get(),
+            getPasswordUseCase = get(),
             deletePasswordUseCase = get(),
             clipboardManager = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
@@ -85,9 +86,9 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (password: Password) ->
+    viewModel { (passwordInfo: PasswordInfo) ->
         EditPasswordViewModel(
-            password = password,
+            passwordInfo = passwordInfo,
             updatePasswordUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
             textProvider = get()
@@ -114,4 +115,12 @@ val viewModelModule = module {
     }
 
     viewModel { MainViewModel() }
+
+    viewModel {
+        MigrationViewModel(
+            getMigrationStateUseCase = get(),
+            migrateDataToTheCorrectStateUseCase = get(),
+            saveMigrationStateUseCase = get()
+        )
+    }
 }

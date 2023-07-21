@@ -1,10 +1,10 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.repositories.PasswordsRepository
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 
-interface DeletePasswordUseCase : CompletableUseCase<Long>
+interface DeletePasswordUseCase : CompletableParameterizedUseCase<Long>
 
 internal class DeletePasswordUseCaseImpl(
     private val passwordsRepository: PasswordsRepository

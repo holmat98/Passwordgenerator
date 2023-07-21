@@ -1,9 +1,8 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.domain.models.NewPassword
 import org.assertj.core.api.Assertions.assertThat
-import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 import org.junit.jupiter.api.Test
+import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 
 internal class NewPasswordMapperImplTest {
 
@@ -19,13 +18,21 @@ internal class NewPasswordMapperImplTest {
     private companion object {
         const val PASSWORD = "password"
         const val PLATFORM = "platform"
-        val NEW_PASSWORD = NewPassword(
+        const val IS_EXPIRING = false
+        const val PASSWORD_SCORE = 50
+        val NEW_PASSWORD = NewPasswordMapper.Param(
             password = PASSWORD,
-            platformName = PLATFORM
+            platformName = PLATFORM,
+            website = null,
+            isExpiring = IS_EXPIRING,
+            passwordScore = PASSWORD_SCORE
         )
         val DATA_NEW_PASSWORD = DataNewPassword(
             password = PASSWORD,
-            platformName = PLATFORM
+            platformName = PLATFORM,
+            website = null,
+            isExpiring = IS_EXPIRING,
+            passwordScore = PASSWORD_SCORE
         )
     }
 }

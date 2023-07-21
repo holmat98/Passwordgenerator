@@ -5,9 +5,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Completable
 import org.junit.jupiter.api.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
 
 class DeletePasswordUseCaseImplTest {
 

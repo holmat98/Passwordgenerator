@@ -1,7 +1,7 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.domain.models.ExportedPassword
+import com.mateuszholik.domain.models.NewPassword
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,7 +21,9 @@ internal class ExportedPasswordToNewPasswordMapperImplTest {
         const val PLATFORM_NAME = "platformName"
         val NEW_PASSWORD = NewPassword(
             password = PASSWORD,
-            platformName = PLATFORM_NAME
+            platformName = PLATFORM_NAME,
+            website = null,
+            isExpiring = false
         )
         val EXPORTED_PASSWORD = ExportedPassword(
             platformName = PLATFORM_NAME,

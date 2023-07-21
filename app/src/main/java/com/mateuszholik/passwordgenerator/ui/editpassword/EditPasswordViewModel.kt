@@ -3,7 +3,7 @@ package com.mateuszholik.passwordgenerator.ui.editpassword
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.domain.models.UpdatedPassword
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
@@ -16,7 +16,7 @@ import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import timber.log.Timber
 
 class EditPasswordViewModel(
-    private val password: Password,
+    private val passwordInfo: PasswordInfo,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val textProvider: TextProvider,
     private val workScheduler: WorkScheduler
@@ -40,23 +40,25 @@ class EditPasswordViewModel(
     }
 
     init {
-        with(password) {
+        with(passwordInfo) {
             newPlatformNameValue.postValue(platformName)
-            newPasswordValue.postValue(password)
+//            newPasswordValue.postValue(password)
         }
     }
 
     fun editPassword() {
         val updatedPassword = UpdatedPassword(
-            id = password.id,
+            id = passwordInfo.id,
             platformName = newPlatformNameValue.value ?: EMPTY_STRING,
             password = newPasswordValue.value ?: EMPTY_STRING,
+            website = null,
+            isExpiring = false
         )
         updatePasswordUseCase(updatedPassword)
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = {
                     _passwordEditedCorrectly.postValue(true)
-                    workScheduler.cancelWorker(password.id)
+                    workScheduler.cancelWorker(passwordInfo.id)
                 },
                 doOnError = {
                     Timber.e(it)

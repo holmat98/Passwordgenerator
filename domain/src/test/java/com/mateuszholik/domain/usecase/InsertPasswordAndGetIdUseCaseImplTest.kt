@@ -13,21 +13,25 @@ internal class InsertPasswordAndGetIdUseCaseImplTest {
 
     private val newPasswordMapper = mockk<NewPasswordMapper>()
     private val passwordsRepository = mockk<PasswordsRepository>()
+    private val getPasswordScoreUseCase = mockk<GetPasswordScoreUseCase>()
 
     private val insertPasswordAndGetIdUseCase = InsertPasswordAndGetIdUseCaseImpl(
         passwordsRepository = passwordsRepository,
-        newPasswordMapper = newPasswordMapper
+        newPasswordMapper = newPasswordMapper,
+        getPasswordScoreUseCase = getPasswordScoreUseCase
     )
 
     @Test
     fun `When repository correctly inserted and returned id then use case will return this id`() {
         every {
-            newPasswordMapper.map(NEW_PASSWORD)
+            newPasswordMapper.map(NEW_PASSWORD_PARAM)
         } returns DATA_NEW_PASSWORD
 
         every {
             passwordsRepository.insertAndGetId(DATA_NEW_PASSWORD)
         } returns Single.just(ID)
+
+        every { getPasswordScoreUseCase(NEW_PASSWORD.password) } returns Single.just(PASSWORD_SCORE)
 
         insertPasswordAndGetIdUseCase(NEW_PASSWORD)
             .test()
@@ -38,13 +42,26 @@ internal class InsertPasswordAndGetIdUseCaseImplTest {
         const val ID = 1L
         const val PASSWORD = "password"
         const val PLATFORM_NAME = "platform"
-        val NEW_PASSWORD = NewPassword(
+        const val PASSWORD_SCORE = 50
+        val NEW_PASSWORD_PARAM = NewPasswordMapper.Param(
             password = PASSWORD,
-            platformName = PLATFORM_NAME
+            platformName = PLATFORM_NAME,
+            website = null,
+            isExpiring = false,
+            passwordScore = PASSWORD_SCORE
+        )
+        val NEW_PASSWORD = NewPassword(
+            platformName = PLATFORM_NAME,
+            password = PASSWORD,
+            website = null,
+            isExpiring = false
         )
         val DATA_NEW_PASSWORD = DataNewPassword(
             password = PASSWORD,
-            platformName = PLATFORM_NAME
+            platformName = PLATFORM_NAME,
+            website = null,
+            isExpiring = false,
+            passwordScore = PASSWORD_SCORE
         )
     }
 }

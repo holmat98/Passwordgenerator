@@ -2,8 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/logged_user_nav"
-    app:startDestination="@id/passwords">
+    app:startDestination="@id/dataMigration">
 
+    <fragment
+        android:id="@+id/dataMigration"
+        android:name="com.mateuszholik.passwordgenerator.ui.migration.MigrationFragment">
+        <action
+            android:id="@+id/action_dataMigration_to_passwords"
+            app:destination="@+id/passwords"
+            app:popUpTo="@id/dataMigration"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/passwords"
         android:name="com.mateuszholik.passwordgenerator.ui.passwords.PasswordsFragment">

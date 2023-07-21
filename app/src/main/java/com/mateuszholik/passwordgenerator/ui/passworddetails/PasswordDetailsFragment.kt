@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
@@ -40,7 +40,7 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
     }
     private val binding by viewBinding(FragmentPasswordDetailsBinding::bind)
     private var adapter: PasswordValidationAdapter? = null
-    private var currentPassword: Password? = null
+    private var currentPasswordDetails: PasswordDetails? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -106,7 +106,7 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
                     }
 
                     override fun onSecondButtonClicked() {
-                        currentPassword?.let { password ->
+                        currentPasswordDetails?.let { password ->
                             val passwordJson = gsonFactory.create().toJson(password)
                             val action =
                                 PasswordDetailsFragmentDirections.actionPasswordDetailsFragmentToEditPasswordFragment(
@@ -130,9 +130,9 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private fun setUpObservers() {
         with(viewModel) {
-            passwordType.observe(viewLifecycleOwner) {
-                currentPassword = it.password
-                binding.passwordInfoView.date = it.password.expiringDate
+            passwordDetails.observe(viewLifecycleOwner) {
+                currentPasswordDetails = it
+                binding.passwordInfoView.passwordValidity = it.passwordValidity
             }
             passwordValidationResult.observe(viewLifecycleOwner) {
                 adapter?.addValidationResult(it)

@@ -38,6 +38,9 @@
     <string name="biometric_authentication_header">Log in with biometrics</string>
     <string name="biometric_authentication_prompt_title">Biometric login</string>
 
+    <!-- Data migration -->
+    <string name="data_migrating">Synchronizing the data…</string>
+
     <!--  Create pin screen  -->
     <string name="create_pin_header">Create pin</string>
     <string name="create_pin_error">Error occurred while creating the pin</string>

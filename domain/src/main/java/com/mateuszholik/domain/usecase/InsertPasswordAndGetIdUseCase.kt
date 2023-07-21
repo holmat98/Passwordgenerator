@@ -10,9 +10,23 @@ interface InsertPasswordAndGetIdUseCase : ParameterizedSingleUseCase<NewPassword
 
 internal class InsertPasswordAndGetIdUseCaseImpl(
     private val passwordsRepository: PasswordsRepository,
-    private val newPasswordMapper: NewPasswordMapper
+    private val newPasswordMapper: NewPasswordMapper,
+    private val getPasswordScoreUseCase: GetPasswordScoreUseCase,
 ) : InsertPasswordAndGetIdUseCase {
 
     override fun invoke(param: NewPassword): Single<Long> =
-        passwordsRepository.insertAndGetId(newPasswordMapper.map(param))
+        getPasswordScoreUseCase(param.password)
+            .flatMap { passwordScore ->
+                passwordsRepository.insertAndGetId(
+                    newPasswordMapper.map(
+                        NewPasswordMapper.Param(
+                            platformName = param.platformName,
+                            password = param.password,
+                            website = param.website,
+                            isExpiring = param.isExpiring,
+                            passwordScore = passwordScore
+                        )
+                    )
+                )
+            }
 }

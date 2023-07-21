@@ -8,56 +8,56 @@ import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
 
-class PasswordDBToPasswordMapperImplTest {
+internal class PasswordDBToPasswordMapperImplTest {
 
-    private val encryptionManager = mockk<KeyBaseEncryptionManager> {
+    private val encryptionManager = mockk<KeyBaseEncryptionManager>()
+
+    private val passwordDBToPasswordMapper = PasswordDBToPasswordMapperImpl(
+        encryptionManager = encryptionManager
+    )
+
+    @Test
+    fun `PasswordDB object is correctly mapped to the Password object`() {
         every {
-            decrypt(
-                EncryptedData(
-                    iv = PASSWORD_DB.passwordIV,
-                    data = PASSWORD_DB.password
-                )
-            )
+            encryptionManager.decrypt(ENCRYPTED_DATA_PASSWORD)
         } returns PASSWORD
 
         every {
-            decrypt(
-                EncryptedData(
-                    iv = PASSWORD_DB.platformIV,
-                    data = PASSWORD_DB.platformName
-                )
-            )
+            encryptionManager.decrypt(ENCRYPTED_DATA_PLATFORM_NAME)
         } returns PLATFORM_NAME
-    }
 
-    private val passwordMapper = PasswordDBToPasswordMapperImpl(encryptionManager)
+        val result = passwordDBToPasswordMapper.map(
+            PasswordDB(
+                platformName = ENCRYPTED_PLATFORM_NAME,
+                platformNameIv = IV,
+                password = ENCRYPTED_PASSWORD,
+                passwordIv = IV
+            )
+        )
 
-    @Test
-    fun `PasswordMapper maps correctly PasswordDB object to Password object`() {
-        val result = passwordMapper.map(PASSWORD_DB)
-
-        assertThat(result).isEqualTo(EXPECTED)
+        assertThat(result).isEqualTo(
+            Password(
+                platformName = PLATFORM_NAME,
+                password = PASSWORD
+            )
+        )
     }
 
     private companion object {
-        const val PLATFORM_NAME = "platform"
-        const val PASSWORD = "password1234"
-        val EXPIRING_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
-        val PASSWORD_DB = PasswordDB(
-            id = 1,
-            platformName = ByteArray(10),
-            platformIV = ByteArray(11),
-            password = ByteArray(12),
-            passwordIV = ByteArray(13),
-            expiringDate = EXPIRING_DATE
+        const val PASSWORD = "password"
+        const val PLATFORM_NAME = "platformName"
+        val IV = ByteArray(5) { it.toByte() }
+        val ENCRYPTED_PASSWORD = PASSWORD.toByteArray()
+        val ENCRYPTED_PLATFORM_NAME = PLATFORM_NAME.toByteArray()
+        val ENCRYPTED_DATA_PLATFORM_NAME = EncryptedData(
+            iv = IV,
+            data = ENCRYPTED_PLATFORM_NAME
         )
-        val EXPECTED = Password(
-            id = 1,
-            platformName = PLATFORM_NAME,
-            password = PASSWORD,
-            expiringDate = EXPIRING_DATE
+        val ENCRYPTED_DATA_PASSWORD = EncryptedData(
+            iv = IV,
+            data = ENCRYPTED_PASSWORD
         )
     }
+
 }

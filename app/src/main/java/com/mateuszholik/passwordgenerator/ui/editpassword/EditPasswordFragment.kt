@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentEditPasswordBinding
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
@@ -23,11 +23,11 @@ class EditPasswordFragment : Fragment(R.layout.fragment_edit_password) {
     private val navArgs: EditPasswordFragmentArgs by navArgs()
     private val gsonFactory: GsonFactory by inject()
     private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
-    private val password: Password by lazy {
-        gsonFactory.create().fromJson(navArgs.password, Password::class.java)
+    private val passwordInfo: PasswordInfo by lazy {
+        gsonFactory.create().fromJson(navArgs.password, PasswordInfo::class.java)
     }
     private val viewModel: EditPasswordViewModel by viewModel {
-        parametersOf(password)
+        parametersOf(passwordInfo)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

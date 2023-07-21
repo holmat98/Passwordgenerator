@@ -1,0 +1,191 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "0ebe9e04bbe86b8d2fa80ba4b7c6e5d5",
+    "entities": [
+      {
+        "tableName": "names",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` BLOB NOT NULL, `name_iv` BLOB NOT NULL, `package_name` BLOB, `package_name_iv` BLOB, `website` BLOB, `website_iv` BLOB)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platformName",
+            "columnName": "name",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platformNameIv",
+            "columnName": "name_iv",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "packageName",
+            "columnName": "package_name",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "packageNameIv",
+            "columnName": "package_name_iv",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "website",
+            "columnName": "website",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "websiteIv",
+            "columnName": "website_iv",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "new_passwords",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name_id` INTEGER NOT NULL, `password` BLOB NOT NULL, `password_iv` BLOB NOT NULL, `expiration_date` INTEGER, `password_score` INTEGER NOT NULL, FOREIGN KEY(`name_id`) REFERENCES `names`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameId",
+            "columnName": "name_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordIV",
+            "columnName": "password_iv",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expirationDate",
+            "columnName": "expiration_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "passwordScore",
+            "columnName": "password_score",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "names",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "name_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "passwords",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `platformName` BLOB NOT NULL, `platformIV` BLOB NOT NULL, `password` BLOB NOT NULL, `passwordIV` BLOB NOT NULL, `expiringDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platformName",
+            "columnName": "platformName",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "platformIV",
+            "columnName": "platformIV",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordIV",
+            "columnName": "passwordIV",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expirationDate",
+            "columnName": "expiringDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [
+      {
+        "viewName": "PasswordInfoView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id as id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
+      },
+      {
+        "viewName": "PasswordDetailsView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT \n            new_passwords.id as id,\n            names.name as platformName,\n            names.name_iv as platformNameIv,\n            new_passwords.password as password,\n            new_passwords.password_iv as passwordIv,\n            names.website as website,\n            names.website_iv as websiteIv,\n            new_passwords.password_score as passwordScore,\n            new_passwords.expiration_date as expirationDate\n        FROM new_passwords\n        JOIN names ON new_passwords.name_id = names.id"
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ebe9e04bbe86b8d2fa80ba4b7c6e5d5')"
+    ]
+  }
+}
