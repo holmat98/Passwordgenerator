@@ -26,7 +26,7 @@ class ClipboardManagerImpl(
 
         val clipData = ClipData.newPlainText(label, text).apply {
             description.extras = PersistableBundle().apply {
-                putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)
+                putBoolean(IS_SENSITIVE, true)
             }
         }
 
@@ -34,6 +34,14 @@ class ClipboardManagerImpl(
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             messageProvider.show(textProvider.provide(MessageType.COPIED_TO_CLIPBOARD))
+        }
+    }
+
+    private companion object {
+        val IS_SENSITIVE = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ClipDescription.EXTRA_IS_SENSITIVE
+        } else {
+            "android.content.extra.IS_SENSITIVE"
         }
     }
 }
