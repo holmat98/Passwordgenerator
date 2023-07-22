@@ -27,7 +27,7 @@ class EditPasswordViewModel(
 
     val newPlatformNameValue = MutableLiveData(EMPTY_STRING)
     val newPasswordValue = MutableLiveData(EMPTY_STRING)
-    val newWebsiteValue = MutableLiveData(EMPTY_STRING)
+    val newWebsiteValue = MutableLiveData<String?>()
     val isExpiring = MutableLiveData(true)
 
     private val _passwordEditedCorrectly = MutableLiveData<Boolean>()
@@ -64,7 +64,7 @@ class EditPasswordViewModel(
             id = passwordId,
             platformName = newPlatformNameValue.value.orEmpty(),
             password = newPasswordValue.value.orEmpty(),
-            website = newWebsiteValue.value.orEmpty(),
+            website = newWebsiteValue.value,
             isExpiring = isExpiring.value ?: false
         )
         updatePasswordUseCase(updatedPassword)
