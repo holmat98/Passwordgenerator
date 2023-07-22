@@ -66,7 +66,7 @@ object BindingAdapters {
     fun setUrlLink(linkTextView: LinkTextView, text: String?) {
         text?.let {
             linkTextView.urlLink = it
-            linkTextView.isVisible = true
+            linkTextView.isVisible = it.isNotEmpty()
         } ?: run {
             linkTextView.isVisible = false
         }

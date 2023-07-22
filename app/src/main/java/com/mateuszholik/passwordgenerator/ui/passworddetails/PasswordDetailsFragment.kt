@@ -14,11 +14,10 @@ import androidx.navigation.fragment.navArgs
 import com.mateuszholik.data.repositories.models.PasswordDetails
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentPasswordDetailsBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.mappers.PasswordValidationTypeToTextMapper
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.ui.adapters.PasswordValidationAdapter
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.ButtonSetup
@@ -26,13 +25,12 @@ import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFrag
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
 
 class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
 
     private val navArgs: PasswordDetailsFragmentArgs by navArgs()
     private val typeToTextMapper: PasswordValidationTypeToTextMapper by inject()
-    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
     private val viewModel: PasswordDetailsViewModel by viewModel {
         parametersOf(navArgs.passwordId)
     }
@@ -136,12 +134,17 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
             }
             passwordDeletedSuccessfully.observe(viewLifecycleOwner) {
                 if (it) {
-                    messageProvider.show(requireContext().getString(R.string.password_details_password_deleted))
+                    activity?.let { activity ->
+                        snackBarProvider.showSuccess(
+                            activity.getString(R.string.password_details_password_deleted),
+                            activity
+                        )
+                    }
                     findNavController().popBackStack()
                 }
             }
-            errorOccurred.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+            errorOccurred.observe(viewLifecycleOwner) { message ->
+                activity?.let { snackBarProvider.showError(message, it) }
             }
         }
     }
