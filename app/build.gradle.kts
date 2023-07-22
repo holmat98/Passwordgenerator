@@ -125,9 +125,6 @@ dependencies {
     // lottie
     implementation(Lottie.DEPENDENCY)
 
-    // gson converter
-    implementation(Retrofit.Converter.DEPENDENCY)
-
     // timber
     implementation(Timber.DEPENDENCY)
 

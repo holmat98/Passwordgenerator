@@ -86,12 +86,13 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (passwordInfo: PasswordInfo) ->
+    viewModel { (passwordId: Long) ->
         EditPasswordViewModel(
-            passwordInfo = passwordInfo,
+            passwordId = passwordId,
             updatePasswordUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
-            textProvider = get()
+            textProvider = get(),
+            getPasswordUseCase = get()
         )
     }
 

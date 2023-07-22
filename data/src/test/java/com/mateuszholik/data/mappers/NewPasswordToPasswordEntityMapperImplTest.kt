@@ -60,7 +60,7 @@ internal class NewPasswordToPasswordEntityMapperImplTest {
 
     @Test
     fun `When isExpiring is equal to false then expirationDate is equal to null and param correctly mapped to PasswordEntity object`() {
-        val result = newPasswordToPasswordEntityMapper.map(TESTED_VALUE_EXPIRING)
+        val result = newPasswordToPasswordEntityMapper.map(TESTED_VALUE_NOT_EXPIRING)
 
         assertThat(result).isEqualTo(
             PasswordEntity(
@@ -87,7 +87,7 @@ internal class NewPasswordToPasswordEntityMapperImplTest {
             isExpiring = true,
             nameId = NAME_ID
         )
-        val TESTED_VALUE_EXPIRING = Param(
+        val TESTED_VALUE_NOT_EXPIRING = Param(
             password = PASSWORD,
             passwordScore = PASSWORD_SCORE,
             isExpiring = false,
