@@ -1,6 +1,6 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.data.repositories.models.NewPassword
+import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.models.ExportedPassword
 
 internal interface ExportedPasswordsListToNewPasswordsListMapper :

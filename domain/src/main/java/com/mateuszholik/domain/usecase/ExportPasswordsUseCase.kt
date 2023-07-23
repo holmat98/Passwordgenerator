@@ -7,12 +7,12 @@ import com.mateuszholik.domain.mappers.PasswordsListToExportPasswordsListMapper
 import com.mateuszholik.domain.models.DataToSave
 import com.mateuszholik.domain.models.ExportType
 import com.mateuszholik.domain.parsers.PasswordsParser
-import com.mateuszholik.domain.usecase.base.CompletableUseCase
+import com.mateuszholik.domain.usecase.base.CompletableParameterizedUseCase
 import io.reactivex.rxjava3.core.Completable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-interface ExportPasswordsUseCase : CompletableUseCase<ExportType>
+interface ExportPasswordsUseCase : CompletableParameterizedUseCase<ExportType>
 
 internal class ExportPasswordsUseCaseImpl(
     private val passwordsRepository: PasswordsRepository,
@@ -24,7 +24,7 @@ internal class ExportPasswordsUseCaseImpl(
 ) : ExportPasswordsUseCase {
 
     override fun invoke(param: ExportType): Completable =
-        passwordsRepository.getAllPasswords()
+        passwordsRepository.getPasswords()
             .map { passwordsListToExportPasswordsListMapper.map(it) }
             .map { passwordsParser.parseToString(it) }
             .map { encryptPasswordsIfNeeded(param, it) }

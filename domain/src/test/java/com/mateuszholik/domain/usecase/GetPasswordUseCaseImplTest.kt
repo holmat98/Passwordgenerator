@@ -1,7 +1,9 @@
 package com.mateuszholik.domain.usecase
 
 import com.mateuszholik.data.repositories.PasswordsRepository
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordDetails
+import com.mateuszholik.data.repositories.models.PasswordInfo
+import com.mateuszholik.data.repositories.models.PasswordValidity
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.rxjava3.core.Maybe
@@ -16,7 +18,7 @@ internal class GetPasswordUseCaseImplTest {
     @Test
     fun `When repository correctly returned password then use case will return this password`() {
         every {
-            passwordsRepository.getPassword(ID)
+            passwordsRepository.getPasswordDetails(ID)
         } returns Maybe.just(PASSWORD)
 
         getPasswordUseCase(ID)
@@ -27,7 +29,7 @@ internal class GetPasswordUseCaseImplTest {
     @Test
     fun `When repository did not return password then use case will return empty`() {
         every {
-            passwordsRepository.getPassword(ID)
+            passwordsRepository.getPasswordDetails(ID)
         } returns Maybe.empty()
 
         getPasswordUseCase(ID)
@@ -37,11 +39,13 @@ internal class GetPasswordUseCaseImplTest {
 
     private companion object {
         const val ID = 1L
-        val PASSWORD = Password(
+        val PASSWORD = PasswordDetails(
             id = ID,
             password = "password",
             platformName = "platform",
-            expiringDate = LocalDateTime.of(2022, 12, 23, 12, 0, 0)
+            passwordValidity = PasswordValidity.NeverExpires,
+            passwordScore = 50,
+            website = "website"
         )
     }
 }

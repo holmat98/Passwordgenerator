@@ -13,19 +13,17 @@ internal class PasswordDBToPasswordMapperImpl(
 
     override fun map(param: PasswordDB): Password =
         Password(
-            id = param.id,
             platformName = encryptionManager.decrypt(
                 EncryptedData(
-                    iv = param.platformIV,
+                    iv = param.platformNameIv,
                     data = param.platformName
                 )
             ),
             password = encryptionManager.decrypt(
                 EncryptedData(
-                    iv = param.passwordIV,
+                    iv = param.passwordIv,
                     data = param.password
                 )
-            ),
-            expiringDate = param.expiringDate
+            )
         )
 }

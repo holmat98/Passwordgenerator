@@ -5,23 +5,21 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentGeneratePasswordBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.ClipboardManager
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.ButtonSetup
 import com.mateuszholik.passwordgenerator.ui.dialogs.CustomBottomSheetDialogFragment.Listener
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_password) {
 
     private val binding by viewBinding(FragmentGeneratePasswordBinding::bind)
     private val viewModel: GeneratePasswordViewModel by viewModel()
-    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
     private val clipboardManager: ClipboardManager by inject()
 
     override val isBottomNavVisible: Boolean
@@ -75,8 +73,8 @@ class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_passwor
     }
 
     private fun setUpObservers() {
-        viewModel.errorOccurred.observe(viewLifecycleOwner) {
-            messageProvider.show(it)
+        viewModel.errorOccurred.observe(viewLifecycleOwner) { message ->
+            activity?.let { snackBarProvider.showError(message, it) }
         }
         viewModel.generatedPassword.observe(viewLifecycleOwner) {
             showBottomSheetDialog(it)

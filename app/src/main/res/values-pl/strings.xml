@@ -38,6 +38,9 @@
     <string name="biometric_authentication_header">Zaloguj się przy użyciu biometrii</string>
     <string name="biometric_authentication_prompt_title">Logowanie biometryczne</string>
 
+    <!-- Data migration -->
+    <string name="data_migrating">Synchronizacja danych…</string>
+
     <!--  Create pin screen  -->
     <string name="create_pin_header">Stwórz pin</string>
     <string name="create_pin_error">Wystąpił błąd przy zapisie pinu</string>
@@ -111,6 +114,8 @@
     <string name="save_password_saved">Hasło zostało zapisane</string>
     <string name="save_password_platform_name">Nazwa platformy</string>
     <string name="save_password_password">Hasło</string>
+    <string name="save_password_website">Strona internetowa</string>
+    <string name="save_password_show_reminder_notification">Czy chcesz otrzymać powiadomienie przypominające o zmianie hasła?</string>
     <string name="save_password_button_save">Zapisz hasło</string>
 
     <!--  Settings  -->
@@ -183,4 +188,5 @@
     <string name="options">Opcje</string>
     <string name="import_info">Import info</string>
     <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
+    <string name="hidden_text_view_button_description">Zmień widoczność tekstu</string>
 </resources>

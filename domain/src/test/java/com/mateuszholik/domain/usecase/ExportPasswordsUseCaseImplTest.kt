@@ -11,10 +11,10 @@ import com.mateuszholik.domain.models.DataToSave
 import com.mateuszholik.domain.models.ExportType
 import com.mateuszholik.domain.models.ExportedPassword
 import com.mateuszholik.domain.parsers.PasswordsParser
-import io.mockk.mockkStatic
-import io.mockk.mockk
-import io.mockk.unmockkStatic
 import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -26,7 +26,7 @@ import java.time.LocalDateTime
 internal class ExportPasswordsUseCaseImplTest {
 
     private val passwordsRepository = mockk<PasswordsRepository> {
-        every { getAllPasswords() } returns Single.just(listOf(PASSWORD))
+        every { getPasswords() } returns Single.just(listOf(PASSWORD))
     }
     private val passwordsListToExportPasswordsListMapper =
         mockk<PasswordsListToExportPasswordsListMapper> {
@@ -41,6 +41,15 @@ internal class ExportPasswordsUseCaseImplTest {
         every { create(any(), any()) } returns URI
     }
 
+    private val exportPasswordsUseCase = ExportPasswordsUseCaseImpl(
+        passwordsRepository = passwordsRepository,
+        passwordsListToExportPasswordsListMapper = passwordsListToExportPasswordsListMapper,
+        passwordsParser = passwordsParser,
+        encryptionManager = encryptionManager,
+        saveDataToFileUseCase = saveDataToFileUseCase,
+        uriFactory = uriFactory
+    )
+
     @BeforeEach
     fun setUp() {
         mockkStatic(LocalDateTime.now()::class)
@@ -53,15 +62,6 @@ internal class ExportPasswordsUseCaseImplTest {
         unmockkStatic(LocalDateTime.now()::class)
     }
 
-    private val exportPasswordsUseCase = ExportPasswordsUseCaseImpl(
-        passwordsRepository = passwordsRepository,
-        passwordsListToExportPasswordsListMapper = passwordsListToExportPasswordsListMapper,
-        passwordsParser = passwordsParser,
-        encryptionManager = encryptionManager,
-        saveDataToFileUseCase = saveDataToFileUseCase,
-        uriFactory = uriFactory
-    )
-
     @Test
     fun `All passwords are saved to file and are not encrypted`() {
         val input = ExportType.Export
@@ -69,6 +69,7 @@ internal class ExportPasswordsUseCaseImplTest {
             data = PARSED_PASSWORDS,
             uri = URI
         )
+
         every {
             saveDataToFileUseCase(dataToSave)
         } returns Completable.complete()
@@ -77,7 +78,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { passwordsRepository.getPasswords() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 0) { encryptionManager.encrypt(any(), any()) }
@@ -104,7 +105,7 @@ internal class ExportPasswordsUseCaseImplTest {
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { passwordsRepository.getAllPasswords() }
+        verify(exactly = 1) { passwordsRepository.getPasswords() }
         verify(exactly = 1) { passwordsListToExportPasswordsListMapper.map(listOf(PASSWORD)) }
         verify(exactly = 1) { passwordsParser.parseToString(listOf(EXPORTED_PASSWORD)) }
         verify(exactly = 1) { encryptionManager.encrypt(ENCRYPTION_PASSWORD, PARSED_PASSWORDS) }
@@ -118,10 +119,8 @@ internal class ExportPasswordsUseCaseImplTest {
         const val PLATFORM_NAME = "platformName"
         const val PARSED_PASSWORDS = "$PLATFORM_NAME:$PASSWORD_STRING"
         val PASSWORD = Password(
-            id = 1L,
             platformName = PLATFORM_NAME,
             password = PASSWORD_STRING,
-            expiringDate = LocalDateTime.of(2023, 1, 7, 12, 0, 0)
         )
         val EXPORTED_PASSWORD = ExportedPassword(
             platformName = PLATFORM_NAME,

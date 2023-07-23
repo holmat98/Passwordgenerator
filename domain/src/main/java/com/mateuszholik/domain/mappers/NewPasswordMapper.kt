@@ -1,15 +1,27 @@
 package com.mateuszholik.domain.mappers
 
-import com.mateuszholik.domain.models.NewPassword
+import com.mateuszholik.domain.mappers.NewPasswordMapper.Param
 import com.mateuszholik.data.repositories.models.NewPassword as DataNewPassword
 
-internal interface NewPasswordMapper : Mapper<NewPassword, DataNewPassword>
+internal interface NewPasswordMapper : Mapper<Param, DataNewPassword> {
+
+    data class Param(
+        val platformName: String,
+        val password: String,
+        val website: String?,
+        val isExpiring: Boolean,
+        val passwordScore: Int,
+    )
+}
 
 internal class NewPasswordMapperImpl : NewPasswordMapper {
 
-    override fun map(param: NewPassword): DataNewPassword =
+    override fun map(param: Param): DataNewPassword =
         DataNewPassword(
             platformName = param.platformName,
-            password = param.password
+            password = param.password,
+            website = param.website,
+            isExpiring = param.isExpiring,
+            passwordScore = param.passwordScore
         )
 }

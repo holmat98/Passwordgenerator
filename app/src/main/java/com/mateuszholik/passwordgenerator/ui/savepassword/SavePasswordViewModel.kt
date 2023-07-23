@@ -7,6 +7,7 @@ import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
+import com.mateuszholik.passwordgenerator.extensions.expirationDate
 import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.models.MessageType
@@ -31,6 +32,8 @@ class SavePasswordViewModel(
 
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
+    val newWebsiteValue = MutableLiveData<String>()
+    val isExpiring = MutableLiveData(true)
 
     val isButtonEnabled = MediatorLiveData<Boolean>().apply {
         value = false
@@ -48,17 +51,21 @@ class SavePasswordViewModel(
 
     fun savePassword() {
         val newPassword = NewPassword(
-            platformName = platformName.value ?: EMPTY_STRING,
-            password = password.value ?: EMPTY_STRING
+            platformName = platformName.value.orEmpty(),
+            password = password.value.orEmpty(),
+            website = newWebsiteValue.value,
+            isExpiring = isExpiring.value ?: false
         )
         insertPasswordAndGetIdUseCase(newPassword)
             .flatMap { getPasswordUseCase(it).toSingle() }
             .flatMapCompletable { password ->
                 Completable.fromAction {
-                    workScheduler.schedule(
-                        password.id,
-                        password.expiringDate.getDiffFromNowInMilliseconds()
-                    )
+                    password.passwordValidity.expirationDate?.let {
+                        workScheduler.schedule(
+                            password.id,
+                            it.getDiffFromNowInMilliseconds()
+                        )
+                    }
                 }
             }
             .subscribeWithObserveOnMainThread(

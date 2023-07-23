@@ -7,13 +7,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSavePasswordBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
 
 class SavePasswordFragment : Fragment(R.layout.fragment_save_password) {
 
@@ -22,7 +20,7 @@ class SavePasswordFragment : Fragment(R.layout.fragment_save_password) {
     private val viewModel: SavePasswordViewModel by viewModel {
         parametersOf(args.password)
     }
-    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,17 +29,17 @@ class SavePasswordFragment : Fragment(R.layout.fragment_save_password) {
             viewModel = this@SavePasswordFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-            setUpObservers()
+        setUpObservers()
     }
 
     private fun setUpObservers() {
         with(viewModel) {
-            savePasswordSuccess.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+            savePasswordSuccess.observe(viewLifecycleOwner) { message ->
+                activity?.let { snackBarProvider.showSuccess(message, it) }
                 findNavController().navigate(R.id.action_savePasswordFragment_to_passwords)
             }
-            errorOccurred.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+            errorOccurred.observe(viewLifecycleOwner) { message ->
+                activity?.let { snackBarProvider.showError(message, it) }
             }
         }
     }

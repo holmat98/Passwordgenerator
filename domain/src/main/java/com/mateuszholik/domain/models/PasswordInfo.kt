@@ -1,8 +1,8 @@
 package com.mateuszholik.domain.models
 
-import com.mateuszholik.data.repositories.models.Password
+import com.mateuszholik.data.repositories.models.PasswordInfo
 
 internal data class PasswordInfo(
-    val password: Password,
+    val passwordInfo: PasswordInfo,
     val passwordScore: Int,
 )

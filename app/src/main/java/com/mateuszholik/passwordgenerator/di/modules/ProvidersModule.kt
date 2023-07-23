@@ -2,6 +2,8 @@ package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProviderImpl
 import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.providers.TextProviderImpl
 import com.mateuszholik.passwordgenerator.providers.ToastProviderImpl
@@ -18,4 +20,6 @@ val providersModule = module {
     single<TextProvider> {
         TextProviderImpl(context = androidContext())
     }
+
+    single<SnackBarProvider> { SnackBarProviderImpl() }
 }
