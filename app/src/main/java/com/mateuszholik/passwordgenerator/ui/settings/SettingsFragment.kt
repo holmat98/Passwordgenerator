@@ -6,15 +6,13 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.extensions.showNumberPickerDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.BiometricManager
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -22,7 +20,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsViewModel by viewModel()
-    private val messageProvider: MessageProvider by inject(named(TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
     private val biometricManager: BiometricManager by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,8 +71,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     }
 
     private fun setUpObservers() {
-        viewModel.errorOccurred.observe(viewLifecycleOwner) {
-            messageProvider.show(it)
+        viewModel.errorOccurred.observe(viewLifecycleOwner) { message ->
+            activity?.let { snackBarProvider.showError(message, it) }
         }
     }
 

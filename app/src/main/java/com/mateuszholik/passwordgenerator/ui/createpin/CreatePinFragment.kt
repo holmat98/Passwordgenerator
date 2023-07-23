@@ -5,19 +5,17 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentCreatePinBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class CreatePinFragment : BaseFragment(R.layout.fragment_create_pin) {
 
     private val binding by viewBinding(FragmentCreatePinBinding::bind)
     private val viewModel: CreatePinViewModel by viewModel()
-    private val messageProvider: MessageProvider by inject(named(NamedConstants.TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
 
     override val isBottomNavVisible: Boolean = false
 
@@ -30,12 +28,12 @@ class CreatePinFragment : BaseFragment(R.layout.fragment_create_pin) {
 
     private fun setUpObservers() {
         with(viewModel) {
-            wrongPin.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+            wrongPin.observe(viewLifecycleOwner) { message ->
+                activity?.let { snackBarProvider.showError(message, it) }
                 binding.pinCode.animateFailure()
             }
-            errorOccurred.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+            errorOccurred.observe(viewLifecycleOwner) { message ->
+                activity?.let { snackBarProvider.showError(message, it) }
             }
             savedPinSuccessfully.observe(viewLifecycleOwner) {
                 if (it) {
