@@ -31,8 +31,8 @@ internal class SnackBarProviderImpl : SnackBarProvider {
     override fun showSuccess(message: String, activity: Activity) {
         show(
             message = message,
-            backgroundColorAttrResId = R.attr.colorTertiary,
-            foregroundColorAttrResId = R.attr.colorOnTertiary,
+            backgroundColorAttrResId = R.attr.colorPrimaryContainer,
+            foregroundColorAttrResId = R.attr.colorOnPrimaryContainer,
             activity = activity
         )
     }
