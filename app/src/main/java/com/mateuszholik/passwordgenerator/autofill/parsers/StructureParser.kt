@@ -30,7 +30,6 @@ class StructureParser(private val autofillStructure: AssistStructure) {
                     id?.let { autoFillIds.add(it) }
                 else -> searchForPasswordEditText(child)
             }
-
         }
     }
 

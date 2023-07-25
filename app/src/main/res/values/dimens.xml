@@ -6,6 +6,7 @@
     <dimen name="radius_13">13dp</dimen>
     <dimen name="radius_15">15dp</dimen>
     <dimen name="radius_25">25dp</dimen>
+    <dimen name="radius_40">40dp</dimen>
 
     <dimen name="stroke_1">1dp</dimen>
     <dimen name="stroke_2">2dp</dimen>

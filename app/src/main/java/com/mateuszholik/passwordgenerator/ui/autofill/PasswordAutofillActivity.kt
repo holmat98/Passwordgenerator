@@ -15,7 +15,9 @@ class PasswordAutofillActivity : AppCompatActivity() {
         binding = ActivityPasswordAutofillBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.closeActivity.setOnClickListener {
+        binding.linearLayout.clipToOutline = true
+
+        binding.toolbar.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
         }
