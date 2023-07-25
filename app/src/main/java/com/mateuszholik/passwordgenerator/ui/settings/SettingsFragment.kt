@@ -1,11 +1,18 @@
 package com.mateuszholik.passwordgenerator.ui.settings
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSettingsBinding
+import com.mateuszholik.passwordgenerator.extensions.getAutofillManager
+import com.mateuszholik.passwordgenerator.extensions.shouldAskToGrantPermission
 import com.mateuszholik.passwordgenerator.extensions.showNumberPickerDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.BiometricManager
@@ -23,6 +30,12 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private val snackBarProvider: SnackBarProvider by inject()
     private val biometricManager: BiometricManager by inject()
 
+    private val requestForAutofillPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            binding.turnOnAutofillButton.isVisible = false
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -31,6 +44,12 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.apply {
             viewModel = this@SettingsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
+
+            turnOnAutofillButton.apply {
+                isVisible = context.getAutofillManager().shouldAskToGrantPermission()
+                onClick = { goToAutofillSettings() }
+                setOnClickListener { goToAutofillSettings() }
+            }
 
             exportPasswordsButton.apply {
                 onClick = {
@@ -83,6 +102,15 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             maxValue = MAX_PASSWORD_VALIDITY_IN_DAYS
         ) {
             viewModel.savePasswordValidity(it.toLong())
+        }
+    }
+
+    private fun goToAutofillSettings() {
+        activity?.let {
+            val intent = Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE).apply {
+                data = Uri.parse("package:${it.packageName}")
+            }
+            requestForAutofillPermissionLauncher.launch(intent)
         }
     }
 

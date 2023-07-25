@@ -131,6 +131,10 @@
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
 
+    <!--  Autofill  -->
+    <string name="settings_turn_on_autofill_service">Włącz autouzupełnianie haseł</string>
+    <string name="autofill_password_authentication_prompt_message">Wybierz hasło w aplikacji</string>
+
     <!--  Warnings  -->
     <string name="warning_icon">Ikona informująca o zbliżającym się wygaśnięciu hasła</string>
     <string name="warning_password_expired">Twoje hasło wygasło!</string>
