@@ -7,6 +7,8 @@ import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCase
+import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCaseImpl
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCase
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
@@ -168,6 +170,12 @@ internal val useCaseModule = module {
     factory<SaveMigrationStateUseCase> {
         SaveMigrationStateUseCaseImpl(
             sharedPrefManager = get()
+        )
+    }
+
+    factory<GetAutofillPasswordsDetailsUseCase> {
+        GetAutofillPasswordsDetailsUseCaseImpl(
+            passwordsRepository = get()
         )
     }
 }

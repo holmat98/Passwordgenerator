@@ -1,6 +1,7 @@
 package com.mateuszholik.passwordgenerator.autofill.builders
 
 import android.app.PendingIntent
+import android.app.assist.AssistStructure
 import android.content.Context
 import android.os.Build
 import android.service.autofill.FillResponse
@@ -39,18 +40,21 @@ class FillResponseBuilder(
 
     fun addSelectPasswordDialog(
         context: Context,
-        autofillIds: Array<AutofillId>,
+        autofillId: AutofillId,
+        assistedStructure: AssistStructure,
     ): FillResponseBuilder {
         val intentSender = PendingIntent.getActivity(
             context,
             PENDING_INTENT_REQUEST_ID,
-            PasswordAutofillActivity.newIntent(context),
+            PasswordAutofillActivity.newIntent(context, assistedStructure),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
         ).intentSender
 
         val packageName = context.packageName
         val promptMessage =
             context.getString(R.string.autofill_password_authentication_prompt_message)
+
+        val autofillIds = arrayOf(autofillId)
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             fillResponseBuilder.setAuthentication(

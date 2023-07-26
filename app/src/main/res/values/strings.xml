@@ -11,6 +11,7 @@
     <string name="passwords_create_password_button">Create password</string>
     <string name="password_test_button_test">Test password</string>
     <string name="button_copy">Copy</string>
+    <string name="button_confirm">Confirm</string>
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
 

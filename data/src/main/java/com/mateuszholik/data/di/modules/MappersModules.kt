@@ -1,5 +1,9 @@
 package com.mateuszholik.data.di.modules
 
+import com.mateuszholik.data.mappers.AutofillPasswordDetailsViewMapper
+import com.mateuszholik.data.mappers.AutofillPasswordDetailsViewMapperImpl
+import com.mateuszholik.data.mappers.AutofillPasswordsDetailsViewListMapper
+import com.mateuszholik.data.mappers.AutofillPasswordsDetailsViewListMapperImpl
 import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapperImpl
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
@@ -73,6 +77,18 @@ internal val mappersModule = module {
     factory<UpdatedPasswordToUpdatedNamesMapper> {
         UpdatedPasswordToUpdatedNamesMapperImpl(
             encryptionManager = get()
+        )
+    }
+
+    factory<AutofillPasswordDetailsViewMapper> {
+        AutofillPasswordDetailsViewMapperImpl(
+            encryptionManager = get()
+        )
+    }
+
+    factory<AutofillPasswordsDetailsViewListMapper> {
+        AutofillPasswordsDetailsViewListMapperImpl(
+            autofillPasswordDetailsViewMapper = get()
         )
     }
 }

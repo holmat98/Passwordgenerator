@@ -11,6 +11,7 @@
     <string name="passwords_create_password_button">Stwórz hasło</string>
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="button_copy">Kopiuj</string>
+    <string name="button_confirm">Potwierdź</string>
     <string name="button_edit">Edytuj</string>
     <string name="button_delete">Usuń</string>
 

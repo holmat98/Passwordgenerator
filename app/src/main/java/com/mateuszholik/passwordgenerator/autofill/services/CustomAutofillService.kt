@@ -32,7 +32,8 @@ class CustomAutofillService : AutofillService(), KoinComponent {
             val fillResponse = fillResponseBuilder
                 .addSelectPasswordDialog(
                     context = this.applicationContext,
-                    autofillIds = arrayOf(parsedStructure.autofillId)
+                    autofillId = parsedStructure.autofillId,
+                    assistedStructure = structure
                 )
                 .build()
 
