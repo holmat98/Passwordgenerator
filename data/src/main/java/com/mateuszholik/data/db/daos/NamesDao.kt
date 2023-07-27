@@ -29,7 +29,21 @@ internal interface NamesDao {
         name: ByteArray,
         nameIv: ByteArray,
         website: ByteArray?,
-        websiteIv: ByteArray?
+        websiteIv: ByteArray?,
+    ): Completable
+
+    @Query(
+        """
+            UPDATE names SET
+                package_name = :packageName,
+                package_name_iv = :packageNameIv
+            WHERE id = :id
+        """
+    )
+    fun updatePackageNameFor(
+        id: Long,
+        packageName: ByteArray,
+        packageNameIv: ByteArray,
     ): Completable
 
     @Query("DELETE FROM names WHERE id = :id")

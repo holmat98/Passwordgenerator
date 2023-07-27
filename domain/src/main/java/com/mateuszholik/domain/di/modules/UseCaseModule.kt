@@ -45,6 +45,8 @@ import com.mateuszholik.domain.usecase.SavePinUseCase
 import com.mateuszholik.domain.usecase.SavePinUseCaseImpl
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.UpdatePackageNameUseCase
+import com.mateuszholik.domain.usecase.UpdatePackageNameUseCaseImpl
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
 import org.koin.android.ext.koin.androidContext
@@ -177,5 +179,9 @@ internal val useCaseModule = module {
         GetAutofillPasswordsDetailsUseCaseImpl(
             passwordsRepository = get()
         )
+    }
+
+    factory<UpdatePackageNameUseCase> {
+        UpdatePackageNameUseCaseImpl(passwordsRepository = get())
     }
 }

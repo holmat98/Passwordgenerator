@@ -3,7 +3,9 @@ package com.mateuszholik.passwordgenerator.ui.autofill.selectpassword
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
+import com.mateuszholik.domain.models.NewPackage
 import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCase
+import com.mateuszholik.domain.usecase.UpdatePackageNameUseCase
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.ui.base.BaseViewModel
@@ -11,13 +13,20 @@ import timber.log.Timber
 
 class SelectPasswordViewModel(
     private val getAutofillPasswordsDetailsUseCase: GetAutofillPasswordsDetailsUseCase,
+    private val updatePackageNameUseCase: UpdatePackageNameUseCase,
 ) : BaseViewModel() {
 
     private val _passwords = MutableLiveData<List<AutofillPasswordDetails>>()
     val passwords: LiveData<List<AutofillPasswordDetails>>
         get() = _passwords
 
-    init { getPasswords() }
+    private val _packageNameUpdateCompleted = MutableLiveData<Boolean>(false)
+    val packageNameUpdateCompleted: LiveData<Boolean>
+        get() = _packageNameUpdateCompleted
+
+    init {
+        getPasswords()
+    }
 
     private fun getPasswords() {
         getAutofillPasswordsDetailsUseCase()
@@ -28,5 +37,20 @@ class SelectPasswordViewModel(
                     _errorOccurred.postValue("Something went wrong")
                 }
             ).addTo(compositeDisposable)
+    }
+
+    fun updatePackageName(passwordId: Long, packageName: String) {
+        updatePackageNameUseCase(
+            NewPackage(
+                passwordId = passwordId,
+                packageName = packageName
+            )
+        ).subscribeWithObserveOnMainThread(
+            doOnSuccess = { _packageNameUpdateCompleted.postValue(true) },
+            doOnError = {
+                Timber.e(it, "Error while updating the package name")
+                _packageNameUpdateCompleted.postValue(true)
+            }
+        ).addTo(compositeDisposable)
     }
 }

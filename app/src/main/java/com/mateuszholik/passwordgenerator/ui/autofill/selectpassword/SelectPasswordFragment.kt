@@ -1,29 +1,21 @@
 package com.mateuszholik.passwordgenerator.ui.autofill.selectpassword
 
-import android.app.Activity
-import android.app.assist.AssistStructure
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
-import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
 import androidx.fragment.app.Fragment
 import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
-import com.mateuszholik.passwordgenerator.autofill.extensions.getParsedStructure
 import com.mateuszholik.passwordgenerator.databinding.FragmentSelectPasswordBinding
-import com.mateuszholik.passwordgenerator.extensions.fromParcelable
+import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
+import com.mateuszholik.passwordgenerator.ui.autofill.AutofillController
 import com.mateuszholik.passwordgenerator.ui.autofill.selectpassword.adapter.SelectPasswordAdapter
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
 
     private val binding by viewBinding(FragmentSelectPasswordBinding::bind)
     private val viewModel: SelectPasswordViewModel by viewModel()
-    private val fillResponseBuilder: FillResponseBuilder by inject()
     private var adapter: SelectPasswordAdapter? = null
     private var selectedPassword: AutofillPasswordDetails? = null
 
@@ -31,35 +23,37 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.confirmSelectedPasswordButton.setOnClickListener {
-            activity?.let {
-                val intent = it.intent
+            selectedPassword?.let { password ->
+                val autofillController = activity as? AutofillController
+                val packageName = autofillController?.getAutofillPackageName()
 
-                val structure: AssistStructure? = intent.fromParcelable(EXTRA_ASSIST_STRUCTURE)
-                val parsedStructure = structure?.getParsedStructure()
-
-                if (parsedStructure != null) {
-                    selectedPassword?.let { password ->
-
-                        val fillResponse = fillResponseBuilder.addDataset(
-                            autofillId = parsedStructure.autofillId,
-                            promptMessage = password.platformName,
-                            autofillValue = password.password,
-                            packageName = it.packageName
-                        ).build()
-
-                        val replyIntent = Intent().apply {
-                            putExtra(EXTRA_AUTHENTICATION_RESULT, fillResponse)
+                if (packageName != null && password.packageName.isNullOrEmpty()) {
+                    showDialog(
+                        titleRes = R.string.autofill_dialog_save_package_name_title,
+                        messageRes = R.string.autofill_dialog_save_package_name_message,
+                        negativeButtonRes = R.string.dialog_button_no,
+                        positiveButtonRes = R.string.dialog_button_yes,
+                        doOnNegativeButton = { autofillData() },
+                        doOnPositiveButton = {
+                            viewModel.updatePackageName(
+                                password.id,
+                                packageName
+                            )
                         }
-
-                        it.setResult(Activity.RESULT_OK, replyIntent)
-                        it.finish()
-                    }
+                    )
+                } else {
+                    autofillData()
                 }
             }
         }
 
         viewModel.passwords.observe(viewLifecycleOwner) {
             adapter?.addPasswords(it)
+        }
+        viewModel.packageNameUpdateCompleted.observe(viewLifecycleOwner) {
+            if (it) {
+                autofillData()
+            }
         }
     }
 
@@ -80,4 +74,14 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
         adapter = null
     }
 
+    private fun autofillData() {
+        val autofillController = activity as? AutofillController
+
+        selectedPassword?.let {
+            autofillController?.finishWithSuccess(
+                promptMessage = it.platformName,
+                autofillValue = it.password
+            )
+        }
+    }
 }

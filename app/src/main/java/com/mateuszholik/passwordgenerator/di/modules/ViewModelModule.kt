@@ -127,7 +127,8 @@ val viewModelModule = module {
 
     viewModel {
         SelectPasswordViewModel(
-            getAutofillPasswordsDetailsUseCase = get()
+            getAutofillPasswordsDetailsUseCase = get(),
+            updatePackageNameUseCase = get(),
         )
     }
 }

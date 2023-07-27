@@ -10,6 +10,7 @@ import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
 import com.mateuszholik.passwordgenerator.autofill.factories.PresentationsFactory
 import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactory
+import com.mateuszholik.passwordgenerator.autofill.models.ParsedStructure
 import com.mateuszholik.passwordgenerator.ui.autofill.PasswordAutofillActivity
 
 class FillResponseBuilder(
@@ -40,13 +41,17 @@ class FillResponseBuilder(
 
     fun addSelectPasswordDialog(
         context: Context,
-        autofillId: AutofillId,
-        assistedStructure: AssistStructure,
+        parsedStructure: ParsedStructure,
+        assistStructure: AssistStructure,
     ): FillResponseBuilder {
         val intentSender = PendingIntent.getActivity(
             context,
             PENDING_INTENT_REQUEST_ID,
-            PasswordAutofillActivity.newIntent(context, assistedStructure),
+            PasswordAutofillActivity.newIntent(
+                context = context,
+                assistStructure = assistStructure,
+                packageName = parsedStructure.packageName
+            ),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
         ).intentSender
 
@@ -54,7 +59,7 @@ class FillResponseBuilder(
         val promptMessage =
             context.getString(R.string.autofill_password_authentication_prompt_message)
 
-        val autofillIds = arrayOf(autofillId)
+        val autofillIds = arrayOf(parsedStructure.autofillId)
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             fillResponseBuilder.setAuthentication(
