@@ -22,6 +22,8 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getPasswords()
+
         binding.confirmSelectedPasswordButton.setOnClickListener {
             selectedPassword?.let { password ->
                 val autofillController = activity as? AutofillController
@@ -72,6 +74,13 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
         super.onPause()
         binding.selectablePasswordsRecyclerView.adapter = null
         adapter = null
+    }
+
+    private fun getPasswords() {
+        val autofillController = activity as? AutofillController
+        val packageName = autofillController?.getAutofillPackageName()
+
+        viewModel.getPasswords(packageName)
     }
 
     private fun autofillData() {

@@ -129,6 +129,7 @@ val viewModelModule = module {
         SelectPasswordViewModel(
             getAutofillPasswordsDetailsUseCase = get(),
             updatePackageNameUseCase = get(),
+            textProvider = get()
         )
     }
 }
