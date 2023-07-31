@@ -6,9 +6,8 @@ import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
-import android.view.autofill.AutofillId
 import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
-import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
+import com.mateuszholik.passwordgenerator.autofill.extensions.getParsedStructure
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -21,15 +20,18 @@ class CustomAutofillService : AutofillService(), KoinComponent {
         cancellationSignal: CancellationSignal,
         callback: FillCallback,
     ) {
-        val autofillIds = request.getAutoFillIds()
+        val fillContext = request.fillContexts.lastOrNull() ?: return
+        val structure = fillContext.structure
 
-        if (autofillIds.isEmpty()) {
+        val parsedStructure = structure.getParsedStructure()
+
+        if (parsedStructure == null || parsedStructure.packageName == packageName) {
             callback.onSuccess(null)
         } else {
             val fillResponse = fillResponseBuilder
                 .addSelectPasswordDialog(
                     context = this.applicationContext,
-                    autofillIds = autofillIds
+                    autofillIds = arrayOf(parsedStructure.autofillId)
                 )
                 .build()
 
@@ -39,14 +41,5 @@ class CustomAutofillService : AutofillService(), KoinComponent {
 
     override fun onSaveRequest(saveRequest: SaveRequest, saveCallback: SaveCallback) {
         TODO("Not yet implemented")
-    }
-
-    private fun FillRequest.getAutoFillIds(): Array<AutofillId> {
-        val fillContext = fillContexts[fillContexts.size - 1]
-        val structure = fillContext.structure
-        val parser = StructureParser(structure)
-        parser.parse()
-
-        return parser.autoFillIds.toTypedArray()
     }
 }

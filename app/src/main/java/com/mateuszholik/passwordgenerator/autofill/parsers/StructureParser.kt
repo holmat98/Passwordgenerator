@@ -1,18 +1,20 @@
 package com.mateuszholik.passwordgenerator.autofill.parsers
 
 import android.app.assist.AssistStructure
-import android.view.autofill.AutofillId
+import android.text.InputType
+import com.mateuszholik.passwordgenerator.autofill.models.ParsedStructure
 
-class StructureParser(private val autofillStructure: AssistStructure) {
+class StructureParser {
 
-    val autoFillIds = ArrayList<AutofillId>()
+    private var packageName: String? = null
 
-    fun parse() {
-        val nodes = autofillStructure.windowNodeCount
+    var parsedStructure: ParsedStructure? = null
+
+    fun parse(assistStructure: AssistStructure) {
+        val nodes = assistStructure.windowNodeCount
 
         for (index in 0 until nodes) {
-            val node = autofillStructure.getWindowNodeAt(index).rootViewNode
-
+            val node = assistStructure.getWindowNodeAt(index).rootViewNode
             searchForPasswordEditText(node)
         }
     }
@@ -22,13 +24,20 @@ class StructureParser(private val autofillStructure: AssistStructure) {
 
         for (childIndex in 0 until numOfChildren) {
             val child = node.getChildAt(childIndex)
-            val id = child.autofillId
 
             when {
                 child.autofillHints?.contains(PASSWORD_FIELD_TEXT) == true ||
-                        child.isPasswordEditText() ->
-                    id?.let { autoFillIds.add(it) }
-                else -> searchForPasswordEditText(child)
+                        child.isPasswordEditText() ||
+                        child.isPasswordInputType() -> child.autofillId?.let {
+                    parsedStructure = ParsedStructure(
+                        autofillId = it,
+                        packageName = packageName ?: child.idPackage
+                    )
+                }
+                else -> {
+                    packageName = child.idPackage
+                    searchForPasswordEditText(child)
+                }
             }
         }
     }
@@ -39,7 +48,18 @@ class StructureParser(private val autofillStructure: AssistStructure) {
                         text?.contains(PASSWORD_FIELD_TEXT, true) == true
                 )
 
+    private fun AssistStructure.ViewNode.isPasswordInputType(): Boolean =
+        when (this.inputType) {
+            InputType.TYPE_NUMBER_VARIATION_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
+            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD,
+            PASSWORD_OR_CLASS_TEXT_INPUT_TYPE -> true
+            else -> false
+        }
+
     private companion object {
+        const val PASSWORD_OR_CLASS_TEXT_INPUT_TYPE = 129
         const val EDIT_TEXT_CLASS_NAME = "android.widget.EditText"
         const val PASSWORD_FIELD_TEXT = "password"
     }
