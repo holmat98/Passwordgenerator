@@ -1,5 +1,6 @@
 package com.mateuszholik.passwordgenerator.autofill.factories
 
+import android.content.IntentSender
 import android.os.Build
 import android.service.autofill.Dataset
 import android.service.autofill.Field
@@ -14,6 +15,13 @@ interface DatasetFactory {
         promptMessage: String,
         autofillValue: String,
         packageName: String,
+    ): Dataset
+
+    fun createAuthenticationDataset(
+        autofillId: AutofillId,
+        promptMessage: String,
+        packageName: String,
+        intentSender: IntentSender,
     ): Dataset
 }
 
@@ -31,6 +39,16 @@ internal class DatasetFactoryImpl(
             .setValue(autofillId, AutofillValue.forText(autofillValue))
             .build()
 
+    override fun createAuthenticationDataset(
+        autofillId: AutofillId,
+        promptMessage: String,
+        packageName: String,
+        intentSender: IntentSender,
+    ): Dataset =
+        Dataset.Builder(remoteViewsFactory.createWithImage(packageName, promptMessage))
+            .setValue(autofillId, AutofillValue.forText(promptMessage))
+            .setAuthentication(intentSender)
+            .build()
 }
 
 internal class Sdk33DatasetFactoryImpl(
@@ -53,6 +71,23 @@ internal class Sdk33DatasetFactoryImpl(
                     )
                 ).build()
             )
+            .build()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun createAuthenticationDataset(
+        autofillId: AutofillId,
+        promptMessage: String,
+        packageName: String,
+        intentSender: IntentSender,
+    ): Dataset =
+        Dataset.Builder(presentationsFactory.createWithImage(packageName, promptMessage))
+            .setField(
+                autofillId,
+                Field.Builder().setValue(
+                    AutofillValue.forText(promptMessage)
+                ).build()
+            )
+            .setAuthentication(intentSender)
             .build()
 
 }

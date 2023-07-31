@@ -9,6 +9,11 @@ interface RemoteViewsFactory {
         packageName: String,
         promptMessage: String,
     ): RemoteViews
+
+    fun createWithImage(
+        packageName: String,
+        promptMessage: String,
+    ): RemoteViews
 }
 
 internal class RemoteViewsFactoryImpl : RemoteViewsFactory {
@@ -18,6 +23,14 @@ internal class RemoteViewsFactoryImpl : RemoteViewsFactory {
         promptMessage: String,
     ): RemoteViews =
         RemoteViews(packageName, R.layout.item_autofill_data).apply {
+            setTextViewText(R.id.autofillLabel, promptMessage)
+        }
+
+    override fun createWithImage(
+        packageName: String,
+        promptMessage: String,
+    ): RemoteViews =
+        RemoteViews(packageName, R.layout.item_autofill_data_with_image).apply {
             setTextViewText(R.id.autofillLabel, promptMessage)
         }
 }

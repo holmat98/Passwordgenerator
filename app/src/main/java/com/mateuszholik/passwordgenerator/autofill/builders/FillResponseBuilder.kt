@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.service.autofill.FillResponse
 import android.view.autofill.AutofillId
+import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
 import com.mateuszholik.passwordgenerator.autofill.factories.PresentationsFactory
@@ -39,6 +40,51 @@ class FillResponseBuilder(
         return this
     }
 
+    fun addDatasetWithItemsAndInAppSelection(
+        autofillId: AutofillId,
+        packageName: String,
+        items: List<AutofillPasswordDetails>,
+        context: Context,
+        assistStructure: AssistStructure,
+        parsedStructure: ParsedStructure,
+    ): FillResponseBuilder {
+        val intentSender = PendingIntent.getActivity(
+            context,
+            PENDING_INTENT_REQUEST_ID,
+            PasswordAutofillActivity.newIntent(
+                context = context,
+                assistStructure = assistStructure,
+                packageName = parsedStructure.packageName
+            ),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
+        ).intentSender
+
+        items.forEach {
+            fillResponseBuilder.addDataset(
+                datasetFactory.create(
+                    autofillId = autofillId,
+                    packageName = packageName,
+                    promptMessage = it.platformName,
+                    autofillValue = it.password
+                )
+            )
+        }
+
+        val promptMessage =
+            context.getString(R.string.autofill_password_authentication_prompt_message)
+
+        fillResponseBuilder.addDataset(
+            datasetFactory.createAuthenticationDataset(
+                autofillId = autofillId,
+                packageName = packageName,
+                promptMessage = promptMessage,
+                intentSender = intentSender
+            )
+        )
+
+        return this
+    }
+
     fun addSelectPasswordDialog(
         context: Context,
         parsedStructure: ParsedStructure,
@@ -65,13 +111,13 @@ class FillResponseBuilder(
             fillResponseBuilder.setAuthentication(
                 autofillIds,
                 intentSender,
-                remoteViewsFactory.create(packageName, promptMessage)
+                remoteViewsFactory.createWithImage(packageName, promptMessage)
             )
         } else {
             fillResponseBuilder.setAuthentication(
                 autofillIds,
                 intentSender,
-                presentationsFactory.create(packageName, promptMessage)
+                presentationsFactory.createWithImage(packageName, promptMessage)
             )
         }
 

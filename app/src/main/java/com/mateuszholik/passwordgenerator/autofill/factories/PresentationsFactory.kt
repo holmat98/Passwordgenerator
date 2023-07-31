@@ -10,6 +10,11 @@ interface PresentationsFactory {
         packageName: String,
         promptMessage: String,
     ): Presentations
+
+    fun createWithImage(
+        packageName: String,
+        promptMessage: String,
+    ): Presentations
 }
 
 internal class PresentationsFactoryImpl(
@@ -20,5 +25,11 @@ internal class PresentationsFactoryImpl(
     override fun create(packageName: String, promptMessage: String): Presentations =
         Presentations.Builder()
             .setDialogPresentation(remoteViewsFactory.create(packageName, promptMessage))
+            .build()
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun createWithImage(packageName: String, promptMessage: String): Presentations =
+        Presentations.Builder()
+            .setDialogPresentation(remoteViewsFactory.createWithImage(packageName, promptMessage))
             .build()
 }

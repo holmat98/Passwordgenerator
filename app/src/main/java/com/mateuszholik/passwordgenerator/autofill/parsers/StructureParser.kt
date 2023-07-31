@@ -30,7 +30,8 @@ class StructureParser {
             when {
                 child.autofillHints?.contains(PASSWORD_FIELD_TEXT) == true ||
                         child.isPasswordEditText() ||
-                        child.isPasswordInputType() -> child.autofillId?.let {
+                        child.isPasswordInputType() ||
+                        child.isPasswordEditText() -> child.autofillId?.let {
                     parsedStructure = ParsedStructure(
                         autofillId = it,
                         packageName = child.idPackage

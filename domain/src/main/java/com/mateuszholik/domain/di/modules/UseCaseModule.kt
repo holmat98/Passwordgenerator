@@ -11,6 +11,8 @@ import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCase
 import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCaseImpl
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCase
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCaseImpl
+import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCase
+import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
@@ -183,5 +185,11 @@ internal val useCaseModule = module {
 
     factory<UpdatePackageNameUseCase> {
         UpdatePackageNameUseCaseImpl(passwordsRepository = get())
+    }
+
+    factory<GetMatchingPasswordsForPackageNameUseCase> {
+        GetMatchingPasswordsForPackageNameUseCaseImpl(
+            passwordsRepository = get()
+        )
     }
 }
