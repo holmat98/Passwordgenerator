@@ -5,9 +5,15 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
 import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
 import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import com.mateuszholik.passwordgenerator.databinding.ActivityPasswordAutofillBinding
@@ -33,13 +39,33 @@ class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
         super.onCreate(savedInstanceState)
         binding = ActivityPasswordAutofillBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        title = null
 
         binding.linearLayout.clipToOutline = true
 
-        binding.toolbar.setOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
-        }
+        setUpMenu()
+    }
+
+    private fun setUpMenu() {
+        val menuHost = this as MenuHost
+
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.close_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    if (menuItem.itemId == R.id.close) {
+                        setResult(RESULT_CANCELED)
+                        finish()
+                    }
+
+                    return true
+                }
+            }
+        )
     }
 
     override fun getAutofillPackageName(): String? =

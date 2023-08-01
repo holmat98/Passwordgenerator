@@ -24,6 +24,9 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
 
         getPasswords()
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         binding.confirmSelectedPasswordButton.setOnClickListener {
             selectedPassword?.let { password ->
                 val autofillController = activity as? AutofillController

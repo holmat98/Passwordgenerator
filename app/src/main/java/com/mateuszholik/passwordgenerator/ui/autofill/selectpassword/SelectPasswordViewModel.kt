@@ -23,9 +23,13 @@ class SelectPasswordViewModel(
     val passwords: LiveData<List<AutofillPasswordDetails>>
         get() = _passwords
 
-    private val _packageNameUpdateCompleted = MutableLiveData<Boolean>(false)
+    private val _packageNameUpdateCompleted = MutableLiveData(false)
     val packageNameUpdateCompleted: LiveData<Boolean>
         get() = _packageNameUpdateCompleted
+
+    private val _isProgressBarVisible = MutableLiveData(true)
+    val isProgressBarVisible: LiveData<Boolean>
+        get() = _isProgressBarVisible
 
     fun getPasswords(packageName: String?) {
         getAutofillPasswordsDetailsUseCase()
@@ -41,6 +45,8 @@ class SelectPasswordViewModel(
 
                 autofillPasswords.toList()
             }
+            .doOnSubscribe { _isProgressBarVisible.postValue(true) }
+            .doFinally { _isProgressBarVisible.postValue(false) }
             .subscribeWithObserveOnMainThread(
                 doOnSuccess = { _passwords.postValue(it) },
                 doOnError = {

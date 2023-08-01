@@ -1,7 +1,6 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.TOAST_MESSAGE_PROVIDER
 import com.mateuszholik.passwordgenerator.schedulers.NotificationWorkSchedulerImpl
 import com.mateuszholik.passwordgenerator.schedulers.WorkScheduler
 import org.koin.android.ext.koin.androidContext

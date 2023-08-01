@@ -3,6 +3,7 @@ package com.mateuszholik.passwordgenerator.autofill.builders
 import android.app.PendingIntent
 import android.app.assist.AssistStructure
 import android.content.Context
+import android.os.Build
 import android.service.autofill.FillResponse
 import android.view.autofill.AutofillId
 import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
@@ -81,6 +82,7 @@ class FillResponseBuilder(
             )
         )
 
+
         return this
     }
 
@@ -106,11 +108,19 @@ class FillResponseBuilder(
 
         val autofillIds = arrayOf(parsedStructure.autofillId)
 
-        fillResponseBuilder.setAuthentication(
-            autofillIds,
-            intentSender,
-            remoteViewsFactory.create(packageName, promptMessage)
-        )
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            fillResponseBuilder.setAuthentication(
+                autofillIds,
+                intentSender,
+                remoteViewsFactory.create(packageName, promptMessage)
+            )
+        } else {
+            fillResponseBuilder.setAuthentication(
+                autofillIds,
+                intentSender,
+                presentationsFactory.create(packageName, promptMessage)
+            )
+        }
 
         return this
     }
