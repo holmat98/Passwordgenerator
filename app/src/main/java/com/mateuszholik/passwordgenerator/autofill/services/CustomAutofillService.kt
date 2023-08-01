@@ -46,14 +46,12 @@ class CustomAutofillService : AutofillService(), KoinComponent {
                         val fillResponseBuilder = fillResponseBuilder
 
                         if (it.isEmpty()) {
-                            Timber.d("Testowanie, empty")
                             fillResponseBuilder.addSelectPasswordDialog(
                                 context = this.applicationContext,
                                 parsedStructure = parsedStructure,
                                 assistStructure = structure
                             )
                         } else {
-                            Timber.d("Testowanie, full")
                             fillResponseBuilder.addDatasetWithItemsAndInAppSelection(
                                 autofillId = parsedStructure.autofillId,
                                 packageName = packageName,

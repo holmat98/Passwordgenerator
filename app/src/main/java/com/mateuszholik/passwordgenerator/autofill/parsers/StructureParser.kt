@@ -29,9 +29,7 @@ class StructureParser {
 
             when {
                 child.autofillHints?.contains(PASSWORD_FIELD_TEXT) == true ||
-                        child.isPasswordEditText() ||
-                        child.isPasswordInputType() ||
-                        child.isPasswordEditText() -> child.autofillId?.let {
+                        child.isPasswordInputType() || child.isPasswordEditText() -> child.autofillId?.let {
                     parsedStructure = ParsedStructure(
                         autofillId = it,
                         packageName = child.idPackage
@@ -51,7 +49,7 @@ class StructureParser {
                 )
 
     private fun AssistStructure.ViewNode.isPasswordInputType(): Boolean =
-        when (this.inputType) {
+        when (inputType) {
             InputType.TYPE_NUMBER_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,

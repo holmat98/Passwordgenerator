@@ -1,8 +1,6 @@
 package com.mateuszholik.passwordgenerator.autofill.factories
 
-import android.app.slice.Slice
 import android.os.Build
-import android.service.autofill.InlinePresentation
 import android.service.autofill.Presentations
 import androidx.annotation.RequiresApi
 
