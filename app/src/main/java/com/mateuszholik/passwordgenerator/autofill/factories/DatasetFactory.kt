@@ -45,7 +45,7 @@ internal class DatasetFactoryImpl(
         packageName: String,
         intentSender: IntentSender,
     ): Dataset =
-        Dataset.Builder(remoteViewsFactory.createWithImage(packageName, promptMessage))
+        Dataset.Builder(remoteViewsFactory.create(packageName, promptMessage))
             .setValue(autofillId, AutofillValue.forText(promptMessage))
             .setAuthentication(intentSender)
             .build()
@@ -80,7 +80,7 @@ internal class Sdk33DatasetFactoryImpl(
         packageName: String,
         intentSender: IntentSender,
     ): Dataset =
-        Dataset.Builder(presentationsFactory.createWithImage(packageName, promptMessage))
+        Dataset.Builder(presentationsFactory.create(packageName, promptMessage))
             .setField(
                 autofillId,
                 Field.Builder().setValue(

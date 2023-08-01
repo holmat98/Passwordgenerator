@@ -9,7 +9,7 @@ import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
 import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
 import androidx.appcompat.app.AppCompatActivity
 import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
-import com.mateuszholik.passwordgenerator.autofill.extensions.getParsedStructure
+import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import com.mateuszholik.passwordgenerator.databinding.ActivityPasswordAutofillBinding
 import com.mateuszholik.passwordgenerator.extensions.fromParcelable
 import org.koin.android.ext.android.inject
@@ -27,6 +27,7 @@ class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
 
     private lateinit var binding: ActivityPasswordAutofillBinding
     private val fillResponseBuilder: FillResponseBuilder by inject()
+    private val structureParser: StructureParser by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +47,7 @@ class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
 
     override fun finishWithSuccess(promptMessage: String, autofillValue: String) {
         val structure: AssistStructure? = intent.fromParcelable(EXTRA_ASSIST_STRUCTURE)
-        val parsedStructure = structure?.getParsedStructure()
+        val parsedStructure = structure?.let { structureParser.parse(it) }
 
         parsedStructure?.let {
             val fillResponse = fillResponseBuilder.addDataset(

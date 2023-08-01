@@ -197,5 +197,5 @@
     <string name="import_info">Import info</string>
     <string name="message_password_copied_to_clipboard">Password was copied</string>
     <string name="hidden_text_view_button_description">Change visibility of the text</string>
-    <string name="link"></string>
+    <string name="app_icon_description">App icon</string>
 </resources>
