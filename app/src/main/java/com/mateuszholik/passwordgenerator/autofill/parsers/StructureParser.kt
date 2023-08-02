@@ -6,17 +6,19 @@ import com.mateuszholik.passwordgenerator.autofill.models.ParsedStructure
 
 class StructureParser {
 
-    private var packageName: String? = null
+    private var parsedStructure: ParsedStructure? = null
 
-    var parsedStructure: ParsedStructure? = null
+    fun parse(assistStructure: AssistStructure): ParsedStructure? {
+        parsedStructure = null
 
-    fun parse(assistStructure: AssistStructure) {
         val nodes = assistStructure.windowNodeCount
 
         for (index in 0 until nodes) {
             val node = assistStructure.getWindowNodeAt(index).rootViewNode
             searchForPasswordEditText(node)
         }
+
+        return parsedStructure
     }
 
     private fun searchForPasswordEditText(node: AssistStructure.ViewNode) {
@@ -31,11 +33,10 @@ class StructureParser {
                         child.isPasswordInputType() -> child.autofillId?.let {
                     parsedStructure = ParsedStructure(
                         autofillId = it,
-                        packageName = packageName ?: child.idPackage
+                        packageName = child.idPackage
                     )
                 }
                 else -> {
-                    packageName = child.idPackage
                     searchForPasswordEditText(child)
                 }
             }

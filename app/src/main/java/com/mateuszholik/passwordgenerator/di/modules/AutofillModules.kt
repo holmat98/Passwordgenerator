@@ -8,6 +8,7 @@ import com.mateuszholik.passwordgenerator.autofill.factories.PresentationsFactor
 import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactory
 import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactoryImpl
 import com.mateuszholik.passwordgenerator.autofill.factories.Sdk33DatasetFactoryImpl
+import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import org.koin.dsl.module
 
 val autofillModule = module {
@@ -35,4 +36,6 @@ val autofillModule = module {
             presentationsFactory = get()
         )
     }
+
+    single { StructureParser() }
 }

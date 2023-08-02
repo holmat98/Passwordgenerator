@@ -7,13 +7,14 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
-import com.mateuszholik.passwordgenerator.autofill.extensions.getParsedStructure
+import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class CustomAutofillService : AutofillService(), KoinComponent {
 
     private val fillResponseBuilder: FillResponseBuilder by inject()
+    private val structureParser: StructureParser by inject()
 
     override fun onFillRequest(
         request: FillRequest,
@@ -23,7 +24,7 @@ class CustomAutofillService : AutofillService(), KoinComponent {
         val fillContext = request.fillContexts.lastOrNull() ?: return
         val structure = fillContext.structure
 
-        val parsedStructure = structure.getParsedStructure()
+        val parsedStructure = structureParser.parse(structure)
 
         if (parsedStructure == null || parsedStructure.packageName == packageName) {
             callback.onSuccess(null)
