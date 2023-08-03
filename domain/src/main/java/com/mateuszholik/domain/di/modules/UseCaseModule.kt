@@ -7,8 +7,12 @@ import com.mateuszholik.domain.usecase.DeletePasswordUseCase
 import com.mateuszholik.domain.usecase.DeletePasswordUseCaseImpl
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
+import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCase
+import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCaseImpl
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCase
 import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCaseImpl
+import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCase
+import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
@@ -43,6 +47,8 @@ import com.mateuszholik.domain.usecase.SavePinUseCase
 import com.mateuszholik.domain.usecase.SavePinUseCaseImpl
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.ShouldUseBiometricAuthenticationUseCaseImpl
+import com.mateuszholik.domain.usecase.UpdatePackageNameUseCase
+import com.mateuszholik.domain.usecase.UpdatePackageNameUseCaseImpl
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCase
 import com.mateuszholik.domain.usecase.UpdatePasswordUseCaseImpl
 import org.koin.android.ext.koin.androidContext
@@ -168,6 +174,22 @@ internal val useCaseModule = module {
     factory<SaveMigrationStateUseCase> {
         SaveMigrationStateUseCaseImpl(
             sharedPrefManager = get()
+        )
+    }
+
+    factory<GetAutofillPasswordsDetailsUseCase> {
+        GetAutofillPasswordsDetailsUseCaseImpl(
+            passwordsRepository = get()
+        )
+    }
+
+    factory<UpdatePackageNameUseCase> {
+        UpdatePackageNameUseCaseImpl(passwordsRepository = get())
+    }
+
+    factory<GetMatchingPasswordsForPackageNameUseCase> {
+        GetMatchingPasswordsForPackageNameUseCaseImpl(
+            passwordsRepository = get()
         )
     }
 }

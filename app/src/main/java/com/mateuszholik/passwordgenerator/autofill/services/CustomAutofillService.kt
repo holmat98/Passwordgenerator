@@ -6,15 +6,26 @@ import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
+import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCase
 import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
 import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
+import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 class CustomAutofillService : AutofillService(), KoinComponent {
 
     private val fillResponseBuilder: FillResponseBuilder by inject()
     private val structureParser: StructureParser by inject()
+    private val getMatchingPasswordsForPackageNameUseCase: GetMatchingPasswordsForPackageNameUseCase by inject()
+    private val compositeDisposable = CompositeDisposable()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
 
     override fun onFillRequest(
         request: FillRequest,
@@ -29,14 +40,35 @@ class CustomAutofillService : AutofillService(), KoinComponent {
         if (parsedStructure == null || parsedStructure.packageName == packageName) {
             callback.onSuccess(null)
         } else {
-            val fillResponse = fillResponseBuilder
-                .addSelectPasswordDialog(
-                    context = this.applicationContext,
-                    autofillIds = arrayOf(parsedStructure.autofillId)
-                )
-                .build()
+            getMatchingPasswordsForPackageNameUseCase(parsedStructure.packageName)
+                .subscribeWithObserveOnMainThread(
+                    doOnSuccess = {
+                        val fillResponseBuilder = fillResponseBuilder
 
-            callback.onSuccess(fillResponse)
+                        if (it.isEmpty()) {
+                            fillResponseBuilder.addSelectPasswordDialog(
+                                context = this.applicationContext,
+                                parsedStructure = parsedStructure,
+                                assistStructure = structure
+                            )
+                        } else {
+                            fillResponseBuilder.addDatasetWithItemsAndInAppSelection(
+                                autofillId = parsedStructure.autofillId,
+                                packageName = packageName,
+                                items = it,
+                                context = this.applicationContext,
+                                assistStructure = structure,
+                                parsedStructure = parsedStructure
+                            )
+                        }
+
+                        callback.onSuccess(fillResponseBuilder.build())
+                    },
+                    doOnError = {
+                        Timber.e(it, "Error while getting matching passwords for autofill")
+                        callback.onSuccess(null)
+                    }
+                )
         }
     }
 

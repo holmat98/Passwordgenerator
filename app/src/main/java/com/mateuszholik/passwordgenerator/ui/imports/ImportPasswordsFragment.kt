@@ -55,13 +55,13 @@ class ImportPasswordsFragment : BaseFragment(R.layout.fragment_import_passwords)
                         menuInflater.inflate(R.menu.info_menu, menu)
                     }
 
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                         if (menuItem.itemId == R.id.importInfo) {
                             showInfoDialog()
-                            true
-                        } else {
-                            true
                         }
+
+                        return true
+                    }
                 },
                 viewLifecycleOwner,
                 Lifecycle.State.RESUMED

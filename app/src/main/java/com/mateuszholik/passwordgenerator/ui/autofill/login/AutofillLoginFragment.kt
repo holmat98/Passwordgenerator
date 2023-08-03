@@ -1,9 +1,10 @@
-package com.mateuszholik.passwordgenerator.ui.login
+package com.mateuszholik.passwordgenerator.ui.autofill.login
 
 import android.os.Bundle
 import android.view.View
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
@@ -12,19 +13,17 @@ import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.models.MessageType
 import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.providers.TextProvider
-import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
+import com.mateuszholik.passwordgenerator.ui.login.LogInViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
+class AutofillLoginFragment : Fragment(R.layout.fragment_log_in) {
 
     private val binding by viewBinding(FragmentLogInBinding::bind)
     private val viewModel: LogInViewModel by viewModel()
     private val snackBarProvider: SnackBarProvider by inject()
     private val textProvider: TextProvider by inject()
     private val biometricManager: BiometricManager by inject()
-
-    override val isBottomNavVisible: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,6 +111,6 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     }
 
     private fun goToLoggedUserScreen() {
-        findNavController().navigate(R.id.action_logInFragment_to_logged_user_nav)
+        findNavController().navigate(R.id.action_autofillLoginFragment_to_selectPasswordFragment)
     }
 }

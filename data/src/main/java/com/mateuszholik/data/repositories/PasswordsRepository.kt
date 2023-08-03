@@ -1,7 +1,9 @@
 package com.mateuszholik.data.repositories
 
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.data.db.daos.NamesDao
 import com.mateuszholik.data.db.daos.PasswordsDao
+import com.mateuszholik.data.mappers.AutofillPasswordsDetailsViewListMapper
 import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
@@ -9,6 +11,7 @@ import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMappe
 import com.mateuszholik.data.mappers.PasswordsDBListToPasswordsListMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
+import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.data.repositories.models.PasswordDetails
@@ -16,7 +19,6 @@ import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.data.repositories.models.UpdatedPassword
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface PasswordsRepository {
@@ -27,11 +29,15 @@ interface PasswordsRepository {
 
     fun update(updatedPassword: UpdatedPassword): Completable
 
+    fun updatePackageName(id: Long, packageName: String): Completable
+
     fun getPasswordDetails(passwordId: Long): Maybe<PasswordDetails>
 
     fun getAllPasswordsInfo(): Single<List<PasswordInfo>>
 
     fun getPasswords(): Single<List<Password>>
+
+    fun getAutofillPasswordsDetails(): Single<List<AutofillPasswordDetails>>
 }
 
 internal class PasswordsRepositoryImpl(
@@ -44,6 +50,8 @@ internal class PasswordsRepositoryImpl(
     private val updatedPasswordToUpdatedNamesMapper: UpdatedPasswordToUpdatedNamesMapper,
     private val updatedPasswordToPasswordEntityMapper: UpdatedPasswordToPasswordEntityMapper,
     private val passwordsDBListToPasswordsListMapper: PasswordsDBListToPasswordsListMapper,
+    private val autofillPasswordsDetailsViewListMapper: AutofillPasswordsDetailsViewListMapper,
+    private val encryptionManager: KeyBaseEncryptionManager,
 ) : PasswordsRepository {
 
     override fun insertAndGetId(newPassword: NewPassword): Single<Long> =
@@ -103,6 +111,18 @@ internal class PasswordsRepositoryImpl(
                 passwordsDao.update(passwordEntity)
             }
 
+    override fun updatePackageName(id: Long, packageName: String): Completable =
+        passwordsDao.getNameIdFor(id)
+            .flatMapCompletable { nameId ->
+                val encryptedPackageName = encryptionManager.encrypt(packageName)
+
+                namesDao.updatePackageNameFor(
+                    id = nameId,
+                    packageName = encryptedPackageName.data,
+                    packageNameIv = encryptedPackageName.iv
+                )
+            }
+
     override fun getPasswordDetails(passwordId: Long): Maybe<PasswordDetails> =
         passwordsDao.getPasswordDetailsFor(passwordId)
             .map { passwordDetailsViewToPasswordDetailsMapper.map(it) }
@@ -114,4 +134,9 @@ internal class PasswordsRepositoryImpl(
     override fun getPasswords(): Single<List<Password>> =
         passwordsDao.getPasswords()
             .map { passwordsDBListToPasswordsListMapper.map(it) }
+
+    override fun getAutofillPasswordsDetails(): Single<List<AutofillPasswordDetails>> =
+        passwordsDao.getAllAutofillPasswordDetails().map {
+            autofillPasswordsDetailsViewListMapper.map(it)
+        }
 }

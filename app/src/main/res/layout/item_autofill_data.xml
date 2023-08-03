@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/md_theme_dark_primary"
-    android:drawableStart="@drawable/ic_lock"
-    android:drawablePadding="@dimen/margin_8"
     android:ellipsize="end"
     android:maxLines="1"
     android:paddingHorizontal="@dimen/margin_8"

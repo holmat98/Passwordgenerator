@@ -1,13 +1,16 @@
 package com.mateuszholik.data.repositories
 
+import com.mateuszholik.cryptography.KeyBaseEncryptionManager
 import com.mateuszholik.cryptography.models.EncryptedData
 import com.mateuszholik.data.db.daos.NamesDao
 import com.mateuszholik.data.db.daos.PasswordsDao
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.db.models.entities.NamesEntity
 import com.mateuszholik.data.db.models.entities.PasswordEntity
+import com.mateuszholik.data.db.models.views.AutofillPasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordInfoView
+import com.mateuszholik.data.mappers.AutofillPasswordsDetailsViewListMapper
 import com.mateuszholik.data.mappers.NewPasswordToNamesEntityMapper
 import com.mateuszholik.data.mappers.NewPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.PasswordDetailsViewToPasswordDetailsMapper
@@ -15,6 +18,7 @@ import com.mateuszholik.data.mappers.PasswordInfoViewListToPasswordInfoListMappe
 import com.mateuszholik.data.mappers.PasswordsDBListToPasswordsListMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToPasswordEntityMapper
 import com.mateuszholik.data.mappers.UpdatedPasswordToUpdatedNamesMapper
+import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.data.repositories.models.NewPassword
 import com.mateuszholik.data.repositories.models.Password
 import com.mateuszholik.data.repositories.models.PasswordDetails
@@ -99,6 +103,10 @@ class PasswordsRepositoryImplTest {
 
     private val passwordsDBListToPasswordsListMapper = mockk<PasswordsDBListToPasswordsListMapper>()
 
+    private val autofillPasswordsDetailsViewListMapper =
+        mockk<AutofillPasswordsDetailsViewListMapper>()
+
+    private val encryptionManager = mockk<KeyBaseEncryptionManager>()
 
     private val passwordsRepository = PasswordsRepositoryImpl(
         passwordsDao = passwordsDao,
@@ -109,7 +117,9 @@ class PasswordsRepositoryImplTest {
         newPasswordToPasswordEntityMapper = newPasswordToPasswordEntityMapper,
         updatedPasswordToUpdatedNamesMapper = updatedPasswordToUpdatedNamesMapper,
         updatedPasswordToPasswordEntityMapper = updatedPasswordToPasswordEntityMapper,
-        passwordsDBListToPasswordsListMapper = passwordsDBListToPasswordsListMapper
+        passwordsDBListToPasswordsListMapper = passwordsDBListToPasswordsListMapper,
+        autofillPasswordsDetailsViewListMapper = autofillPasswordsDetailsViewListMapper,
+        encryptionManager = encryptionManager,
     )
 
     @TestFactory
@@ -308,6 +318,51 @@ class PasswordsRepositoryImplTest {
 
     }
 
+    @Test
+    fun `When package name is successfully updated then Completable complete is returned`() {
+        every {
+            encryptionManager.encrypt(PACKAGE_NAME)
+        } returns ENCRYPTED_PACKAGE_NAME
+
+        every {
+            namesDao.updatePackageNameFor(
+                id = ID,
+                packageNameIv = ENCRYPTED_PACKAGE_NAME.iv,
+                packageName = ENCRYPTED_PACKAGE_NAME.data
+            )
+        } returns Completable.complete()
+
+        passwordsRepository.updatePackageName(ID, PACKAGE_NAME)
+            .test()
+            .assertComplete()
+
+        verify(exactly = 1) { passwordsDao.getNameIdFor(ID) }
+        verify(exactly = 1) { encryptionManager.encrypt(PACKAGE_NAME) }
+        verify(exactly = 1) {
+            namesDao.updatePackageNameFor(
+                id = ID,
+                packageNameIv = ENCRYPTED_PACKAGE_NAME.iv,
+                packageName = ENCRYPTED_PACKAGE_NAME.data
+            )
+        }
+    }
+
+    @Test
+    fun `When getAllAutofillPasswordDetails is called then the list of autofillPasswordDetails is returned`() {
+        every {
+            passwordsDao.getAllAutofillPasswordDetails()
+        } returns Single.just(listOf(AUTOFILL_PASSWORD_DETAILS_VIEW))
+
+        every {
+            autofillPasswordsDetailsViewListMapper.map(listOf(AUTOFILL_PASSWORD_DETAILS_VIEW))
+        } returns listOf(AUTOFILL_PASSWORD_DETAILS)
+
+        passwordsRepository.getAutofillPasswordsDetails()
+            .test()
+            .assertComplete()
+            .assertValue(listOf(AUTOFILL_PASSWORD_DETAILS))
+    }
+
     private companion object {
         const val ID = 1L
         const val ID_2 = 2L
@@ -319,6 +374,7 @@ class PasswordsRepositoryImplTest {
         const val PASSWORD_2 = "password2"
         const val PASSWORD_3 = "password2"
         const val WEBSITE = "website"
+        const val PACKAGE_NAME = "com.example.package"
         const val PASSWORD_SCORE = 50
         val NEW_PASSWORD = NewPassword(
             platformName = PLATFORM_NAME,
@@ -372,6 +428,10 @@ class PasswordsRepositoryImplTest {
         val ENCRYPTED_PASSWORD_3 = EncryptedData(
             iv = ByteArray(20),
             data = ByteArray(21)
+        )
+        val ENCRYPTED_PACKAGE_NAME = EncryptedData(
+            iv = ByteArray(22),
+            data = ByteArray(23)
         )
         val EXPIRATION_DATE: LocalDateTime = LocalDateTime.of(2022, 6, 11, 12, 0, 0)
         val NAMES_ENTITY = NamesEntity(
@@ -481,6 +541,21 @@ class PasswordsRepositoryImplTest {
         val PASSWORD_MODEL_2 = Password(
             platformName = PLATFORM_NAME_2,
             password = PASSWORD_2
+        )
+        val AUTOFILL_PASSWORD_DETAILS_VIEW = AutofillPasswordDetailsView(
+            id = 1,
+            platformName = ByteArray(5) { it.toByte() },
+            platformNameIv = ByteArray(6) { it.toByte() },
+            password = ByteArray(7) { it.toByte() },
+            passwordIv = ByteArray(8) { it.toByte() },
+            packageName = ByteArray(9) { it.toByte() },
+            packageNameIv = ByteArray(10) { it.toByte() }
+        )
+        val AUTOFILL_PASSWORD_DETAILS = AutofillPasswordDetails(
+            id = 1,
+            platformName = PLATFORM_NAME,
+            password = PASSWORD,
+            packageName = PACKAGE_NAME
         )
     }
 }
