@@ -131,6 +131,10 @@
     <string name="settings_screen_biometric_auth_option">Turn on biometric authentication</string>
     <string name="settings_screen_title">Settings</string>
 
+    <!--  Autofill  -->
+    <string name="settings_turn_on_autofill_service">Turn on password autofill service</string>
+    <string name="autofill_password_authentication_prompt_message">Select password in the app</string>
+
     <!--  Warnings  -->
     <string name="warning_icon">Icon informing about password expiration</string>
     <string name="warning_password_expired">Your password expired!</string>

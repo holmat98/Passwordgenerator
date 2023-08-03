@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.autofill.PasswordAutofillActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TransparentScreen"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.LicencesScreen" />
         <activity
@@ -39,5 +44,17 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
+        <service
+            android:name=".autofill.services.CustomAutofillService"
+            android:exported="true"
+            android:label="Password Manager"
+            android:permission="android.permission.BIND_AUTOFILL_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.autofill.AutofillService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.autofill"
+                android:resource="@xml/service_configuration" />
+        </service>
     </application>
 </manifest>
