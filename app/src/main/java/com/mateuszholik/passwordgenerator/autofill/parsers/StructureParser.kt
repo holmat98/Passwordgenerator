@@ -6,40 +6,48 @@ import com.mateuszholik.passwordgenerator.autofill.models.ParsedStructure
 
 class StructureParser {
 
-    private var parsedStructure: ParsedStructure? = null
-
     fun parse(assistStructure: AssistStructure): ParsedStructure? {
-        parsedStructure = null
 
         val nodes = assistStructure.windowNodeCount
 
         for (index in 0 until nodes) {
             val node = assistStructure.getWindowNodeAt(index).rootViewNode
-            searchForPasswordEditText(node)
+            val result = searchForPasswordEditText(node)
+
+            if (result != null) {
+                return result
+            }
         }
 
-        return parsedStructure
+        return null
     }
 
-    private fun searchForPasswordEditText(node: AssistStructure.ViewNode) {
+    private fun searchForPasswordEditText(node: AssistStructure.ViewNode): ParsedStructure? {
         val numOfChildren = node.childCount
 
         for (childIndex in 0 until numOfChildren) {
             val child = node.getChildAt(childIndex)
 
-            when {
-                child.autofillHints?.contains(PASSWORD_FIELD_TEXT) == true ||
-                        child.isPasswordInputType() || child.isPasswordEditText() -> child.autofillId?.let {
-                    parsedStructure = ParsedStructure(
-                        autofillId = it,
+            val isPasswordEditText = child.autofillHints?.contains(PASSWORD_FIELD_TEXT) == true ||
+                    child.isPasswordInputType() || child.isPasswordEditText()
+
+            if (isPasswordEditText) {
+                return child.autofillId?.let { autofillId ->
+                    ParsedStructure(
+                        autofillId = autofillId,
                         packageName = child.idPackage
                     )
                 }
-                else -> {
-                    searchForPasswordEditText(child)
-                }
+            }
+
+            val resultForChildren = searchForPasswordEditText(child)
+
+            if (resultForChildren != null) {
+                return resultForChildren
             }
         }
+
+        return null
     }
 
     private fun AssistStructure.ViewNode.isPasswordEditText(): Boolean =
