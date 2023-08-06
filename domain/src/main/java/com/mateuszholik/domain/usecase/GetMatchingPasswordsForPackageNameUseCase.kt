@@ -16,7 +16,8 @@ internal class GetMatchingPasswordsForPackageNameUseCaseImpl(
         passwordsRepository.getAutofillPasswordsDetails()
             .map { autofillPasswords ->
                 autofillPasswords.filter {
-                    it.packageName == param
+                    param != null && it.packageName == param
                 }
             }
+            .onErrorReturn { emptyList() }
 }
