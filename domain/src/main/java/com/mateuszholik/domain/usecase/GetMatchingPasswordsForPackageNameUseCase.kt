@@ -19,4 +19,5 @@ internal class GetMatchingPasswordsForPackageNameUseCaseImpl(
                     param != null && it.packageName == param
                 }
             }
+            .onErrorReturn { emptyList() }
 }
