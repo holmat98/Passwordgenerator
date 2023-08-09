@@ -11,6 +11,7 @@ internal interface NewPasswordMapper : Mapper<Param, DataNewPassword> {
         val website: String?,
         val isExpiring: Boolean,
         val passwordScore: Int,
+        val packageName: String?,
     )
 }
 
@@ -22,6 +23,7 @@ internal class NewPasswordMapperImpl : NewPasswordMapper {
             password = param.password,
             website = param.website,
             isExpiring = param.isExpiring,
-            passwordScore = param.passwordScore
+            passwordScore = param.passwordScore,
+            packageName = param.packageName
         )
 }

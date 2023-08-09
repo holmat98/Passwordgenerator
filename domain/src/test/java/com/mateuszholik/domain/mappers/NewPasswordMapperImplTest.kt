@@ -20,19 +20,22 @@ internal class NewPasswordMapperImplTest {
         const val PLATFORM = "platform"
         const val IS_EXPIRING = false
         const val PASSWORD_SCORE = 50
+        const val PACKAGE_NAME = "com.example.package"
         val NEW_PASSWORD = NewPasswordMapper.Param(
             password = PASSWORD,
             platformName = PLATFORM,
             website = null,
             isExpiring = IS_EXPIRING,
-            passwordScore = PASSWORD_SCORE
+            passwordScore = PASSWORD_SCORE,
+            packageName = PACKAGE_NAME
         )
         val DATA_NEW_PASSWORD = DataNewPassword(
             password = PASSWORD,
             platformName = PLATFORM,
             website = null,
             isExpiring = IS_EXPIRING,
-            passwordScore = PASSWORD_SCORE
+            passwordScore = PASSWORD_SCORE,
+            packageName = PACKAGE_NAME
         )
     }
 }

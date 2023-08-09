@@ -7,19 +7,22 @@ import com.mateuszholik.data.repositories.models.NewPassword
 internal interface NewPasswordToNamesEntityMapper : Mapper<NewPassword, NamesEntity>
 
 internal class NewPasswordToNamesEntityMapperImpl(
-    private val encryptionManager: KeyBaseEncryptionManager
+    private val encryptionManager: KeyBaseEncryptionManager,
 ) : NewPasswordToNamesEntityMapper {
 
     override fun map(param: NewPassword): NamesEntity {
         val encryptedPlatformName = encryptionManager.encrypt(param.platformName)
         val encryptedWebsite = param.website?.let { encryptionManager.encrypt(it) }
+        val encryptedPackageName = param.packageName?.let { encryptionManager.encrypt(it) }
 
         return NamesEntity(
             id = 0,
             platformName = encryptedPlatformName.data,
             platformNameIv = encryptedPlatformName.iv,
             website = encryptedWebsite?.data,
-            websiteIv = encryptedWebsite?.iv
+            websiteIv = encryptedWebsite?.iv,
+            packageName = encryptedPackageName?.data,
+            packageNameIv = encryptedPackageName?.iv
         )
     }
 }

@@ -381,21 +381,24 @@ class PasswordsRepositoryImplTest {
             password = PASSWORD,
             website = WEBSITE,
             passwordScore = PASSWORD_SCORE,
-            isExpiring = true
+            isExpiring = true,
+            packageName = null
         )
         val NEW_PASSWORD_2 = NewPassword(
             platformName = PLATFORM_NAME_2,
             password = PASSWORD_2,
             website = null,
             passwordScore = PASSWORD_SCORE,
-            isExpiring = true
+            isExpiring = true,
+            packageName = null
         )
         val NEW_PASSWORD_3 = NewPassword(
             platformName = PLATFORM_NAME_3,
             password = PASSWORD_3,
             website = WEBSITE,
             passwordScore = PASSWORD_SCORE,
-            isExpiring = false
+            isExpiring = false,
+            packageName = null
         )
         val UPDATED_PASSWORD = UpdatedPassword(
             id = ID,

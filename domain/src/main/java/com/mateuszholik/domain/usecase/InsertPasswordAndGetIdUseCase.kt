@@ -24,7 +24,8 @@ internal class InsertPasswordAndGetIdUseCaseImpl(
                             password = param.password,
                             website = param.website,
                             isExpiring = param.isExpiring,
-                            passwordScore = passwordScore
+                            passwordScore = passwordScore,
+                            packageName = param.packageName
                         )
                     )
                 )

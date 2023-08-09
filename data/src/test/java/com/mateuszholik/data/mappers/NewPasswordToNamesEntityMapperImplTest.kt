@@ -30,7 +30,7 @@ internal class NewPasswordToNamesEntityMapperImplTest {
     }
 
     @Test
-    fun `When website is null in NewPassword is correctly mapped to the NamesEntity object`() {
+    fun `When website and packageName are null then NewPassword is correctly mapped to the NamesEntity object`() {
         val result = newPasswordToNamesEntityMapper.map(NEW_PASSWORD_WITHOUT_WEBSITE)
 
         assertThat(result).isEqualTo(NAMES_ENTITY_WITHOUT_WEBSITE)
@@ -42,20 +42,23 @@ internal class NewPasswordToNamesEntityMapperImplTest {
         const val PASSWORD = "password"
         const val WEBSITE = "website"
         const val PASSWORD_SCORE = 90
+        const val PACKAGE_NAME = "com.example.package"
         const val IS_EXPIRING = true
         val NEW_PASSWORD = NewPassword(
             platformName = PLATFORM_NAME,
             password = PASSWORD,
             website = WEBSITE,
             passwordScore = PASSWORD_SCORE,
-            isExpiring = IS_EXPIRING
+            isExpiring = IS_EXPIRING,
+            packageName = PACKAGE_NAME
         )
         val NEW_PASSWORD_WITHOUT_WEBSITE = NewPassword(
             platformName = PLATFORM_NAME,
             password = PASSWORD,
             website = null,
             passwordScore = PASSWORD_SCORE,
-            isExpiring = IS_EXPIRING
+            isExpiring = IS_EXPIRING,
+            packageName = null
         )
         val NAMES_ENTITY = NamesEntity(
             id = 0,
@@ -63,8 +66,8 @@ internal class NewPasswordToNamesEntityMapperImplTest {
             platformNameIv = ENCRYPTION_RESULT,
             website = ENCRYPTION_RESULT,
             websiteIv = ENCRYPTION_RESULT,
-            packageName = null,
-            packageNameIv = null,
+            packageName = ENCRYPTION_RESULT,
+            packageNameIv = ENCRYPTION_RESULT,
         )
         val NAMES_ENTITY_WITHOUT_WEBSITE = NamesEntity(
             id = 0,
