@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.savepassword
+package com.mateuszholik.passwordgenerator.ui.autofill.savepassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -19,22 +19,23 @@ import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
-class SavePasswordViewModel(
-    generatedPassword: String?,
+class AutofillSavePasswordViewModel(
     private val insertPasswordAndGetIdUseCase: InsertPasswordAndGetIdUseCase,
     private val getPasswordUseCase: GetPasswordUseCase,
     private val workScheduler: WorkScheduler,
     private val textProvider: TextProvider,
+    private val packageName: String?,
 ) : BaseViewModel() {
 
-    private val _savePasswordSuccess = MutableLiveData<String>()
-    val savePasswordSuccess: LiveData<String>
+    private val _savePasswordSuccess = MutableLiveData<AutofillResult>()
+    val savePasswordSuccess: LiveData<AutofillResult>
         get() = _savePasswordSuccess
 
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
-    val newWebsiteValue = MutableLiveData<String>()
     val isExpiring = MutableLiveData(true)
+    val shouldShowSavePackageNameOption = MutableLiveData(!packageName.isNullOrEmpty())
+    val shouldSavePackageName = MutableLiveData(false)
 
     val isButtonEnabled = MediatorLiveData<Boolean>().apply {
         value = false
@@ -46,16 +47,17 @@ class SavePasswordViewModel(
         }
     }
 
-    init {
-        password.postValue(generatedPassword)
-    }
-
     fun savePassword() {
         val newPassword = NewPassword(
             platformName = platformName.value.orEmpty(),
             password = password.value.orEmpty(),
-            website = newWebsiteValue.value,
-            isExpiring = isExpiring.value.orFalse()
+            website = null,
+            isExpiring = isExpiring.value.orFalse(),
+            packageName = packageName.takeIf { shouldSavePackageName.value.orFalse() }
+        )
+        val result = AutofillResult(
+            promptMessage = newPassword.platformName,
+            autofillValue = newPassword.password
         )
         insertPasswordAndGetIdUseCase(newPassword)
             .flatMap { getPasswordUseCase(it).toSingle() }
@@ -70,10 +72,10 @@ class SavePasswordViewModel(
                 }
             }
             .subscribeWithObserveOnMainThread(
-                doOnSuccess = { _savePasswordSuccess.postValue(textProvider.provide(MessageType.SAVE_PASSWORD_SUCCESS)) },
+                doOnSuccess = { _savePasswordSuccess.postValue(result) },
                 doOnError = {
                     _errorOccurred.postValue(textProvider.provide(MessageType.SAVE_PASSWORD_ERROR))
-                    Timber.e(it)
+                    Timber.e(it, "Error while saving password in autofill activity")
                 }
             )
             .addTo(compositeDisposable)
@@ -82,4 +84,9 @@ class SavePasswordViewModel(
     private fun areInputsNotEmpty(): Boolean =
         password.value?.isNotEmpty().orFalse() &&
                 platformName.value?.isNotEmpty().orFalse()
+
+    data class AutofillResult(
+        val promptMessage: String,
+        val autofillValue: String,
+    )
 }
