@@ -34,7 +34,7 @@ class AutofillSavePasswordViewModel(
     val platformName = MutableLiveData(EMPTY_STRING)
     val password = MutableLiveData(EMPTY_STRING)
     val isExpiring = MutableLiveData(true)
-    val shouldShowSavePackageNameOption = MutableLiveData(packageName.isNullOrEmpty())
+    val shouldShowSavePackageNameOption = MutableLiveData(!packageName.isNullOrEmpty())
     val shouldSavePackageName = MutableLiveData(false)
 
     val isButtonEnabled = MediatorLiveData<Boolean>().apply {
