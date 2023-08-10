@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
+import com.mateuszholik.passwordgenerator.extensions.addSources
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.expirationDate
 import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
@@ -37,15 +38,10 @@ class AutofillSavePasswordViewModel(
     val shouldShowSavePackageNameOption = MutableLiveData(!packageName.isNullOrEmpty())
     val shouldSavePackageName = MutableLiveData(false)
 
-    val isButtonEnabled = MediatorLiveData<Boolean>().apply {
-        value = false
-        addSource(platformName) {
-            value = areInputsNotEmpty()
-        }
-        addSource(password) {
-            value = areInputsNotEmpty()
-        }
-    }
+    val isButtonEnabled = MediatorLiveData<Boolean>().addSources(
+        platformName,
+        password
+    ) { areInputsNotEmpty() }
 
     fun savePassword() {
         val newPassword = NewPassword(

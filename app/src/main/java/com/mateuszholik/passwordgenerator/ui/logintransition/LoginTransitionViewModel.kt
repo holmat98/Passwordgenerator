@@ -16,7 +16,6 @@ class LoginTransitionViewModel(
     val isPinCreated: LiveData<Boolean>
         get() = _isPinCreated
 
-
     init {
         getIsPinCreated()
     }
