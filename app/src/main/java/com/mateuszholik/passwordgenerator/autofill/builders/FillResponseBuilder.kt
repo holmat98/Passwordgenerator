@@ -3,22 +3,18 @@ package com.mateuszholik.passwordgenerator.autofill.builders
 import android.app.PendingIntent
 import android.app.assist.AssistStructure
 import android.content.Context
-import android.os.Build
+import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
+import android.util.Size
 import android.view.autofill.AutofillId
+import android.widget.inline.InlinePresentationSpec
 import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
-import com.mateuszholik.passwordgenerator.autofill.factories.PresentationsFactory
-import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactory
 import com.mateuszholik.passwordgenerator.autofill.models.ParsedStructure
 import com.mateuszholik.passwordgenerator.ui.autofill.PasswordAutofillActivity
 
-class FillResponseBuilder(
-    private val datasetFactory: DatasetFactory,
-    private val remoteViewsFactory: RemoteViewsFactory,
-    private val presentationsFactory: PresentationsFactory,
-) {
+class FillResponseBuilder(private val datasetFactory: DatasetFactory) {
 
     private var fillResponseBuilder = FillResponse.Builder()
 
@@ -27,13 +23,15 @@ class FillResponseBuilder(
         promptMessage: String,
         autofillValue: String,
         packageName: String,
+        inlinePresentationSpec: InlinePresentationSpec? = null,
     ): FillResponseBuilder {
         fillResponseBuilder.addDataset(
             datasetFactory.create(
                 autofillId,
                 promptMessage,
                 autofillValue,
-                packageName
+                packageName,
+                inlinePresentationSpec
             )
         )
 
@@ -47,8 +45,9 @@ class FillResponseBuilder(
         context: Context,
         assistStructure: AssistStructure,
         parsedStructure: ParsedStructure,
+        inlinePresentationSpec: InlinePresentationSpec? = null
     ): FillResponseBuilder {
-        val intentSender = PendingIntent.getActivity(
+        val pendingIntent = PendingIntent.getActivity(
             context,
             PENDING_INTENT_REQUEST_ID,
             PasswordAutofillActivity.newIntent(
@@ -57,7 +56,7 @@ class FillResponseBuilder(
                 packageName = parsedStructure.packageName
             ),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
-        ).intentSender
+        )
 
         items.forEach {
             fillResponseBuilder.addDataset(
@@ -65,7 +64,8 @@ class FillResponseBuilder(
                     autofillId = autofillId,
                     packageName = packageName,
                     promptMessage = it.platformName,
-                    autofillValue = it.password
+                    autofillValue = it.password,
+                    inlinePresentationSpec = inlinePresentationSpec ?: InlinePresentationSpec.Builder(Size(100, 30), Size(1000, 30)).build(),
                 )
             )
         }
@@ -78,10 +78,10 @@ class FillResponseBuilder(
                 autofillId = autofillId,
                 packageName = packageName,
                 promptMessage = promptMessage,
-                intentSender = intentSender
+                pendingIntent = pendingIntent,
+                inlinePresentationSpec = inlinePresentationSpec
             )
         )
-
 
         return this
     }
@@ -90,8 +90,9 @@ class FillResponseBuilder(
         context: Context,
         parsedStructure: ParsedStructure,
         assistStructure: AssistStructure,
+        fillRequest: FillRequest,
     ): FillResponseBuilder {
-        val intentSender = PendingIntent.getActivity(
+        val pendingIntent = PendingIntent.getActivity(
             context,
             PENDING_INTENT_REQUEST_ID,
             PasswordAutofillActivity.newIntent(
@@ -100,27 +101,21 @@ class FillResponseBuilder(
                 packageName = parsedStructure.packageName
             ),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
-        ).intentSender
+        )
 
         val packageName = context.packageName
         val promptMessage =
             context.getString(R.string.autofill_password_authentication_prompt_message)
 
-        val autofillIds = arrayOf(parsedStructure.autofillId)
-
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            fillResponseBuilder.setAuthentication(
-                autofillIds,
-                intentSender,
-                remoteViewsFactory.create(packageName, promptMessage)
+        fillResponseBuilder.addDataset(
+            datasetFactory.createAuthenticationDataset(
+                autofillId = parsedStructure.autofillId,
+                packageName = packageName,
+                promptMessage = promptMessage,
+                pendingIntent = pendingIntent,
+                inlinePresentationSpec = fillRequest.inlineSuggestionsRequest?.inlinePresentationSpecs?.first() ?: InlinePresentationSpec.Builder(Size(100, 30), Size(1000, 30)).build(),
             )
-        } else {
-            fillResponseBuilder.setAuthentication(
-                autofillIds,
-                intentSender,
-                presentationsFactory.create(packageName, promptMessage)
-            )
-        }
+        )
 
         return this
     }

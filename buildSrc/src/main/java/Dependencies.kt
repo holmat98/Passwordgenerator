@@ -129,6 +129,12 @@ object Androidx {
 
         const val DEPENDENCY = "androidx.core:core-splashscreen:$version"
     }
+
+    object Autofill {
+        private const val version = "1.3.0-alpha01"
+
+        const val DEPENDENCY = "androidx.autofill:autofill:$version"
+    }
 }
 
 object Google {

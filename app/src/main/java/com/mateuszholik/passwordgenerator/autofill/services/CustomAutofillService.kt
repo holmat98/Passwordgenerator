@@ -38,8 +38,10 @@ class CustomAutofillService : AutofillService(), KoinComponent {
         val parsedStructure = structureParser.parse(structure)
 
         if (parsedStructure == null || parsedStructure.packageName == packageName) {
+            Timber.d("Testowanie: Didnt found")
             callback.onSuccess(null)
         } else {
+            Timber.d("Testowanie: Found")
             getMatchingPasswordsForPackageNameUseCase(parsedStructure.packageName)
                 .subscribeWithObserveOnMainThread(
                     doOnSuccess = {
@@ -49,7 +51,8 @@ class CustomAutofillService : AutofillService(), KoinComponent {
                             fillResponseBuilder.addSelectPasswordDialog(
                                 context = this.applicationContext,
                                 parsedStructure = parsedStructure,
-                                assistStructure = structure
+                                assistStructure = structure,
+                                fillRequest = request
                             )
                         } else {
                             fillResponseBuilder.addDatasetWithItemsAndInAppSelection(
@@ -58,7 +61,8 @@ class CustomAutofillService : AutofillService(), KoinComponent {
                                 items = it,
                                 context = this.applicationContext,
                                 assistStructure = structure,
-                                parsedStructure = parsedStructure
+                                parsedStructure = parsedStructure,
+                                inlinePresentationSpec = request.inlineSuggestionsRequest?.inlinePresentationSpecs?.first()
                             )
                         }
 
