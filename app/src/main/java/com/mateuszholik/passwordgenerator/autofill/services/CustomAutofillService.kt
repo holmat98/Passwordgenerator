@@ -40,29 +40,29 @@ class CustomAutofillService : AutofillService(), KoinComponent {
         if (parsedStructure == null || parsedStructure.packageName == packageName) {
             callback.onSuccess(null)
         } else {
-            val inlinePresentationSpec = request.inlineSuggestionsRequest?.inlinePresentationSpecs?.firstOrNull()
             getMatchingPasswordsForPackageNameUseCase(parsedStructure.packageName)
                 .subscribeWithObserveOnMainThread(
                     doOnSuccess = {
                         val fillResponseBuilder = fillResponseBuilder
 
-                        if (it.isEmpty()) {
-                            fillResponseBuilder.addSelectPasswordDialog(
-                                context = this.applicationContext,
-                                parsedStructure = parsedStructure,
-                                assistStructure = structure,
-                                inlinePresentationSpec = inlinePresentationSpec
-                            )
-                        } else {
-                            fillResponseBuilder.addDatasetWithItemsAndInAppSelection(
+                        val inlinePresentationSpec =
+                            request.inlineSuggestionsRequest?.inlinePresentationSpecs?.firstOrNull()
+
+                        if (it.isNotEmpty()) {
+                            fillResponseBuilder.addDatasetForSuggestedAutofillItems(
                                 packageName = packageName,
                                 items = it,
-                                context = this.applicationContext,
-                                assistStructure = structure,
                                 parsedStructure = parsedStructure,
                                 inlinePresentationSpec = inlinePresentationSpec
                             )
                         }
+
+                        fillResponseBuilder.addSelectPasswordDialog(
+                            context = this.applicationContext,
+                            parsedStructure = parsedStructure,
+                            assistStructure = structure,
+                            inlinePresentationSpec = inlinePresentationSpec
+                        )
 
                         callback.onSuccess(fillResponseBuilder.build())
                     },

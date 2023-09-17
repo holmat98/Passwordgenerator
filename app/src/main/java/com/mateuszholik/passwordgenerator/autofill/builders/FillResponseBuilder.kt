@@ -15,20 +15,12 @@ class FillResponseBuilder(private val datasetFactory: DatasetFactory) {
 
     private var fillResponseBuilder = FillResponse.Builder()
 
-    fun addDatasetWithItemsAndInAppSelection(
+    fun addDatasetForSuggestedAutofillItems(
         packageName: String,
         items: List<AutofillPasswordDetails>,
-        context: Context,
-        assistStructure: AssistStructure,
         parsedStructure: ParsedStructure,
         inlinePresentationSpec: InlinePresentationSpec? = null,
     ): FillResponseBuilder {
-        val pendingIntent = createAutofillActivityPendingIntent(
-            context = context,
-            assistStructure = assistStructure,
-            packageName = parsedStructure.packageName
-        )
-
         items.forEach {
             fillResponseBuilder.addDataset(
                 datasetFactory.create(
@@ -40,19 +32,6 @@ class FillResponseBuilder(private val datasetFactory: DatasetFactory) {
                 )
             )
         }
-
-        val promptMessage =
-            context.getString(R.string.autofill_password_authentication_prompt_message)
-
-        fillResponseBuilder.addDataset(
-            datasetFactory.createAuthenticationDataset(
-                autofillId = parsedStructure.autofillId,
-                packageName = packageName,
-                promptMessage = promptMessage,
-                pendingIntent = pendingIntent,
-                inlinePresentationSpec = inlinePresentationSpec
-            )
-        )
 
         return this
     }
