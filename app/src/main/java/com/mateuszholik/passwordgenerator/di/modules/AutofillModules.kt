@@ -9,13 +9,19 @@ import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactory
 import com.mateuszholik.passwordgenerator.autofill.factories.RemoteViewsFactoryImpl
 import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import com.mateuszholik.passwordgenerator.autofill.factories.Sdk33DatasetFactoryImpl
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val autofillModule = module {
 
     single<RemoteViewsFactory> { RemoteViewsFactoryImpl() }
 
-    single<PresentationsFactory> { PresentationsFactoryImpl(remoteViewsFactory = get()) }
+    single<PresentationsFactory> {
+        PresentationsFactoryImpl(
+            remoteViewsFactory = get(),
+            context = androidContext()
+        )
+    }
 
     single {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
@@ -30,11 +36,7 @@ val autofillModule = module {
     }
 
     single {
-        FillResponseBuilder(
-            datasetFactory = get(),
-            remoteViewsFactory = get(),
-            presentationsFactory = get()
-        )
+        FillResponseBuilder(datasetFactory = get())
     }
 
     single { StructureParser() }

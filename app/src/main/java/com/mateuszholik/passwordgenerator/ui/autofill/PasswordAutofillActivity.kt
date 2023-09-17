@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
 import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
 import androidx.appcompat.app.AppCompatActivity
-import com.mateuszholik.passwordgenerator.autofill.builders.FillResponseBuilder
+import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
 import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import com.mateuszholik.passwordgenerator.databinding.ActivityPasswordAutofillBinding
 import com.mateuszholik.passwordgenerator.extensions.fromParcelable
@@ -26,7 +26,7 @@ interface AutofillController {
 class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
 
     private lateinit var binding: ActivityPasswordAutofillBinding
-    private val fillResponseBuilder: FillResponseBuilder by inject()
+    private val datasetFactory: DatasetFactory by inject()
     private val structureParser: StructureParser by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,15 +54,15 @@ class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
         val parsedStructure = structure?.let { structureParser.parse(it) }
 
         parsedStructure?.let {
-            val fillResponse = fillResponseBuilder.addDataset(
+            val dataset = datasetFactory.create(
                 autofillId = it.autofillId,
                 promptMessage = promptMessage,
                 autofillValue = autofillValue,
                 packageName = packageName
-            ).build()
+            )
 
             val replyIntent = Intent().apply {
-                putExtra(EXTRA_AUTHENTICATION_RESULT, fillResponse)
+                putExtra(EXTRA_AUTHENTICATION_RESULT, dataset)
             }
 
             setResult(Activity.RESULT_OK, replyIntent)

@@ -146,6 +146,9 @@ dependencies {
 
     // crashlytics
     implementation(Google.PlayServices.Firebase.Crashlytics.DEPENDENCY)
+
+    // autofill
+    implementation(Androidx.Autofill.DEPENDENCY)
 }
 
 tasks.withType(Test::class) {

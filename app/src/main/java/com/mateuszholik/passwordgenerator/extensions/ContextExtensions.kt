@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.autofill.AutofillManager
 import androidx.annotation.AttrRes
+import timber.log.Timber
 
 internal fun Context.getAttrColor(@AttrRes colorResId: Int): Int {
     val typedValue = TypedValue()
@@ -16,4 +17,9 @@ internal fun Context.getAutofillManager(): AutofillManager =
     getSystemService(AutofillManager::class.java)
 
 internal fun AutofillManager.shouldAskToGrantPermission(): Boolean =
-    !hasEnabledAutofillServices() && isAutofillSupported
+    try {
+        !hasEnabledAutofillServices() && isAutofillSupported
+    } catch(exception: Exception) {
+        Timber.e(exception, "Error while getting information if autofill is enabled")
+        isAutofillSupported
+    }
