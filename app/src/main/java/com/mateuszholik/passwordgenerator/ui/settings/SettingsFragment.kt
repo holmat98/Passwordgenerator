@@ -46,7 +46,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             lifecycleOwner = viewLifecycleOwner
 
             turnOnAutofillButton.apply {
-                isVisible = true
+                isVisible = context.getAutofillManager().shouldAskToGrantPermission()
                 onClick = { goToAutofillSettings() }
                 setOnClickListener { goToAutofillSettings() }
             }
