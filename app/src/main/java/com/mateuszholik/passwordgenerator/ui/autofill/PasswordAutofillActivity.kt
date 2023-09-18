@@ -1,33 +1,16 @@
 package com.mateuszholik.passwordgenerator.ui.autofill
 
-import android.app.Activity
 import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
-import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
-import androidx.appcompat.app.AppCompatActivity
-import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
-import com.mateuszholik.passwordgenerator.autofill.parsers.StructureParser
 import com.mateuszholik.passwordgenerator.databinding.ActivityPasswordAutofillBinding
-import com.mateuszholik.passwordgenerator.extensions.fromParcelable
-import org.koin.android.ext.android.inject
+import com.mateuszholik.passwordgenerator.ui.autofill.base.BaseAutofillActivity
 
-interface AutofillController {
-
-    fun getAutofillPackageName(): String?
-
-    fun finishWithSuccess(promptMessage: String, autofillValue: String)
-
-    fun finishWithCancel()
-}
-
-class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
+class PasswordAutofillActivity : BaseAutofillActivity() {
 
     private lateinit var binding: ActivityPasswordAutofillBinding
-    private val datasetFactory: DatasetFactory by inject()
-    private val structureParser: StructureParser by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,45 +23,12 @@ class PasswordAutofillActivity : AppCompatActivity(), AutofillController {
             linearLayout.clipToOutline = true
 
             closeButton.setOnClickListener {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
+                finishWithCancel()
             }
         }
-    }
-
-    override fun getAutofillPackageName(): String? =
-        intent.extras?.getString(PACKAGE_NAME_KEY)
-
-    override fun finishWithSuccess(promptMessage: String, autofillValue: String) {
-        val structure: AssistStructure? = intent.fromParcelable(EXTRA_ASSIST_STRUCTURE)
-        val parsedStructure = structure?.let { structureParser.parse(it) }
-
-        parsedStructure?.let {
-            val dataset = datasetFactory.create(
-                autofillId = it.autofillId,
-                promptMessage = promptMessage,
-                autofillValue = autofillValue,
-                packageName = packageName
-            )
-
-            val replyIntent = Intent().apply {
-                putExtra(EXTRA_AUTHENTICATION_RESULT, dataset)
-            }
-
-            setResult(Activity.RESULT_OK, replyIntent)
-            finish()
-        }
-    }
-
-    override fun finishWithCancel() {
-        setResult(RESULT_CANCELED)
-        finish()
     }
 
     companion object {
-
-        private const val PACKAGE_NAME_KEY = "PACKAGE_NAME_KEY"
-
         fun newIntent(
             context: Context,
             assistStructure: AssistStructure,

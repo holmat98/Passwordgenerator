@@ -11,7 +11,7 @@ import com.mateuszholik.passwordgenerator.databinding.FragmentSelectPasswordBind
 import com.mateuszholik.passwordgenerator.extensions.animateVisibility
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
-import com.mateuszholik.passwordgenerator.ui.autofill.AutofillController
+import com.mateuszholik.passwordgenerator.ui.autofill.base.AutofillController
 import com.mateuszholik.passwordgenerator.ui.autofill.selectpassword.adapter.SelectPasswordAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

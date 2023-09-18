@@ -26,14 +26,20 @@
         <activity
             android:name=".ui.autofill.PasswordAutofillActivity"
             android:exported="false"
-            android:theme="@style/Theme.TransparentScreen"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TransparentScreen" />
+        <activity
+            android:name=".ui.autofill.AutofillCreatePasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TransparentScreen" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.LicencesScreen" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.LicencesScreen" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

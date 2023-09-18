@@ -1,21 +1,21 @@
-package com.mateuszholik.passwordgenerator.ui.autofill.savepassword
+package com.mateuszholik.passwordgenerator.ui.autofill.createpassword
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.mateuszholik.passwordgenerator.R
-import com.mateuszholik.passwordgenerator.databinding.FragmentAutofillSavePasswordBinding
+import com.mateuszholik.passwordgenerator.databinding.FragmentAutofillCreatePasswordBinding
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
-import com.mateuszholik.passwordgenerator.ui.autofill.AutofillController
+import com.mateuszholik.passwordgenerator.ui.autofill.base.AutofillController
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class AutofillSavePasswordFragment : Fragment(R.layout.fragment_autofill_save_password) {
+class AutofillCreatePasswordFragment : Fragment(R.layout.fragment_autofill_create_password) {
 
-    private val binding by viewBinding(FragmentAutofillSavePasswordBinding::bind)
-    private val viewModel: AutofillSavePasswordViewModel by viewModel {
+    private val binding by viewBinding(FragmentAutofillCreatePasswordBinding::bind)
+    private val viewModel: AutofillCreatePasswordViewModel by viewModel {
         parametersOf((activity as? AutofillController)?.getAutofillPackageName())
     }
     private val snackBarProvider: SnackBarProvider by inject()
@@ -24,7 +24,7 @@ class AutofillSavePasswordFragment : Fragment(R.layout.fragment_autofill_save_pa
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            viewModel = this@AutofillSavePasswordFragment.viewModel
+            viewModel = this@AutofillCreatePasswordFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
 

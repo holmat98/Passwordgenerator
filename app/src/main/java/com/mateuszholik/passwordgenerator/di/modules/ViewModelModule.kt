@@ -2,7 +2,7 @@ package com.mateuszholik.passwordgenerator.di.modules
 
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
 import com.mateuszholik.passwordgenerator.ui.MainViewModel
-import com.mateuszholik.passwordgenerator.ui.autofill.savepassword.AutofillSavePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.autofill.createpassword.AutofillCreatePasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.autofill.selectpassword.SelectPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
@@ -135,7 +135,7 @@ val viewModelModule = module {
     }
 
     viewModel {(packageName: String?) ->
-        AutofillSavePasswordViewModel(
+        AutofillCreatePasswordViewModel(
             getPasswordUseCase = get(),
             insertPasswordAndGetIdUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),

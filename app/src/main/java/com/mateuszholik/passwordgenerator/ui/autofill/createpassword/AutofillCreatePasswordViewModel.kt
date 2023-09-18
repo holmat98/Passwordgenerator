@@ -1,4 +1,4 @@
-package com.mateuszholik.passwordgenerator.ui.autofill.savepassword
+package com.mateuszholik.passwordgenerator.ui.autofill.createpassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -20,7 +20,7 @@ import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
-class AutofillSavePasswordViewModel(
+class AutofillCreatePasswordViewModel(
     private val insertPasswordAndGetIdUseCase: InsertPasswordAndGetIdUseCase,
     private val getPasswordUseCase: GetPasswordUseCase,
     private val workScheduler: WorkScheduler,
