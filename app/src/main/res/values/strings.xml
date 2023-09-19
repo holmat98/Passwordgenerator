@@ -135,9 +135,11 @@
     <!--  Autofill  -->
     <string name="settings_turn_on_autofill_service">Turn on password autofill service</string>
     <string name="autofill_password_authentication_prompt_message">Select password in the app</string>
+    <string name="autofill_create_password_authentication_prompt_message">Create password in the app</string>
     <string name="autofill_dialog_save_package_name_title">Remember password</string>
     <string name="autofill_dialog_save_package_name_message">Do you want to remember this password for future autofill for this app?</string>
     <string name="autofill_get_passwords_error">Error occurred while getting the passwords</string>
+    <string name="autofill_generate_password">Generate password</string>
     <string name="autofill_save_password_button_save">Save and autofill</string>
 
     <!--  Warnings  -->

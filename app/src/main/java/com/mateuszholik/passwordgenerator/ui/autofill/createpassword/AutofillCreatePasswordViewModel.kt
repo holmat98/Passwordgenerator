@@ -1,9 +1,10 @@
-package com.mateuszholik.passwordgenerator.ui.autofill.savepassword
+package com.mateuszholik.passwordgenerator.ui.autofill.createpassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.models.NewPassword
+import com.mateuszholik.domain.usecase.CreatePasswordUseCase
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
 import com.mateuszholik.passwordgenerator.extensions.addSources
@@ -20,9 +21,10 @@ import com.mateuszholik.passwordgenerator.utils.Constants.EMPTY_STRING
 import io.reactivex.rxjava3.core.Completable
 import timber.log.Timber
 
-class AutofillSavePasswordViewModel(
+class AutofillCreatePasswordViewModel(
     private val insertPasswordAndGetIdUseCase: InsertPasswordAndGetIdUseCase,
     private val getPasswordUseCase: GetPasswordUseCase,
+    private val createPasswordUseCase: CreatePasswordUseCase,
     private val workScheduler: WorkScheduler,
     private val textProvider: TextProvider,
     private val packageName: String?,
@@ -77,6 +79,14 @@ class AutofillSavePasswordViewModel(
             .addTo(compositeDisposable)
     }
 
+    fun generatePassword() {
+        createPasswordUseCase(DEFAULT_PASSWORD_LENGTH)
+            .subscribeWithObserveOnMainThread(
+                doOnSuccess = { password.postValue(it) },
+                doOnError = { Timber.e(it, "Error while generating the password") }
+            ).addTo(compositeDisposable)
+    }
+
     private fun areInputsNotEmpty(): Boolean =
         password.value?.isNotEmpty().orFalse() &&
                 platformName.value?.isNotEmpty().orFalse()
@@ -85,4 +95,8 @@ class AutofillSavePasswordViewModel(
         val promptMessage: String,
         val autofillValue: String,
     )
+
+    private companion object {
+        const val DEFAULT_PASSWORD_LENGTH = 16
+    }
 }

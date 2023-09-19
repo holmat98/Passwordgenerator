@@ -4,19 +4,18 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE
-import com.mateuszholik.passwordgenerator.databinding.ActivityPasswordAutofillBinding
+import android.view.autofill.AutofillManager
+import com.mateuszholik.passwordgenerator.databinding.ActivityAutofillCreatePasswordBinding
 import com.mateuszholik.passwordgenerator.ui.autofill.base.BaseAutofillActivity
 
-class PasswordAutofillActivity : BaseAutofillActivity() {
+class AutofillCreatePasswordActivity : BaseAutofillActivity() {
 
-    private lateinit var binding: ActivityPasswordAutofillBinding
+    private lateinit var binding: ActivityAutofillCreatePasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPasswordAutofillBinding.inflate(layoutInflater)
+        binding = ActivityAutofillCreatePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         title = null
 
         with(binding) {
@@ -29,13 +28,14 @@ class PasswordAutofillActivity : BaseAutofillActivity() {
     }
 
     companion object {
+
         fun newIntent(
             context: Context,
             assistStructure: AssistStructure,
             packageName: String?,
         ): Intent =
-            Intent(context, PasswordAutofillActivity::class.java).apply {
-                putExtra(EXTRA_ASSIST_STRUCTURE, assistStructure)
+            Intent(context, AutofillCreatePasswordActivity::class.java).apply {
+                putExtra(AutofillManager.EXTRA_ASSIST_STRUCTURE, assistStructure)
                 putExtra(PACKAGE_NAME_KEY, packageName)
             }
     }

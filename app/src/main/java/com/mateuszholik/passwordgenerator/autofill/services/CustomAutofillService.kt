@@ -48,7 +48,14 @@ class CustomAutofillService : AutofillService(), KoinComponent {
                         val inlinePresentationSpec =
                             request.inlineSuggestionsRequest?.inlinePresentationSpecs?.firstOrNull()
 
-                        if (it.isNotEmpty()) {
+                        if (it.isEmpty()) {
+                            fillResponseBuilder.addCreatePasswordDialog(
+                                context = this.applicationContext,
+                                parsedStructure = parsedStructure,
+                                assistStructure = structure,
+                                inlinePresentationSpec = inlinePresentationSpec
+                            )
+                        } else {
                             fillResponseBuilder.addDatasetForSuggestedAutofillItems(
                                 packageName = packageName,
                                 items = it,
