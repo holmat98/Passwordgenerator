@@ -71,7 +71,7 @@
         <item name="android:minHeight">@dimen/min_button_height</item>
     </style>
 
-    <style name="TextButton" parent="ThemeOverlay.Material3.Button.ElevatedButton">
+    <style name="ElevatedButton" parent="ThemeOverlay.Material3.Button.ElevatedButton">
         <item name="android:textSize">@dimen/text_size_25</item>
         <item name="textAllCaps">false</item>
         <item name="android:padding">@dimen/padding_8</item>
