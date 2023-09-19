@@ -16,6 +16,15 @@ class AutofillCreatePasswordActivity : BaseAutofillActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAutofillCreatePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = null
+
+        with(binding) {
+            linearLayout.clipToOutline = true
+
+            closeButton.setOnClickListener {
+                finishWithCancel()
+            }
+        }
     }
 
     companion object {

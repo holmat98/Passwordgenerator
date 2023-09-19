@@ -139,6 +139,7 @@
     <string name="autofill_dialog_save_package_name_title">Zapamiętaj hasło</string>
     <string name="autofill_dialog_save_package_name_message">Czy chcesz zapamiętać to hasło do przyszłego autouzupełniania dla tej aplikacji?</string>
     <string name="autofill_get_passwords_error">Wystąpił błąd podczas pobierania haseł</string>
+    <string name="autofill_generate_password">Wygeneruj hasło</string>
     <string name="autofill_save_password_button_save">Zapisz i uzupełnij</string>
 
     <!--  Warnings  -->

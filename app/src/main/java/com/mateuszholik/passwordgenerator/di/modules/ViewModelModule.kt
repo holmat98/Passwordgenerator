@@ -138,6 +138,7 @@ val viewModelModule = module {
         AutofillCreatePasswordViewModel(
             getPasswordUseCase = get(),
             insertPasswordAndGetIdUseCase = get(),
+            createPasswordUseCase = get(),
             workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
             textProvider = get(),
             packageName = packageName
