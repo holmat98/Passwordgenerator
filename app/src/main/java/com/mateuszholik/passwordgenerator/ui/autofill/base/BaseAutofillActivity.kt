@@ -2,6 +2,8 @@ package com.mateuszholik.passwordgenerator.ui.autofill.base
 
 import android.app.assist.AssistStructure
 import android.content.Intent
+import android.os.Bundle
+import android.view.WindowManager
 import android.view.autofill.AutofillManager
 import androidx.appcompat.app.AppCompatActivity
 import com.mateuszholik.passwordgenerator.autofill.factories.DatasetFactory
@@ -22,6 +24,11 @@ abstract class BaseAutofillActivity : AppCompatActivity(), AutofillController {
 
     private val datasetFactory: DatasetFactory by inject()
     private val structureParser: StructureParser by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    }
 
     override fun getAutofillPackageName(): String? =
         intent.extras?.getString(PACKAGE_NAME_KEY)

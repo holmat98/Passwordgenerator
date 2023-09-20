@@ -3,12 +3,9 @@ package com.mateuszholik.passwordgenerator.ui.autofill.selectpassword
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.mateuszholik.data.repositories.models.AutofillPasswordDetails
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentSelectPasswordBinding
-import com.mateuszholik.passwordgenerator.extensions.animateVisibility
 import com.mateuszholik.passwordgenerator.extensions.showDialog
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.ui.autofill.base.AutofillController
@@ -21,12 +18,6 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
     private val viewModel: SelectPasswordViewModel by viewModel()
     private var adapter: SelectPasswordAdapter? = null
     private var selectedPassword: AutofillPasswordDetails? = null
-    private val scrollListener = object : RecyclerView.OnScrollListener() {
-
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            binding.goToCreatePasswordScreenButton.animateVisibility(isVisible = dy <= 0)
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,10 +52,6 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
             }
         }
 
-        binding.goToCreatePasswordScreenButton.setOnClickListener {
-            findNavController().navigate(R.id.action_selectPasswordFragment_to_autofillSavePasswordFragment)
-        }
-
         viewModel.passwords.observe(viewLifecycleOwner) {
             adapter?.addPasswords(it)
         }
@@ -83,10 +70,7 @@ class SelectPasswordFragment : Fragment(R.layout.fragment_select_password) {
                 isEnabled = true
             }
         }
-        binding.selectablePasswordsRecyclerView.apply {
-            adapter = this@SelectPasswordFragment.adapter
-            addOnScrollListener(scrollListener)
-        }
+        binding.selectablePasswordsRecyclerView.adapter = adapter
     }
 
     override fun onPause() {
