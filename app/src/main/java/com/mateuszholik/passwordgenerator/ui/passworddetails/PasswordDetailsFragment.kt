@@ -61,13 +61,13 @@ class PasswordDetailsFragment : Fragment(R.layout.fragment_password_details) {
                         menuInflater.inflate(R.menu.options_menu, menu)
                     }
 
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                         if (menuItem.itemId == R.id.menuOptions) {
                             showOptionsDialog()
-                            true
-                        } else {
-                            true
                         }
+
+                        return true
+                    }
                 },
                 viewLifecycleOwner,
                 Lifecycle.State.RESUMED

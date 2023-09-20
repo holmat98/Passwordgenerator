@@ -48,20 +48,23 @@ internal class InsertPasswordAndGetIdUseCaseImplTest {
             platformName = PLATFORM_NAME,
             website = null,
             isExpiring = false,
-            passwordScore = PASSWORD_SCORE
+            passwordScore = PASSWORD_SCORE,
+            packageName = null
         )
         val NEW_PASSWORD = NewPassword(
             platformName = PLATFORM_NAME,
             password = PASSWORD,
             website = null,
-            isExpiring = false
+            isExpiring = false,
+            packageName = null
         )
         val DATA_NEW_PASSWORD = DataNewPassword(
             password = PASSWORD,
             platformName = PLATFORM_NAME,
             website = null,
             isExpiring = false,
-            passwordScore = PASSWORD_SCORE
+            passwordScore = PASSWORD_SCORE,
+            packageName = null
         )
     }
 }

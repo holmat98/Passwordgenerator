@@ -31,5 +31,6 @@ class TextProviderImpl(private val context: Context) : TextProvider {
             MessageType.LOGIN_WRONG_PIN_ERROR -> context.getString(R.string.log_in_wrong_pin)
             MessageType.CREATE_PIN_WRONG_PIN_ERROR -> context.getString(R.string.create_pin_wrong_pin)
             MessageType.SAVE_PASSWORD_SUCCESS -> context.getString(R.string.save_password_saved)
+            MessageType.GET_AUTOFILL_PASSWORD_ERROR -> context.getString(R.string.autofill_get_passwords_error)
         }
 }

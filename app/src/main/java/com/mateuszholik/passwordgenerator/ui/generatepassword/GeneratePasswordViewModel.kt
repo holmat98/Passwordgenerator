@@ -16,8 +16,8 @@ class GeneratePasswordViewModel(
     private val textProvider: TextProvider
 ) : BaseViewModel() {
 
-    private val _generatedPassword = MutableLiveData<String>()
-    val generatedPassword: LiveData<String>
+    private val _generatedPassword = MutableLiveData<String?>()
+    val generatedPassword: LiveData<String?>
         get() = _generatedPassword
 
     val passwordLength = MutableLiveData(DEFAULT_PASSWORD_LENGTH)
@@ -34,6 +34,10 @@ class GeneratePasswordViewModel(
                 }
             )
             .addTo(compositeDisposable)
+    }
+
+    fun clearGeneratedPassword() {
+        _generatedPassword.postValue(null)
     }
 
     private companion object {

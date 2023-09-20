@@ -36,6 +36,11 @@ class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_passwor
         setUpObservers()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.clearGeneratedPassword()
+    }
+
     private fun showBottomSheetDialog(text: String) {
         activity?.supportFragmentManager?.let {
             CustomBottomSheetDialogFragment.newInstance(
@@ -76,8 +81,8 @@ class GeneratePasswordFragment : BaseFragment(R.layout.fragment_generate_passwor
         viewModel.errorOccurred.observe(viewLifecycleOwner) { message ->
             activity?.let { snackBarProvider.showError(message, it) }
         }
-        viewModel.generatedPassword.observe(viewLifecycleOwner) {
-            showBottomSheetDialog(it)
+        viewModel.generatedPassword.observe(viewLifecycleOwner) {generatedPassword ->
+            generatedPassword?.let { showBottomSheetDialog(it) }
         }
     }
 

@@ -18,7 +18,9 @@ internal val repositoriesModule = module {
             newPasswordToPasswordEntityMapper = get(),
             updatedPasswordToUpdatedNamesMapper = get(),
             updatedPasswordToPasswordEntityMapper = get(),
-            passwordsDBListToPasswordsListMapper = get()
+            passwordsDBListToPasswordsListMapper = get(),
+            autofillPasswordsDetailsViewListMapper = get(),
+            encryptionManager = get()
         )
     }
 

@@ -38,15 +38,23 @@
                 android:textColor="?colorSecondary" />
 
             <androidx.appcompat.widget.SwitchCompat
-                style="@style/SwitchCompatStyle"
                 android:id="@+id/shouldUseBiometricAuthBtn"
+                style="@style/SwitchCompatStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/margin_16"
                 android:layout_margin="@dimen/margin_16"
+                android:padding="@dimen/margin_16"
                 android:text="@string/settings_screen_biometric_auth_option"
                 app:onSwitchValueChanged="@{(value) -> viewModel.onValueChanged(value)}"
                 app:setSwitchValue="@{viewModel.shouldUseBiometricAuthentication}" />
+
+            <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
+                android:id="@+id/turnOnAutofillButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_16"
+                app:buttonText="@string/settings_turn_on_autofill_service" />
 
             <com.mateuszholik.passwordgenerator.uicomponents.buttons.SettingsButton
                 android:id="@+id/passwordValidityButton"

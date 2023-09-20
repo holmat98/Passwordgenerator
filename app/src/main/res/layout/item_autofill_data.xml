@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/autofillLabel"
+    style="@style/DefaultText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_theme_dark_primary"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingHorizontal="@dimen/margin_8"
+    android:paddingVertical="@dimen/margin_16"
+    android:text="@string/autofill_password_authentication_prompt_message"
+    android:textColor="@color/md_theme_dark_onPrimary" />

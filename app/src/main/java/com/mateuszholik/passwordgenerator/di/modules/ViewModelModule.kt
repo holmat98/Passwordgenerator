@@ -1,8 +1,9 @@
 package com.mateuszholik.passwordgenerator.di.modules
 
-import com.mateuszholik.data.repositories.models.PasswordInfo
 import com.mateuszholik.passwordgenerator.di.utils.NamedConstants.NOTIFICATION_WORK_SCHEDULER
 import com.mateuszholik.passwordgenerator.ui.MainViewModel
+import com.mateuszholik.passwordgenerator.ui.autofill.createpassword.AutofillCreatePasswordViewModel
+import com.mateuszholik.passwordgenerator.ui.autofill.selectpassword.SelectPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.createpin.CreatePinViewModel
 import com.mateuszholik.passwordgenerator.ui.editpassword.EditPasswordViewModel
 import com.mateuszholik.passwordgenerator.ui.export.ExportPasswordsViewModel
@@ -122,6 +123,25 @@ val viewModelModule = module {
             getMigrationStateUseCase = get(),
             migrateDataToTheCorrectStateUseCase = get(),
             saveMigrationStateUseCase = get()
+        )
+    }
+
+    viewModel {
+        SelectPasswordViewModel(
+            getAutofillPasswordsDetailsUseCase = get(),
+            updatePackageNameUseCase = get(),
+            textProvider = get()
+        )
+    }
+
+    viewModel {(packageName: String?) ->
+        AutofillCreatePasswordViewModel(
+            getPasswordUseCase = get(),
+            insertPasswordAndGetIdUseCase = get(),
+            createPasswordUseCase = get(),
+            workScheduler = get(named(NOTIFICATION_WORK_SCHEDULER)),
+            textProvider = get(),
+            packageName = packageName
         )
     }
 }

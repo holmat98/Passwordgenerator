@@ -7,22 +7,20 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.FragmentLogInBinding
-import com.mateuszholik.passwordgenerator.di.utils.NamedConstants
 import com.mateuszholik.passwordgenerator.extensions.viewBinding
 import com.mateuszholik.passwordgenerator.managers.BiometricManager
 import com.mateuszholik.passwordgenerator.models.MessageType
-import com.mateuszholik.passwordgenerator.providers.MessageProvider
+import com.mateuszholik.passwordgenerator.providers.SnackBarProvider
 import com.mateuszholik.passwordgenerator.providers.TextProvider
 import com.mateuszholik.passwordgenerator.ui.base.BaseFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
 
     private val binding by viewBinding(FragmentLogInBinding::bind)
     private val viewModel: LogInViewModel by viewModel()
-    private val messageProvider: MessageProvider by inject(named(NamedConstants.TOAST_MESSAGE_PROVIDER))
+    private val snackBarProvider: SnackBarProvider by inject()
     private val textProvider: TextProvider by inject()
     private val biometricManager: BiometricManager by inject()
 
@@ -41,7 +39,8 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
             keyboard.doOnUndoClicked = {
                 pinCode.removeTextFromPin()
                 pinCode.setDefaultStyle()
-                keyboard.background = ContextCompat.getDrawable(keyboard.context, R.drawable.view_background)
+                keyboard.background =
+                    ContextCompat.getDrawable(keyboard.context, R.drawable.view_background)
             }
             keyboard.doOnConfirmedClicked = { viewModel.logIn(pinCode.pin) }
         }
@@ -50,14 +49,19 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
     private fun setUpObservers() {
         with(viewModel) {
             wrongPin.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+                activity?.let { activity ->
+                    snackBarProvider.showError(it, activity)
+                }
                 binding.pinCode.animateFailure()
                 binding.keyboard.apply {
-                    background = ContextCompat.getDrawable(context, R.drawable.view_background_error)
+                    background =
+                        ContextCompat.getDrawable(context, R.drawable.view_background_error)
                 }
             }
             errorOccurred.observe(viewLifecycleOwner) {
-                messageProvider.show(it)
+                activity?.let { activity ->
+                    snackBarProvider.showError(it, activity)
+                }
             }
             shouldUseBiometricAuthentication.observe(viewLifecycleOwner) {
                 if (it) {
@@ -84,13 +88,23 @@ class LogInFragment : BaseFragment(R.layout.fragment_log_in) {
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                         super.onAuthenticationError(errorCode, errString)
 
-                        messageProvider.show(textProvider.provide(MessageType.BIOMETRIC_AUTH_ERROR))
+                        activity?.let { activity ->
+                            snackBarProvider.showError(
+                                textProvider.provide(MessageType.BIOMETRIC_AUTH_ERROR),
+                                activity
+                            )
+                        }
                     }
 
                     override fun onAuthenticationFailed() {
                         super.onAuthenticationFailed()
 
-                        messageProvider.show(textProvider.provide(MessageType.BIOMETRIC_AUTH_FAILED))
+                        activity?.let { activity ->
+                            snackBarProvider.showError(
+                                textProvider.provide(MessageType.BIOMETRIC_AUTH_ERROR),
+                                activity
+                            )
+                        }
                     }
                 }
             )

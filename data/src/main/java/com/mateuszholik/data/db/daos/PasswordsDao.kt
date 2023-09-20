@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.mateuszholik.data.db.models.PasswordDB
 import com.mateuszholik.data.db.models.entities.PasswordEntity
+import com.mateuszholik.data.db.models.views.AutofillPasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordDetailsView
 import com.mateuszholik.data.db.models.views.PasswordInfoView
 import io.reactivex.rxjava3.core.Completable
@@ -39,4 +40,7 @@ internal interface PasswordsDao {
 
     @Query("SELECT name_id FROM new_passwords WHERE id = :passwordId")
     fun getNameIdFor(passwordId: Long): Maybe<Long>
+
+    @Query("SELECT * from AutofillPasswordDetailsView")
+    fun getAllAutofillPasswordDetails(): Single<List<AutofillPasswordDetailsView>>
 }

@@ -11,6 +11,7 @@
     <string name="passwords_create_password_button">Stwórz hasło</string>
     <string name="password_test_button_test">Przetestuj hasło</string>
     <string name="button_copy">Kopiuj</string>
+    <string name="button_confirm">Potwierdź</string>
     <string name="button_edit">Edytuj</string>
     <string name="button_delete">Usuń</string>
 
@@ -131,6 +132,16 @@
     <string name="settings_screen_biometric_auth_option">Włącz autentykację biometrią</string>
     <string name="settings_screen_title">Ustawienia</string>
 
+    <!--  Autofill  -->
+    <string name="settings_turn_on_autofill_service">Włącz autouzupełnianie haseł</string>
+    <string name="autofill_password_authentication_prompt_message">Wybierz hasło w aplikacji</string>
+    <string name="autofill_create_password_authentication_prompt_message">Stwórz hasło w aplikacji</string>
+    <string name="autofill_dialog_save_package_name_title">Zapamiętaj hasło</string>
+    <string name="autofill_dialog_save_package_name_message">Czy chcesz zapamiętać to hasło do przyszłego autouzupełniania dla tej aplikacji?</string>
+    <string name="autofill_get_passwords_error">Wystąpił błąd podczas pobierania haseł</string>
+    <string name="autofill_generate_password">Wygeneruj hasło</string>
+    <string name="autofill_save_password_button_save">Zapisz i uzupełnij</string>
+
     <!--  Warnings  -->
     <string name="warning_icon">Ikona informująca o zbliżającym się wygaśnięciu hasła</string>
     <string name="warning_password_expired">Twoje hasło wygasło!</string>
@@ -189,4 +200,5 @@
     <string name="import_info">Import info</string>
     <string name="message_password_copied_to_clipboard">Hasło zostało skopiowane</string>
     <string name="hidden_text_view_button_description">Zmień widoczność tekstu</string>
+    <string name="app_icon_description">Ikona aplikacji</string>
 </resources>

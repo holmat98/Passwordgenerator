@@ -24,11 +24,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.autofill.PasswordAutofillActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TransparentScreen" />
+        <activity
+            android:name=".ui.autofill.AutofillCreatePasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TransparentScreen" />
+        <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.LicencesScreen" />
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.LicencesScreen" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -39,5 +50,17 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
+        <service
+            android:name=".autofill.services.CustomAutofillService"
+            android:exported="true"
+            android:label="Password Manager"
+            android:permission="android.permission.BIND_AUTOFILL_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.autofill.AutofillService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.autofill"
+                android:resource="@xml/service_configuration" />
+        </service>
     </application>
 </manifest>

@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.mateuszholik.domain.models.NewPassword
 import com.mateuszholik.domain.usecase.GetPasswordUseCase
 import com.mateuszholik.domain.usecase.InsertPasswordAndGetIdUseCase
+import com.mateuszholik.passwordgenerator.extensions.addSources
 import com.mateuszholik.passwordgenerator.extensions.addTo
 import com.mateuszholik.passwordgenerator.extensions.expirationDate
 import com.mateuszholik.passwordgenerator.extensions.getDiffFromNowInMilliseconds
+import com.mateuszholik.passwordgenerator.extensions.orFalse
 import com.mateuszholik.passwordgenerator.extensions.subscribeWithObserveOnMainThread
 import com.mateuszholik.passwordgenerator.models.MessageType
 import com.mateuszholik.passwordgenerator.providers.TextProvider
@@ -35,15 +37,10 @@ class SavePasswordViewModel(
     val newWebsiteValue = MutableLiveData<String>()
     val isExpiring = MutableLiveData(true)
 
-    val isButtonEnabled = MediatorLiveData<Boolean>().apply {
-        value = false
-        addSource(platformName) {
-            value = areInputsNotEmpty()
-        }
-        addSource(password) {
-            value = areInputsNotEmpty()
-        }
-    }
+    val isButtonEnabled = MediatorLiveData<Boolean>().addSources(
+        platformName,
+        password
+    ) { areInputsNotEmpty() }
 
     init {
         password.postValue(generatedPassword)
@@ -54,7 +51,7 @@ class SavePasswordViewModel(
             platformName = platformName.value.orEmpty(),
             password = password.value.orEmpty(),
             website = newWebsiteValue.value,
-            isExpiring = isExpiring.value ?: false
+            isExpiring = isExpiring.value.orFalse()
         )
         insertPasswordAndGetIdUseCase(newPassword)
             .flatMap { getPasswordUseCase(it).toSingle() }
@@ -79,6 +76,6 @@ class SavePasswordViewModel(
     }
 
     private fun areInputsNotEmpty(): Boolean =
-        password.value?.isNotEmpty() ?: false &&
-                platformName.value?.isNotEmpty() ?: false
+        password.value?.isNotEmpty().orFalse() &&
+                platformName.value?.isNotEmpty().orFalse()
 }

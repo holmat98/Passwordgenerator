@@ -6,4 +6,5 @@ data class NewPassword(
     val website: String?,
     val passwordScore: Int,
     val isExpiring: Boolean,
+    val packageName: String?,
 )
