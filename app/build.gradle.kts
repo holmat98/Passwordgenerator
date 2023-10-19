@@ -1,16 +1,14 @@
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
-    kotlin(Plugins.KAPT)
     id(Plugins.SAFE_ARGS)
     id(Plugins.OSS_LICENSES)
     id(Plugins.GOOGLE_SERVICES)
     id(Plugins.FIREBASE_CRASHLYTICS)
     id(AndroidGitVersion.PLUGIN)
     id(Plugins.KOTLIN_PARCELIZE)
+    id(Plugins.JACOCO)
 }
-
-apply(from="../jacoco.gradle")
 
 androidGitVersion {
     format = "%tag%%-commit%%-dirty%"
@@ -19,7 +17,12 @@ androidGitVersion {
 }
 
 android {
+    namespace = "com.mateuszholik.passwordgenerator"
     compileSdk = DefaultConfig.COMPILE_SDK
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = DefaultConfig.APPLICATION_ID
@@ -51,12 +54,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -93,12 +96,6 @@ dependencies {
 
     // Constraint layout
     implementation(Androidx.ConstraintLayout.DEPENDENCY)
-
-    //room
-    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
-    kapt(Androidx.Room.COMPILER_DEPENDENCY)
-    implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
-    testImplementation(Androidx.Room.TEST_DEPENDENCY)
 
     // ViewModel
     implementation(Androidx.Lifecycle.ViewModel.DEPENDENCY)

@@ -1,17 +1,16 @@
 plugins {
     id(Plugins.ANDROID_LIBRARY)
     id(Plugins.KOTLIN_ANDROID)
-    kotlin(Plugins.KAPT)
+    id(Google.KSP.PLUGIN)
+    id(Plugins.JACOCO)
 }
 
-apply(from="../jacoco.gradle")
-
 android {
+    namespace = "com.mateuszholik.data"
     compileSdk = DefaultConfig.COMPILE_SDK
 
     defaultConfig {
         minSdk = DefaultConfig.MIN_SDK
-        targetSdk = DefaultConfig.TARGET_SDK
 
         testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
 
@@ -24,7 +23,6 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile(Proguard.FILE),
                 Proguard.RULES
@@ -32,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -66,7 +64,7 @@ dependencies {
 
     //room
     implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
-    kapt(Androidx.Room.COMPILER_DEPENDENCY)
+    ksp(Androidx.Room.COMPILER_DEPENDENCY)
     implementation(Androidx.Room.ROOM_KTX_DEPENDENCY)
     testImplementation(Androidx.Room.TEST_DEPENDENCY)
 
