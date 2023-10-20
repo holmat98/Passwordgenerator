@@ -3,6 +3,7 @@ import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.api.BaseVariant
 import com.android.build.gradle.api.LibraryVariant
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.DomainObjectSet
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -68,7 +69,7 @@ class JacocoReportsPlugin : Plugin<Project> {
     }
 
     private val Project.applicationVariants: DomainObjectSet<ApplicationVariant>?
-        get() = extensions.findByType(AppExtension::class.java)?.applicationVariants
+        get() = extensions.findByType(BaseAppModuleExtension::class.java)?.applicationVariants
 
     private val Project.libraryVariants: DefaultDomainObjectSet<LibraryVariant>?
         get() = extensions.findByType(LibraryExtension::class.java)?.libraryVariants

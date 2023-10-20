@@ -5,6 +5,7 @@ object Plugins {
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
     const val ANDROID_LIBRARY = "com.android.library"
+    const val KAPT = "kapt"
     const val SAFE_ARGS = "androidx.navigation.safeargs"
     const val OSS_LICENSES = "com.google.android.gms.oss-licenses-plugin"
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"

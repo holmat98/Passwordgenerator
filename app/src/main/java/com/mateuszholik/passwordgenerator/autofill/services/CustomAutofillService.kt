@@ -23,8 +23,8 @@ class CustomAutofillService : AutofillService(), KoinComponent {
     private val compositeDisposable = CompositeDisposable()
 
     override fun onDestroy() {
-        super.onDestroy()
         compositeDisposable.dispose()
+        super.onDestroy()
     }
 
     override fun onFillRequest(
