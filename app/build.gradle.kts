@@ -1,6 +1,7 @@
 plugins {
     id(Plugins.ANDROID_APPLICATION)
     id(Plugins.KOTLIN_ANDROID)
+    kotlin(Plugins.KAPT)
     id(Plugins.SAFE_ARGS)
     id(Plugins.OSS_LICENSES)
     id(Plugins.GOOGLE_SERVICES)

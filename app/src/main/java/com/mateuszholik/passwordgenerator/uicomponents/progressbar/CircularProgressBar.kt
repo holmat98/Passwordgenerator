@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.google.android.material.R as MaterialR
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
@@ -69,12 +70,12 @@ class CircularProgressBar @JvmOverloads constructor(
 
         val primaryColor = typedArray.getColor(
             R.styleable.CircularProgressBar_primaryColor,
-            context.getAttrColor(R.attr.colorPrimary)
+            context.getAttrColor(MaterialR.attr.colorPrimary)
         )
 
         val secondaryColor = typedArray.getColor(
             R.styleable.CircularProgressBar_secondaryColor,
-            context.getAttrColor(R.attr.colorOnPrimary)
+            context.getAttrColor(MaterialR.attr.colorOnPrimary)
         )
 
         val textSize = typedArray.getDimension(
@@ -94,10 +95,10 @@ class CircularProgressBar @JvmOverloads constructor(
         strokeWidth = min(width, height) * 0.05f
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas?.run {
+        canvas.run {
             drawArc(oval, START_ANGLE, FULL_ANGLE, false, paintBackground)
             drawArc(oval, START_ANGLE, FULL_ANGLE * animatedProgressValue / 100, false, paintProgress)
 

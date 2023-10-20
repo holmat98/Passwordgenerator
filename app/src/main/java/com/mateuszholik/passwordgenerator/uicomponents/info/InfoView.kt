@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.R as MaterialR
 import com.mateuszholik.data.repositories.models.PasswordValidity
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.databinding.ViewInfoBinding
@@ -35,17 +36,17 @@ class InfoView(context: Context, attrs: AttributeSet) : MaterialCardView(context
             is PasswordValidity.NeverExpires,
             is PasswordValidity.Valid ->
                 WarningViewDetails(
-                    attrColor = R.attr.colorPrimary,
+                    attrColor = MaterialR.attr.colorPrimary,
                     stringRes = R.string.warning_password_correct
                 )
             is PasswordValidity.Expired ->
                 WarningViewDetails(
-                    attrColor = R.attr.colorError,
+                    attrColor = MaterialR.attr.colorError,
                     stringRes = R.string.warning_password_expired
                 )
             else ->
                 WarningViewDetails(
-                    attrColor = R.attr.colorTertiary,
+                    attrColor = MaterialR.attr.colorTertiary,
                     stringRes = R.string.warning_password_expiring
                 )
         }
