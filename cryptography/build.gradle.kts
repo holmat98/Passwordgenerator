@@ -33,32 +33,11 @@ android {
 
 dependencies {
 
-    // Core ktx
-    implementation(Androidx.Core.DEPENDENCY)
-
-    // Appcompat
-    implementation(Androidx.AppCompat.DEPENDENCY)
-
-    // Tests
-    testImplementation(Testing.JUnit.DEPENDENCY)
-    testCompileOnly(Testing.JUnit.API_DEPENDENCY)
-    testRuntimeOnly(Testing.JUnit.ENGINE)
-    testImplementation(Testing.JUnit.PARAMS)
-    testImplementation(Testing.AssertJ.DEPENDENCY)
-    testImplementation(Androidx.Core.Testing.DEPENDENCY)
-
-    // koin
-    implementation(Koin.DEPENDENCY)
-
-    // mockk
-    testImplementation(Mockk.DEPENDENCY)
-    androidTestImplementation(Mockk.Android.DEPENDENCY)
-
-    // Jetpack security
-    implementation(Androidx.Security.CRYPTO_DEPENDENCY)
-    implementation(Androidx.Security.APP_AUTHENTICATOR_DEPENDENCY)
-    implementation(Androidx.Security.IDENTITY_CREDENTIAL_DEPENDENCY)
-    androidTestImplementation(Androidx.Security.APP_AUTHENTICATOR_TESTING_DEPENDENCY)
+    // Dependencies
+    common()
+    unitTesting()
+    koin()
+    cryptography()
 }
 
 tasks.withType(Test::class) {

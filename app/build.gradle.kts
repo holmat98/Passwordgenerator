@@ -71,82 +71,21 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":passwordvalidation"))
 
-    // Core ktx
-    implementation(Androidx.Core.DEPENDENCY)
-
-    // Activity
-    implementation(Androidx.Activity.DEPENDENCY)
-
-    // Appcompat
-    implementation(Androidx.AppCompat.DEPENDENCY)
-
-    // Tests
-    testImplementation(Testing.JUnit.DEPENDENCY)
-    testCompileOnly(Testing.JUnit.API_DEPENDENCY)
-    testRuntimeOnly(Testing.JUnit.ENGINE)
-    testImplementation(Testing.JUnit.PARAMS)
-    testImplementation(Testing.AssertJ.DEPENDENCY)
-    testImplementation(Androidx.Core.Testing.DEPENDENCY)
-
-    // Navigation
-    implementation(Androidx.Navigation.FRAGMENT_NAVIGATION_DEPENDENCY)
-    implementation(Androidx.Navigation.UI_KTX_NAVIGATION_DEPENDENCY)
-
-    // Material design
-    implementation(Google.MaterialDesign.DEPENDENCY)
-
-    // Constraint layout
-    implementation(Androidx.ConstraintLayout.DEPENDENCY)
-
-    // ViewModel
-    implementation(Androidx.Lifecycle.ViewModel.DEPENDENCY)
-
-    // Jetpack security
-    implementation(Androidx.Security.CRYPTO_DEPENDENCY)
-    implementation(Androidx.Security.APP_AUTHENTICATOR_DEPENDENCY)
-    implementation(Androidx.Security.IDENTITY_CREDENTIAL_DEPENDENCY)
-    androidTestImplementation(Androidx.Security.APP_AUTHENTICATOR_TESTING_DEPENDENCY)
-
-    // RxJava
-    implementation(RxJava.DEPENDENCY)
-    implementation(RxJava.Android.DEPENDENCY)
-    implementation(Androidx.Room.RX_JAVA_DEPENDENCY)
-
-    // koin
-    implementation(Koin.DEPENDENCY)
-    implementation(Koin.Worker.DEPENDENCY)
-
-    // mockk
-    testImplementation(Mockk.DEPENDENCY)
-    androidTestImplementation(Mockk.Android.DEPENDENCY)
-
-    // lottie
-    implementation(Lottie.DEPENDENCY)
-
-    // timber
-    implementation(Timber.DEPENDENCY)
-
-    // worker manager
-    implementation(Androidx.WorkManager.DEPENDENCY)
-    implementation(Androidx.WorkManager.Rx.DEPENDENCY)
-
-    // biometric manager
-    implementation(Androidx.Biometric.DEPENDENCY)
-
-    // leak canary
-    debugImplementation(SquareUp.LeakCanary.DEPENDENCY)
-
-    // splash screen
-    implementation(Androidx.SplashScreen.DEPENDENCY)
-
-    // oss licenses
-    implementation(Google.PlayServices.OssLicences.DEPENDENCY)
-
-    // crashlytics
-    implementation(Google.PlayServices.Firebase.Crashlytics.DEPENDENCY)
-
-    // autofill
-    implementation(Androidx.Autofill.DEPENDENCY)
+    // Dependencies
+    common()
+    ui()
+    fragmentNavigation()
+    viewModel()
+    unitTesting()
+    rxJava()
+    koin(true)
+    logging()
+    workManager()
+    biometricManager()
+    leakCanary()
+    ossLicenses()
+    crashlytics()
+    autofill()
 }
 
 tasks.withType(Test::class) {

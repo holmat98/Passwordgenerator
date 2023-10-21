@@ -80,7 +80,6 @@ object Androidx {
 
         const val RUNTIME_DEPENDENCY = "androidx.room:room-runtime:$version"
         const val COMPILER_DEPENDENCY = "androidx.room:room-compiler:$version"
-        const val ROOM_KTX_DEPENDENCY = "androidx.room:room-ktx:$version"
         const val TEST_DEPENDENCY = "androidx.room:room-testing:$version"
         const val RX_JAVA_DEPENDENCY = "androidx.room:room-rxjava3:$version"
     }
