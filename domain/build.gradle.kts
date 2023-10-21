@@ -4,32 +4,7 @@ plugins {
     id(Plugins.JACOCO)
 }
 
-android {
-    namespace = "com.mateuszholik.domain"
-    compileSdk = DefaultConfig.COMPILE_SDK
-
-    defaultConfig {
-        minSdk = DefaultConfig.MIN_SDK
-
-        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
-    }
-
-    buildTypes {
-        release {
-            proguardFiles(
-                getDefaultProguardFile(Proguard.FILE),
-                Proguard.RULES
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
+android.configure(namespace = "com.mateuszholik.domain")
 
 dependencies {
 
