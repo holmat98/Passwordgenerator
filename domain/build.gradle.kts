@@ -38,31 +38,11 @@ dependencies {
     implementation(project(":cryptography"))
     implementation(project(":passwordvalidation"))
 
-    // Core ktx
-    implementation(Androidx.Core.DEPENDENCY)
-
-    // Appcompat
-    implementation(Androidx.AppCompat.DEPENDENCY)
-
-    // Tests
-    testImplementation(Testing.JUnit.DEPENDENCY)
-    testCompileOnly(Testing.JUnit.API_DEPENDENCY)
-    testRuntimeOnly(Testing.JUnit.ENGINE)
-    testImplementation(Testing.JUnit.PARAMS)
-    testImplementation(Testing.AssertJ.DEPENDENCY)
-    testImplementation(Androidx.Core.Testing.DEPENDENCY)
-
-    // RxJava
-    implementation(RxJava.DEPENDENCY)
-    implementation(RxJava.Android.DEPENDENCY)
-    implementation(Androidx.Room.RX_JAVA_DEPENDENCY)
-
-    // koin
-    implementation(Koin.DEPENDENCY)
-
-    // mockk
-    testImplementation(Mockk.DEPENDENCY)
-    androidTestImplementation(Mockk.Android.DEPENDENCY)
+    // Dependencies
+    common()
+    unitTesting()
+    rxJava()
+    koin()
 }
 
 tasks.withType<Test> {
