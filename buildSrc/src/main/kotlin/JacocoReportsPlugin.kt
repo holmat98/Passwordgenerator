@@ -30,13 +30,12 @@ class JacocoReportsPlugin : Plugin<Project> {
     private fun Project.doAfterEvaluate() =
         afterEvaluate {
             val variants = getAllVariants()
-            val buildDirectory = layout.buildDirectory
 
             variants.forEach { variant ->
                 val testTaskName = "test${variant.name.capitalized()}UnitTest"
 
-                val javaDirectories = fileTree(
-                    "${buildDirectory}/tmp/kotlin-classes/${variant.name}"
+                val kotlinDirectories = fileTree(
+                    "${buildDir}/tmp/kotlin-classes/${variant.name}"
                 ) { exclude(EXCLUDED_FILES) }
 
                 tasks.register<JacocoReport>("${testTaskName}Coverage") {
@@ -44,16 +43,16 @@ class JacocoReportsPlugin : Plugin<Project> {
                     group = "Reporting"
                     description = "Generate Jacoco coverage reports on the ${variant.name} build."
 
+                    classDirectories.setFrom(files(kotlinDirectories))
+                    additionalClassDirs.setFrom(files(COVERAGE_SOURCE_DIRS))
+                    sourceDirectories.setFrom(files(COVERAGE_SOURCE_DIRS))
+                    executionData.setFrom(files("${buildDir}/jacoco/${testTaskName}.exec"))
+
                     reports {
                         csv.required.set(true)
                         xml.required.set(false)
                         html.required.set(true)
                     }
-
-                    classDirectories.setFrom(files(javaDirectories))
-                    sourceDirectories.setFrom(files(COVERAGE_SOURCE_DIRS))
-                    additionalSourceDirs.setFrom(files(COVERAGE_SOURCE_DIRS))
-                    executionData.setFrom("${buildDirectory}/jacoco/${testTaskName}.exec")
                 }
             }
         }
