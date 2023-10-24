@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import com.google.android.material.snackbar.Snackbar
-import com.mateuszholik.passwordgenerator.R
+import com.google.android.material.R
 import com.mateuszholik.passwordgenerator.databinding.ItemSnackbarBinding
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 
