@@ -9,23 +9,21 @@ object Plugins {
     const val SAFE_ARGS = "androidx.navigation.safeargs"
     const val OSS_LICENSES = "com.google.android.gms.oss-licenses-plugin"
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"
+    const val JACOCO = "jacoco-reports"
 }
 
 object DefaultConfig {
-    const val COMPILE_SDK = 33
+    const val COMPILE_SDK = 34
     const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
     const val MIN_SDK = 30
-    const val TARGET_SDK = 33
-    const val VERSION_CODE = 1
-    const val VERSION_NAME = "1.0.0"
+    const val TARGET_SDK = 34
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
 object GradlePlugins {
-    const val kotlinVersion = "1.8.22"
-    private const val gradlePluginVersion = "7.4.0"
+    const val kotlinVersion = "1.9.10"
+    private const val gradlePluginVersion = "8.1.2"
 
-    const val OSS_LICENSES = "com.google.android.gms:oss-licenses-plugin:0.10.6"
     const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:$gradlePluginVersion"
     const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
@@ -38,7 +36,7 @@ object Proguard {
 object Androidx {
 
     object Core {
-        private const val version = "1.10.1"
+        private const val version = "1.12.0"
 
         const val DEPENDENCY = "androidx.core:core-ktx:$version"
 
@@ -78,11 +76,10 @@ object Androidx {
     }
 
     object Room {
-        private const val version = "2.5.1"
+        private const val version = "2.5.2"
 
         const val RUNTIME_DEPENDENCY = "androidx.room:room-runtime:$version"
         const val COMPILER_DEPENDENCY = "androidx.room:room-compiler:$version"
-        const val ROOM_KTX_DEPENDENCY = "androidx.room:room-ktx:$version"
         const val TEST_DEPENDENCY = "androidx.room:room-testing:$version"
         const val RX_JAVA_DEPENDENCY = "androidx.room:room-rxjava3:$version"
     }
@@ -139,6 +136,12 @@ object Androidx {
 
 object Google {
 
+    object KSP {
+        const val version = "1.9.10-1.0.13"
+
+        const val PLUGIN = "com.google.devtools.ksp"
+    }
+
     object MaterialDesign {
         private const val version = "1.9.0"
 
@@ -154,6 +157,7 @@ object Google {
             private const val version = "17.0.0"
 
             const val DEPENDENCY = "com.google.android.gms:play-services-oss-licenses:$version"
+            const val PLUGIN = "com.google.android.gms:oss-licenses-plugin:0.10.6"
         }
 
         object Firebase {

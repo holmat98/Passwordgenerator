@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
-import com.mateuszholik.passwordgenerator.R
+import com.google.android.material.R
 import com.mateuszholik.passwordgenerator.databinding.DialogCustomBottomSheetBinding
 import com.mateuszholik.passwordgenerator.extensions.fromParcelable
 import kotlinx.parcelize.Parcelize

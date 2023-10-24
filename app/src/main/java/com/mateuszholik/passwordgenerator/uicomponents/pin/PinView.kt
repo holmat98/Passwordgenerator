@@ -10,6 +10,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.google.android.material.R as MaterialR
 import com.mateuszholik.passwordgenerator.R
 import com.mateuszholik.passwordgenerator.extensions.getAttrColor
 import com.mateuszholik.passwordgenerator.uicomponents.utils.Constants.ANIMATION_DURATION
@@ -84,12 +85,12 @@ class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         val primaryColor = typedArray.getColor(
             R.styleable.PinView_pinPrimaryColor,
-            context.getAttrColor(R.attr.colorPrimary)
+            context.getAttrColor(MaterialR.attr.colorPrimary)
         )
 
         val secondaryColor = typedArray.getColor(
             R.styleable.PinView_pinSecondaryColor,
-            context.getAttrColor(R.attr.colorOnPrimary)
+            context.getAttrColor(MaterialR.attr.colorOnPrimary)
         )
 
         val textSize = typedArray.getDimension(
@@ -111,10 +112,10 @@ class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         typedArray.recycle()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas?.run {
+        canvas.run {
             drawPath(pathOuter, paintSecondary)
             drawPath(path, paintPrimary)
 
@@ -134,11 +135,11 @@ class PinView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun animateSuccess() {
-        animateColors(context.getAttrColor(R.attr.colorSecondary))
+        animateColors(context.getAttrColor(MaterialR.attr.colorSecondary))
     }
 
     fun animateFailure() {
-        animateColors(context.getAttrColor(R.attr.colorError))
+        animateColors(context.getAttrColor(MaterialR.attr.colorError))
         shake()
     }
 
