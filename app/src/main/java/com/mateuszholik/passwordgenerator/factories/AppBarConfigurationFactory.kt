@@ -16,7 +16,6 @@ class AppBarConfigurationFactoryImpl : AppBarConfigurationFactory {
             R.id.loginTransitionFragment,
             R.id.createPinFragment,
             R.id.logInFragment,
-            R.id.dataMigration,
             R.id.passwords,
             R.id.generatePassword,
             R.id.testPassword,

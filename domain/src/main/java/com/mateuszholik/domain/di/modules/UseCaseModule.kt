@@ -9,8 +9,6 @@ import com.mateuszholik.domain.usecase.ExportPasswordsUseCase
 import com.mateuszholik.domain.usecase.ExportPasswordsUseCaseImpl
 import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCase
 import com.mateuszholik.domain.usecase.GetAutofillPasswordsDetailsUseCaseImpl
-import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCase
-import com.mateuszholik.domain.usecase.GetIfShouldMigrateDataUseCaseImpl
 import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCase
 import com.mateuszholik.domain.usecase.GetMatchingPasswordsForPackageNameUseCaseImpl
 import com.mateuszholik.domain.usecase.GetPasswordScoreUseCase
@@ -31,16 +29,12 @@ import com.mateuszholik.domain.usecase.IsPinCorrectUseCase
 import com.mateuszholik.domain.usecase.IsPinCorrectUseCaseImpl
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCase
 import com.mateuszholik.domain.usecase.IsPinCreatedUseCaseImpl
-import com.mateuszholik.domain.usecase.MigrateDataToTheCorrectStateUseCase
-import com.mateuszholik.domain.usecase.MigrateDataToTheCorrectStateUseCaseImpl
 import com.mateuszholik.domain.usecase.ReadDataFromFileUseCase
 import com.mateuszholik.domain.usecase.ReadDataFromFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCase
 import com.mateuszholik.domain.usecase.SaveDataToFileUseCaseImpl
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCase
 import com.mateuszholik.domain.usecase.SaveIfShouldUseBiometricAuthenticationUseCaseImpl
-import com.mateuszholik.domain.usecase.SaveMigrationStateUseCase
-import com.mateuszholik.domain.usecase.SaveMigrationStateUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCase
 import com.mateuszholik.domain.usecase.SavePasswordValidityValueUseCaseImpl
 import com.mateuszholik.domain.usecase.SavePinUseCase
@@ -155,25 +149,6 @@ internal val useCaseModule = module {
     factory<GetPasswordScoreUseCase> {
         GetPasswordScoreUseCaseImpl(
             getPasswordValidationResultUseCase = get()
-        )
-    }
-
-    factory<MigrateDataToTheCorrectStateUseCase> {
-        MigrateDataToTheCorrectStateUseCaseImpl(
-            migrationRepository = get(),
-            getPasswordScoreUseCase = get()
-        )
-    }
-
-    factory<GetIfShouldMigrateDataUseCase> {
-        GetIfShouldMigrateDataUseCaseImpl(
-            sharedPrefManager = get()
-        )
-    }
-
-    factory<SaveMigrationStateUseCase> {
-        SaveMigrationStateUseCaseImpl(
-            sharedPrefManager = get()
         )
     }
 
