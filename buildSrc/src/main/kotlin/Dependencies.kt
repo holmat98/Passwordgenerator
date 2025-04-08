@@ -13,10 +13,10 @@ object Plugins {
 }
 
 object DefaultConfig {
-    const val COMPILE_SDK = 34
+    const val COMPILE_SDK = 35
     const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
     const val MIN_SDK = 30
-    const val TARGET_SDK = 34
+    const val TARGET_SDK = 35
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
