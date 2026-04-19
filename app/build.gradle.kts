@@ -1,6 +1,6 @@
 plugins {
     id(Plugins.ANDROID_APPLICATION)
-    id(Plugins.KOTLIN_ANDROID)
+    id(Plugins.ANDROID_KOTLIN)
     kotlin(Plugins.KAPT)
     id(Plugins.SAFE_ARGS)
     id(Plugins.OSS_LICENSES)

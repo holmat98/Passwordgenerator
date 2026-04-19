@@ -1,7 +1,7 @@
 object Plugins {
     const val ANDROID_APPLICATION = "com.android.application"
     const val KOTLIN = "kotlin"
-    const val KOTLIN_ANDROID = "org.jetbrains.kotlin.android"
+    const val ANDROID_KOTLIN = "org.jetbrains.kotlin.android"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
     const val ANDROID_LIBRARY = "com.android.library"
@@ -10,6 +10,10 @@ object Plugins {
     const val OSS_LICENSES = "com.google.android.gms.oss-licenses-plugin"
     const val KOTLIN_PARCELIZE = "kotlin-parcelize"
     const val JACOCO = "jacoco-reports"
+    const val HILT = "com.google.dagger.hilt.android"
+
+    const val JAVA_LIBRARY = "java-library"
+    const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
 }
 
 object DefaultConfig {
@@ -25,7 +29,7 @@ object Proguard {
     const val RULES = "proguard-rules.pro"
 }
 
-object Androidx {
+object AndroidX {
 
     object Core {
         private const val version = "1.12.0"
@@ -36,6 +40,52 @@ object Androidx {
             private const val version = "2.2.0"
 
             const val DEPENDENCY = "androidx.arch.core:core-testing:$version"
+        }
+    }
+
+    object CoreKtx {
+        private const val VERSION = "1.17.0"
+
+        const val DEPENDENCY = "androidx.core:core-ktx:$VERSION"
+
+        object Testing {
+            private const val VERSION = "2.2.0"
+
+            const val DEPENDENCY = "androidx.arch.core:core-testing:$VERSION"
+        }
+    }
+
+    object ActivityCompose {
+        private const val VERSION = "1.10.1"
+
+        const val DEPENDENCY = "androidx.activity:activity-compose:$VERSION"
+    }
+
+    object Compose {
+        const val KOTLIN_COMPILER_PLUGIN_VERSION = "2.2.10"
+        const val COMPILER_PLUGIN = "org.jetbrains.kotlin.plugin.compose"
+        const val BOM = "androidx.compose:compose-bom:2025.08.01"
+        const val UI = "androidx.compose.ui:ui"
+        const val MATERIAL = "androidx.compose.material3:material3"
+        const val PREVIEW = "androidx.compose.ui:ui-tooling-preview"
+        const val UI_TOOLING = "androidx.compose.ui:ui-tooling"
+        const val NAVIGATION = "androidx.navigation:navigation-compose:2.8.0-beta01"
+        const val TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest"
+        const val LIVEDATA = "androidx.compose.runtime:runtime-livedata"
+        const val LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-compose:2.8.7"
+
+        const val FOUNDATION = "androidx.compose.foundation:foundation"
+
+        object Hilt {
+            private const val VERSION = "1.2.0"
+
+            const val DEPENDENCY = "androidx.hilt:hilt-navigation-compose:$VERSION"
+        }
+
+        object Lifecycle {
+            private const val VERSION = "2.9.2"
+
+            const val DEPENDENCY = "androidx.lifecycle:lifecycle-runtime-compose:$VERSION"
         }
     }
 
@@ -77,11 +127,12 @@ object Androidx {
     }
 
     object Lifecycle {
+        private const val VERSION = "2.9.2"
+
+        const val DEPENDENCY = "androidx.lifecycle:lifecycle-runtime-ktx:$VERSION"
 
         object ViewModel {
-            private const val version = "2.6.1"
-
-            const val DEPENDENCY = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
+            const val DEPENDENCY = "androidx.lifecycle:lifecycle-viewmodel-ktx:$VERSION"
         }
     }
 
@@ -129,9 +180,20 @@ object Androidx {
 object Google {
 
     object KSP {
-        const val version = "1.9.10-1.0.13"
+        const val VERSION = "2.2.10-2.0.2"
 
         const val PLUGIN = "com.google.devtools.ksp"
+    }
+
+    object Hilt {
+        const val VERSION = "2.57.1"
+
+        const val PLUGIN = "com.google.dagger.hilt.android"
+        const val DEPENDENCY = "com.google.dagger:hilt-android:$VERSION"
+
+        object Compiler {
+            const val DEPENDENCY = "com.google.dagger:hilt-android-compiler:$VERSION"
+        }
     }
 
     object MaterialDesign {
@@ -161,6 +223,27 @@ object Google {
                 const val DEPENDENCY = "com.google.firebase:firebase-crashlytics:$version"
             }
         }
+    }
+}
+
+object Jetbrains {
+
+    object Coroutines {
+        private const val VERSION = "1.10.2"
+
+        const val DEPENDENCY = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION"
+
+        object UnitTesting {
+            const val DEPENDENCY = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$VERSION"
+        }
+    }
+
+    object Serialization {
+        private const val VERSION = "1.9.0"
+        const val PLUGIN_VERSION = "2.2.10"
+
+        const val DEPENDENCY = "org.jetbrains.kotlinx:kotlinx-serialization-json:$VERSION"
+        const val PLUGIN = "org.jetbrains.kotlin.plugin.serialization"
     }
 }
 
@@ -234,6 +317,21 @@ object Timber {
     private const val version = "5.0.1"
 
     const val DEPENDENCY = "com.jakewharton.timber:timber:$version"
+}
+
+object Coil {
+    private const val VERSION = "3.0.0"
+
+    const val DEPENDENCY = "io.coil-kt.coil3:coil-compose:$VERSION"
+}
+
+object Airbnb {
+
+    object Lottie {
+        private const val VERSION = "6.6.7"
+
+        const val DEPENDENCY = "com.airbnb.android:lottie-compose:$VERSION"
+    }
 }
 
 object AndroidGitVersion {
