@@ -13,21 +13,13 @@ object Plugins {
 }
 
 object DefaultConfig {
-    const val COMPILE_SDK = 35
-    const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
+    const val COMPILE_SDK = 36
     const val MIN_SDK = 30
-    const val TARGET_SDK = 35
+    const val TARGET_SDK = 36
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
+    const val CONSUMER_RULES_FILE = "consumer-rules.pro"
 }
 
-object GradlePlugins {
-    const val kotlinVersion = "1.9.10"
-    private const val gradlePluginVersion = "8.1.2"
-
-    const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:$gradlePluginVersion"
-    const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    const val KOTLIN_JVM = "org.jetbrains.kotlin.jvm"
-}
 object Proguard {
     const val FILE = "proguard-android-optimize.txt"
     const val RULES = "proguard-rules.pro"

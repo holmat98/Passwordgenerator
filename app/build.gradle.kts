@@ -18,6 +18,7 @@ androidGitVersion {
 }
 
 android.configure(
+    namespace = "com.mateuszholik.passwordgenerator",
     versionCode = androidGitVersion.code(),
     versionName = androidGitVersion.name()
 )

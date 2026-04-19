@@ -1,46 +1,57 @@
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import org.gradle.api.Action
 import org.gradle.api.JavaVersion
-import org.gradle.api.plugins.ExtensionAware
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 fun BaseAppModuleExtension.configure(
-    namespace: String = "com.mateuszholik.passwordgenerator",
+    namespace: String,
     versionCode: Int,
     versionName: String,
 ) {
     this.namespace = namespace
     compileSdk = DefaultConfig.COMPILE_SDK
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     configureDefaultConfig(
+        namespace = namespace,
         versionCode = versionCode,
         versionName = versionName
     )
-    configureBuildFeatures()
+    configureComposeFeatures()
     configureDefaultBuildTypes()
     configureJava()
+    configurePackaging()
 }
 
-private fun BaseAppModuleExtension.configureDefaultConfig(versionCode: Int, versionName: String) {
+private fun BaseAppModuleExtension.configureDefaultConfig(
+    namespace: String,
+    versionCode: Int,
+    versionName: String,
+) {
     defaultConfig {
-        applicationId = DefaultConfig.APPLICATION_ID
+        applicationId = namespace
         minSdk = DefaultConfig.MIN_SDK
         targetSdk = DefaultConfig.TARGET_SDK
         this.versionCode = versionCode
         this.versionName = versionName
 
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
         testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
     }
 }
 
-private fun BaseAppModuleExtension.configureBuildFeatures() {
+private fun BaseAppModuleExtension.configureComposeFeatures() {
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
+        buildConfig = true
+        compose = true
+    }
+}
+
+private fun BaseAppModuleExtension.configurePackaging() {
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -62,14 +73,7 @@ private fun BaseAppModuleExtension.configureDefaultBuildTypes() {
 
 private fun BaseAppModuleExtension.configureJava() {
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
-
-private fun BaseAppModuleExtension.kotlinOptions(configure: Action<KotlinJvmOptions>) {
-    (this as ExtensionAware).extensions.configure("kotlinOptions", configure)
 }

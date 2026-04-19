@@ -1,20 +1,45 @@
-import com.android.build.gradle.LibraryExtension
-import org.gradle.api.Action
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
-import org.gradle.api.plugins.ExtensionAware
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
-fun LibraryExtension.configure(namespace: String) {
+fun LibraryExtension.configure(
+    namespace: String,
+    isUsingCompose: Boolean = false
+) {
     this.namespace = namespace
     compileSdk = DefaultConfig.COMPILE_SDK
-
-    buildFeatures {
-        buildConfig = true
-    }
 
     configureDefaultConfig()
     configureDefaultBuildTypes()
     configureJava()
+    if (isUsingCompose) {
+        configureComposeFeatures()
+    }
+    configureBuildConfigFeatures()
+}
+
+private fun LibraryExtension.configureDefaultConfig() {
+    defaultConfig {
+        minSdk = DefaultConfig.MIN_SDK
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
+        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
+        consumerProguardFiles(DefaultConfig.CONSUMER_RULES_FILE)
+    }
+}
+
+private fun LibraryExtension.configureComposeFeatures() {
+    buildFeatures {
+        compose = true
+    }
+}
+
+private fun LibraryExtension.configureBuildConfigFeatures() {
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 private fun LibraryExtension.configureDefaultBuildTypes() {
@@ -28,23 +53,9 @@ private fun LibraryExtension.configureDefaultBuildTypes() {
     }
 }
 
-private fun LibraryExtension.configureDefaultConfig() {
-    defaultConfig {
-        minSdk = DefaultConfig.MIN_SDK
-        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTATION_RUNNER
-    }
-}
-
 private fun LibraryExtension.configureJava() {
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
-
-private fun LibraryExtension.kotlinOptions(configure: Action<KotlinJvmOptions>) {
-    (this as ExtensionAware).extensions.configure("kotlinOptions", configure)
 }

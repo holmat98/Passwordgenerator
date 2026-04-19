@@ -32,7 +32,7 @@ class JacocoReportsPlugin : Plugin<Project> {
             val variants = getAllVariants()
 
             variants.forEach { variant ->
-                val testTaskName = "test${variant.name.capitalized()}UnitTest"
+                val testTaskName = "test${variant.name}UnitTest"
 
                 val kotlinDirectories = fileTree(
                     "${buildDir}/tmp/kotlin-classes/${variant.name}"
