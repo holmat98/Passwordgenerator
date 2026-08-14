@@ -13,16 +13,16 @@ object Plugins {
 }
 
 object DefaultConfig {
-    const val COMPILE_SDK = 35
+    const val COMPILE_SDK = 36
     const val APPLICATION_ID = "com.mateuszholik.passwordgenerator"
     const val MIN_SDK = 30
-    const val TARGET_SDK = 35
+    const val TARGET_SDK = 36
     const val TEST_INSTRUMENTATION_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 }
 
 object GradlePlugins {
-    const val kotlinVersion = "1.9.10"
-    private const val gradlePluginVersion = "8.1.2"
+    const val kotlinVersion = "2.0.20"
+    private const val gradlePluginVersion = "8.9.1"
 
     const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:$gradlePluginVersion"
     const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -137,7 +137,7 @@ object Androidx {
 object Google {
 
     object KSP {
-        const val version = "1.9.10-1.0.13"
+        const val version = "2.0.20-1.0.25"
 
         const val PLUGIN = "com.google.devtools.ksp"
     }
